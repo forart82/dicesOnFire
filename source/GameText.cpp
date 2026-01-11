@@ -39,7 +39,19 @@ void GameText::init(std::string text, sf::Vector2f position, sf::Color color)
 
 void GameText::addText(std::string text)
 {
+  this->m_text += text + " \n";
+  this->m_sfText.setString(this->m_text);
+}
+
+void GameText::setText(std::string text)
+{
   this->m_text = text;
+  this->m_sfText.setString(this->m_text);
+}
+
+void GameText::removeText()
+{
+  this->m_text = "";
   this->m_sfText.setString(this->m_text);
 }
 
@@ -47,10 +59,12 @@ void GameText::setPosition(sf::Vector2f position)
 {
   this->m_sfText.setPosition(position);
 }
+
 void GameText::setColor(sf::Color color)
 {
   this->m_sfText.setFillColor(color);
 }
+
 sf::Text GameText::getSfText()
 {
   return this->m_sfText;

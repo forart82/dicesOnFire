@@ -25,7 +25,8 @@ void DebugBar::draw(sf::RenderWindow &window)
   if (this->m_isActive)
   {
     std::cout << this->m_debugText->getText() << std::endl;
-    // window.draw(this->m_debugText->getSfText());
+    window.draw(this->m_debugText->getSfText());
+    this->m_debugText->removeText();
   }
 }
 

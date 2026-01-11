@@ -20,6 +20,8 @@ public:
 
   void init(std::string text, sf::Vector2f position, sf::Color color);
   void addText(std::string text);
+  void setText(std::string text);
+  void removeText();
   void setPosition(sf::Vector2f position);
   void setColor(sf::Color color);
   sf::Text getSfText();
