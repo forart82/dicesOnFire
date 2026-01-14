@@ -12,45 +12,8 @@ Game::Game() : m_rng(std::random_device{}())
   this->m_debugBar = std::make_unique<DebugBar>(this->m_debugText.get());
 
   this->m_window.setVerticalSyncEnabled(true);
-  this->m_background.setFillColor(COLOR_DEEP_CHARCOAL);
-  this->m_background.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
-  this->m_background.setPosition({0.f, 0.f});
 
-  // Blanks
-  this->m_upBlank.setFillColor(COLOR_BLUE_SHADE);
-  this->m_upBlank.setSize({GLOBAL_SCREEN_WIDTH, 50});
-  this->m_upBlank.setPosition({0.f, 0.f});
-
-  this->m_righttBlank.setFillColor(COLOR_RED_SHADE);
-  this->m_righttBlank.setSize({50, GLOBAL_SCREEN_HEIGHT});
-  this->m_righttBlank.setPosition({GLOBAL_SCREEN_WIDTH - 50.f, 0.f});
-
-  this->m_downtBlank.setFillColor(COLOR_YELLOW_SHADE);
-  this->m_downtBlank.setSize({GLOBAL_SCREEN_WIDTH, 50});
-  this->m_downtBlank.setPosition({0.f, GLOBAL_SCREEN_HEIGHT - 50.f});
-
-  this->m_leftBlank.setFillColor(COLOR_GREEN_SHADE);
-  this->m_leftBlank.setSize({50, GLOBAL_SCREEN_HEIGHT});
-  this->m_leftBlank.setPosition({0.f, 0.f});
-
-  // Lines
-  this->m_upLine.setFillColor(COLOR_DEEP_BLUE);
-  this->m_upLine.setSize({GLOBAL_SCREEN_WIDTH, 3});
-  this->m_upLine.setPosition({0.f, 0.f});
-
-  this->m_righttLine.setFillColor(COLOR_DEEP_BLUE);
-  this->m_righttLine.setSize({3, GLOBAL_SCREEN_HEIGHT});
-  this->m_righttLine.setPosition({GLOBAL_SCREEN_WIDTH - 3.f, 0.f});
-
-  this->m_downtLine.setFillColor(COLOR_DEEP_BLUE);
-  this->m_downtLine.setSize({GLOBAL_SCREEN_WIDTH, 3});
-  this->m_downtLine.setPosition({0.f, GLOBAL_SCREEN_HEIGHT - 3.f});
-
-  this->m_leftLine.setFillColor(COLOR_DEEP_BLUE);
-  this->m_leftLine.setSize({3, GLOBAL_SCREEN_HEIGHT});
-  this->m_leftLine.setPosition({0.f, 0.f});
-
-  std::cout << "Game created" << sf::VideoMode().getDesktopMode().size.x << " " << sf::VideoMode().getDesktopMode().size.y << std::endl;
+  std::cout << "Game created" << std::endl;
 }
 
 Game::~Game()
@@ -103,41 +66,53 @@ void Game::run()
     while (this->m_timeSinceLastUpdate >= this->m_timePerFrame)
     {
       this->m_timeSinceLastUpdate -= this->m_timePerFrame;
-      this->update();
+      this->update(this->m_timePerFrame);
     }
-
     this->draw();
   }
 }
 
-void Game::update()
+void Game::update(sf::Time delta)
 {
-  // this->m_debugBar.update(this->m_timePerFrame, this->m_timeSinceLastUpdate);
-  this->m_debugText->addText("Hello World !");
+  this->m_debugText->addText("fps", "Target FPS: 60");
+  this->m_debugText->addText("fpsvalue", "FPS: " + std::to_string(1.0f / delta.asSeconds()));
+  this->m_debugText->addText("fpsdelta", "Time since last update: " + std::to_string(delta.asSeconds()));
+  this->m_debugText->addText("random", std::to_string(std::rand() % 10));
 }
 
 void Game::draw()
 {
   this->m_window.clear();
-  this->m_window.draw(this->m_background);
-  this->m_window.draw(this->m_upBlank);
-  this->m_window.draw(this->m_righttBlank);
-  this->m_window.draw(this->m_downtBlank);
-  this->m_window.draw(this->m_leftBlank);
-  this->m_window.draw(this->m_upLine);
-  this->m_window.draw(this->m_righttLine);
-  this->m_window.draw(this->m_downtLine);
-  this->m_window.draw(this->m_leftLine);
+  this->handleMainViewRatio();
 
-  int newWidth = this->m_window.getSize().x;
-  int newHeight = newWidth * SCREEN_RATIO;
+  this->m_window.setView(this->m_mainView);
 
+  this->m_debugBar->draw(this->m_window);
+  this->m_window.display();
+}
+
+void Game::handleMainViewRatio()
+{
   this->m_mainView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
   this->m_mainView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
 
-  this->m_window.setSize({newWidth, newHeight});
-  this->m_window.setView(this->m_mainView);
+  float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
+  float windowRatio = (float)this->m_window.getSize().x / (float)this->m_window.getSize().y;
 
-  m_debugBar->draw(this->m_window);
-  this->m_window.display();
+  float sizeX = 1.f;
+  float sizeY = 1.f;
+  float posX = 0.f;
+  float posY = 0.f;
+
+  if (windowRatio > targetRatio)
+  {
+    sizeX = targetRatio / windowRatio;
+    posX = (1.f - sizeX) / 2.f;
+  }
+  else
+  {
+    sizeY = windowRatio / targetRatio;
+    posY = (1.f - sizeY) / 2.f;
+  }
+  this->m_mainView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }

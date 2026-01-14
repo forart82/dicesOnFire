@@ -16,22 +16,11 @@ private:
   sf::View m_mainView = sf::View(sf::FloatRect({0, 200}, {0, 300}));
 
   // Time
-  const sf::Time m_timePerFrame = sf::seconds(1.f / 60.f);
+  const sf::Time m_timePerFrame = sf::seconds(1.f / 160.f);
   sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
   sf::Clock m_clock;
 
   bool m_isFontLoaded;
-
-  sf::RectangleShape m_background;
-  sf::RectangleShape m_upBlank;
-  sf::RectangleShape m_downtBlank;
-  sf::RectangleShape m_leftBlank;
-  sf::RectangleShape m_righttBlank;
-
-  sf::RectangleShape m_upLine;
-  sf::RectangleShape m_downtLine;
-  sf::RectangleShape m_leftLine;
-  sf::RectangleShape m_righttLine;
 
   // Class elements
   std::unique_ptr<GameText> m_debugText;
@@ -44,6 +33,8 @@ public:
   ~Game();
 
   void run();
-  void update();
+  void update(sf::Time delta);
   void draw();
+
+  void handleMainViewRatio();
 };

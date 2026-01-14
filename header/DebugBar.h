@@ -2,12 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameText.h"
+#include "DebugWindow.h"
 
 class DebugBar
 {
 
 private:
   GameText *m_debugText;
+  DebugWindow m_debugWindow;
   bool m_isActive;
 
 public:
