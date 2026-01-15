@@ -4,24 +4,24 @@
 
 DebugWindow::DebugWindow()
 {
-  this->m_background.setFillColor(COLOR_DEEP_CHARCOAL);
+  this->m_background.setFillColor(COLOR_SHADE_DARK_GRAY);
   this->m_background.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
   this->m_background.setPosition({0.f, 0.f});
 
   // Blanks
-  this->m_upBlank.setFillColor(COLOR_BLUE_SHADE);
+  this->m_upBlank.setFillColor(COLOR_SHADE_BLUE);
   this->m_upBlank.setSize({GLOBAL_SCREEN_WIDTH, 50});
   this->m_upBlank.setPosition({0.f, 0.f});
 
-  this->m_righttBlank.setFillColor(COLOR_RED_SHADE);
+  this->m_righttBlank.setFillColor(COLOR_SHADE_RED);
   this->m_righttBlank.setSize({50, GLOBAL_SCREEN_HEIGHT});
   this->m_righttBlank.setPosition({GLOBAL_SCREEN_WIDTH - 50.f, 0.f});
 
-  this->m_downtBlank.setFillColor(COLOR_YELLOW_SHADE);
+  this->m_downtBlank.setFillColor(COLOR_SHADE_YELLOW);
   this->m_downtBlank.setSize({GLOBAL_SCREEN_WIDTH, 50});
   this->m_downtBlank.setPosition({0.f, GLOBAL_SCREEN_HEIGHT - 50.f});
 
-  this->m_leftBlank.setFillColor(COLOR_GREEN_SHADE);
+  this->m_leftBlank.setFillColor(COLOR_SHADE_GREEN);
   this->m_leftBlank.setSize({50, GLOBAL_SCREEN_HEIGHT});
   this->m_leftBlank.setPosition({0.f, 0.f});
 
@@ -45,15 +45,16 @@ DebugWindow::DebugWindow()
 
 DebugWindow::~DebugWindow() {}
 
-void DebugWindow::draw(sf::RenderWindow &window)
+void DebugWindow::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  window.draw(this->m_background);
-  window.draw(this->m_upBlank);
-  window.draw(this->m_righttBlank);
-  window.draw(this->m_downtBlank);
-  window.draw(this->m_leftBlank);
-  window.draw(this->m_upLine);
-  window.draw(this->m_righttLine);
-  window.draw(this->m_downtLine);
-  window.draw(this->m_leftLine);
+
+  target.draw(this->m_background, states);
+  target.draw(this->m_upBlank, states);
+  target.draw(this->m_righttBlank, states);
+  target.draw(this->m_downtBlank, states);
+  target.draw(this->m_leftBlank, states);
+  target.draw(this->m_upLine, states);
+  target.draw(this->m_righttLine, states);
+  target.draw(this->m_downtLine, states);
+  target.draw(this->m_leftLine, states);
 }

@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class DebugWindow
+class DebugWindow : public sf::Drawable
 {
 
 private:
@@ -21,5 +21,5 @@ public:
   DebugWindow();
   ~DebugWindow();
 
-  void draw(sf::RenderWindow &window);
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };

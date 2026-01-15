@@ -30,10 +30,9 @@ GameText::~GameText()
 {
 }
 
-void GameText::draw(sf::RenderWindow &window)
+void GameText::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  window.draw(this->m_sfText);
-  this->removeText();
+  target.draw(this->m_sfText, states);
 }
 
 void GameText::init(std::string key, std::string text, sf::Vector2f position, sf::Color color)

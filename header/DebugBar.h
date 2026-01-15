@@ -4,20 +4,22 @@
 #include "GameText.h"
 #include "DebugWindow.h"
 
-class DebugBar
+class DebugBar : public sf::Drawable
 {
 
 private:
-  GameText *m_debugText;
+  GameText m_debugText;
   DebugWindow m_debugWindow;
   bool m_isActive;
 
 public:
-  DebugBar(GameText *debugText);
+  DebugBar();
   ~DebugBar();
 
-  void update(sf::Time timePerFrame, sf::Time timeSinceLastUpdate);
-  void draw(sf::RenderWindow &window);
+  void update(sf::Time &delta);
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void toggleActive();
+
+  GameText getDebugText();
 };

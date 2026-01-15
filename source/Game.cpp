@@ -8,11 +8,10 @@
 
 Game::Game() : m_rng(std::random_device{}())
 {
-  this->m_debugText = std::make_unique<GameText>();
-  this->m_debugBar = std::make_unique<DebugBar>(this->m_debugText.get());
+  this->m_debugBar = std::make_unique<DebugBar>();
+  this->m_timer = std::make_unique<Timer>(2);
 
   this->m_window.setVerticalSyncEnabled(true);
-
   std::cout << "Game created" << std::endl;
 }
 
@@ -74,20 +73,22 @@ void Game::run()
 
 void Game::update(sf::Time delta)
 {
-  this->m_debugText->addText("fps", "Target FPS: 60");
-  this->m_debugText->addText("fpsvalue", "FPS: " + std::to_string(1.0f / delta.asSeconds()));
-  this->m_debugText->addText("fpsdelta", "Time since last update: " + std::to_string(delta.asSeconds()));
-  this->m_debugText->addText("random", std::to_string(std::rand() % 10));
+  this->m_timer->update(delta);
+  this->m_debugBar->update(delta);
 }
 
 void Game::draw()
 {
+  // Will be first
   this->m_window.clear();
   this->handleMainViewRatio();
-
   this->m_window.setView(this->m_mainView);
 
-  this->m_debugBar->draw(this->m_window);
+  // Will be between
+  this->m_window.draw(*this->m_timer);
+
+  // Will be last
+  this->m_window.draw(*this->m_debugBar);
   this->m_window.display();
 }
 

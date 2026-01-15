@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-class GameText
+class GameText : public sf::Drawable
 {
 
 private:
@@ -20,7 +20,7 @@ public:
   GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color);
   ~GameText();
 
-  void draw(sf::RenderWindow &window);
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void init(std::string key, std::string text, sf::Vector2f position, sf::Color color);
   void addText(std::string key, std::string text);

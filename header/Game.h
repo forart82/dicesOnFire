@@ -4,6 +4,7 @@
 #include <random>
 #include "DebugBar.h"
 #include "GameText.h"
+#include "Timer.h"
 #include "Grid.h"
 #include "_GLOBALS.h"
 
@@ -16,15 +17,15 @@ private:
   sf::View m_mainView = sf::View(sf::FloatRect({0, 200}, {0, 300}));
 
   // Time
-  const sf::Time m_timePerFrame = sf::seconds(1.f / 160.f);
+  const sf::Time m_timePerFrame = sf::seconds(1.f / 60.f);
   sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
   sf::Clock m_clock;
 
   bool m_isFontLoaded;
 
-  // Class elements
-  std::unique_ptr<GameText> m_debugText;
+  // Entity elements
   std::unique_ptr<DebugBar> m_debugBar;
+  std::unique_ptr<Timer> m_timer;
 
   std::mt19937 m_rng;
 

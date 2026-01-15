@@ -29,10 +29,19 @@ const sf::Color COLOR_SLATE_GRAY = sf::Color(112, 128, 144);
 const sf::Color COLOR_DARK_GRAY = sf::Color(66, 66, 66);
 const sf::Color COLOR_DEEP_CHARCOAL = sf::Color(33, 33, 33);
 const sf::Color COLOR_BLACK = sf::Color(20, 17, 21);
-const sf::Color COLOR_BLUE_SHADE = sf::Color(0, 0, 255, 25);
-const sf::Color COLOR_RED_SHADE = sf::Color(255, 0, 0, 25);
-const sf::Color COLOR_YELLOW_SHADE = sf::Color(255, 255, 0, 25);
-const sf::Color COLOR_GREEN_SHADE = sf::Color(0, 255, 0, 25);
+const sf::Color COLOR_SHADE_BLUE = sf::Color(0, 0, 255, 25);
+const sf::Color COLOR_SHADE_RED = sf::Color(255, 0, 0, 25);
+const sf::Color COLOR_SHADE_YELLOW = sf::Color(255, 255, 0, 25);
+const sf::Color COLOR_SHADE_GREEN = sf::Color(0, 255, 0, 25);
+const sf::Color COLOR_SHADE_WHITE = sf::Color(255, 255, 255, 25);
+const sf::Color COLOR_SHADE_GHOST_WHITE = sf::Color(248, 248, 255, 25);
+const sf::Color COLOR_SHADE_SILVER = sf::Color(192, 192, 192, 25);
+const sf::Color COLOR_SHADE_LIGHT_GRAY = sf::Color(189, 189, 189, 25);
+const sf::Color COLOR_SHADE_GRAY = sf::Color(117, 117, 117, 25);
+const sf::Color COLOR_SHADE_SLATE_GRAY = sf::Color(112, 128, 144, 25);
+const sf::Color COLOR_SHADE_DARK_GRAY = sf::Color(66, 66, 66, 25);
+const sf::Color COLOR_SHADE_DEEP_CHARCOAL = sf::Color(33, 33, 33, 25);
+const sf::Color COLOR_SHADE_BLACK = sf::Color(20, 17, 21, 25);
 
 // --- Reds & Pinks ---
 const sf::Color COLOR_RED = sf::Color(255, 0, 0);
