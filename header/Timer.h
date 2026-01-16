@@ -9,12 +9,14 @@ private:
   sf::RectangleShape m_progressBar;
   sf::Time m_elapsedTime;
   sf::Vector2f m_progressBarSize;
+  bool m_vertical;
   float m_cooldown;
 
 public:
   Timer(float cooldown);
   Timer(
       float cooldown,
+      bool vertical,
       sf::Vector2f position,
       sf::Vector2f size,
       sf::Color backgroundColor,

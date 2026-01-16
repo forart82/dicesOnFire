@@ -1,29 +1,33 @@
 #include "../header/GameText.h"
 #include "../header/_GLOBALS.h"
 
-GameText::GameText() : m_sfText(m_sfFont), m_isFontLoaded(false)
+GameText::GameText() : GameText("", "", {10, 10}, COLOR_SKY_BLUE)
 {
-  this->init("", "", {10, 10}, COLOR_SKY_BLUE);
 }
 
-GameText::GameText(std::string text) : m_sfText(m_sfFont), m_isFontLoaded(false)
+GameText::GameText(std::string text)
+    : GameText("", text, {10, 10}, COLOR_SKY_BLUE)
 {
-  this->init("", text, {10, 10}, COLOR_SKY_BLUE);
 }
 
-GameText::GameText(std::string text, sf::Vector2f position) : m_sfText(m_sfFont), m_isFontLoaded(false)
+GameText::GameText(std::string text, sf::Vector2f position)
+    : GameText("", "", position, COLOR_SKY_BLUE)
 {
-  this->init("", text, position, COLOR_SKY_BLUE);
 }
 
-GameText::GameText(std::string text, sf::Vector2f position, sf::Color color) : m_sfText(m_sfFont), m_isFontLoaded(false)
+GameText::GameText(std::string text, sf::Vector2f position, sf::Color color)
+    : GameText("", "", position, color)
 {
-  this->init("", text, position, color);
 }
 
-GameText::GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color) : m_sfText(m_sfFont), m_isFontLoaded(false)
+GameText::GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color) : m_sfText(m_sfFont)
 {
-  this->init(key, text, position, color);
+  if (!this->m_sfFont.openFromFile("arial.ttf"))
+  {
+    throw std::runtime_error("FATAL ERROR: Could not load font 'arial.ttf' for GameText.");
+  }
+  this->m_sfText.setPosition(position);
+  this->m_sfText.setFillColor(color);
 }
 
 GameText::~GameText()
@@ -35,26 +39,16 @@ void GameText::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(this->m_sfText, states);
 }
 
-void GameText::init(std::string key, std::string text, sf::Vector2f position, sf::Color color)
-{
-  this->m_isFontLoaded = m_sfFont.openFromFile("arial.ttf");
-  if (!this->m_isFontLoaded)
-  {
-    throw std::runtime_error("FATAL ERROR: Could not load font 'arial.ttf' for GameText.");
-  }
-  this->m_sfText.setPosition(position);
-  this->m_sfText.setFillColor(color);
-}
-
 void GameText::addText(std::string key, std::string value)
 {
   this->m_texts[key] = value;
-  std::string tmp = "";
+  std::string combined;
+  combined.reserve(256);
   for (auto const &[key, value] : this->m_texts)
   {
-    tmp += value + "\n";
+    combined += value + "\n";
   }
-  this->m_sfText.setString(tmp);
+  this->m_sfText.setString(combined);
 }
 
 void GameText::removeText()
@@ -77,7 +71,7 @@ sf::Text GameText::getSfText()
   return this->m_sfText;
 }
 
-std::map<std::string, std::string> GameText::getTexts()
+const std::map<std::string, std::string> &GameText::getTexts() const
 {
   return this->m_texts;
 }
