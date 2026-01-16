@@ -19,8 +19,6 @@ public:
       bool vertical,
       sf::Vector2f position,
       sf::Vector2f size,
-      sf::Color backgroundColor,
-      sf::Color progressBarColor,
       float padding);
 
   ~Timer();

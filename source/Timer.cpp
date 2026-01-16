@@ -8,9 +8,7 @@ Timer::Timer(float cooldown)
           cooldown,
           true,
           {300.f, 300.f},
-          {350.f, 50.f},
-          COLOR_DARK_VIOLET,
-          COLOR_DARK_GREEN,
+          {350.f, 30.f},
           4)
 {
 }
@@ -20,8 +18,6 @@ Timer::Timer(
     bool vertical,
     sf::Vector2f position,
     sf::Vector2f size,
-    sf::Color backgroundColor,
-    sf::Color progressBarColor,
     float padding)
 {
   this->m_cooldown = cooldown;
@@ -30,11 +26,11 @@ Timer::Timer(
 
   this->m_background.setPosition(position);
   this->m_background.setSize(size);
-  this->m_background.setFillColor(backgroundColor);
+  this->m_background.setFillColor(COLOR_TIMER_BACKGROUND);
 
   this->m_progressBar.setPosition({position.x + padding, position.y + padding});
   this->m_progressBar.setSize(this->m_progressBarSize);
-  this->m_progressBar.setFillColor(progressBarColor);
+  this->m_progressBar.setFillColor(COLOR_TIMER_PROGRESSBAR);
 }
 
 Timer::~Timer() {};
@@ -44,8 +40,19 @@ void Timer::update(sf::Time &delta)
   this->m_elapsedTime += delta;
   float seconds = m_elapsedTime.asSeconds();
   float progress = std::min(seconds / this->m_cooldown, 1.f);
-  float progressHeight = this->m_vertical ? this->m_progressBarSize.y : this->m_progressBarSize.y - (this->m_progressBarSize.y * progress);
-  float progressWidth = this->m_vertical ? this->m_progressBarSize.x - (this->m_progressBarSize.x * progress) : this->m_progressBarSize.x;
+  float progressHeight = this->m_progressBarSize.y;
+  float progressWidth = this->m_progressBarSize.x;
+
+  if (this->m_vertical)
+  {
+    progressWidth = this->m_progressBarSize.x - (this->m_progressBarSize.x * progress);
+  }
+
+  if (!this->m_vertical)
+  {
+    progressHeight = this->m_progressBarSize.y - (this->m_progressBarSize.y * progress);
+  }
+
   this->m_progressBar.setSize({progressWidth, progressHeight});
 
   if (seconds >= this->m_cooldown)

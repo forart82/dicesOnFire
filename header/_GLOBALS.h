@@ -106,3 +106,7 @@ const sf::Color COLOR_BRONZE = sf::Color(205, 127, 50);
 const sf::Color COLOR_COFFEE = sf::Color(121, 85, 72);
 const sf::Color COLOR_BROWN = sf::Color(76, 43, 54);
 const sf::Color COLOR_MUD_BROWN = sf::Color(62, 39, 35);
+
+// Timer Color
+const sf::Color COLOR_TIMER_BACKGROUND = COLOR_DARK_VIOLET;
+const sf::Color COLOR_TIMER_PROGRESSBAR = COLOR_DARK_GREEN;

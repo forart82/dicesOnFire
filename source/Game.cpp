@@ -10,6 +10,7 @@ Game::Game() : m_rng(std::random_device{}())
 {
   this->m_debugBar = std::make_unique<DebugBar>();
   this->m_timer = std::make_unique<Timer>(2);
+  this->m_dice = std::make_unique<Dice>();
 
   this->m_window.setVerticalSyncEnabled(true);
   std::cout << "Game created" << std::endl;
@@ -74,6 +75,7 @@ void Game::run()
 void Game::update(sf::Time delta)
 {
   this->m_timer->update(delta);
+  this->m_dice->update(delta);
   this->m_debugBar->update(delta);
 }
 
@@ -86,6 +88,7 @@ void Game::draw()
 
   // Will be between
   this->m_window.draw(*this->m_timer);
+  this->m_window.draw(*this->m_dice);
 
   // Will be last
   this->m_window.draw(*this->m_debugBar);

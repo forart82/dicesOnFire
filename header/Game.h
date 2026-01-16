@@ -5,6 +5,7 @@
 #include "DebugBar.h"
 #include "GameText.h"
 #include "Timer.h"
+#include "Dice.h"
 #include "Grid.h"
 #include "_GLOBALS.h"
 
@@ -26,6 +27,7 @@ private:
   // Entity elements
   std::unique_ptr<DebugBar> m_debugBar;
   std::unique_ptr<Timer> m_timer;
+  std::unique_ptr<Dice> m_dice;
 
   std::mt19937 m_rng;
 

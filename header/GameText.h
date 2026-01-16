@@ -8,15 +8,11 @@ class GameText : public sf::Drawable
 
 private:
   sf::Text m_sfText;
-  sf::Font m_sfFont;
   std::map<std::string, std::string> m_texts;
 
 public:
   GameText();
-  GameText(std::string text);
-  GameText(std::string text, sf::Vector2f position);
-  GameText(std::string text, sf::Vector2f position, sf::Color color);
-  GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color);
+  GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color, std::string fontName);
   ~GameText();
 
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
