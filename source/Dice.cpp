@@ -5,7 +5,7 @@
 #include "../header/_GLOBALS.h"
 #include <iostream>
 
-Dice::Dice() : Dice(99, 1, 2, {800.f, 200.f}, {50.f, 50.f}, COLOR_CYBER_PURPLE, COLOR_CRIMSON)
+Dice::Dice() : Dice(6, 1, 2, {100.f, 200.f}, {50.f, 50.f}, COLOR_CYBER_PURPLE, COLOR_CRIMSON)
 {
 }
 Dice::Dice(int faces, int rerolles, float cooldown, sf::Vector2f position, sf::Vector2f size, sf::Color slotColor, sf::Color solideColor)
