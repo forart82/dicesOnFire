@@ -21,6 +21,7 @@ public:
   void removeText();
   void setPosition(sf::Vector2f position);
   void setColor(sf::Color color);
+  void setFontSize(int fontSize);
   sf::Text getSfText();
   const std::map<std::string, std::string> &getTexts() const;
 };

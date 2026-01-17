@@ -20,59 +20,72 @@ Timer::Timer(
     sf::Vector2f size,
     float padding)
 {
-  this->m_cooldown = cooldown;
-  this->m_vertical = vertical;
-  this->m_progressBarSize = {size.x - (padding * 2), size.y - (padding * 2)};
+  m_cooldown = cooldown;
+  m_vertical = vertical;
+  m_progressBarSize = {size.x - (padding * 2), size.y - (padding * 2)};
 
-  this->m_background.setPosition(position);
-  this->m_background.setSize(size);
-  this->m_background.setFillColor(COLOR_TIMER_BACKGROUND);
+  m_background.setPosition(position);
+  m_background.setSize(size);
+  m_background.setFillColor(COLOR_TIMER_BACKGROUND);
 
-  this->m_progressBar.setPosition({position.x + padding, position.y + padding});
-  this->m_progressBar.setSize(this->m_progressBarSize);
-  this->m_progressBar.setFillColor(COLOR_TIMER_PROGRESSBAR);
+  m_progressBar.setPosition({position.x + padding, position.y + padding});
+  m_progressBar.setSize(m_progressBarSize);
+  m_progressBar.setFillColor(COLOR_TIMER_PROGRESSBAR);
 }
 
 Timer::~Timer() {};
 
 void Timer::update(sf::Time &delta)
 {
-  this->m_elapsedTime += delta;
-  float seconds = m_elapsedTime.asSeconds();
-  float progress = std::min(seconds / this->m_cooldown, 1.f);
-  float progressHeight = this->m_progressBarSize.y;
-  float progressWidth = this->m_progressBarSize.x;
-
-  if (this->m_vertical)
+  if (!m_stop)
   {
-    progressWidth = this->m_progressBarSize.x - (this->m_progressBarSize.x * progress);
-  }
 
-  if (!this->m_vertical)
-  {
-    progressHeight = this->m_progressBarSize.y - (this->m_progressBarSize.y * progress);
-  }
+    m_elapsedTime += delta;
+    float seconds = m_elapsedTime.asSeconds();
+    float progress = std::min(seconds / m_cooldown, 1.f);
+    float progressHeight = m_progressBarSize.y;
+    float progressWidth = m_progressBarSize.x;
 
-  this->m_progressBar.setSize({progressWidth, progressHeight});
+    if (m_vertical)
+    {
+      progressWidth = m_progressBarSize.x - (m_progressBarSize.x * progress);
+    }
 
-  if (seconds >= this->m_cooldown)
-  {
-    m_elapsedTime = sf::Time::Zero;
+    if (!m_vertical)
+    {
+      progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
+    }
+
+    m_progressBar.setSize({progressWidth, progressHeight});
+
+    if (seconds >= m_cooldown)
+    {
+      if (onTimeout)
+      {
+        onTimeout();
+      }
+      m_elapsedTime = sf::Time::Zero;
+    }
   }
 }
 
 void Timer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(this->m_background, states);
-  target.draw(this->m_progressBar, states);
+  target.draw(m_background, states);
+  target.draw(m_progressBar, states);
 }
 
 const sf::RectangleShape &Timer::getBackground() const
 {
-  return this->m_background;
+  return m_background;
 }
 
 const sf::RectangleShape &Timer::getProgressBar() const
 {
-  return this->m_progressBar;
+  return m_progressBar;
+}
+
+void Timer::toggleStop()
+{
+  m_stop = !m_stop;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 class Timer : public sf::Drawable
 {
@@ -11,6 +12,7 @@ private:
   sf::Vector2f m_progressBarSize;
   bool m_vertical;
   float m_cooldown;
+  bool m_stop;
 
 public:
   Timer(float cooldown);
@@ -23,9 +25,12 @@ public:
 
   ~Timer();
 
+  std::function<void()> onTimeout;
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   const sf::RectangleShape &getBackground() const;
   const sf::RectangleShape &getProgressBar() const;
+
+  void toggleStop();
 };
