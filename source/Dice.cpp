@@ -28,7 +28,7 @@ Dice::Dice(int faces, int rerolles, float cooldown, sf::Vector2f position, sf::V
   this->m_solide.setOutlineThickness(5);
 
   // GameText
-  this->m_faceValueText = std::make_unique<GameText>("title", "1", sf::Vector2f(100.f, 100.f), COLOR_AQUA, 'second');
+  this->m_faceValueText = std::make_unique<GameText>("title", "1", sf::Vector2f(100.f, 100.f), COLOR_AQUA, "second");
 }
 Dice::~Dice() {}
 
