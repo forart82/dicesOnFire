@@ -1,18 +1,16 @@
 #include <SFML/Graphics.hpp>
-#include "Dice.h"
-#include "DiceHelper.h"
+#include "../header/Dice.h"
+#include "../header/DiceHelper.h"
+#include "../header/_GLOBALS.h"
+#include "../header/_HELPERS.h"
 
 std::unique_ptr<Dice> DiceHelper::create(sf::Vector2f position, sf::Color color)
 {
-  // Create the unique_ptr
   auto dice = std::make_unique<Dice>();
 
-  // Centralized setup logic
   dice->setPosition(position);
-  dice->setColor(color);
+  dice->setColors(COLORS_DICE_ELEMENTS[GET_RANDOM_NUMBER_INT(1, 3)], COLOR_GRAYSCALE_BLACK);
+  dice->setFaces(4);
 
-  // You can even set up the onTimeout here if needed
-  // dice->onTimeout = ...;
-
-  return dice; // Return by value (it automatically moves)
+  return dice;
 }

@@ -2,14 +2,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include "../header/_BaseRectangleX2.h"
 
-class Timer : public sf::Drawable
+class Timer : public _BaseRectangleX2
 {
 private:
-  sf::RectangleShape m_backgroundShape;
-  sf::RectangleShape m_progressBarShape;
-  sf::Time m_elapsedTime;
   sf::Vector2f m_progressBarSize;
+  sf::Time m_elapsedTime;
   float m_cooldown;
   bool m_isVertical;
   bool m_stop;
@@ -17,11 +16,17 @@ private:
 public:
   Timer(float cooldown);
   Timer(
+      sf::Vector2f outerPosition,
+      sf::Vector2f outerSize,
+      sf::Color outerFillColor,
+      sf::Color outerOutlineColor,
+      sf::Vector2f innerPosition,
+      sf::Vector2f innerSize,
+      sf::Color innerFillColor,
+      sf::Color innerOutlineColor,
+      float padding,
       float cooldown,
-      bool isVertical,
-      sf::Vector2f position,
-      sf::Vector2f size,
-      float padding);
+      bool isVertical);
 
   ~Timer();
 
@@ -31,7 +36,4 @@ public:
 
   void toggleStop();
   void setCooldown(float cooldown);
-
-  const sf::RectangleShape &getBackground() const;
-  const sf::RectangleShape &getProgressBar() const;
 };

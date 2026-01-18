@@ -1,37 +1,54 @@
-#include "../header/Timer.h"
-#include "../header/_GLOBALS.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../header/Timer.h"
+#include "../header/_GLOBALS.h"
+#include "../header/_BaseRectangleX2.h"
 
 Timer::Timer(float cooldown)
     : Timer(
+          {1250.f, 1020.f},
+          {500.f, 100.f},
+          COLOR_VIOLET_DARK_VIOLET,
+          COLOR_GRAYSCALE_BLACK,
+          {1250.f, 1020.f},
+          {500.f, 100.f},
+          COLOR_GREEN_DARK_GREEN,
+          COLOR_GREEN_DARK_GREEN,
+          28,
           cooldown,
-          true,
-          {50.f, 1020.f},
-          {350.f, 30.f},
-          4)
+          true)
 {
 }
 
 Timer::Timer(
+    sf::Vector2f outerPosition,
+    sf::Vector2f outerSize,
+    sf::Color outerFillColor,
+    sf::Color outerOutlineColor,
+    sf::Vector2f innerPosition,
+    sf::Vector2f innerSize,
+    sf::Color innerFillColor,
+    sf::Color innerOutlineColor,
+    float padding,
     float cooldown,
-    bool isVertical,
-    sf::Vector2f position,
-    sf::Vector2f size,
-    float padding)
-    : m_stop(false), m_cooldown(cooldown), m_isVertical(isVertical)
+    bool isVertical)
+    : _BaseRectangleX2(
+          outerPosition,
+          outerSize,
+          outerFillColor,
+          outerOutlineColor,
+          innerPosition,
+          innerSize,
+          innerFillColor,
+          innerOutlineColor,
+          padding,
+          true),
+      m_stop(false),
+      m_cooldown(cooldown),
+      m_isVertical(isVertical),
+      m_progressBarSize({innerSize.x - padding * 2, innerSize.y - padding * 2})
+
 {
-  m_cooldown = cooldown;
-  m_isVertical = isVertical;
-  m_progressBarSize = {size.x - (padding * 2), size.y - (padding * 2)};
-
-  m_backgroundShape.setPosition(position);
-  m_backgroundShape.setSize(size);
-  m_backgroundShape.setFillColor(COLOR_TIMER_BACKGROUND);
-
-  m_progressBarShape.setPosition({position.x + padding, position.y + padding});
-  m_progressBarShape.setSize(m_progressBarSize);
-  m_progressBarShape.setFillColor(COLOR_TIMER_PROGRESSBAR);
 }
 
 Timer::~Timer() {};
@@ -56,7 +73,7 @@ void Timer::update(sf::Time &delta)
       progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
     }
 
-    m_progressBarShape.setSize({progressWidth, progressHeight});
+    setInnerSize({progressWidth, progressHeight});
 
     if (seconds >= m_cooldown)
     {
@@ -71,8 +88,7 @@ void Timer::update(sf::Time &delta)
 
 void Timer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(m_backgroundShape, states);
-  target.draw(m_progressBarShape, states);
+  _BaseRectangleX2::draw(target, states);
 }
 
 void Timer::toggleStop()
@@ -83,14 +99,4 @@ void Timer::toggleStop()
 void Timer::setCooldown(float cooldown)
 {
   m_cooldown = cooldown;
-}
-
-const sf::RectangleShape &Timer::getBackground() const
-{
-  return m_backgroundShape;
-}
-
-const sf::RectangleShape &Timer::getProgressBar() const
-{
-  return m_progressBarShape;
 }
