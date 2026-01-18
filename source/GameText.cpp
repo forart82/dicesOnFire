@@ -2,7 +2,7 @@
 #include "../header/_GLOBALS.h"
 #include "../header/FontManager.h"
 
-GameText::GameText() : GameText("", "", {10, 10}, COLOR_SKY_BLUE, "Quantico")
+GameText::GameText() : GameText("", "", {10, 10}, COLOR_BLUE_SKY_BLUE, "Quantico")
 {
 }
 

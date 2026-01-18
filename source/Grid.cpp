@@ -25,7 +25,7 @@ void Grid::createStartZone()
       // Get a pointer to the first vertex of the current quad
       sf::Vertex *triangels = &vertices[cellCounter * 6];
       // Use emplace_back to construct the Cell in-place
-      cells.emplace_back(triangels, sf::Vector2f(width, height), COLOR_BLACK);
+      cells.emplace_back(triangels, sf::Vector2f(width, height), COLOR_GRAYSCALE_BLACK);
       cellCounter++;
     }
   }

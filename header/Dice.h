@@ -9,8 +9,8 @@
 class Dice : public sf::Drawable, sf::Transformable
 {
 private:
-  sf::CircleShape m_slot;
-  sf::CircleShape m_solide;
+  sf::CircleShape m_slotShape;
+  sf::CircleShape m_solideShape;
   std::unique_ptr<GameText> m_diceValueText;
   Timer m_timer;
   int m_faces;

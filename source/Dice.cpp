@@ -5,7 +5,7 @@
 #include "../header/_GLOBALS.h"
 #include <iostream>
 
-Dice::Dice() : Dice(6, 1, 2, {100.f, 200.f}, {50.f, 50.f}, COLOR_CYBER_PURPLE, COLOR_CRIMSON)
+Dice::Dice() : Dice(6, 1, 2, {450.f, 950.f}, {50.f, 50.f}, COLOR_VIOLET_CYBER_PURPLE, COLOR_RED_CRIMSON)
 {
 }
 Dice::Dice(int faces, int rerolles, float cooldown, sf::Vector2f position, sf::Vector2f size, sf::Color slotColor, sf::Color solideColor)
@@ -17,20 +17,20 @@ Dice::Dice(int faces, int rerolles, float cooldown, sf::Vector2f position, sf::V
   makeFaceValues();
 
   // Slot
-  m_slot.setPosition(position);
-  m_slot.setRadius(size.x);
-  m_slot.setFillColor(slotColor);
+  m_slotShape.setPosition(position);
+  m_slotShape.setRadius(size.x);
+  m_slotShape.setFillColor(slotColor);
 
   // Solide
-  m_solide.setPosition({position.x + m_padding, position.y + m_padding});
-  m_solide.setRadius(size.x - m_padding);
-  m_solide.setPointCount(faces);
-  m_solide.setFillColor(solideColor);
-  m_solide.setOutlineColor(COLOR_BLACK);
-  m_solide.setOutlineThickness(5);
+  m_solideShape.setPosition({position.x + m_padding, position.y + m_padding});
+  m_solideShape.setRadius(size.x - m_padding);
+  m_solideShape.setPointCount(faces);
+  m_solideShape.setFillColor(solideColor);
+  m_solideShape.setOutlineColor(COLOR_GRAYSCALE_BLACK);
+  m_solideShape.setOutlineThickness(5);
 
   // GameText
-  m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(position.x + size.x / 2, position.y + size.y / 2 - 20.f), COLOR_AQUA, "Quantico");
+  m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(position.x + size.x / 2, position.y + size.y / 2 - 20.f), COLOR_BLUE_AQUA, "Quantico");
   m_diceValueText->setFontSize(63);
 
   // Timer
@@ -63,8 +63,8 @@ void Dice::update(sf::Time &delta)
 void Dice::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   states.transform *= getTransform();
-  target.draw(m_slot);
-  target.draw(m_solide);
+  target.draw(m_slotShape);
+  target.draw(m_solideShape);
   target.draw(m_timer);
   target.draw(*m_diceValueText);
 }
@@ -82,8 +82,8 @@ void Dice::makeFaceValues()
 
 void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
 {
-  auto position = m_slot.getPosition();
-  auto radius = m_slot.getRadius();
+  auto position = m_slotShape.getPosition();
+  auto radius = m_slotShape.getRadius();
   if (diceValue < 10)
   {
     auto newPosition = sf::Vector2f(position.x + 28.f, position.y + 10.f);
