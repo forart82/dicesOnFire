@@ -33,6 +33,14 @@ public:
   void handelTextPositionBasedOnDiceValue(int diceValues);
   void toggleStop();
 
+  void setPosition(sf::Vector2f postion);
+  void setSize(sf::Vector2f size);
+  void setSolideColor(sf::Color solideColor, sf::Color outlineColor);
+  void setFaces(int faces);
+  void setRerolls(int rerolls);
+  void setCooldown(float cooldown);
+  void setFaceValues(std::map<int, float> faceValues);
+
   void onTimeout();
 
   float roll();

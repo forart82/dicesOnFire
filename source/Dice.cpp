@@ -9,25 +9,23 @@ Dice::Dice() : Dice(6, 1, 2, {450.f, 950.f}, {50.f, 50.f}, COLOR_VIOLET_CYBER_PU
 {
 }
 Dice::Dice(int faces, int rerolles, float cooldown, sf::Vector2f position, sf::Vector2f size, sf::Color slotColor, sf::Color solideColor)
-    : m_timer(cooldown, true, {position.x, position.y + size.y * 2 + 5.f}, {size.x * 2, 20.f}, 2), m_padding(8), m_stop(false)
+    : m_timer(
+          cooldown,
+          true,
+          {position.x, position.y + size.y * 2 + 5.f},
+          {size.x * 2, 20.f}, 2),
+      m_faces(m_faces),
+      m_rerolls(rerolles),
+      m_padding(8),
+      m_stop(false)
 {
   // Dice
-  m_faces = faces;
-  m_rerolls = rerolles;
   makeFaceValues();
-
-  // Slot
-  m_slotShape.setPosition(position);
-  m_slotShape.setRadius(size.x);
+  setPosition(position);
+  setSize(size);
   m_slotShape.setFillColor(slotColor);
-
-  // Solide
-  m_solideShape.setPosition({position.x + m_padding, position.y + m_padding});
-  m_solideShape.setRadius(size.x - m_padding);
-  m_solideShape.setPointCount(faces);
-  m_solideShape.setFillColor(solideColor);
-  m_solideShape.setOutlineColor(COLOR_GRAYSCALE_BLACK);
-  m_solideShape.setOutlineThickness(5);
+  setSolideColor(solideColor, COLOR_GRAYSCALE_BLACK);
+  setFaces(faces);
 
   // GameText
   m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(position.x + size.x / 2, position.y + size.y / 2 - 20.f), COLOR_BLUE_AQUA, "Quantico");
@@ -99,6 +97,43 @@ void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
 void Dice::toggleStop()
 {
   m_stop = !m_stop;
+}
+
+void Dice::setPosition(sf::Vector2f position)
+{
+  m_slotShape.setPosition(position);
+  m_solideShape.setPosition({position.x + m_padding, position.y + m_padding});
+}
+void Dice::setSize(sf::Vector2f size)
+{
+  m_slotShape.setRadius(size.x);
+  m_solideShape.setRadius(size.x - m_padding);
+}
+void Dice::setSolideColor(sf::Color solideColor, sf::Color outlineColor)
+{
+  m_solideShape.setFillColor(solideColor);
+  m_solideShape.setOutlineColor(outlineColor);
+  m_solideShape.setOutlineThickness(5);
+}
+void Dice::setFaces(int faces)
+{
+  m_faces = faces;
+  makeFaceValues();
+}
+void Dice::setRerolls(int rerolls)
+{
+  m_rerolls = rerolls;
+}
+void Dice::setCooldown(float cooldown)
+{
+  m_timer.setCooldown(cooldown);
+}
+void Dice::setFaceValues(std::map<int, float> faceValues)
+{
+  if (faceValues.size() == m_faces)
+  {
+    m_faceValues = faceValues;
+  }
 }
 
 void Dice::onTimeout()
