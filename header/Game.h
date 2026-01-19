@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "_GLOBALS.h"
 #include "DiceBox.h"
+#include "DiceMenu.h"
 
 class Game
 {
@@ -29,7 +30,7 @@ private:
   std::unique_ptr<DebugBar> m_debugBar;
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<Dice> m_dice;
-  std::unique_ptr<DiceBox> m_diceBox;
+  std::unique_ptr<DiceMenu> m_diceMenu;
 
   std::mt19937 m_rng;
 

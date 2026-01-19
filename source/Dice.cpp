@@ -8,7 +8,7 @@
 #include "../header/_BaseCircle.h"
 
 Dice::Dice()
-    : Dice(sf::Vector2f(500, 500), 50, COLOR_BLUE_CLOUDY_AQUA, COLOR_GREEN_DARK_GREEN, 4, 1, 2)
+    : Dice(sf::Vector2f(1000, 1000), 50, COLOR_BLUE_CLOUDY_AQUA, COLOR_GREEN_DARK_GREEN, 4, 1, 2)
 {
 }
 

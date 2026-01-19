@@ -4,20 +4,17 @@
 #include "../header/Dice.h"
 #include "../header/Timer.h"
 #include "../header/_GLOBALS.h"
+#include "../header/_BaseRectangle.h"
 
 DiceBox::DiceBox()
-    : DiceBox({0.f, 0.f}, {600.f, 150.f}, COLOR_RED_DENSE_HOT_PINK, 5)
+    : DiceBox({0.f, 0.f}, {600.f, 150.f}, COLOR_RED_DENSE_HOT_PINK, COLOR_GRAYSCALE_BLACK, true, 5)
 {
 }
 
-DiceBox::DiceBox(sf::Vector2f position, sf::Vector2f size, sf::Color color, float cooldown)
-    : m_position(position), m_size(size), m_backgroundColor(color)
+DiceBox::DiceBox(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor,
+                 sf::Color outlineColor, bool isActive, float cooldown)
+    : _BaseRectangle(position, size, fillColor, outlineColor, isActive)
 {
-  // Box
-  m_boxShape.setFillColor(m_backgroundColor);
-  m_boxShape.setSize(m_size);
-  m_boxShape.setPosition(m_position);
-
   // Timer
   m_timer = std::make_unique<Timer>(
       sf::Vector2f(position.x + 10, position.y + 110),
@@ -29,7 +26,7 @@ DiceBox::DiceBox(sf::Vector2f position, sf::Vector2f size, sf::Color color, floa
       COLOR_GREEN_DARK_GREEN,
       COLOR_GREEN_DARK_GREEN,
       5,
-      5,
+      cooldown,
       true);
 }
 DiceBox::~DiceBox() {}
@@ -41,11 +38,11 @@ void DiceBox::update(sf::Time &delta)
 
 void DiceBox::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(m_boxShape);
+  _BaseRectangle::draw(target, states);
   target.draw(*m_timer);
 }
 
-void DiceBox::addDice(int slotNumber, Dice *dice)
+void DiceBox::placeDiceInSlot(int slotNumber, Dice *dice)
 {
   m_dices[slotNumber] = dice;
 }

@@ -4,8 +4,8 @@
 #include <cmath>
 
 const int TILE_SIZE = 32;
-const int GLOBAL_SCREEN_WIDTH = 1920;
-const int GLOBAL_SCREEN_HEIGHT = 1080;
+const int GLOBAL_SCREEN_WIDTH = 3840;
+const int GLOBAL_SCREEN_HEIGHT = 2160;
 
 const int START_ZONE_WIDTH = 600;
 const int START_ZONE_HEIGHT = 400;
