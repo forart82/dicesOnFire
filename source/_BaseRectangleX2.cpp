@@ -46,7 +46,7 @@ void _BaseRectangleX2::draw(sf::RenderTarget &target, sf::RenderStates states) c
   if (m_isActive)
   {
     target.draw(m_outerShape, states);
-    target.draw(m_innerShape, states);
+    // target.draw(m_innerShape, states);
   }
 }
 
