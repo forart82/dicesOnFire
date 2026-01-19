@@ -11,10 +11,6 @@ Game::Game() : m_rng(std::random_device{}())
   m_debugBar = std::make_unique<DebugBar>();
   m_diceMenu = std::make_unique<DiceMenu>();
 
-  // unneeded
-  m_timer = std::make_unique<Timer>(2);
-  m_dice = std::make_unique<Dice>();
-
   m_window.setVerticalSyncEnabled(true);
   std::cout << "Game created" << std::endl;
 }
@@ -80,10 +76,6 @@ void Game::update(sf::Time delta)
   // Menu
   m_diceMenu->update(delta);
 
-  // unneeded
-  m_timer->update(delta);
-  m_dice->update(delta);
-
   // Last element
   m_debugBar->update(delta);
 }
@@ -97,10 +89,6 @@ void Game::draw()
 
   // Will be between
   m_window.draw(*m_diceMenu);
-
-  // unneeded
-  m_window.draw(*m_timer);
-  m_window.draw(*m_dice);
 
   // Will be last
   m_window.draw(*m_debugBar);

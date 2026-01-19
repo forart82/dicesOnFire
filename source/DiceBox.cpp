@@ -16,18 +16,19 @@ DiceBox::DiceBox(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor,
     : _BaseRectangle(position, size, fillColor, outlineColor, isActive)
 {
   // Timer
-  m_timer = std::make_unique<Timer>(
-      sf::Vector2f(position.x + 10, position.y + 110),
-      sf::Vector2f(580, 30),
-      COLOR_VIOLET_DARK_VIOLET,
-      COLOR_GRAYSCALE_BLACK,
-      sf::Vector2f(position.x + 10, position.y + 110),
-      sf::Vector2f(580, 30),
-      COLOR_GREEN_DARK_GREEN,
-      COLOR_GREEN_DARK_GREEN,
-      5,
-      cooldown,
-      true);
+  float
+      m_timer = std::make_unique<Timer>(
+          sf::Vector2f(position.x + 5.f, newY),
+          sf::Vector2f(m_size.x - 25.f, m_size.y * 0.12f),
+          COLOR_VIOLET_DARK_VIOLET,
+          COLOR_GRAYSCALE_BLACK,
+          sf::Vector2f(position.x, newY),
+          sf::Vector2f(m_size.x, m_size.y * 0.12f),
+          COLOR_GREEN_DARK_GREEN,
+          COLOR_GREEN_DARK_GREEN,
+          5,
+          cooldown,
+          true);
 }
 DiceBox::~DiceBox() {}
 

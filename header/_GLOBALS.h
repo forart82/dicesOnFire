@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <map>
 
 const int TILE_SIZE = 32;
 const int GLOBAL_SCREEN_WIDTH = 3840;
@@ -279,6 +280,17 @@ const sf::Color COLOR_TIMER_BACKGROUND = COLOR_VIOLET_DARK_VIOLET;
 const sf::Color COLOR_TIMER_PROGRESSBAR = COLOR_GREEN_DARK_GREEN;
 
 // Dice Color
+const std::map<int, sf::Color> COLORS_DICE_BOXES = {
+    {1, COLOR_RED_MILKY_ROSE},
+    {2, COLOR_GREEN_MILKY_LIME},
+    {3, COLOR_ORANGE_MILKY_PEACH},
+    {4, COLOR_BLUE_MILKY_DEEP_BLUE},
+    {5, COLOR_BROWN_MILKY_OCHRE},
+    {6, COLOR_VIOLET_MILKY_DARK_VIOLET},
+    {7, COLOR_RED_MILKY_SALMON},
+    {8, COLOR_BLUE_MILKY_ICE_COLD},
+};
+
 const std::vector<sf::Color> COLORS_DICE_ELEMENTS = {
     COLOR_RED_CRIMSON,
     COLOR_BLUE_ELECTRIC_BLUE,
