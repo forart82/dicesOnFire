@@ -8,12 +8,12 @@ Timer::Timer(float cooldown)
     : Timer(
           sf::Vector2f(1250.f, 1020.f),
           sf::Vector2f(500.f, 100.f),
-          COLOR_VIOLET_DARK_VIOLET,
+          COLOR_TIMER_BACKGROUND,
           COLOR_GRAYSCALE_BLACK,
           sf::Vector2f(1250.f, 1020.f),
           sf::Vector2f(500.f, 100.f),
-          COLOR_GREEN_DARK_GREEN,
-          COLOR_GREEN_DARK_GREEN,
+          COLOR_TIMER_PROGRESSBAR,
+          COLOR_GRAYSCALE_BLACK,
           5,
           cooldown,
           true)

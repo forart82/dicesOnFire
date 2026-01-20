@@ -12,7 +12,7 @@ _BaseRectangle::_BaseRectangle(sf::Vector2f position, sf::Vector2f size, sf::Col
 {
   m_shape.setPosition(m_position);
   m_shape.setSize(m_size);
-  m_shape.setOrigin({size.x / 2, size.y / 2});
+  m_shape.setOrigin(sf::Vector2f(size.x / 2.f, size.y / 2.f));
   m_shape.setFillColor(m_fillColor);
   m_shape.setOutlineColor(m_outlineColor);
   m_shape.setOutlineThickness(1);
@@ -46,7 +46,7 @@ void _BaseRectangle::setSize(sf::Vector2f size)
 {
   m_size = size;
   m_shape.setSize(m_size);
-  m_shape.setOrigin({m_size.x / 2, m_size.y / 2});
+  m_shape.setOrigin(sf::Vector2f(size.x / 2.f, size.y / 2.f));
 }
 
 void _BaseRectangle::setFillColor(sf::Color fillColor)
