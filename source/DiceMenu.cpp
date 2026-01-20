@@ -16,7 +16,7 @@ DiceMenu::DiceMenu()
 
 DiceMenu::DiceMenu(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor, bool isActive)
     : _BaseRectangle(position, size, fillColor, outlineColor, isActive),
-      m_diceBoxCounter(1)
+      m_diceBoxCounter(8)
 {
   makeDiceBoxes();
 }
@@ -39,7 +39,7 @@ void DiceMenu::makeDiceBox(int diceBoxNumber)
       COLORS_DICE_BOXES.at(diceBoxNumber),
       COLOR_GRAYSCALE_BLACK,
       true,
-      3);
+      300);
 }
 
 void DiceMenu::makeDiceBoxes()

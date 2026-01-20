@@ -4,7 +4,7 @@
 
 DebugWindow::DebugWindow()
 {
-  m_backgroundShape.setFillColor(COLOR_GRAYSCALE_DENSE_DARK_GRAY);
+  m_backgroundShape.setFillColor(COLOR_GRAYSCALE_MILKY_DARK_GRAY);
   m_backgroundShape.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
   m_backgroundShape.setPosition({0.f, 0.f});
 

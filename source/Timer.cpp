@@ -6,15 +6,15 @@
 
 Timer::Timer(float cooldown)
     : Timer(
-          {1250.f, 1020.f},
-          {500.f, 100.f},
+          sf::Vector2f(1250.f, 1020.f),
+          sf::Vector2f(500.f, 100.f),
           COLOR_VIOLET_DARK_VIOLET,
           COLOR_GRAYSCALE_BLACK,
-          {1250.f, 1020.f},
-          {500.f, 100.f},
+          sf::Vector2f(1250.f, 1020.f),
+          sf::Vector2f(500.f, 100.f),
           COLOR_GREEN_DARK_GREEN,
           COLOR_GREEN_DARK_GREEN,
-          28,
+          5,
           cooldown,
           true)
 {

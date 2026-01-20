@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "Dice.h"
 #include "_BaseRectangle.h"
+#include "WeaponSlot.h"
 
 class DiceBox : public _BaseRectangle
 {
@@ -12,6 +13,7 @@ class DiceBox : public _BaseRectangle
 private:
   std::map<int, Dice *> m_dices;
   std::unique_ptr<Timer> m_timer;
+  std::unique_ptr<WeaponSlot> m_weaponSlot;
 
 public:
   DiceBox();
