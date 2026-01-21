@@ -39,7 +39,8 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
       colors::COLORS_DICE_BOXES.at(weaponSlotNumber),
       colors::COLOR_GRAYSCALE_BLACK,
       true,
-      300);
+      300,
+      weaponSlotNumber);
 }
 
 void WeaponSlotsMenu::makeWeaponSlotes()

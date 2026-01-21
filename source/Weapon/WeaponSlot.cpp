@@ -10,13 +10,33 @@
 #include "Weapon/WeaponHelper.h"
 
 WeaponSlot::WeaponSlot()
-    : WeaponSlot({0.f, 0.f}, {600.f, 150.f}, colors::COLOR_RED_DENSE_HOT_PINK, colors::COLOR_GRAYSCALE_BLACK, true, 5)
+    : WeaponSlot(
+          sf::Vector2f(0.f, 0.f),
+          sf::Vector2f(600.f, 150.f),
+          colors::COLOR_RED_DENSE_HOT_PINK,
+          colors::COLOR_GRAYSCALE_BLACK,
+          true,
+          5,
+          1)
 {
 }
 
-WeaponSlot::WeaponSlot(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor,
-                       sf::Color outlineColor, bool isActive, float cooldown)
-    : _BaseRectangle(position, size, fillColor, outlineColor, isActive)
+WeaponSlot::WeaponSlot(
+    sf::Vector2f position,
+    sf::Vector2f size,
+    sf::Color fillColor,
+    sf::Color outlineColor,
+    bool isActive,
+    float cooldown,
+    int orderNumber)
+    : _BaseRectangle(
+          position,
+          size,
+          fillColor,
+          outlineColor,
+          isActive),
+      m_orderNumber(orderNumber)
+
 {
   float padding = 5.f;
   // Timer
@@ -36,21 +56,33 @@ WeaponSlot::WeaponSlot(sf::Vector2f position, sf::Vector2f size, sf::Color fillC
       padding,
       cooldown,
       true);
+  fakeDropWeaponInSlot();
+  m_bladedWeapon->setPosition(
+      sf::Vector2f(100.f, 100.f));
+  m_bladedWeapon->setSize(
+      sf::Vector2f(100.f, 100.f));
+  m_bladedWeapon->setColors(
+      colors::COLOR_BLUE_CLOUDY_DEEP_BLUE,
+      colors::COLOR_GRAYSCALE_DEEP_CHARCOAL);
+  m_bladedWeapon->setNumberOfSlots(2);
+  m_bladedWeapon->setActive(true);
 }
 WeaponSlot::~WeaponSlot() {}
 
 void WeaponSlot::update(sf::Time &delta)
 {
   m_timer->update(delta);
+  m_bladedWeapon->update(delta);
 }
 
 void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   _BaseRectangle::draw(target, states);
   target.draw(*m_timer);
+  target.draw(*m_bladedWeapon);
 }
 
-void WeaponSlot::fakeDropWeapon()
+void WeaponSlot::fakeDropWeaponInSlot()
 {
   m_bladedWeapon = CREATE_BLADEDWEAPON();
 }

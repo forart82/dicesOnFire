@@ -14,7 +14,12 @@ private:
 
 public:
   WeaponSlotsMenu();
-  WeaponSlotsMenu(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor, bool isActive);
+  WeaponSlotsMenu(
+      sf::Vector2f position,
+      sf::Vector2f size,
+      sf::Color fillColor,
+      sf::Color outlineColor,
+      bool isActive);
   ~WeaponSlotsMenu();
 
   void update(sf::Time &delta);
