@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include "Timer.h"
-#include "Dice/Dice.h"
+#include "Dice/DiceSlot.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/BladedWeapon.h"
 #include "Form/_BaseRectangle.h"
@@ -12,9 +12,8 @@ class WeaponSlot : public _BaseRectangle
 {
 
 private:
-  std::map<int, Dice *> m_dices;
   std::unique_ptr<Timer> m_timer;
-  std::unique_ptr<BladedWeapon> m_weapon;
+  std::unique_ptr<BladedWeapon> m_bladedWeapon;
 
 public:
   WeaponSlot();
@@ -24,7 +23,5 @@ public:
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void placeDiceInSlot(int slotNumber, Dice *dice);
-  void setTimerCooldown(float cooldown);
   void fakeDropWeapon();
 };

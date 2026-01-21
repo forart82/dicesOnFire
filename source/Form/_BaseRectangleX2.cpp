@@ -1,11 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "Form/_BaseRectangleX2.h"
 #include "_GLOBALS.h"
+#include "_COLORS.h"
 
 _BaseRectangleX2::_BaseRectangleX2()
     : _BaseRectangleX2(
-          sf::Vector2f(200, 1000), sf::Vector2f(300, 50), COLOR_RED_MILKY_ROSE, COLOR_GRAYSCALE_BLACK,
-          sf::Vector2f(200, 1000), sf::Vector2f(300, 50), COLOR_GREEN_DARK_GREEN, COLOR_GREEN_DARK_GREEN,
+          sf::Vector2f(200, 1000), sf::Vector2f(300, 50), colors::COLOR_RED_MILKY_ROSE, colors::COLOR_GRAYSCALE_BLACK,
+          sf::Vector2f(200, 1000), sf::Vector2f(300, 50), colors::COLOR_GREEN_DARK_GREEN, colors::COLOR_GREEN_DARK_GREEN,
           5, true)
 {
 }

@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "Form/_BaseRectangle.h"
 #include "_GLOBALS.h"
+#include "_COLORS.h"
 
 _BaseRectangle::_BaseRectangle()
-    : _BaseRectangle(sf::Vector2f(100, 100), sf::Vector2f(300, 50), COLOR_RED_DENSE_ROSE, COLOR_GRAYSCALE_BLACK, true)
+    : _BaseRectangle(sf::Vector2f(100, 100), sf::Vector2f(300, 50), colors::COLOR_RED_DENSE_ROSE, colors::COLOR_GRAYSCALE_BLACK, true)
 {
 }
 _BaseRectangle::_BaseRectangle(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor, bool isActive)

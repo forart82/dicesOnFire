@@ -2,14 +2,14 @@
 #include <iostream>
 #include "Weapon/WeaponSlotsMenu.h"
 #include "Form/_BaseRectangle.h"
-#include "_GLOBALS.h"
+#include "_COLORS.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
     : WeaponSlotsMenu(
           sf::Vector2f(384.f, 742.5f),
           sf::Vector2f(768.f, 1485.f),
-          COLOR_BLUE_CLOUDY_CLEAR_BLUE,
-          COLOR_GRAYSCALE_BLACK,
+          colors::COLOR_BLUE_CLOUDY_CLEAR_BLUE,
+          colors::COLOR_GRAYSCALE_BLACK,
           true)
 {
 }
@@ -36,8 +36,8 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
       sf::Vector2f(paddingLeft + width / 2, paddingTop + (height / 2) + (height * (index)) + (paddingTop * (index))),
       sf::Vector2f(width, height),
-      COLORS_DICE_BOXES.at(weaponSlotNumber),
-      COLOR_GRAYSCALE_BLACK,
+      colors::COLORS_DICE_BOXES.at(weaponSlotNumber),
+      colors::COLOR_GRAYSCALE_BLACK,
       true,
       300);
 }

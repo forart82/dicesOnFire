@@ -4,11 +4,12 @@
 #include "Timer.h"
 #include "GameText.h"
 #include "_GLOBALS.h"
+#include "_COLORS.h"
 #include "_HELPERS.h"
 #include "Form/_BaseCircle.h"
 
 Dice::Dice()
-    : Dice(sf::Vector2f(1000, 1000), 50, COLOR_BLUE_CLOUDY_AQUA, COLOR_GREEN_DARK_GREEN, 4, 1, 2)
+    : Dice(sf::Vector2f(1000, 1000), 50, colors::COLOR_BLUE_CLOUDY_AQUA, colors::COLOR_GREEN_DARK_GREEN, 4, 1, 2)
 {
 }
 
@@ -22,12 +23,12 @@ Dice::Dice(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color o
       m_timer(
           {position.x, position.y + radius * 2 + 5.f},
           {radius * 2, 20.f},
-          COLOR_TIMER_BACKGROUND,
-          COLOR_GRAYSCALE_BLACK,
+          colors::COLOR_TIMER_BACKGROUND,
+          colors::COLOR_GRAYSCALE_BLACK,
           {position.x, position.y + radius * 2 + 5.f},
           {radius * 2, 20.f},
-          COLOR_TIMER_PROGRESSBAR,
-          COLOR_GRAYSCALE_BLACK,
+          colors::COLOR_TIMER_PROGRESSBAR,
+          colors::COLOR_GRAYSCALE_BLACK,
           2,
           cooldown,
           true),
@@ -44,7 +45,7 @@ Dice::Dice(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color o
   setFaces(m_faces);
 
   // GameText
-  m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(m_position.x + m_radius / 2, m_position.y + m_radius / 2 - 20.f), COLOR_BLUE_AQUA, "Quantico");
+  m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(m_position.x + m_radius / 2, m_position.y + m_radius / 2 - 20.f), colors::COLOR_BLUE_AQUA, "Quantico");
   m_diceValueText->setFontSize(63);
 
   // Timer

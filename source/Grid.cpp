@@ -3,6 +3,7 @@
 #include "Grid.h"
 #include "_GLOBALS.h"
 #include "_HELPERS.h"
+#include "_COLORS.h"
 
 Grid::Grid()
 {
@@ -25,7 +26,7 @@ void Grid::createStartZone()
       // Get a pointer to the first vertex of the current quad
       sf::Vertex *triangels = &vertices[cellCounter * 6];
       // Use emplace_back to construct the Cell in-place
-      cells.emplace_back(triangels, sf::Vector2f(width, height), COLOR_GRAYSCALE_BLACK);
+      cells.emplace_back(triangels, sf::Vector2f(width, height), colors::COLOR_GRAYSCALE_BLACK);
       cellCounter++;
     }
   }

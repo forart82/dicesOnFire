@@ -1,16 +1,43 @@
 #include <SFML/Graphics.hpp>
 #include "Weapon/_BaseWeapon.h"
+#include "_COLORS.h"
 
 _BaseWeapon::_BaseWeapon()
-    : _BaseWeapon(7, 2) {}
+    : _BaseWeapon(
+          sf::Vector2f(100.f, 100.f),
+          sf::Vector2f(100.f, 100.f),
+          colors::COLOR_BLUE_AQUA,
+          colors::COLOR_BLUE_CLOUDY_AQUA,
+          true,
+          5,
+          7,
+          2)
+{
+}
 
-_BaseWeapon::_BaseWeapon(int damage, int numberOfSlots)
-    : m_damage(damage), m_numberOfSlots(numberOfSlots)
+_BaseWeapon::_BaseWeapon(
+    sf::Vector2f position,
+    sf::Vector2f size,
+    sf::Color fillColor,
+    sf::Color outlineColor,
+    bool isActive,
+    float cooldown,
+    int damage,
+    int numberOfSlots)
+    : _BaseRectangle(
+          position,
+          size,
+          fillColor,
+          outlineColor,
+          isActive),
+      m_damage(damage),
+      m_numberOfSlots(numberOfSlots)
 {
 }
 
 void _BaseWeapon::update(sf::Time &delta)
 {
+  _BaseRectangle::update(delta);
   for (const auto &[key, diceSlot] : m_diceSlots)
   {
     diceSlot->update(delta);
@@ -19,6 +46,7 @@ void _BaseWeapon::update(sf::Time &delta)
 
 void _BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+  _BaseRectangle::draw(target, states);
   for (const auto &[key, diceSlot] : m_diceSlots)
   {
     target.draw(*diceSlot);

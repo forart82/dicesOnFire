@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "Form/_BaseCircle.h"
 #include "_GLOBALS.h"
+#include "_COLORS.h"
 
 _BaseCircle::_BaseCircle()
-    : _BaseCircle(sf::Vector2f(100, 100), 50, COLOR_RED_DENSE_ROSE, COLOR_GRAYSCALE_BLACK, true)
+    : _BaseCircle(sf::Vector2f(100, 100), 50, colors::COLOR_RED_DENSE_ROSE, colors::COLOR_GRAYSCALE_BLACK, true)
 {
 }
 _BaseCircle::_BaseCircle(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color outlineColor, bool isActive)

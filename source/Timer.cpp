@@ -3,17 +3,18 @@
 #include "Timer.h"
 #include "Form/_BaseRectangleX2.h"
 #include "_GLOBALS.h"
+#include "_COLORS.h"
 
 Timer::Timer(float cooldown)
     : Timer(
           sf::Vector2f(1250.f, 1020.f),
           sf::Vector2f(500.f, 100.f),
-          COLOR_TIMER_BACKGROUND,
-          COLOR_GRAYSCALE_BLACK,
+          colors::COLOR_TIMER_BACKGROUND,
+          colors::COLOR_GRAYSCALE_BLACK,
           sf::Vector2f(1250.f, 1020.f),
           sf::Vector2f(500.f, 100.f),
-          COLOR_TIMER_PROGRESSBAR,
-          COLOR_GRAYSCALE_BLACK,
+          colors::COLOR_TIMER_PROGRESSBAR,
+          colors::COLOR_GRAYSCALE_BLACK,
           5,
           cooldown,
           true)
