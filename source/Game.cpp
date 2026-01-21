@@ -1,15 +1,15 @@
-#include "../header/Game.h"
-#include "../header/DebugBar.h"
-#include "../header/_GLOBALS.h"
-#include "../header/Grid.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <random>
+#include "Game.h"
+#include "DebugBar.h"
+#include "Grid.h"
+#include "_GLOBALS.h"
 
 Game::Game() : m_rng(std::random_device{}())
 {
   m_debugBar = std::make_unique<DebugBar>();
-  m_diceMenu = std::make_unique<DiceMenu>();
+  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
 
   m_window.setVerticalSyncEnabled(true);
   std::cout << "Game created" << std::endl;
@@ -74,7 +74,7 @@ void Game::run()
 void Game::update(sf::Time delta)
 {
   // Menu
-  m_diceMenu->update(delta);
+  m_weaponSlotsMenu->update(delta);
 
   // Last element
   m_debugBar->update(delta);
@@ -88,7 +88,7 @@ void Game::draw()
   m_window.setView(m_mainView);
 
   // Will be between
-  m_window.draw(*m_diceMenu);
+  m_window.draw(*m_weaponSlotsMenu);
 
   // Will be last
   m_window.draw(*m_debugBar);

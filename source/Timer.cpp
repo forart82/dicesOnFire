@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../header/Timer.h"
-#include "../header/_GLOBALS.h"
-#include "../header/_BaseRectangleX2.h"
+#include "Timer.h"
+#include "Form/_BaseRectangleX2.h"
+#include "_GLOBALS.h"
 
 Timer::Timer(float cooldown)
     : Timer(

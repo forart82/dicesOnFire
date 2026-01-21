@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Dice.h"
+#include "Dice/Dice.h"
 #include "_HELPERS.h"
 
 class DiceHelper

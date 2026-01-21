@@ -5,11 +5,11 @@
 #include "DebugBar.h"
 #include "GameText.h"
 #include "Timer.h"
-#include "Dice.h"
 #include "Grid.h"
 #include "_GLOBALS.h"
-#include "DiceBox.h"
-#include "DiceMenu.h"
+#include "Dice/Dice.h"
+#include "Weapon/WeaponSlot.h"
+#include "Weapon/WeaponSlotsMenu.h"
 
 class Game
 {
@@ -28,7 +28,7 @@ private:
 
   // Entity elements
   std::unique_ptr<DebugBar> m_debugBar;
-  std::unique_ptr<DiceMenu> m_diceMenu;
+  std::unique_ptr<WeaponSlotsMenu> m_weaponSlotsMenu;
 
   std::mt19937 m_rng;
 

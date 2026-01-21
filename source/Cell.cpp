@@ -1,8 +1,8 @@
-#include "../header/Cell.h"
 #include <SFML/Graphics.hpp>
-#include "../header/_GLOBALS.h"
-#include "../header/_HELPERS.h"
 #include <iostream>
+#include "Cell.h"
+#include "_GLOBALS.h"
+#include "_HELPERS.h"
 
 using namespace std;
 

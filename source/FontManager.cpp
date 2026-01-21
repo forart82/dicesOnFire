@@ -1,4 +1,4 @@
-#include "../header/FontManager.h"
+#include "FontManager.h"
 
 std::map<std::string, sf::Font> FontManager::s_fonts;
 

@@ -1,5 +1,5 @@
-#include "../header/DebugBar.h"
 #include <iostream>
+#include "DebugBar.h"
 
 DebugBar::DebugBar() : m_isActive(false)
 {

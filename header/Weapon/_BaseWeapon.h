@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
-#include "DiceSlot.h"
+#include "Dice/DiceSlot.h"
 
-class _BaseWeapon : sf::Drawable
+class _BaseWeapon : public sf::Drawable
 {
 protected:
   int m_damage;

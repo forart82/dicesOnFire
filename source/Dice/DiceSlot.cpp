@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "../header/DiceSlot.h"
-#include "../header/_BaseCircle.h"
+#include "Dice/DiceSlot.h"
+#include "Form/_BaseCircle.h"
 
 DiceSlot::DiceSlot()
     : _BaseCircle()

@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "../header/_BaseRectangleX2.h"
-#include "../header/_GLOBALS.h"
+#include "Form/_BaseRectangleX2.h"
+#include "_GLOBALS.h"
 
 _BaseRectangleX2::_BaseRectangleX2()
     : _BaseRectangleX2(
@@ -22,7 +22,7 @@ _BaseRectangleX2::_BaseRectangleX2(
   m_outerShape.setOrigin({m_outerSize.x / 2.f, m_outerSize.y / 2.f});
   m_outerShape.setFillColor(m_outerFillColor);
   m_outerShape.setOutlineColor(m_outerOutlineColor);
-  m_outerShape.setOutlineThickness(1);
+  m_outerShape.setOutlineThickness(2);
 
   // m_innerShape.setPosition({m_innerPosition.x + m_innerPadding, m_innerPosition.y + m_innerPadding});
   m_innerShape.setPosition(m_outerPosition);
@@ -30,7 +30,7 @@ _BaseRectangleX2::_BaseRectangleX2(
   m_innerShape.setOrigin({(m_outerSize.x - m_innerPadding * 2) / 2.f, (m_outerSize.y - m_innerPadding * 2) / 2.f});
   m_innerShape.setFillColor(m_innerFillColor);
   m_innerShape.setOutlineColor(m_innerOutlineColor);
-  m_innerShape.setOutlineThickness(1);
+  m_innerShape.setOutlineThickness(2);
 }
 
 _BaseRectangleX2::~_BaseRectangleX2()

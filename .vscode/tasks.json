@@ -8,7 +8,12 @@
         "-fdiagnostics-color=always",
         "-g",
         "${workspaceFolder}\\main.cpp",
-        "${workspaceFolder}\\source\\**",
+        "${workspaceFolder}/source/*.cpp",
+        "${workspaceFolder}/source/Dice/*.cpp",
+        "${workspaceFolder}/source/Form/*.cpp",
+        "${workspaceFolder}/source/Weapon/*.cpp",
+        "-I",
+        "${workspaceFolder}\\header",
         "-o",
         "${workspaceFolder}\\game.exe", // Output executable in the root folder
         "-lsfml-graphics",

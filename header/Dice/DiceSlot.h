@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "_BaseCircle.h"
+#include "Form/_BaseCircle.h"
 
 class DiceSlot : public _BaseCircle
 {

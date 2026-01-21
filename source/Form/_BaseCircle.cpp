@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "../header/_BaseCircle.h"
-#include "../header/_GLOBALS.h"
+#include "Form/_BaseCircle.h"
+#include "_GLOBALS.h"
 
 _BaseCircle::_BaseCircle()
     : _BaseCircle(sf::Vector2f(100, 100), 50, COLOR_RED_DENSE_ROSE, COLOR_GRAYSCALE_BLACK, true)
@@ -15,7 +15,7 @@ _BaseCircle::_BaseCircle(sf::Vector2f position, float radius, sf::Color fillColo
   m_shape.setOrigin({m_radius, m_radius});
   m_shape.setFillColor(m_fillColor);
   m_shape.setOutlineColor(m_outlineColor);
-  m_shape.setOutlineThickness(1);
+  m_shape.setOutlineThickness(2);
 }
 
 _BaseCircle::~_BaseCircle()

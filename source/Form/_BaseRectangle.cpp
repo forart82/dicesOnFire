@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
-#include "../header/_BaseRectangle.h"
-#include "../header/_GLOBALS.h"
+#include "Form/_BaseRectangle.h"
+#include "_GLOBALS.h"
 
 _BaseRectangle::_BaseRectangle()
     : _BaseRectangle(sf::Vector2f(100, 100), sf::Vector2f(300, 50), COLOR_RED_DENSE_ROSE, COLOR_GRAYSCALE_BLACK, true)
@@ -15,7 +15,7 @@ _BaseRectangle::_BaseRectangle(sf::Vector2f position, sf::Vector2f size, sf::Col
   m_shape.setOrigin(sf::Vector2f(size.x / 2.f, size.y / 2.f));
   m_shape.setFillColor(m_fillColor);
   m_shape.setOutlineColor(m_outlineColor);
-  m_shape.setOutlineThickness(1);
+  m_shape.setOutlineThickness(2);
 }
 
 _BaseRectangle::~_BaseRectangle()

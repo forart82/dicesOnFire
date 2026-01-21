@@ -1,21 +1,21 @@
 #include <SFML/Graphics.hpp>
-#include "../header/Sword.h"
-#include "../header/_BaseWeapon.h"
+#include "Weapon/Sword.h"
+#include "Weapon/BladedWeapon.h"
 
 Sword::Sword()
     : Sword(7, 2) {}
 
 Sword::Sword(int damage, int numberOfSlots)
-    : _BaseWeapon(damage, numberOfSlots) {}
+    : BladedWeapon(damage, numberOfSlots) {}
 
 Sword::~Sword() {};
 
 void Sword::update(sf::Time &delta)
 {
-  _BaseWeapon::update(delta);
+  BladedWeapon::update(delta);
 }
 
 void Sword::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  _BaseWeapon::draw(target, states);
+  BladedWeapon::draw(target, states);
 }

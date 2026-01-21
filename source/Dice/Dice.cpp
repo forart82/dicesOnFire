@@ -1,11 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../header/Dice.h"
-#include "../header/Timer.h"
-#include "../header/GameText.h"
-#include "../header/_GLOBALS.h"
-#include "../header/_HELPERS.h"
-#include "../header/_BaseCircle.h"
+#include "Dice/Dice.h"
+#include "Timer.h"
+#include "GameText.h"
+#include "_GLOBALS.h"
+#include "_HELPERS.h"
+#include "Form/_BaseCircle.h"
 
 Dice::Dice()
     : Dice(sf::Vector2f(1000, 1000), 50, COLOR_BLUE_CLOUDY_AQUA, COLOR_GREEN_DARK_GREEN, 4, 1, 2)

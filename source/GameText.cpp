@@ -1,6 +1,6 @@
-#include "../header/GameText.h"
-#include "../header/_GLOBALS.h"
-#include "../header/FontManager.h"
+#include "GameText.h"
+#include "FontManager.h"
+#include "_GLOBALS.h"
 
 GameText::GameText() : GameText("", "", {10, 10}, COLOR_BLUE_SKY_BLUE, "Quantico")
 {

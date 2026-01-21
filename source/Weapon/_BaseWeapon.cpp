@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "../header/_BaseWeapon.h"
+#include "Weapon/_BaseWeapon.h"
 
 _BaseWeapon::_BaseWeapon()
     : _BaseWeapon(7, 2) {}

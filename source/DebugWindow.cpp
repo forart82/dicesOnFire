@@ -1,6 +1,6 @@
-#include "../header/DebugWindow.h"
-#include "../header/_GLOBALS.h"
 #include <SFML/Graphics.hpp>
+#include "DebugWindow.h"
+#include "_GLOBALS.h"
 
 DebugWindow::DebugWindow()
 {

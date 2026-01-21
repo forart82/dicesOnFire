@@ -1,8 +1,8 @@
-#include "../header/Grid.h"
-#include "../header/_GLOBALS.h"
-#include "../header/_HELPERS.h"
-#include <iostream>
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "Grid.h"
+#include "_GLOBALS.h"
+#include "_HELPERS.h"
 
 Grid::Grid()
 {

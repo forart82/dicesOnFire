@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "_BaseWeapon.h"
+#include "Weapon/BladedWeapon.h"
 
-class Sword : public _BaseWeapon
+class Sword : public BladedWeapon
 {
 
 private:
