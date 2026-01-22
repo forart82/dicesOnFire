@@ -1,9 +1,11 @@
-#include "./header/Game.h"
-#include "./header/FontManager.h"
+#include "Game.h"
+#include "FontManager.h"
+#include "ConfigManager.h"
 
 int main()
 {
 
+  config::load("./configs/gui.config");
   FontManager::load("arial", "assets/fonts/arial.ttf");
   FontManager::load("Pm", "assets/fonts/PermanentMarker-Regular.ttf");
   FontManager::load("Quantico", "assets/fonts/Quantico-Regular.ttf");

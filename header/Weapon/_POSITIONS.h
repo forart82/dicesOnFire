@@ -1,5 +1,5 @@
 #ifndef _POSITIONS_H
-#define _COLORS_H
+#define _POSITIONS_H
 
 #include <SFML/Graphics.hpp>
 #include <map>

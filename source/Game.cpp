@@ -5,6 +5,7 @@
 #include "DebugBar.h"
 #include "Grid.h"
 #include "_GLOBALS.h"
+#include "ConfigManager.h"
 
 Game::Game() : m_rng(std::random_device{}())
 {
@@ -52,6 +53,11 @@ void Game::run()
         case sf::Keyboard::Scancode::O:
           m_debugBar->toggleActive();
           break;
+        case sf::Keyboard::Scancode::Comma:
+          std::cout << "Comma" << std::endl;
+          config::reload();
+          m_weaponSlotsMenu.reset();
+          m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
         default:
           break;
         }

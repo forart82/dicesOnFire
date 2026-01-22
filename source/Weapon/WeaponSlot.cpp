@@ -8,6 +8,7 @@
 #include "Form/_BaseRectangle.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/WeaponHelper.h"
+#include "ConfigManager.h"
 
 WeaponSlot::WeaponSlot()
     : WeaponSlot(
@@ -38,16 +39,17 @@ WeaponSlot::WeaponSlot(
       m_orderNumber(orderNumber)
 
 {
+  std::cout << " some position " << config::getKey("WEAPONSLOT_1_POSITION").x << " " << config::getKey("WEAPONSLOT_1_POSITION").y << std::endl;
+
   float padding = 5.f;
   // Timer
   float timerPaddingTop = 70.f;
   float timerWidth = 748.f;
   float timerHeight = 30.f;
-  std::cout << position.y << std::endl;
   m_timer = std::make_unique<Timer>(
-      sf::Vector2f(position.x, position.y + timerPaddingTop),
+      sf::Vector2f(config::getKey("WEAPONSLOT_8_POSITION")),
       sf::Vector2f(timerWidth, timerHeight),
-      colors::COLOR_TIMER_BACKGROUND,
+      colors::COLOR_BLUE_AQUA,
       colors::COLOR_GRAYSCALE_BLACK,
       sf::Vector2f(position.x, position.y + timerPaddingTop),
       sf::Vector2f(timerWidth, timerHeight),

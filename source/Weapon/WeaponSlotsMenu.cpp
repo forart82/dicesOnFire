@@ -3,12 +3,13 @@
 #include "Weapon/WeaponSlotsMenu.h"
 #include "Form/_BaseRectangle.h"
 #include "_COLORS.h"
+#include "ConfigManager.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
     : WeaponSlotsMenu(
-          sf::Vector2f(384.f, 742.5f),
-          sf::Vector2f(768.f, 1485.f),
-          colors::COLOR_BLUE_CLOUDY_CLEAR_BLUE,
+          sf::Vector2f(config::getKey("WEAPONSLOTSMENU_POSITION")),
+          sf::Vector2f(config::getKey("WEAPONSLOTSMENU_SIZE")),
+          colors::COLOR_BLUE_CLOUDY_AQUA,
           colors::COLOR_GRAYSCALE_BLACK,
           true)
 {
@@ -27,15 +28,12 @@ WeaponSlotsMenu::~WeaponSlotsMenu()
 
 void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
 {
-
-  float paddingLeft = 5.f;
-  float paddingTop = 5.f;
-  float width = 758.f;
-  float height = 180.f;
   float index = weaponSlotNumber - 1;
+  std::string positionString = "WEAPONSLOT_" + std::to_string(weaponSlotNumber) + "_POSITION";
+  std::string sizeString = "WEAPONSLOT_" + std::to_string(weaponSlotNumber) + "_SIZE";
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
-      sf::Vector2f(paddingLeft + width / 2, paddingTop + (height / 2) + (height * (index)) + (paddingTop * (index))),
-      sf::Vector2f(width, height),
+      sf::Vector2f(config::getKey(positionString)),
+      sf::Vector2f(config::getKey(sizeString)),
       colors::COLORS_DICE_BOXES.at(weaponSlotNumber),
       colors::COLOR_GRAYSCALE_BLACK,
       true,

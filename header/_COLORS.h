@@ -272,14 +272,14 @@ namespace colors
 
     // Dice Color
     inline const std::map<int, sf::Color> COLORS_DICE_BOXES = {
-        {1, COLOR_GRAYSCALE_SILVER},
-        {2, COLOR_GRAYSCALE_SILVER},
-        {3, COLOR_GRAYSCALE_SILVER},
-        {4, COLOR_GRAYSCALE_SILVER},
-        {5, COLOR_GRAYSCALE_SILVER},
-        {6, COLOR_GRAYSCALE_SILVER},
-        {7, COLOR_GRAYSCALE_SILVER},
-        {8, COLOR_GRAYSCALE_SILVER}};
+        {1, COLOR_RED_CRIMSON},
+        {2, COLOR_BLUE_AQUA},
+        {3, COLOR_GREEN_DARK_GREEN},
+        {4, COLOR_ORANGE_AMBER},
+        {5, COLOR_VIOLET_PURPLE},
+        {6, COLOR_BROWN_BROWN},
+        {7, COLOR_RED_BURGUNDY},
+        {8, COLOR_BLUE_CLEAR_BLUE}};
 
     inline const std::vector<sf::Color> COLORS_DICE_ELEMENTS = {
         COLOR_RED_CRIMSON,
