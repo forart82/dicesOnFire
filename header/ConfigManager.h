@@ -64,19 +64,18 @@ namespace config
         int b = std::stof(b_str);
         int a = std::stof(a_str);
         m_gui[key] = {
-          sf::Vector2f(x, y);
+                         sf::Vector2f(x, y),
+                         sf::Vector2f} std::cout
+                     << key << " " << x << " " << y << std::endl;
       }
-      std::cout << key << " " << x << " " << y << std::endl;
     }
+
+    file.close();
+    return true;
   }
 
-  file.close();
-  return true;
-}
-
-inline void reload()
-{
-  load(m_fileName);
-}
-}
-;
+  inline void reload()
+  {
+    load(m_fileName);
+  }
+};
