@@ -1,166 +1,141 @@
+#ifndef CONFIG_MANAGER_H
+#define CONFIG_MANAGER_H
+
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 namespace config
 {
-
-  struct Rectangle
-  {
-    sf::Vector2f position;
-    sf::Vector2f size;
-    sf::Color innerColor;
-    sf::Color outerColor;
-    int thickness;
-  };
-
-  struct Circle 
-  {
-    sf:: Vector2F position;
-    float radius;
-    sf::Color innerColor;
-    sf::Color outerColor;
-    int thickness;
-  }
-  
-  inline std::string m_fileName;
-
-  inline std::map<std::string, Rectangle> m_rectangle;
-  inline std::map<std::string, Circle> m_circle;
- 
-  inline std:: m_form = "";
-
-  inline const Rectangle DEFAULT_RECTANGLE = {
-      {0.f, 0.f},
-      {0.f, 0.f},
-      sf::Color::Red,
-      sf::Color::Black,
-      2
-  }
-  inline const Circle DEFAULT_CIRCLE = {
-      {0.f, 0.f},
-      0,
-      sf::Color::Red,
-      sf::Color::Black,
-      2
-  }
-
-  inline Rectangle getRectangle(std::string key)
-  {
-    auto it = m_rectangle.find(key);
-    if (it != m_rectangle.end())
+    struct Rectangle
     {
-      return it->second;
-    }
-    return DEFAULT_RECTANGLE;
-  }
+        sf::Vector2f position;
+        sf::Vector2f size;
+        sf::Color innerColor;
+        sf::Color outerColor;
+        float thickness;
+    };
 
-  inline Circle getCircle(std::string key)
-  {
-    auto it = m_circle.find(key);
-    if (it != m_circle.end())
+    struct RecatangleX2
     {
-      return it->second;
-    }
-    return DEFAULT_CIRCLE;
-  }
-
-  inline bool load(std::string fileName)
-  {
-    m_fileName = fileName;
-    std::ifstream file(fileName);
-    if (!file.is_open())
-    {
-      std::cerr << "Erreur : Impossible d'ouvrir " << fileName << std::endl;
-      return false;
+        Rectangle outer;
+        Rectangle inner;
     }
 
-    std::string line;
-    while (std::getline(file, line))
+    struct Circle 
     {
-      std::stringstream ss(line);
-      std::string key = std::getline(ss, key, ';');
+        sf::Vector2f position;
+        float radius;
+        sf::Color innerColor;
+        sf::Color outerColor;
+        float thickness;
+    };
 
-      if(m_form=="RECTANGLE"){
-        makeRectangle(key, ss);
-      }
+    // Data Storage
+    inline std::string m_fileName;
+    inline std::map<std::string, Rectangle> m_rectangle;
+    inline std::map<std::string, Circle> m_circle;
+    inline std::string m_form = "";
 
-      m_form=key;
+    // Default Values
+    inline const Rectangle DEFAULT_RECTANGLE = { {0.f, 0.f}, {0.f, 0.f}, sf::Color::Red, sf::Color::Black, 2.0f };
+    inline const Circle DEFAULT_CIRCLE = { {0.f, 0.f}, 0.f, sf::Color::Red, sf::Color::Black, 2.0f };
+
+    // Getters
+    inline Rectangle getRectangle(const std::string& key)
+    {
+        auto it = m_rectangle.find(key);
+        return (it != m_rectangle.end()) ? it->second : DEFAULT_RECTANGLE;
     }
 
-    file.close();
-    return true;
-  }
+    inline Circle getCircle(const std::string& key)
+    {
+        auto it = m_circle.find(key);
+        return (it != m_circle.end()) ? it->second : DEFAULT_CIRCLE;
+    }
 
-  inline makeRectangle(
-    std::string key, 
-    std::stringstream ss)
-  {
-      std::string 
-        x_str, 
-        y_str, 
-        width_str,
-        height_str,
-        r1_str, 
-        g1_str, 
-        b1_str, 
-        a1_str,
-        r2_str, 
-        g2_str, 
-        b2_str, 
-        a2_str,
-        thickness_str;
-       
-      std::getline(ss, x_str, ';');
-      std::getline(ss, y_str, ';');
-      std::getline(ss, width_str, ';');
-      std::getline(ss, height_str, ';');
-      std::getline(ss, r1_str, ';');
-      std::getline(ss, g1_str, ';');
-      std::getline(ss, b1_str, ';');
-      std::getline(ss, a1_str, ';');
-      std::getline(ss, r2_str, ';');
-      std::getline(ss, g2_str, ';');
-      std::getline(ss, b2_str, ';');
-      std::getline(ss, a2_str, ';');
-      std::getline(ss, thickness_str, ';');
- 
+    // Helper to safely parse strings to float/int
+    inline float toF(const std::string& s) { return s.empty() ? 0.f : std::stof(s); }
+    inline sf::Uint8 toU8(const std::string& s) { return s.empty() ? 0 : static_cast<sf::Uint8>(std::stoi(s)); }
 
-      if ( 
-         !key.empty() && 
-         !x_str.empty() && 
-         !y_str.empty() &&
-         !widthv_str.empty() &&
-         !r_str.empty() && 
-         !g_str.empty() && 
-         !b_str.empty() && 
-         !a_str.empty() &&
-         !r_str.empty() &&
-         !r_str.empty() &&
-         !r_str.empty() &&
-         !r_str.empty() &&
-         !r_str.empty())
-      {
-        float x = std::stof(x_str);
-        float y = std::stof(y_str);
-        float width = std::stof(width_str);
-        float height std::stof(height_dtr);
-        int r = std::stof(r_str);
-        int g = std::stof(g_str);
-        int b = std::stof(b_str);
-        int a = std::stof(a_str);
+    inline void parseRectangle(std::stringstream& ss, const std::string& key)
+    {
+        std::string x, y, w, h, r1, g1, b1, a1, r2, g2, b2, a2, t;
+        
+        std::getline(ss, x, ';'); std::getline(ss, y, ';');
+        std::getline(ss, w, ';'); std::getline(ss, h, ';');
+        std::getline(ss, r1, ';'); std::getline(ss, g1, ';'); std::getline(ss, b1, ';'); std::getline(ss, a1, ';');
+        std::getline(ss, r2, ';'); std::getline(ss, g2, ';'); std::getline(ss, b2, ';'); std::getline(ss, a2, ';');
+        std::getline(ss, t, ';');
+
         m_rectangle[key] = {
-          sf::Vector2f(x, y),
-          sf::Vector2f(width, height),
-          
+            {toF(x), toF(y)},
+            {toF(w), toF(h)},
+            {toU8(r1), toU8(g1), toU8(b1), toU8(a1)},
+            {toU8(r2), toU8(g2), toU8(b2), toU8(a2)},
+            toF(t)
+        };
+    }
 
-  }
+    inline void parseCircle(std::stringstream& ss, const std::string& key)
+    {
+        std::string x, y, rad, r1, g1, b1, a1, r2, g2, b2, a2, t;
+        
+        std::getline(ss, x, ';'); std::getline(ss, y, ';');
+        std::getline(ss, rad, ';');
+        std::getline(ss, r1, ';'); std::getline(ss, g1, ';'); std::getline(ss, b1, ';'); std::getline(ss, a1, ';');
+        std::getline(ss, r2, ';'); std::getline(ss, g2, ';'); std::getline(ss, b2, ';'); std::getline(ss, a2, ';');
+        std::getline(ss, t, ';');
 
-  inline void reload()
-  {
-    load(m_fileName);
-  }
-};
+        m_circle[key] = {
+            {toF(x), toF(y)},
+            toF(rad),
+            {toU8(r1), toU8(g1), toU8(b1), toU8(a1)},
+            {toU8(r2), toU8(g2), toU8(b2), toU8(a2)},
+            toF(t)
+        };
+    }
+
+    inline bool load(const std::string& fileName)
+    {
+        m_fileName = fileName;
+        std::ifstream file(fileName);
+        if (!file.is_open()) return false;
+
+        // Clear existing data for a fresh load
+        m_rectangle.clear();
+        m_circle.clear();
+        m_form = "";
+
+        std::string line;
+        while (std::getline(file, line))
+        {
+            if (line.empty() || line[0] == '#') continue;
+
+            std::stringstream ss(line);
+            std::string firstToken;
+            std::getline(ss, firstToken, ';');
+
+            // Logic: If the line starts with RECTANGLE or CIRCLE, change the mode
+            if (firstToken == "RECTANGLE" || firstToken == "CIRCLE") {
+                m_form = firstToken;
+                continue;
+            }
+
+            // Otherwise, treat the first token as the KEY and parse based on current mode
+            if (m_form == "RECTANGLE") parseRectangle(ss, firstToken);
+            else if (m_form == "CIRCLE") parseCircle(ss, firstToken);
+        }
+
+        file.close();
+        return true;
+    }
+
+    inline void reload() { if (!m_fileName.empty()) load(m_fileName); }
+}
+
+#endif
