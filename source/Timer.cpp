@@ -1,53 +1,43 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Timer.h"
-#include "Form/_BaseRectangleX2.h"
+#include "ConfigManager.h"
+#include "Form/BaseRectangle.h"
+#include "Form/BaseRectangleX2.h"
 #include "_GLOBALS.h"
 #include "_COLORS.h"
 
 Timer::Timer(float cooldown)
     : Timer(
-          sf::Vector2f(1250.f, 1020.f),
-          sf::Vector2f(500.f, 100.f),
-          colors::COLOR_TIMER_BACKGROUND,
-          colors::COLOR_GRAYSCALE_BLACK,
-          sf::Vector2f(1250.f, 1020.f),
-          sf::Vector2f(500.f, 100.f),
-          colors::COLOR_TIMER_PROGRESSBAR,
-          colors::COLOR_GRAYSCALE_BLACK,
-          5,
+          BaseRectangleX2(
+              BaseRectangle(
+                  sf::Vector2f(1250.f, 1020.f),
+                  sf::Vector2f(500.f, 100.f),
+                  1,
+                  true,
+                  colors::COLOR_TIMER_PROGRESSBAR,
+                  colors::COLOR_GRAYSCALE_BLACK),
+              BaseRectangle(
+                  sf::Vector2f(1250.f, 1020.f),
+                  sf::Vector2f(500.f, 100.f),
+                  1,
+                  true,
+                  colors::COLOR_TIMER_PROGRESSBAR,
+                  colors::COLOR_GRAYSCALE_BLACK)),
           cooldown,
           true)
 {
 }
 
 Timer::Timer(
-    sf::Vector2f outerPosition,
-    sf::Vector2f outerSize,
-    sf::Color outerFillColor,
-    sf::Color outerOutlineColor,
-    sf::Vector2f innerPosition,
-    sf::Vector2f innerSize,
-    sf::Color innerFillColor,
-    sf::Color innerOutlineColor,
-    float padding,
+    BaseRectangleX2 timerMenu,
     float cooldown,
     bool isVertical)
-    : _BaseRectangleX2(
-          outerPosition,
-          outerSize,
-          outerFillColor,
-          outerOutlineColor,
-          innerPosition,
-          innerSize,
-          innerFillColor,
-          innerOutlineColor,
-          padding,
-          true),
+    : m_timerMenu(timerMenu),
       m_stop(false),
       m_cooldown(cooldown),
       m_isVertical(isVertical),
-      m_progressBarSize({innerSize.x - padding * 2, innerSize.y - padding * 2})
+      m_progressBarSize(timerMenu.getInner().getSize())
 
 {
 }
@@ -74,8 +64,6 @@ void Timer::update(sf::Time &delta)
       progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
     }
 
-    setInnerSize({progressWidth, progressHeight});
-
     if (seconds >= m_cooldown)
     {
       if (onTimeout)
@@ -89,7 +77,7 @@ void Timer::update(sf::Time &delta)
 
 void Timer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  _BaseRectangleX2::draw(target, states);
+  BaseRectangleX2::draw(target, states);
 }
 
 void Timer::toggleStop()

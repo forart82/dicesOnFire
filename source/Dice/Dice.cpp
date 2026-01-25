@@ -6,32 +6,25 @@
 #include "_GLOBALS.h"
 #include "_COLORS.h"
 #include "_HELPERS.h"
-#include "Form/_BaseCircle.h"
+#include "Form/BaseCircle.h"
 
 Dice::Dice()
-    : Dice(sf::Vector2f(1000, 1000), 50, colors::COLOR_BLUE_CLOUDY_AQUA, colors::COLOR_GREEN_DARK_GREEN, 4, 1, 2)
+    : Dice(
+          BaseCircle(
+              sf::Vector2f(1000, 1000),
+              50,
+              1, true,
+              colors::COLOR_BLUE_CLOUDY_AQUA,
+              colors::COLOR_GREEN_DARK_GREEN),
+          4,
+          1,
+          2)
 {
 }
 
-Dice::Dice(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color outlineColor, int faces, int rerolls, float cooldown)
-    : _BaseCircle(
-          position,
-          radius,
-          fillColor,
-          outlineColor,
-          true),
-      m_timer(
-          {position.x, position.y + radius * 2 + 5.f},
-          {radius * 2, 20.f},
-          colors::COLOR_TIMER_BACKGROUND,
-          colors::COLOR_GRAYSCALE_BLACK,
-          {position.x, position.y + radius * 2 + 5.f},
-          {radius * 2, 20.f},
-          colors::COLOR_TIMER_PROGRESSBAR,
-          colors::COLOR_GRAYSCALE_BLACK,
-          2,
-          cooldown,
-          true),
+Dice::Dice(BaseCircle diceMenu, int faces, int rerolls, float cooldown)
+    : m_diceMenu(diceMenu),
+      m_timer(10),
       m_faces(faces),
       m_rerolls(rerolls),
       m_padding(8),
@@ -77,7 +70,7 @@ void Dice::update(sf::Time &delta)
 
 void Dice::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  _BaseCircle::draw(target, states);
+  BaseCircle::draw(target, states);
   target.draw(m_timer);
   target.draw(*m_diceValueText);
 }

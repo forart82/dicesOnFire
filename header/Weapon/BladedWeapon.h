@@ -1,19 +1,16 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Weapon/_BaseWeapon.h"
+#include "Weapon/BaseWeapon.h"
+#include "Form/BaseRectangle.h"
 
-class BladedWeapon : public _BaseWeapon
+class BladedWeapon : public BaseWeapon
 {
 private:
 public:
   BladedWeapon();
   BladedWeapon(
-      sf::Vector2f position,
-      sf::Vector2f size,
-      sf::Color fillColor,
-      sf::Color outlineColor,
-      bool isActive,
+      BaseRectangle weaponMenu,
       float cooldown,
       int damage,
       int numberOfSlots);

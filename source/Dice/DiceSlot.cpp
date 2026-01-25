@@ -1,14 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include "Dice/DiceSlot.h"
-#include "Form/_BaseCircle.h"
+#include "Form/BaseCircle.h"
 
 DiceSlot::DiceSlot()
-    : _BaseCircle()
+    : BaseCircle()
 {
 }
 
-DiceSlot::DiceSlot(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color outlineColor, bool isActive)
-    : _BaseCircle(position, radius, fillColor, outlineColor, isActive)
+DiceSlot::DiceSlot(BaseCircle diceSlotMenu)
+    : m_diceSlotMenu(diceSlotMenu)
 {
 }
 

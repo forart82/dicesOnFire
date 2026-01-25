@@ -6,24 +6,21 @@
 #include "Dice/DiceSlot.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/BladedWeapon.h"
-#include "Form/_BaseRectangle.h"
+#include "Form/BaseRectangle.h"
 
-class WeaponSlot : public _BaseRectangle
+class WeaponSlot : public BaseRectangle
 {
 
 private:
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<BladedWeapon> m_bladedWeapon;
+  BaseRectangle m_slotMenu;
   int m_orderNumber;
 
 public:
   WeaponSlot();
   WeaponSlot(
-      sf::Vector2f position,
-      sf::Vector2f size,
-      sf::Color fillColor,
-      sf::Color outlineColor,
-      bool isActive,
+      BaseRectangle slotMenu,
       float cooldown,
       int orderNumber);
   ~WeaponSlot();

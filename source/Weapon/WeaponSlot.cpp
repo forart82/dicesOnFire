@@ -5,57 +5,30 @@
 #include "_COLORS.h"
 #include "Dice/Dice.h"
 #include "Dice/DiceSlot.h"
-#include "Form/_BaseRectangle.h"
+#include "Form/BaseRectangle.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/WeaponHelper.h"
 #include "ConfigManager.h"
 
 WeaponSlot::WeaponSlot()
     : WeaponSlot(
-          sf::Vector2f(0.f, 0.f),
-          sf::Vector2f(600.f, 150.f),
-          colors::COLOR_RED_DENSE_HOT_PINK,
-          colors::COLOR_GRAYSCALE_BLACK,
-          true,
+          BaseRectangle(),
           5,
           1)
 {
 }
 
 WeaponSlot::WeaponSlot(
-    sf::Vector2f position,
-    sf::Vector2f size,
-    sf::Color fillColor,
-    sf::Color outlineColor,
-    bool isActive,
+    BaseRectangle slotMenu,
     float cooldown,
     int orderNumber)
-    : _BaseRectangle(
-          position,
-          size,
-          fillColor,
-          outlineColor,
-          isActive),
+    : m_slotMenu(slotMenu),
       m_orderNumber(orderNumber)
 
 {
-  std::cout << " some position " << config::getKey("WEAPONSLOT_1_POSITION").x << " " << config::getKey("WEAPONSLOT_1_POSITION").y << std::endl;
-
-  float padding = 5.f;
-  // Timer
-  float timerPaddingTop = 70.f;
-  float timerWidth = 748.f;
-  float timerHeight = 30.f;
+  std::cout << "slotMenu: " << slotMenu.getPosition().x << std::endl;
   m_timer = std::make_unique<Timer>(
-      sf::Vector2f(config::getKey("WEAPONSLOT_8_POSITION")),
-      sf::Vector2f(timerWidth, timerHeight),
-      colors::COLOR_BLUE_AQUA,
-      colors::COLOR_GRAYSCALE_BLACK,
-      sf::Vector2f(position.x, position.y + timerPaddingTop),
-      sf::Vector2f(timerWidth, timerHeight),
-      colors::COLOR_TIMER_PROGRESSBAR,
-      colors::COLOR_GRAYSCALE_BLACK,
-      padding,
+      config::getRectangleX2("WEAPONSLOT_" + std::to_string(orderNumber) + "_TIMER"),
       cooldown,
       true);
   fakeDropWeaponInSlot();
@@ -79,7 +52,7 @@ void WeaponSlot::update(sf::Time &delta)
 
 void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  _BaseRectangle::draw(target, states);
+  BaseRectangle::draw(target, states);
   target.draw(*m_timer);
   target.draw(*m_bladedWeapon);
 }

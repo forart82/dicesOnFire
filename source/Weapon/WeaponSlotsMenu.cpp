@@ -1,22 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Weapon/WeaponSlotsMenu.h"
-#include "Form/_BaseRectangle.h"
+#include "Form/BaseRectangle.h"
 #include "_COLORS.h"
 #include "ConfigManager.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
-    : WeaponSlotsMenu(
-          sf::Vector2f(config::getKey("WEAPONSLOTSMENU_POSITION")),
-          sf::Vector2f(config::getKey("WEAPONSLOTSMENU_SIZE")),
-          colors::COLOR_BLUE_CLOUDY_AQUA,
-          colors::COLOR_GRAYSCALE_BLACK,
-          true)
+    : WeaponSlotsMenu(config::getRectangle("WEAPONSLOTSMENU"))
 {
 }
 
-WeaponSlotsMenu::WeaponSlotsMenu(sf::Vector2f position, sf::Vector2f size, sf::Color fillColor, sf::Color outlineColor, bool isActive)
-    : _BaseRectangle(position, size, fillColor, outlineColor, isActive),
+WeaponSlotsMenu::WeaponSlotsMenu(
+    BaseRectangle menu)
+    : m_menu(menu),
       m_weaponSlotCounter(8)
 {
   makeWeaponSlotes();
@@ -29,15 +25,10 @@ WeaponSlotsMenu::~WeaponSlotsMenu()
 void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
 {
   float index = weaponSlotNumber - 1;
-  std::string positionString = "WEAPONSLOT_" + std::to_string(weaponSlotNumber) + "_POSITION";
-  std::string sizeString = "WEAPONSLOT_" + std::to_string(weaponSlotNumber) + "_SIZE";
+  std::string weaponSlotConfig = "WEAPONSLOT_" + std::to_string(weaponSlotNumber);
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
-      sf::Vector2f(config::getKey(positionString)),
-      sf::Vector2f(config::getKey(sizeString)),
-      colors::COLORS_DICE_BOXES.at(weaponSlotNumber),
-      colors::COLOR_GRAYSCALE_BLACK,
-      true,
-      300,
+      config::getRectangle(weaponSlotConfig),
+      5,
       weaponSlotNumber);
 }
 
@@ -62,7 +53,7 @@ void WeaponSlotsMenu::update(sf::Time &delta)
 
 void WeaponSlotsMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  _BaseRectangle::draw(target, states);
+  BaseRectangle::draw(target, states);
   for (const auto &[key, weaponSlot] : m_weaponSlots)
   {
     target.draw(*weaponSlot);

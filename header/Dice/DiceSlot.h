@@ -1,13 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Form/_BaseCircle.h"
+#include "Form/BaseCircle.h"
 
-class DiceSlot : public _BaseCircle
+class DiceSlot : public BaseCircle
 {
 private:
+  BaseCircle m_diceSlotMenu;
+
 public:
   DiceSlot();
-  DiceSlot(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color outlineColor, bool isActive);
+  DiceSlot(BaseCircle diceSlotMenu);
   ~DiceSlot();
 };

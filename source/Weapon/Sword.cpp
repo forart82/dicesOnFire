@@ -2,33 +2,28 @@
 #include "Weapon/Sword.h"
 #include "Weapon/BladedWeapon.h"
 #include "_COLORS.h"
+#include "Form/BaseRectangle.h"
 
 Sword::Sword()
     : Sword(
-          sf::Vector2f(100.f, 100.f),
-          sf::Vector2f(100.f, 100.f),
-          colors::COLOR_BLUE_AQUA,
-          colors::COLOR_BLUE_CLOUDY_AQUA,
-          true,
+          BaseRectangle(
+              sf::Vector2f(100.f, 100.f),
+              sf::Vector2f(100.f, 100.f),
+              1,
+              true,
+              colors::COLOR_BLUE_AQUA,
+              colors::COLOR_BLUE_CLOUDY_AQUA),
           5,
           7,
           2) {}
 
 Sword::Sword(
-    sf::Vector2f position,
-    sf::Vector2f size,
-    sf::Color fillColor,
-    sf::Color outlineColor,
-    bool isActive,
+    BaseRectangle swordMenu,
     float cooldown,
     int damage,
     int numberOfSlots)
     : BladedWeapon(
-          position,
-          size,
-          fillColor,
-          outlineColor,
-          isActive,
+          swordMenu,
           cooldown,
           damage,
           numberOfSlots) {}

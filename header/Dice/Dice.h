@@ -5,11 +5,12 @@
 #include <random>
 #include "GameText.h"
 #include "Timer.h"
-#include "Form/_BaseCircle.h"
+#include "Form/BaseCircle.h"
 
-class Dice : public _BaseCircle
+class Dice : public BaseCircle
 {
 private:
+  BaseCircle m_diceMenu;
   std::unique_ptr<GameText> m_diceValueText;
   Timer m_timer;
   std::map<int, float> m_faceValues;
@@ -21,7 +22,7 @@ private:
 
 public:
   Dice();
-  Dice(sf::Vector2f position, float radius, sf::Color fillColor, sf::Color outlineColor, int faces, int rerolls, float cooldown);
+  Dice(BaseCircle diceMenu, int faces, int rerolls, float cooldown);
 
   ~Dice();
 

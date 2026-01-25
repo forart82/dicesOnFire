@@ -2,11 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include "Form/_BaseRectangleX2.h"
+#include "Form/BaseRectangleX2.h"
 
-class Timer : public _BaseRectangleX2
+class Timer : public BaseRectangleX2
 {
 private:
+  BaseRectangleX2 m_timerMenu;
   sf::Vector2f m_progressBarSize;
   sf::Time m_elapsedTime;
   float m_cooldown;
@@ -16,15 +17,7 @@ private:
 public:
   Timer(float cooldown);
   Timer(
-      sf::Vector2f outerPosition,
-      sf::Vector2f outerSize,
-      sf::Color outerFillColor,
-      sf::Color outerOutlineColor,
-      sf::Vector2f innerPosition,
-      sf::Vector2f innerSize,
-      sf::Color innerFillColor,
-      sf::Color innerOutlineColor,
-      float padding,
+      BaseRectangleX2 timerMenu,
       float cooldown,
       bool isVertical);
 

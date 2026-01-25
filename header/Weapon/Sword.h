@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Weapon/BladedWeapon.h"
+#include "Form/BaseRectangle.h"
 
 class Sword : public BladedWeapon
 {
@@ -10,11 +11,7 @@ private:
 public:
   Sword();
   Sword(
-      sf::Vector2f position,
-      sf::Vector2f size,
-      sf::Color fillColor,
-      sf::Color outlineColor,
-      bool isActive,
+      BaseRectangle swordMenu,
       float cooldown,
       int damage,
       int numberOfSlots);
