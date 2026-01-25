@@ -20,11 +20,11 @@ namespace config
         float thickness;
     };
 
-    struct RecatangleX2
+    struct RectangleX2 // Correction Typo: Recatangle -> Rectangle
     {
         Rectangle outer;
         Rectangle inner;
-    }
+    }; // Correction: Point-virgule ajouté ici
 
     struct Circle 
     {
@@ -38,11 +38,13 @@ namespace config
     // Data Storage
     inline std::string m_fileName;
     inline std::map<std::string, Rectangle> m_rectangle;
+    inline std::map<std::string, RectangleX2> m_rectangleX2;
     inline std::map<std::string, Circle> m_circle;
     inline std::string m_form = "";
 
     // Default Values
     inline const Rectangle DEFAULT_RECTANGLE = { {0.f, 0.f}, {0.f, 0.f}, sf::Color::Red, sf::Color::Black, 2.0f };
+    inline const RectangleX2 DEFAULT_RECTANGLEX2 = { DEFAULT_RECTANGLE, DEFAULT_RECTANGLE };
     inline const Circle DEFAULT_CIRCLE = { {0.f, 0.f}, 0.f, sf::Color::Red, sf::Color::Black, 2.0f };
 
     // Getters
@@ -50,6 +52,12 @@ namespace config
     {
         auto it = m_rectangle.find(key);
         return (it != m_rectangle.end()) ? it->second : DEFAULT_RECTANGLE;
+    }
+
+    inline RectangleX2 getRectangleX2(const std::string& key)
+    {
+        auto it = m_rectangleX2.find(key);
+        return (it != m_rectangleX2.end()) ? it->second : DEFAULT_RECTANGLEX2;
     }
 
     inline Circle getCircle(const std::string& key)
@@ -81,6 +89,28 @@ namespace config
         };
     }
 
+    inline void parseRectangleX2(std::stringstream& ss, const std::string& key)
+    {
+        auto readRect = [&](std::stringstream& source) -> Rectangle {
+            std::string x, y, w, h, r1, g1, b1, a1, r2, g2, b2, a2, t;
+            std::getline(source, x, ';');  std::getline(source, y, ';');
+            std::getline(source, w, ';');  std::getline(source, h, ';');
+            std::getline(source, r1, ';'); std::getline(source, g1, ';'); std::getline(source, b1, ';'); std::getline(source, a1, ';');
+            std::getline(source, r2, ';'); std::getline(source, g2, ';'); std::getline(source, b2, ';'); std::getline(source, a2, ';');
+            std::getline(source, t, ';');
+
+            return {
+                {toF(x), toF(y)},
+                {toF(w), toF(h)},
+                {toU8(r1), toU8(g1), toU8(b1), toU8(a1)},
+                {toU8(r2), toU8(g2), toU8(b2), toU8(a2)},
+                toF(t)
+            };
+        };
+
+        m_rectangleX2[key] = { readRect(ss), readRect(ss) };
+    }
+
     inline void parseCircle(std::stringstream& ss, const std::string& key)
     {
         std::string x, y, rad, r1, g1, b1, a1, r2, g2, b2, a2, t;
@@ -106,8 +136,8 @@ namespace config
         std::ifstream file(fileName);
         if (!file.is_open()) return false;
 
-        // Clear existing data for a fresh load
         m_rectangle.clear();
+        m_rectangleX2.clear();
         m_circle.clear();
         m_form = "";
 
@@ -120,15 +150,14 @@ namespace config
             std::string firstToken;
             std::getline(ss, firstToken, ';');
 
-            // Logic: If the line starts with RECTANGLE or CIRCLE, change the mode
-            if (firstToken == "RECTANGLE" || firstToken == "CIRCLE") {
+            if (firstToken == "RECTANGLE" || firstToken == "CIRCLE" || firstToken == "RECTANGLEX2") {
                 m_form = firstToken;
                 continue;
             }
 
-            // Otherwise, treat the first token as the KEY and parse based on current mode
             if (m_form == "RECTANGLE") parseRectangle(ss, firstToken);
             else if (m_form == "CIRCLE") parseCircle(ss, firstToken);
+            else if (m_form == "RECTANGLEX2") parseRectangleX2(ss, firstToken);
         }
 
         file.close();
