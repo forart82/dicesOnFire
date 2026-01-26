@@ -61,6 +61,6 @@ public:
 
   BaseRectangle &getInner()
   {
-    return m_outer;
+    return m_inner;
   }
 };
