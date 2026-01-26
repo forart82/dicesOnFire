@@ -23,7 +23,6 @@ WeaponSlot::WeaponSlot(
     float cooldown,
     int orderNumber)
     : BaseRectangle(weaponSlotMenu),
-      m_weaponSlotMenu(weaponSlotMenu),
       m_orderNumber(orderNumber)
 
 {
