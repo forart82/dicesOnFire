@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "_COLORS.h"
 
 class BaseRectangle : public sf::Drawable
@@ -40,13 +41,13 @@ public:
         m_fillColor(fillColor),
         m_outlineColor(outlineColor)
   {
-    m_shape.setPosition(m_position);
-    m_shape.setSize(m_size);
+    m_shape.setPosition({std::round(m_position.x), std::round(m_position.y)});
+    m_shape.setSize({std::round(m_size.x), std::round(m_size.y)});
     m_shape.setOutlineThickness(m_thickness);
     m_shape.setFillColor(m_fillColor);
     m_shape.setOutlineColor(m_outlineColor);
 
-    m_shape.setOrigin(sf::Vector2f(size.x / 2.f, size.y / 2.f));
+    m_shape.setOrigin({std::round(size.x / 2.f), std::round(size.y / 2.f)});
   }
 
   ~BaseRectangle()
@@ -70,14 +71,14 @@ public:
   void setPosition(sf::Vector2f position)
   {
     m_position = position;
-    m_shape.setPosition(m_position);
+    m_shape.setPosition({std::round(m_position.x), std::round(m_position.y)});
   }
 
   void setSize(sf::Vector2f size)
   {
     m_size = size;
-    m_shape.setSize(m_size);
-    m_shape.setOrigin(sf::Vector2f(size.x / 2.f, size.y / 2.f));
+    m_shape.setSize({std::round(m_size.x), std::round(m_size.y)});
+    m_shape.setOrigin({std::round(size.x / 2.f), std::round(size.y / 2.f)});
   }
 
   void setThickness(int thickness)

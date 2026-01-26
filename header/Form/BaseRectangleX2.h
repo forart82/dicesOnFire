@@ -59,7 +59,7 @@ public:
     return m_outer;
   }
 
-  const BaseRectangle &getInner() const
+  BaseRectangle &getInner()
   {
     return m_outer;
   }

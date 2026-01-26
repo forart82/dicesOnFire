@@ -9,13 +9,13 @@ class WeaponSlotsMenu : public BaseRectangle
 {
 
 private:
-  BaseRectangle m_menu;
+  BaseRectangle m_WeaponSlotsMenuMenu;
   std::map<int, std::unique_ptr<WeaponSlot>> m_weaponSlots;
   int m_weaponSlotCounter;
 
 public:
   WeaponSlotsMenu();
-  WeaponSlotsMenu(BaseRectangle menu);
+  WeaponSlotsMenu(BaseRectangle weaponSlotsMenuMenu);
   ~WeaponSlotsMenu();
 
   void update(sf::Time &delta);

@@ -54,7 +54,6 @@ void Game::run()
           m_debugBar->toggleActive();
           break;
         case sf::Keyboard::Scancode::Comma:
-          std::cout << "Comma" << std::endl;
           config::reload();
           m_weaponSlotsMenu.reset();
           m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
@@ -103,8 +102,11 @@ void Game::draw()
 
 void Game::handleMainViewRatio()
 {
-  m_mainView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
-  m_mainView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  // m_mainView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
+  // m_mainView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+
+  m_mainView.setCenter({std::round(GLOBAL_SCREEN_WIDTH / 2), std::round(GLOBAL_SCREEN_HEIGHT / 2)});
+  m_mainView.setSize({std::round(GLOBAL_SCREEN_WIDTH), std::round(GLOBAL_SCREEN_HEIGHT)});
 
   float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
   float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
@@ -124,5 +126,5 @@ void Game::handleMainViewRatio()
     sizeY = windowRatio / targetRatio;
     posY = (1.f - sizeY) / 2.f;
   }
-  m_mainView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+  m_mainView.setViewport(sf::FloatRect({std::round(posX), std::round(posY)}, {std::round(sizeX), std::round(sizeY)}));
 }

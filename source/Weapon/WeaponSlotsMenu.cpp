@@ -11,8 +11,9 @@ WeaponSlotsMenu::WeaponSlotsMenu()
 }
 
 WeaponSlotsMenu::WeaponSlotsMenu(
-    BaseRectangle menu)
-    : m_menu(menu),
+    BaseRectangle weaponSlotsMenuMenu)
+    : BaseRectangle(weaponSlotsMenuMenu),
+      m_WeaponSlotsMenuMenu(weaponSlotsMenuMenu),
       m_weaponSlotCounter(8)
 {
   makeWeaponSlotes();
@@ -45,6 +46,7 @@ void WeaponSlotsMenu::makeWeaponSlotes()
 
 void WeaponSlotsMenu::update(sf::Time &delta)
 {
+  BaseRectangle::update(delta);
   for (const auto &[key, weaponSlot] : m_weaponSlots)
   {
     weaponSlot->update(delta);

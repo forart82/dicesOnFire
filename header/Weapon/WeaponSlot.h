@@ -14,13 +14,13 @@ class WeaponSlot : public BaseRectangle
 private:
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<BladedWeapon> m_bladedWeapon;
-  BaseRectangle m_slotMenu;
+  BaseRectangle m_weaponSlotMenu;
   int m_orderNumber;
 
 public:
   WeaponSlot();
   WeaponSlot(
-      BaseRectangle slotMenu,
+      BaseRectangle m_weaponSlotMenu,
       float cooldown,
       int orderNumber);
   ~WeaponSlot();

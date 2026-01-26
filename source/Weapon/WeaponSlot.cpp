@@ -19,14 +19,14 @@ WeaponSlot::WeaponSlot()
 }
 
 WeaponSlot::WeaponSlot(
-    BaseRectangle slotMenu,
+    BaseRectangle weaponSlotMenu,
     float cooldown,
     int orderNumber)
-    : m_slotMenu(slotMenu),
+    : BaseRectangle(weaponSlotMenu),
+      m_weaponSlotMenu(weaponSlotMenu),
       m_orderNumber(orderNumber)
 
 {
-  std::cout << "slotMenu: " << slotMenu.getPosition().x << std::endl;
   m_timer = std::make_unique<Timer>(
       config::getRectangleX2("WEAPONSLOT_" + std::to_string(orderNumber) + "_TIMER"),
       cooldown,
@@ -46,6 +46,7 @@ WeaponSlot::~WeaponSlot() {}
 
 void WeaponSlot::update(sf::Time &delta)
 {
+  BaseRectangle::update(delta);
   m_timer->update(delta);
   m_bladedWeapon->update(delta);
 }

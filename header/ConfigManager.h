@@ -29,14 +29,7 @@ namespace config
   // Getters
   inline BaseRectangle getRectangle(const std::string &key)
   {
-    std::cout << "search for key: " << key << std::endl;
     auto it = m_rectangle.find(key);
-
-    if (it != m_rectangle.end())
-    {
-      std::cout << "GET: " << it->second.getPosition().x << std::endl;
-    }
-
     return (it != m_rectangle.end()) ? it->second : DEFAULT_RECTANGLE;
   }
 
@@ -93,9 +86,12 @@ namespace config
     std::getline(ss, blue2, ';');
     std::getline(ss, alpha2, ';');
 
-    std::cout << "READ: " << x << y << width << height << thinkess << isActive << red1 << green1 << blue1 << alpha1 << red2 << green2 << blue2 << alpha2 << std::endl;
-
-    return {{toFloat(x), toFloat(y)}, {toFloat(width), toFloat(height)}, toUnit8(thinkess), toBool(isActive), {toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)}, {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
+    return {{toFloat(x), toFloat(y)},
+            {toFloat(width), toFloat(height)},
+            toUnit8(thinkess),
+            toBool(isActive),
+            {toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)},
+            {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
   }
 
   inline BaseCircle readCircle(std::stringstream &ss)
@@ -127,22 +123,16 @@ namespace config
 
   inline void parseRectangle(std::stringstream &ss, const std::string &key)
   {
-    std::cout << "parseRectangle: " << key << std::endl;
-
     m_rectangle[key] = readRectangle(ss);
   }
 
   inline void parseRectangleX2(std::stringstream &ss, const std::string &key)
   {
-    std::cout << "parseRectangleX2: " << key << std::endl;
-
     m_rectangleX2[key] = {readRectangle(ss), readRectangle(ss)};
   }
 
   inline void parseCircle(std::stringstream &ss, const std::string &key)
   {
-    std::cout << "parseCircle: " << key << std::endl;
-
     m_circle[key] = {readCircle(ss)};
   }
 
