@@ -23,7 +23,7 @@ BaseWeapon::BaseWeapon(
     float cooldown,
     int damage,
     int numberOfSlots)
-    : m_weaponMenu(weaponMenu),
+    : BaseRectangle(weaponMenu),
       m_damage(damage),
       m_numberOfSlots(numberOfSlots)
 {
