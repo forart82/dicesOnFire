@@ -9,7 +9,6 @@ class WeaponSlotsMenu : public BaseRectangle
 {
 
 private:
-  BaseRectangle m_WeaponSlotsMenuMenu;
   std::map<int, std::unique_ptr<WeaponSlot>> m_weaponSlots;
   int m_weaponSlotCounter;
 
