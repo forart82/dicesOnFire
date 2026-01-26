@@ -13,7 +13,6 @@ protected:
   int m_numberOfSlots;
   std::map<int, std::unique_ptr<DiceSlot>> m_diceSlots;
   std::unique_ptr<Timer> m_timer;
-  BaseRectangle m_weaponMenu;
 
 public:
   BaseWeapon();
