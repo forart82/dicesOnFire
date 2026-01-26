@@ -15,18 +15,23 @@ Sword::Sword()
               colors::COLOR_BLUE_CLOUDY_AQUA),
           5,
           7,
-          2) {}
+          2,
+          1)
+{
+}
 
 Sword::Sword(
     BaseRectangle swordMenu,
     float cooldown,
     int damage,
-    int numberOfSlots)
+    int numberOfSlots,
+    int weaponSlotNumber)
     : BladedWeapon(
           swordMenu,
           cooldown,
           damage,
-          numberOfSlots) {}
+          numberOfSlots,
+          weaponSlotNumber) {}
 
 Sword::~Sword() {};
 

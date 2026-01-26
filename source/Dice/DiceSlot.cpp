@@ -8,10 +8,20 @@ DiceSlot::DiceSlot()
 }
 
 DiceSlot::DiceSlot(BaseCircle diceSlotMenu)
-    : m_diceSlotMenu(diceSlotMenu)
+    : BaseCircle(diceSlotMenu)
 {
 }
 
 DiceSlot::~DiceSlot()
 {
 }
+
+void DiceSlot::update(sf::Time &delta)
+{
+    BaseCircle::update(delta);
+}
+
+void DiceSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    BaseCircle::draw(target, states);
+};

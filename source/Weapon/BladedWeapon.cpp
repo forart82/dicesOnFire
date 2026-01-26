@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "Weapon/BladedWeapon.h"
 #include "Weapon/BaseWeapon.h"
 #include "_COLORS.h"
@@ -15,7 +16,8 @@ BladedWeapon::BladedWeapon()
               colors::COLOR_BLUE_CLOUDY_AQUA),
           5,
           7,
-          2)
+          2,
+          1)
 {
 }
 
@@ -23,12 +25,17 @@ BladedWeapon::BladedWeapon(
     BaseRectangle weaponMenu,
     float cooldown,
     int damage,
-    int numberOfSlots)
+    int numberOfSlots,
+    int weaponSlotNumber)
     : BaseWeapon(
           weaponMenu,
           cooldown,
           damage,
-          numberOfSlots) {}
+          numberOfSlots,
+          weaponSlotNumber)
+{
+  makeDiceSlots();
+}
 
 BladedWeapon::~BladedWeapon() {};
 

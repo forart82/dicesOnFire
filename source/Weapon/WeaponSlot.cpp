@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "_GLOBALS.h"
 #include "_COLORS.h"
+#include "_HELPERS.h"
 #include "Dice/Dice.h"
 #include "Dice/DiceSlot.h"
 #include "Form/BaseRectangle.h"
@@ -21,25 +22,17 @@ WeaponSlot::WeaponSlot()
 WeaponSlot::WeaponSlot(
     BaseRectangle weaponSlotMenu,
     float cooldown,
-    int orderNumber)
+    int weaponSlotNumber)
     : BaseRectangle(weaponSlotMenu),
-      m_orderNumber(orderNumber)
+      m_weaponSlotNumber(weaponSlotNumber)
 
 {
+  std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
   m_timer = std::make_unique<Timer>(
-      config::getRectangleX2("WEAPONSLOT_" + std::to_string(orderNumber) + "_TIMER"),
+      config::getRectangleX2(weaponSlotKey + "_TIMER"),
       cooldown,
       true);
-  fakeDropWeaponInSlot();
-  m_bladedWeapon->setPosition(
-      sf::Vector2f(100.f, 100.f));
-  m_bladedWeapon->setSize(
-      sf::Vector2f(100.f, 100.f));
-  m_bladedWeapon->setColors(
-      colors::COLOR_BLUE_CLOUDY_DEEP_BLUE,
-      colors::COLOR_GRAYSCALE_DEEP_CHARCOAL);
-  m_bladedWeapon->setNumberOfSlots(2);
-  m_bladedWeapon->setActive(true);
+  fakeDropWeaponInSlot(weaponSlotKey);
 }
 WeaponSlot::~WeaponSlot() {}
 
@@ -57,7 +50,13 @@ void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(*m_bladedWeapon);
 }
 
-void WeaponSlot::fakeDropWeaponInSlot()
+void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
 {
-  m_bladedWeapon = CREATE_BLADEDWEAPON();
+  m_bladedWeapon = std::make_unique<BladedWeapon>(
+      config::getRectangle(weaponSlotKey + "_WEAPON"),
+      GET_RANDOM_NUMBER_INT(3, 5),
+      GET_RANDOM_NUMBER_INT(1, 7),
+      // GET_RANDOM_NUMBER_INT(1, 2),
+      8,
+      m_weaponSlotNumber);
 }

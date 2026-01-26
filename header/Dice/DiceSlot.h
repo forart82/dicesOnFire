@@ -6,10 +6,11 @@
 class DiceSlot : public BaseCircle
 {
 private:
-  BaseCircle m_diceSlotMenu;
-
 public:
   DiceSlot();
   DiceSlot(BaseCircle diceSlotMenu);
   ~DiceSlot();
+
+  void update(sf::Time &delta);
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };

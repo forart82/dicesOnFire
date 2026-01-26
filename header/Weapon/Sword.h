@@ -14,7 +14,8 @@ public:
       BaseRectangle swordMenu,
       float cooldown,
       int damage,
-      int numberOfSlots);
+      int numberOfSlots,
+      int weaponSlotNumber);
   ~Sword();
 
   void update(sf::Time &delta);

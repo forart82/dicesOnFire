@@ -34,7 +34,6 @@ Timer::Timer(
     float cooldown,
     bool isVertical)
     : BaseRectangleX2(timerMenu),
-      m_timerMenu(timerMenu),
       m_stop(false),
       m_cooldown(cooldown),
       m_isVertical(isVertical),

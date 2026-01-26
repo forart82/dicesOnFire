@@ -13,7 +13,8 @@ public:
       BaseRectangle weaponMenu,
       float cooldown,
       int damage,
-      int numberOfSlots);
+      int numberOfSlots,
+      int weaponSlotNumber);
   ~BladedWeapon();
 
   void update(sf::Time &delta);

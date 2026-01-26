@@ -9,12 +9,8 @@ class BaseRectangle : public sf::Drawable
 
 protected:
   sf::RectangleShape m_shape;
-  sf::Vector2f m_position;
-  sf::Vector2f m_size;
   int m_thickness;
   bool m_isActive;
-  sf::Color m_fillColor;
-  sf::Color m_outlineColor;
 
 public:
   BaseRectangle()
@@ -34,20 +30,16 @@ public:
       bool isActive,
       sf::Color fillColor,
       sf::Color outlineColor)
-      : m_position(position),
-        m_size(size),
-        m_thickness(thickness),
-        m_isActive(isActive),
-        m_fillColor(fillColor),
-        m_outlineColor(outlineColor)
+      : m_thickness(thickness),
+        m_isActive(isActive)
   {
-    m_shape.setPosition({std::round(m_position.x), std::round(m_position.y)});
-    m_shape.setSize({std::round(m_size.x), std::round(m_size.y)});
+    m_shape.setPosition({std::round(position.x), std::round(position.y)});
+    m_shape.setSize({std::round(size.x), std::round(size.y)});
     m_shape.setOutlineThickness(m_thickness);
-    m_shape.setFillColor(m_fillColor);
-    m_shape.setOutlineColor(m_outlineColor);
+    m_shape.setFillColor(fillColor);
+    m_shape.setOutlineColor(outlineColor);
 
-    m_shape.setOrigin({std::round(size.x / 2.f), std::round(size.y / 2.f)});
+    this->setOriginFromSize(size);
   }
 
   ~BaseRectangle()
@@ -67,17 +59,36 @@ public:
   }
 
   // --- Setters ---
+  void setBaseRectangle(const BaseRectangle baseRectangle)
+  {
+    sf::Vector2f size = baseRectangle.getSize();
+    this->setPosition(baseRectangle.getPosition());
+    this->setSize(size);
+    this->setThickness(baseRectangle.getThickness());
+    this->setIsActive(baseRectangle.getIsActive());
+    this->setFillColor(baseRectangle.getFillColor());
+    this->setOutlineColor(baseRectangle.getOutlineColor());
+
+    this->setOriginFromSize(size);
+  }
 
   void setPosition(sf::Vector2f position)
   {
-    m_position = position;
-    m_shape.setPosition({std::round(m_position.x), std::round(m_position.y)});
+    m_shape.setPosition({std::round(position.x), std::round(position.y)});
   }
 
   void setSize(sf::Vector2f size)
   {
-    m_size = size;
-    m_shape.setSize({std::round(m_size.x), std::round(m_size.y)});
+    m_shape.setSize({std::round(size.x), std::round(size.y)});
+  }
+
+  void setOrigin(sf::Vector2f origin)
+  {
+    m_shape.setSize({std::round(origin.x), std::round(origin.y)});
+  }
+
+  void setOriginFromSize(sf::Vector2f size)
+  {
     m_shape.setOrigin({std::round(size.x / 2.f), std::round(size.y / 2.f)});
   }
 
@@ -86,27 +97,23 @@ public:
     m_thickness = thickness;
   }
 
-  void setActive(bool isActive)
+  void setIsActive(bool isActive)
   {
     m_isActive = isActive;
   }
 
   void setFillColor(sf::Color fillColor)
   {
-    m_fillColor = fillColor;
-    m_shape.setFillColor(m_fillColor);
+    m_shape.setFillColor(fillColor);
   }
 
   void setOutlineColor(sf::Color outlineColor)
   {
-    m_outlineColor = outlineColor;
-    m_shape.setOutlineColor(m_outlineColor);
+    m_shape.setOutlineColor(outlineColor);
   }
 
   void setColors(sf::Color fillColor, sf::Color outlineColor)
   {
-    m_fillColor = fillColor;
-    m_outlineColor = outlineColor;
     setFillColor(fillColor);
     setOutlineColor(outlineColor);
   }
@@ -116,13 +123,33 @@ public:
     m_isActive = !m_isActive;
   }
 
-  const sf::Vector2f &getPosition() const
+  sf::Vector2f getPosition() const
   {
-    return m_position;
+    return m_shape.getPosition();
   }
 
-  const sf::Vector2f &getSize() const
+  sf::Vector2f getSize() const
   {
-    return m_size;
+    return m_shape.getSize();
+  }
+
+  const int &getThickness() const
+  {
+    return m_thickness;
+  }
+
+  const bool &getIsActive() const
+  {
+    return m_isActive;
+  }
+
+  sf::Color getFillColor() const
+  {
+    return m_shape.getFillColor();
+  }
+
+  sf::Color getOutlineColor() const
+  {
+    return m_shape.getOutlineColor();
   }
 };

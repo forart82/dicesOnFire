@@ -7,7 +7,6 @@
 class Timer : public BaseRectangleX2
 {
 private:
-  BaseRectangleX2 m_timerMenu;
   sf::Vector2f m_progressBarSize;
   sf::Time m_elapsedTime;
   float m_cooldown;

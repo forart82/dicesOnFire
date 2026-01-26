@@ -50,11 +50,11 @@ public:
 
   void draw(sf::RenderTarget &target, sf::RenderStates states) const
   {
-    m_outer.draw(target, states);
-    m_inner.draw(target, states);
+    target.draw(m_outer);
+    target.draw(m_inner);
   }
 
-  const BaseRectangle &getOuter() const
+  BaseRectangle &getOuter()
   {
     return m_outer;
   }

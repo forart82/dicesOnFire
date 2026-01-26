@@ -2,6 +2,7 @@
 #include "Weapon/BaseWeapon.h"
 #include "_COLORS.h"
 #include "Form/BaseRectangle.h"
+#include "ConfigManager.h"
 
 BaseWeapon::BaseWeapon()
     : BaseWeapon(
@@ -14,7 +15,8 @@ BaseWeapon::BaseWeapon()
               colors::COLOR_BLUE_CLOUDY_AQUA),
           5,
           7,
-          2)
+          2,
+          1)
 {
 }
 
@@ -22,10 +24,12 @@ BaseWeapon::BaseWeapon(
     BaseRectangle weaponMenu,
     float cooldown,
     int damage,
-    int numberOfSlots)
+    int numberOfSlots,
+    int weaponSlotNumber)
     : BaseRectangle(weaponMenu),
       m_damage(damage),
-      m_numberOfSlots(numberOfSlots)
+      m_numberOfSlots(numberOfSlots),
+      m_weaponSlotNumber(weaponSlotNumber)
 {
 }
 
@@ -49,7 +53,9 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void BaseWeapon::makeDiceSlot(int slotId)
 {
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>();
+  std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
+  std::cout << " key " << diceSlotKey << std::endl;
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>(config::getCircle(diceSlotKey));
 }
 
 void BaseWeapon::makeDiceSlots()
