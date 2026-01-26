@@ -40,6 +40,10 @@ void BaseWeapon::update(sf::Time &delta)
   {
     diceSlot->update(delta);
   }
+  for (const auto &[key, timer] : m_timers)
+  {
+    timer->update(delta);
+  }
 }
 
 void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -49,6 +53,10 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
   {
     target.draw(*diceSlot);
   }
+  for (const auto &[key, timer] : m_timers)
+  {
+    target.draw(*timer);
+  }
 }
 
 void BaseWeapon::makeDiceSlot(int slotId)
@@ -56,6 +64,10 @@ void BaseWeapon::makeDiceSlot(int slotId)
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
   std::cout << " key " << diceSlotKey << std::endl;
   m_diceSlots[slotId] = std::make_unique<DiceSlot>(config::getCircle(diceSlotKey));
+  m_timers[slotId] = std::make_unique<Timer>(
+      config::getRectangleX2(diceSlotKey + "_TIMER"),
+      5,
+      true);
 }
 
 void BaseWeapon::makeDiceSlots()
