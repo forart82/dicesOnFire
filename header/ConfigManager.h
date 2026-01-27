@@ -151,7 +151,6 @@ namespace config
 
     for (const auto &listedFileName : m_fileNames)
     {
-
       std::ifstream file(listedFileName);
       if (!file.is_open())
       {
