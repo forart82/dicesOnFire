@@ -56,7 +56,6 @@ void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
       config::getRectangle(weaponSlotKey + "_WEAPON"),
       GET_RANDOM_NUMBER_INT(3, 5),
       GET_RANDOM_NUMBER_INT(1, 7),
-      // GET_RANDOM_NUMBER_INT(1, 2),
-      8,
+      GET_RANDOM_NUMBER_INT(1, 2),
       m_weaponSlotNumber);
 }

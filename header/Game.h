@@ -10,6 +10,7 @@
 #include "Dice/Dice.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/WeaponSlotsMenu.h"
+#include "Entity/Hero.h"
 
 class Game
 {
@@ -26,9 +27,10 @@ private:
 
   bool m_isFontLoaded;
 
-  // Entity elements
+  // Class elements
   std::unique_ptr<DebugBar> m_debugBar;
   std::unique_ptr<WeaponSlotsMenu> m_weaponSlotsMenu;
+  std::unique_ptr<Hero> m_hero;
 
   std::mt19937 m_rng;
 

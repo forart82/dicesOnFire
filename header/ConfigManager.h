@@ -16,6 +16,7 @@ namespace config
 
   // Data Storage
   inline std::string m_fileName;
+  inline std::vector<std::string> m_fileNames;
   inline std::map<std::string, BaseRectangle> m_rectangle;
   inline std::map<std::string, BaseRectangleX2> m_rectangleX2;
   inline std::map<std::string, BaseCircle> m_circle;
@@ -136,49 +137,59 @@ namespace config
     m_circle[key] = {readCircle(ss)};
   }
 
-  inline bool load(const std::string &fileName)
+  inline bool load(const std::string &fileName = "")
   {
-    m_fileName = fileName;
-    std::ifstream file(fileName);
-    if (!file.is_open())
-      return false;
+    if (fileName.length() > 0)
+    {
+      m_fileNames.push_back(fileName);
+    }
 
     m_rectangle.clear();
     m_rectangleX2.clear();
     m_circle.clear();
     m_form = "";
 
-    std::string line;
-    while (std::getline(file, line))
+    for (const auto &listedFileName : m_fileNames)
     {
-      if (line.empty() || line[0] == '#')
-        continue;
 
-      std::stringstream ss(line);
-      std::string firstToken;
-      std::getline(ss, firstToken, ';');
-
-      if (firstToken == "RECTANGLE" || firstToken == "CIRCLE" || firstToken == "RECTANGLEX2")
+      std::ifstream file(listedFileName);
+      if (!file.is_open())
       {
-        m_form = firstToken;
         continue;
       }
 
-      if (m_form == "RECTANGLE")
-        parseRectangle(ss, firstToken);
-      else if (m_form == "CIRCLE")
-        parseCircle(ss, firstToken);
-      else if (m_form == "RECTANGLEX2")
-        parseRectangleX2(ss, firstToken);
-    }
+      std::string line;
+      while (std::getline(file, line))
+      {
+        if (line.empty() || line[0] == '#')
+          continue;
 
-    file.close();
+        std::stringstream ss(line);
+        std::string firstToken;
+        std::getline(ss, firstToken, ';');
+
+        if (firstToken == "RECTANGLE" || firstToken == "CIRCLE" || firstToken == "RECTANGLEX2")
+        {
+          m_form = firstToken;
+          continue;
+        }
+
+        if (m_form == "RECTANGLE")
+          parseRectangle(ss, firstToken);
+        else if (m_form == "CIRCLE")
+          parseCircle(ss, firstToken);
+        else if (m_form == "RECTANGLEX2")
+          parseRectangleX2(ss, firstToken);
+      }
+
+      file.close();
+    }
     return true;
   }
 
   inline void reload()
   {
     if (!m_fileName.empty())
-      load(m_fileName);
+      load();
   }
 }

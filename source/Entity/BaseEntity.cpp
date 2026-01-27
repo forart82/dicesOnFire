@@ -1,0 +1,84 @@
+#include <SFML/Graphics.hpp>
+#include "Entity/BaseEntity.h"
+#include "Form/BaseRectangle.h"
+#include "Form/BaseRectangleX2.h"
+
+BaseEntity::BaseEntity()
+    : BaseEntity(
+          std::make_unique<BaseRectangle>(),
+          std::make_unique<BaseRectangleX2>(),
+          100,
+          100,
+          2)
+{
+}
+
+BaseEntity::BaseEntity(
+    std::unique_ptr<BaseRectangle> body,
+    std::unique_ptr<BaseRectangleX2> healthBar,
+    float health,
+    float maxHealth,
+    float speed)
+    : m_health(health),
+      m_maxHealth(maxHealth),
+      m_speed(speed)
+{
+  m_body = std::move(body);
+  m_healthBar = std::move(healthBar);
+}
+
+BaseEntity::~BaseEntity() {}
+
+void BaseEntity::update(sf::Time &delta)
+{
+  m_body->update(delta);
+  m_healthBar->update(delta);
+}
+
+void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+  target.draw(*m_body);
+  target.draw(*m_healthBar);
+}
+
+void BaseEntity::setBody(std::unique_ptr<BaseRectangle> body)
+{
+  m_body = std::move(body);
+}
+void BaseEntity::setHealthBar(std::unique_ptr<BaseRectangleX2> healthBar)
+{
+  m_healthBar = std::move(healthBar);
+}
+void BaseEntity::setHealth(float health)
+{
+  m_health = health;
+}
+void BaseEntity::setMaxHealth(float maxHealth)
+{
+  m_maxHealth = maxHealth;
+}
+void BaseEntity::setSpeed(float speed)
+{
+  m_speed = speed;
+}
+
+BaseRectangle &BaseEntity::getBody()
+{
+  return *m_body;
+}
+BaseRectangleX2 &BaseEntity::getHealthBar()
+{
+  return *m_healthBar;
+}
+float &BaseEntity::getHealth()
+{
+  return m_health;
+}
+float &BaseEntity::getMaxHealth()
+{
+  return m_maxHealth;
+}
+float &BaseEntity::getSpeed()
+{
+  return m_speed;
+}

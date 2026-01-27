@@ -6,6 +6,7 @@ int main()
 {
 
   config::load("./configs/gui.config");
+  config::load("./configs/hero.config");
   FontManager::load("arial", "assets/fonts/arial.ttf");
   FontManager::load("Pm", "assets/fonts/PermanentMarker-Regular.ttf");
   FontManager::load("Quantico", "assets/fonts/Quantico-Regular.ttf");

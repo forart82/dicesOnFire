@@ -13,7 +13,7 @@ WeaponSlotsMenu::WeaponSlotsMenu()
 WeaponSlotsMenu::WeaponSlotsMenu(
     BaseRectangle weaponSlotsMenuMenu)
     : BaseRectangle(weaponSlotsMenuMenu),
-      m_weaponSlotCounter(8)
+      m_weaponSlotCounter(1)
 {
   makeWeaponSlotes();
 }

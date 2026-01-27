@@ -11,6 +11,12 @@ Game::Game() : m_rng(std::random_device{}())
 {
   m_debugBar = std::make_unique<DebugBar>();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+  m_hero = std::make_unique<Hero>(
+      std::make_unique<BaseRectangle>(config::getRectangle("HERO")),
+      std::make_unique<BaseRectangleX2>(config::getRectangleX2("HERO_HEALTHBAR")),
+      100,
+      100,
+      2);
 
   m_window.setVerticalSyncEnabled(true);
   std::cout << "Game created" << std::endl;
@@ -79,8 +85,8 @@ void Game::run()
 void Game::update(sf::Time delta)
 {
   // Menu
+  m_hero->update(delta);
   m_weaponSlotsMenu->update(delta);
-
   // Last element
   m_debugBar->update(delta);
 }
@@ -93,6 +99,7 @@ void Game::draw()
   m_window.setView(m_mainView);
 
   // Will be between
+  m_window.draw(*m_hero);
   m_window.draw(*m_weaponSlotsMenu);
 
   // Will be last

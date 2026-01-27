@@ -3,18 +3,19 @@
     {
       "type": "cppbuild",
       "label": "C/C++: g++.exe build project",
-      "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+      "command": "C:/msys64/ucrt64/bin/g++.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
-        "${workspaceFolder}\\main.cpp",
+        "${workspaceFolder}/main.cpp",
         "${workspaceFolder}/source/*.cpp",
         "${workspaceFolder}/source/Dice/*.cpp",
+        "${workspaceFolder}/source/Entity/*.cpp",
         "${workspaceFolder}/source/Weapon/*.cpp",
         "-I",
-        "${workspaceFolder}\\header",
+        "${workspaceFolder}/header",
         "-o",
-        "${workspaceFolder}\\game.exe", // Output executable in the root folder
+        "${workspaceFolder}/game.exe", // Output executable in the root folder
         "-lsfml-graphics",
         "-lsfml-audio",
         "-lsfml-window",
@@ -22,7 +23,7 @@
         // "-mwindows" // needed to not show up console window
       ],
       "options": {
-        "cwd": "C:\\msys64\\ucrt64\\bin"
+        "cwd": "C:/msys64/ucrt64/bin"
       },
       "problemMatcher": [
         "$gcc"
