@@ -13,5 +13,7 @@ public:
   HeroEvents(Hero &hero);
   ~HeroEvents();
 
-  void handleCodes(sf::Keyboard::Scancode &code);
+  void keyBoardInput(sf::Keyboard::Scancode &code);
+
+  void move(sf::)
 };
