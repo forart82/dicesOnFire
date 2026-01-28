@@ -23,7 +23,7 @@ public:
       float speed);
   ~BaseEntity();
 
-  void update(sf::Time &delta);
+  virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void setBody(std::unique_ptr<BaseRectangle> body);

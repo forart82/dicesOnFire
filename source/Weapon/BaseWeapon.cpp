@@ -63,7 +63,6 @@ void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
   m_diceSlots[slotId] = std::make_unique<DiceSlot>(config::getCircle(diceSlotKey));
-  std::cout << diceSlotKey << " " << config::getRectangleX2(diceSlotKey + "_TIMER").getInner().getSize().x << std::endl;
   m_timers[slotId] = std::make_unique<Timer>(
       config::getRectangleX2(diceSlotKey + "_TIMER"),
       5,

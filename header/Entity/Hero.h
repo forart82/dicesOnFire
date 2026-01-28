@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity/BaseEntity.h"
+#include "_ENUMS.h"
 
 class Hero : public BaseEntity
 {
@@ -18,5 +19,7 @@ public:
       float speed);
   ~Hero();
 
-  void setDirection(sf::Vector2f direction);
+  void update(sf::Time &delta) override;
+
+  void move(sf::Time &delta);
 };

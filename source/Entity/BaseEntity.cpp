@@ -31,8 +31,6 @@ BaseEntity::~BaseEntity() {}
 
 void BaseEntity::update(sf::Time &delta)
 {
-  m_body->update(delta);
-  m_healthBar->update(delta);
 }
 
 void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const

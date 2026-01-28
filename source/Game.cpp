@@ -16,11 +16,11 @@ Game::Game() : m_rng(std::random_device{}())
       std::make_unique<BaseRectangleX2>(config::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
-      2);
+      1500);
 
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
-  m_window.setVerticalSyncEnabled(true);
+  m_window.setVerticalSyncEnabled(false);
   std::cout << "Game created" << std::endl;
 }
 
@@ -39,6 +39,7 @@ void Game::run()
       {
         m_window.close();
       }
+
       if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
       {
 
@@ -48,24 +49,13 @@ void Game::run()
         case sf::Keyboard::Scancode::Escape:
           m_window.close();
           break;
-        case sf::Keyboard::Scancode::W:
-        case sf::Keyboard::Scancode::A:
-        case sf::Keyboard::Scancode::S:
-        case sf::Keyboard::Scancode::D:
-        case sf::Keyboard::Scancode::Up:
-        case sf::Keyboard::Scancode::Left:
-        case sf::Keyboard::Scancode::Down:
-        case sf::Keyboard::Scancode::Right:
-          break;
         case sf::Keyboard::Scancode::R:
           break;
         case sf::Keyboard::Scancode::O:
           m_debugBar->toggleActive();
           break;
         case sf::Keyboard::Scancode::Comma:
-          config::reload();
-          m_weaponSlotsMenu.reset();
-          m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+          reloadConfig();
         default:
           break;
         }
@@ -138,4 +128,18 @@ void Game::handleMainViewRatio()
   m_mainView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
   m_mainView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
   m_mainView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+}
+
+void Game::reloadConfig()
+{
+  config::reload();
+  m_weaponSlotsMenu.reset();
+  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+  m_hero.reset();
+  m_hero = std::make_unique<Hero>(
+      std::make_unique<BaseRectangle>(config::getRectangle("HERO")),
+      std::make_unique<BaseRectangleX2>(config::getRectangleX2("HERO_HEALTHBAR")),
+      100,
+      100,
+      500);
 }

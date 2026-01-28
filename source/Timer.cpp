@@ -37,7 +37,7 @@ Timer::Timer(
       m_stop(false),
       m_cooldown(cooldown),
       m_isVertical(isVertical),
-      m_progressBarSize(timerMenu.getInner().getSize())
+      m_progressBarSize(timerMenu.getInner().getShape().getSize())
 
 {
 }
@@ -57,13 +57,13 @@ void Timer::update(sf::Time &delta)
     if (m_isVertical)
     {
       progressWidth = m_progressBarSize.x - (m_progressBarSize.x * progress);
-      this->getInner().setSize({progressWidth, progressHeight});
+      this->getInner().getShape().setSize({progressWidth, progressHeight});
     }
 
     if (!m_isVertical)
     {
       progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
-      this->getInner().setSize({progressWidth, progressHeight});
+      this->getInner().getShape().setSize({progressWidth, progressHeight});
     }
 
     if (seconds >= m_cooldown)

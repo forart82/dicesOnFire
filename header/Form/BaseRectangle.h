@@ -59,32 +59,16 @@ public:
   }
 
   // --- Setters ---
-  void setBaseRectangle(const BaseRectangle baseRectangle)
+  void setBaseRectangle(BaseRectangle baseRectangle)
   {
-    sf::Vector2f size = baseRectangle.getSize();
-    this->setPosition(baseRectangle.getPosition());
-    this->setSize(size);
-    this->setThickness(baseRectangle.getThickness());
-    this->setIsActive(baseRectangle.getIsActive());
-    this->setFillColor(baseRectangle.getFillColor());
-    this->setOutlineColor(baseRectangle.getOutlineColor());
+    m_shape.setPosition(baseRectangle.m_shape.getPosition());
+    m_shape.setSize(baseRectangle.m_shape.getSize());
+    setThickness(baseRectangle.getThickness());
+    setIsActive(baseRectangle.getIsActive());
+    m_shape.setFillColor(baseRectangle.m_shape.getFillColor());
+    m_shape.setOutlineColor(baseRectangle.m_shape.getOutlineColor());
 
-    this->setOriginFromSize(size);
-  }
-
-  void setPosition(sf::Vector2f position)
-  {
-    m_shape.setPosition({std::round(position.x), std::round(position.y)});
-  }
-
-  void setSize(sf::Vector2f size)
-  {
-    m_shape.setSize({std::round(size.x), std::round(size.y)});
-  }
-
-  void setOrigin(sf::Vector2f origin)
-  {
-    m_shape.setSize({std::round(origin.x), std::round(origin.y)});
+    setOriginFromSize(baseRectangle.m_shape.getSize());
   }
 
   void setOriginFromSize(sf::Vector2f size)
@@ -102,54 +86,23 @@ public:
     m_isActive = isActive;
   }
 
-  void setFillColor(sf::Color fillColor)
-  {
-    m_shape.setFillColor(fillColor);
-  }
-
-  void setOutlineColor(sf::Color outlineColor)
-  {
-    m_shape.setOutlineColor(outlineColor);
-  }
-
-  void setColors(sf::Color fillColor, sf::Color outlineColor)
-  {
-    setFillColor(fillColor);
-    setOutlineColor(outlineColor);
-  }
-
   void toggleActive()
   {
     m_isActive = !m_isActive;
   }
 
-  sf::Vector2f getPosition() const
+  sf::RectangleShape &getShape()
   {
-    return m_shape.getPosition();
+    return m_shape;
   }
 
-  sf::Vector2f getSize() const
-  {
-    return m_shape.getSize();
-  }
-
-  const int &getThickness() const
+  int &getThickness()
   {
     return m_thickness;
   }
 
-  const bool &getIsActive() const
+  bool &getIsActive()
   {
     return m_isActive;
-  }
-
-  sf::Color getFillColor() const
-  {
-    return m_shape.getFillColor();
-  }
-
-  sf::Color getOutlineColor() const
-  {
-    return m_shape.getOutlineColor();
   }
 };

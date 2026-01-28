@@ -44,4 +44,5 @@ public:
   void draw();
 
   void handleMainViewRatio();
+  void reloadConfig();
 };

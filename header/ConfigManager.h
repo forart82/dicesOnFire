@@ -15,7 +15,6 @@ namespace config
 {
 
   // Data Storage
-  inline std::string m_fileName;
   inline std::vector<std::string> m_fileNames;
   inline std::map<std::string, BaseRectangle> m_rectangle;
   inline std::map<std::string, BaseRectangleX2> m_rectangleX2;
@@ -157,6 +156,8 @@ namespace config
         continue;
       }
 
+      std::cout << "load file: " << listedFileName << std::endl;
+
       std::string line;
       while (std::getline(file, line))
       {
@@ -188,7 +189,6 @@ namespace config
 
   inline void reload()
   {
-    if (!m_fileName.empty())
-      load();
+    load();
   }
 }
