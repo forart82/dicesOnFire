@@ -18,6 +18,8 @@ Game::Game() : m_rng(std::random_device{}())
       100,
       2);
 
+  m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
+
   m_window.setVerticalSyncEnabled(true);
   std::cout << "Game created" << std::endl;
 }
@@ -39,6 +41,7 @@ void Game::run()
       }
       if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
       {
+
         switch (keyPressed->scancode)
         {
         case sf::Keyboard::Scancode::F5:

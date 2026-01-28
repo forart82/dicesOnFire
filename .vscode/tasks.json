@@ -11,6 +11,7 @@
         "${workspaceFolder}/source/*.cpp",
         "${workspaceFolder}/source/Dice/*.cpp",
         "${workspaceFolder}/source/Entity/*.cpp",
+        "${workspaceFolder}/source/Event/*.cpp",
         "${workspaceFolder}/source/Weapon/*.cpp",
         "-I",
         "${workspaceFolder}/header",
