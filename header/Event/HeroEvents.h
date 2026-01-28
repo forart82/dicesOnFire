@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity/Hero.h"
+#include "_ENUMS.h"
 
 class HeroEvents
 {
@@ -15,5 +16,5 @@ public:
 
   void keyBoardInput(sf::Keyboard::Scancode &code);
 
-  void move(sf::)
+  void move()
 };

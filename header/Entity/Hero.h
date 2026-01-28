@@ -6,6 +6,8 @@
 class Hero : public BaseEntity
 {
 private:
+  sf::Vector2f m_direction;
+
 public:
   Hero();
   Hero(
@@ -15,4 +17,6 @@ public:
       float maxHealth,
       float speed);
   ~Hero();
+
+  void setDirection(sf::Vector2f direction);
 };

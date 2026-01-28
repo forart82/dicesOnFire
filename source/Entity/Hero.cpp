@@ -29,3 +29,8 @@ Hero::Hero(
 }
 
 Hero::~Hero() {}
+
+void Hero::setDirection(sf::Vector2f direction)
+{
+  m_direction = direction;
+}
