@@ -3,10 +3,10 @@
 #include "Weapon/WeaponSlotsMenu.h"
 #include "Form/BaseRectangle.h"
 #include "_COLORS.h"
-#include "ConfigManager.h"
+#include "Manager/ConfigManager.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
-    : WeaponSlotsMenu(config::getRectangle("WEAPONSLOTSMENU"))
+    : WeaponSlotsMenu(configManager::getRectangle("WEAPONSLOTSMENU"))
 {
 }
 
@@ -27,7 +27,7 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
   float index = weaponSlotNumber - 1;
   std::string weaponSlotConfig = "WEAPONSLOT_" + std::to_string(weaponSlotNumber);
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
-      config::getRectangle(weaponSlotConfig),
+      configManager::getRectangle(weaponSlotConfig),
       5,
       weaponSlotNumber);
 }

@@ -3,6 +3,7 @@
 #include "Cell.h"
 #include "_GLOBALS.h"
 #include "_HELPERS.h"
+#include "Manager/TextureManager.h"
 
 using namespace std;
 
@@ -65,14 +66,24 @@ void Cell::setTriangles(sf::Vertex *rect)
   sf::Vector2f bottomRight(m_right - GAP_SIZE, m_bottom - GAP_SIZE);
 
   // Define the 2 triangles that make up the quad
-  // Triangle 1
   m_rect[0].position = topLeft;
   m_rect[1].position = topRight;
   m_rect[2].position = bottomLeft;
-  // Triangle 2
   m_rect[3].position = topRight;
   m_rect[4].position = bottomRight;
   m_rect[5].position = bottomLeft;
+
+  float top = 224;
+  float bottom = 256;
+  float left = 32 * GET_RANDOM_NUMBER_INT(0, 10);
+  float right = left + 32;
+
+  m_rect[0].texCoords = {left, top};
+  m_rect[1].texCoords = {right, top};
+  m_rect[2].texCoords = {left, bottom};
+  m_rect[3].texCoords = {right, top};
+  m_rect[4].texCoords = {right, bottom};
+  m_rect[5].texCoords = {left, bottom};
 }
 
 void Cell::setRectColor()

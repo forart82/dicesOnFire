@@ -9,6 +9,7 @@ class DebugBar : public sf::Drawable
 
 private:
   GameText m_debugText;
+  GameText m_debugTextManager;
   DebugWindow m_debugWindow;
   bool m_isActive;
 

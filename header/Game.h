@@ -19,7 +19,8 @@ class Game
 private:
   // Window
   sf::RenderWindow m_window = sf::RenderWindow(sf::VideoMode({960, 600}), "Game", sf::State::Windowed);
-  sf::View m_mainView = sf::View(sf::FloatRect({0, 200}, {0, 300}));
+  sf::View m_uiView = sf::View(sf::FloatRect({0, 200}, {GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT}));
+  sf::View m_playerView = sf::View(sf::FloatRect({0, 0}, {GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT}));
 
   // Time
   const sf::Time m_timePerFrame = sf::seconds(1.f / 60.f);
@@ -45,6 +46,7 @@ public:
   void update(sf::Time delta);
   void draw();
 
-  void handleMainViewRatio();
+  void handlePlayerViewRatio();
+  void handleUiViewRatio();
   void reloadConfig();
 };

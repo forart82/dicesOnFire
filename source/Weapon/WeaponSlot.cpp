@@ -9,7 +9,7 @@
 #include "Form/BaseRectangle.h"
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/WeaponHelper.h"
-#include "ConfigManager.h"
+#include "Manager/ConfigManager.h"
 
 WeaponSlot::WeaponSlot()
     : WeaponSlot(
@@ -29,7 +29,7 @@ WeaponSlot::WeaponSlot(
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
   m_timer = std::make_unique<Timer>(
-      config::getRectangleX2(weaponSlotKey + "_TIMER"),
+      configManager::getRectangleX2(weaponSlotKey + "_TIMER"),
       cooldown,
       true);
   fakeDropWeaponInSlot(weaponSlotKey);
@@ -53,7 +53,7 @@ void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
 {
   m_bladedWeapon = std::make_unique<BladedWeapon>(
-      config::getRectangle(weaponSlotKey + "_WEAPON"),
+      configManager::getRectangle(weaponSlotKey + "_WEAPON"),
       GET_RANDOM_NUMBER_INT(3, 5),
       GET_RANDOM_NUMBER_INT(1, 7),
       GET_RANDOM_NUMBER_INT(1, 2),

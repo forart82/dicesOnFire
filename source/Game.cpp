@@ -5,20 +5,20 @@
 #include "DebugBar.h"
 #include "Grid.h"
 #include "_GLOBALS.h"
-#include "ConfigManager.h"
+#include "Manager/ConfigManager.h"
 
 Game::Game() : m_rng(std::random_device{}())
 {
   m_debugBar = std::make_unique<DebugBar>();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
   m_hero = std::make_unique<Hero>(
-      std::make_unique<BaseRectangle>(config::getRectangle("HERO")),
-      std::make_unique<BaseRectangleX2>(config::getRectangleX2("HERO_HEALTHBAR")),
+      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO")),
+      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
       1500);
 
-  m_grid = std::make_unique<Grid>();
+  m_grid = std::make_unique<Grid>(*m_hero);
 
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
@@ -92,12 +92,15 @@ void Game::draw()
 {
   // Will be first
   m_window.clear();
-  handleMainViewRatio();
-  m_window.setView(m_mainView);
+  handleUiViewRatio();
 
   // Will be between
+  m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
+  m_window.setView(m_playerView);
   m_window.draw(*m_grid);
   m_window.draw(*m_hero);
+
+  m_window.setView(m_uiView);
   m_window.draw(*m_weaponSlotsMenu);
 
   // Will be last
@@ -105,7 +108,7 @@ void Game::draw()
   m_window.display();
 }
 
-void Game::handleMainViewRatio()
+void Game::handlePlayerViewRatio()
 {
 
   float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
@@ -127,23 +130,50 @@ void Game::handleMainViewRatio()
     posY = (1.f - sizeY) / 2.f;
   }
 
-  // m_mainView.setCenter({std::round(GLOBAL_SCREEN_WIDTH / 2), std::round(GLOBAL_SCREEN_HEIGHT / 2)});
-  // m_mainView.setSize({std::round(GLOBAL_SCREEN_WIDTH), std::round(GLOBAL_SCREEN_HEIGHT)});
-  // m_mainView.setViewport(sf::FloatRect({std::round(posX), std::round(posY)}, {std::round(sizeX), std::round(sizeY)}));
-  m_mainView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
-  m_mainView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
-  m_mainView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+  m_uiView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
+  m_uiView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+}
+
+void Game::handleUiViewRatio()
+{
+
+  float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
+  float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
+
+  float sizeX = 1.f;
+  float sizeY = 1.f;
+  float posX = 0.f;
+  float posY = 0.f;
+
+  if (windowRatio > targetRatio)
+  {
+    sizeX = targetRatio / windowRatio;
+    posX = (1.f - sizeX) / 2.f;
+  }
+  else
+  {
+    sizeY = windowRatio / targetRatio;
+    posY = (1.f - sizeY) / 2.f;
+  }
+
+  m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
+  m_playerView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+  m_uiView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
+  m_uiView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }
 
 void Game::reloadConfig()
 {
-  config::reload();
+  configManager::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
-      std::make_unique<BaseRectangle>(config::getRectangle("HERO")),
-      std::make_unique<BaseRectangleX2>(config::getRectangleX2("HERO_HEALTHBAR")),
+      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO")),
+      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
       500);

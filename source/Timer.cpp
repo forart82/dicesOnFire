@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Timer.h"
-#include "ConfigManager.h"
+#include "Manager/ConfigManager.h"
 #include "Form/BaseRectangle.h"
 #include "Form/BaseRectangleX2.h"
 #include "_GLOBALS.h"

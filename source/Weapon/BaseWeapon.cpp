@@ -2,7 +2,7 @@
 #include "Weapon/BaseWeapon.h"
 #include "_COLORS.h"
 #include "Form/BaseRectangle.h"
-#include "ConfigManager.h"
+#include "Manager/ConfigManager.h"
 
 BaseWeapon::BaseWeapon()
     : BaseWeapon(
@@ -62,9 +62,9 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>(config::getCircle(diceSlotKey));
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>(configManager::getCircle(diceSlotKey));
   m_timers[slotId] = std::make_unique<Timer>(
-      config::getRectangleX2(diceSlotKey + "_TIMER"),
+      configManager::getRectangleX2(diceSlotKey + "_TIMER"),
       5,
       true);
 }

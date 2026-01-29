@@ -1,5 +1,5 @@
 #include "GameText.h"
-#include "FontManager.h"
+#include "Manager/FontManager.h"
 #include "_GLOBALS.h"
 #include "_COLORS.h"
 
@@ -7,9 +7,14 @@ GameText::GameText() : GameText("", "", {10, 10}, colors::COLOR_BLUE_SKY_BLUE, "
 {
 }
 
-GameText::GameText(std::string key, std::string text, sf::Vector2f position, sf::Color color, std::string fontName) : m_sfText(FontManager::get("Quantico"))
+GameText::GameText(
+    std::string key,
+    std::string text,
+    sf::Vector2f position,
+    sf::Color color,
+    std::string fontName)
+    : m_sfText(fontManager::get(fontName))
 {
-  m_sfText.setFont(FontManager::get(fontName));
   m_sfText.setPosition(position);
   m_sfText.setFillColor(color);
 }
@@ -27,7 +32,7 @@ void GameText::addText(std::string key, std::string value)
 {
   m_texts[key] = value;
   std::string combined;
-  combined.reserve(256);
+  combined.reserve(1024);
   for (auto const &[key, value] : m_texts)
   {
     combined += value + "\n";
