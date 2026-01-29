@@ -8,10 +8,12 @@
 Grid::Grid()
 {
   int numCells = (GLOBAL_SCREEN_WIDTH / TILE_SIZE) * (GLOBAL_SCREEN_HEIGHT / TILE_SIZE);
-  cells.reserve(numCells); // Reserve memory to avoid reallocations
-  vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
-  vertices.resize(numCells * 6);
+  m_cells.reserve(numCells); // Reserve memory to avoid reallocations
+  m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
+  m_vertices.resize(numCells * 6);
   createStartZone();
+  // m_transform.rotate(sf::degrees(45.f));
+  m_transform.scale({1.f, 0.5f});
 }
 Grid::~Grid() {}
 
@@ -24,21 +26,21 @@ void Grid::createStartZone()
     for (int width = SNAP_TO_GRID(0); width < GLOBAL_SCREEN_WIDTH; width += TILE_SIZE)
     {
       // Get a pointer to the first vertex of the current quad
-      sf::Vertex *triangels = &vertices[cellCounter * 6];
+      sf::Vertex *triangels = &m_vertices[cellCounter * 6];
       // Use emplace_back to construct the Cell in-place
-      cells.emplace_back(triangels, sf::Vector2f(width, height), colors::COLOR_GRAYSCALE_BLACK);
+      m_cells.emplace_back(triangels, sf::Vector2f(width, height), colors::COLOR_BROWN_MILKY_SAND);
       cellCounter++;
     }
   }
 }
 
-void Grid::update()
+void Grid::update(sf::Time &delta)
 {
   // Future grid update logic
 }
 
-void Grid::draw(sf::RenderTarget &target)
+void Grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  // Draw all vertices in a single, efficient draw call
-  target.draw(vertices);
+  states.transform *= m_transform;
+  target.draw(m_vertices, states);
 }

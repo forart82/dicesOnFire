@@ -18,6 +18,8 @@ Game::Game() : m_rng(std::random_device{}())
       100,
       1500);
 
+  m_grid = std::make_unique<Grid>();
+
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
   m_window.setVerticalSyncEnabled(false);
@@ -77,9 +79,11 @@ void Game::run()
 
 void Game::update(sf::Time delta)
 {
-  // Menu
+  // Elements
+  m_grid->update(delta);
   m_hero->update(delta);
   m_weaponSlotsMenu->update(delta);
+
   // Last element
   m_debugBar->update(delta);
 }
@@ -92,6 +96,7 @@ void Game::draw()
   m_window.setView(m_mainView);
 
   // Will be between
+  m_window.draw(*m_grid);
   m_window.draw(*m_hero);
   m_window.draw(*m_weaponSlotsMenu);
 

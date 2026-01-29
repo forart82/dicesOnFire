@@ -33,6 +33,8 @@ private:
   std::unique_ptr<WeaponSlotsMenu> m_weaponSlotsMenu;
   std::unique_ptr<Hero> m_hero;
   std::unique_ptr<HeroEvents> m_heroEvents;
+  std::unique_ptr<Grid> m_grid;
+
   std::mt19937 m_rng;
 
 public:

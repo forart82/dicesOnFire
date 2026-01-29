@@ -4,12 +4,13 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-class Grid
+class Grid : public sf::Drawable
 {
 
 private:
-  std::vector<Cell> cells;
-  sf::VertexArray vertices;
+  std::vector<Cell> m_cells;
+  sf::VertexArray m_vertices;
+  sf::Transform m_transform;
 
 public:
   Grid();
@@ -17,6 +18,6 @@ public:
 
   void createStartZone();
 
-  void update();
-  void draw(sf::RenderTarget &target);
+  void update(sf::Time &detla);
+  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 };
