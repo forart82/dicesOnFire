@@ -6,31 +6,32 @@ class Cell
 {
 
 private:
-  std::string m_key;
-  int m_top;
   int m_left;
-  int m_bottom;
-  int m_right;
-  sf::Vector2f m_position;
-  sf::Color m_color;
-  sf::Vertex *m_rect;
+  int m_top;
+  int m_assetsLeft;
+  int m_assetsTop;
+
+  sf::Vector2f m_leftTop;
+  sf::Vector2f m_rightTop;
+  sf::Vector2f m_leftBottom;
+  sf::Vector2f m_rightBottom;
+
+  sf::Vector2f m_assetsLeftTop;
+  sf::Vector2f m_assetsRightTop;
+  sf::Vector2f m_assetsLeftBottom;
+  sf::Vector2f m_assetsRightBottom;
 
 public:
-  Cell(sf::Vertex *rect, sf::Vector2f position, sf::Color color);
+  Cell(int left, int top);
   ~Cell();
-  void update();
 
-  void manageCell(sf::Vertex *rect, sf::Vector2f position);
+  sf::Vector2f &getLeftTop();
+  sf::Vector2f &getRightTop();
+  sf::Vector2f &getLeftBottom();
+  sf::Vector2f &getRightBottom();
 
-  // MARK: Setter
-  void setPosition(sf::Vector2f position);
-  void setKey();
-  void setTriangles(sf::Vertex *rect);
-  void setRectColor();
-  void setColor(sf::Color color);
-
-  // MARK: Getter
-  std::string getKey() const;
-  sf::Color getColor();
-  sf::Vector2f getPosition() const;
+  sf::Vector2f &getAssetsLeftTop();
+  sf::Vector2f &getAssetsRightTop();
+  sf::Vector2f &getAssetsLeftBottom();
+  sf::Vector2f &getAssetsRightBottom();
 };

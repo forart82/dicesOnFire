@@ -11,6 +11,7 @@ class Grid : public sf::Drawable
 private:
   std::map<std::pair<int, int>, Cell> m_cells;
   sf::VertexArray m_vertices;
+  int m_radius;
 
   Hero &m_hero;
 
@@ -21,5 +22,5 @@ public:
   void update(sf::Time &detla);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void createStartZone();
+  void loadZone();
 };

@@ -7,114 +7,63 @@
 
 using namespace std;
 
-Cell::Cell(
-    sf::Vertex *rect,
-    sf::Vector2f position,
-    sf::Color color)
-    : m_rect(rect),
-      m_position(position),
-      m_color(color),
-      m_top(position.y),
-      m_left(position.x + TILE_SIZE),
-      m_bottom(position.y + TILE_SIZE),
-      m_right(position.x),
-      m_key(MAKE_CELL_KEY(m_top, m_right, m_bottom, m_left))
+Cell::Cell(int left, int top)
 {
-  manageCell(rect, position);
+  m_left = left;
+  m_top = top;
+
+  m_assetsLeft = 32 * GET_RANDOM_NUMBER_INT(0, 10);
+  m_assetsTop = 224;
+
+  m_leftTop = sf::Vector2f(m_left, m_top);
+  m_rightTop = sf::Vector2f(m_left + TILE_SIZE, m_top);
+  m_leftBottom = sf::Vector2f(m_left, m_top + TILE_SIZE);
+  m_rightBottom = sf::Vector2f(m_left + TILE_SIZE, m_top + TILE_SIZE);
+
+  m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
+  m_assetsRightTop = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop);
+  m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + ASSETS_TILE_SIZE);
+  m_assetsRightBottom = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop + ASSETS_TILE_SIZE);
 }
 
-Cell::~Cell()
+Cell::~Cell() {}
+
+sf::Vector2f &Cell::getLeftTop()
 {
+  return m_leftTop;
 }
 
-void Cell::update()
+sf::Vector2f &Cell::getRightTop()
 {
+  return m_rightTop;
 }
 
-void Cell::manageCell(sf::Vertex *rect, sf::Vector2f position)
+sf::Vector2f &Cell::getLeftBottom()
 {
-  setPosition(position);
-  setKey();
-  setTriangles(rect);
-  setRectColor();
+  return m_leftBottom;
 }
 
-// MARK: Setter
-void Cell::setPosition(sf::Vector2f position)
+sf::Vector2f &Cell::getRightBottom()
 {
-  m_position = position;
-
-  // Update the vertex positions
-  m_top = SNAP_TO_GRID(position.y);
-  m_right = SNAP_TO_GRID(position.x + TILE_SIZE);
-  m_bottom = SNAP_TO_GRID(position.y + TILE_SIZE);
-  m_left = SNAP_TO_GRID(position.x);
-}
-void Cell::setKey()
-{
-  m_key = MAKE_CELL_KEY(m_top, m_right, m_bottom, m_left);
+  return m_rightBottom;
 }
 
-void Cell::setTriangles(sf::Vertex *rect)
+sf::Vector2f &Cell::getAssetsLeftTop()
 {
-  m_rect = rect;
-
-  // Define the 4 corners of the quad
-  sf::Vector2f topLeft(m_left + GAP_SIZE, m_top + GAP_SIZE);
-  sf::Vector2f topRight(m_right - GAP_SIZE, m_top + GAP_SIZE);
-  sf::Vector2f bottomLeft(m_left + GAP_SIZE, m_bottom - GAP_SIZE);
-  sf::Vector2f bottomRight(m_right - GAP_SIZE, m_bottom - GAP_SIZE);
-
-  // Define the 2 triangles that make up the quad
-  m_rect[0].position = topLeft;
-  m_rect[1].position = topRight;
-  m_rect[2].position = bottomLeft;
-  m_rect[3].position = topRight;
-  m_rect[4].position = bottomRight;
-  m_rect[5].position = bottomLeft;
-
-  float top = 224;
-  float bottom = 256;
-  float left = 32 * GET_RANDOM_NUMBER_INT(0, 10);
-  float right = left + 32;
-
-  m_rect[0].texCoords = {left, top};
-  m_rect[1].texCoords = {right, top};
-  m_rect[2].texCoords = {left, bottom};
-  m_rect[3].texCoords = {right, top};
-  m_rect[4].texCoords = {right, bottom};
-  m_rect[5].texCoords = {left, bottom};
+  return m_assetsLeftTop;
 }
 
-void Cell::setRectColor()
+sf::Vector2f &Cell::getAssetsRightTop()
 {
-  if (m_rect != nullptr)
-  {
-    for (int i = 0; i < 6; ++i)
-    {
-      m_rect[i].color = m_color;
-    }
-  }
+  return m_assetsRightTop;
 }
 
-void Cell::setColor(sf::Color color)
+sf::Vector2f &Cell::getAssetsLeftBottom()
 {
-  m_color = color;
+  return m_assetsLeftBottom;
 }
 
-// MARK: Getter
-
-std::string Cell::getKey() const
+sf::Vector2f &Cell::getAssetsRightBottom()
 {
-  return m_key;
-}
-
-sf::Color Cell::getColor()
-{
-  return m_color;
-}
-
-sf::Vector2f Cell::getPosition() const
-{
-  return m_position;
+  return m_assetsRightBottom;
 }

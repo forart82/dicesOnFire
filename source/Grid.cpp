@@ -9,18 +9,15 @@
 Grid::Grid(Hero &hero)
     : m_hero(hero)
 {
-  int numCells = 2500;
+  m_radius = m_hero.getWatchRadius();
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
-  m_vertices.resize(numCells * 6);
-  createStartZone();
+  loadZone();
 }
 Grid::~Grid() {}
 
 void Grid::update(sf::Time &delta)
 {
-  // m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
-  // m_vertices.resize(2500 * 6);
-  // createStartZone();
+  loadZone();
 }
 
 void Grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -29,15 +26,20 @@ void Grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_vertices, states);
 }
 
-void Grid::createStartZone()
+void Grid::loadZone()
 {
+  int side = (m_radius * 2) + 1;
+  int numCells = side * side;
+  if (m_vertices.getVertexCount() != numCells * 6)
+  {
+    m_vertices.resize(numCells * 6);
+  }
   int cellCounter = 0;
-  int radius = 25;
-  int playerXMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - radius * TILE_SIZE);
-  int playerYMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - radius * TILE_SIZE);
+  int playerXMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - m_radius * TILE_SIZE);
+  int playerYMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - m_radius * TILE_SIZE);
 
-  int playerXMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + radius * TILE_SIZE);
-  int playerYMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + radius * TILE_SIZE);
+  int playerXMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + m_radius * TILE_SIZE);
+  int playerYMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + m_radius * TILE_SIZE);
 
   for (int x = playerXMin; x <= playerXMax; x += TILE_SIZE)
   {
@@ -46,10 +48,30 @@ void Grid::createStartZone()
 
       if (m_cells.find({x, y}) == m_cells.end())
       {
-        sf::Vertex *triangels = &m_vertices[cellCounter * 6];
-        m_cells.try_emplace({x, y}, triangels, sf::Vector2f(x, y), colors::COLOR_BROWN_MILKY_SAND);
-        std::cout << cellCounter << std::endl;
+        m_cells.try_emplace({x, y}, x, y);
+        std::cout << cellCounter << " max: " << 625 * 6 << std::endl;
       }
+      sf::Vertex *triangels = &m_vertices[cellCounter * 6];
+
+      auto &cell = m_cells.at({x, y});
+      // Triangle 1
+      triangels[0].position = cell.getLeftTop();
+      triangels[1].position = cell.getRightTop();
+      triangels[2].position = cell.getLeftBottom();
+
+      // Triangle 2
+      triangels[3].position = cell.getRightTop();
+      triangels[4].position = cell.getRightBottom();
+      triangels[5].position = cell.getLeftBottom();
+
+      triangels[0].texCoords = cell.getAssetsLeftTop();
+      triangels[1].texCoords = cell.getAssetsRightTop();
+      triangels[2].texCoords = cell.getAssetsLeftBottom();
+
+      // Triangle 2
+      triangels[3].texCoords = cell.getAssetsRightTop();
+      triangels[4].texCoords = cell.getAssetsRightBottom();
+      triangels[5].texCoords = cell.getAssetsLeftBottom();
 
       cellCounter++;
     }

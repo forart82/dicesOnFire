@@ -12,6 +12,7 @@ protected:
   float m_health;
   float m_maxHealth;
   float m_speed;
+  int m_watchRadius;
 
 public:
   BaseEntity();
@@ -20,7 +21,8 @@ public:
       std::unique_ptr<BaseRectangleX2> healthBar,
       float health,
       float maxHealth,
-      float speed);
+      float speed,
+      int watchRadius);
   ~BaseEntity();
 
   virtual void update(sf::Time &delta);
@@ -31,10 +33,12 @@ public:
   void setHealth(float health);
   void setMaxHealth(float maxHealth);
   void setSpeed(float speed);
+  void setWatchRadius(int watchRadius);
 
   BaseRectangle &getBody();
   BaseRectangleX2 &getHealthBar();
   float &getHealth();
   float &getMaxHealth();
   float &getSpeed();
+  int &getWatchRadius();
 };

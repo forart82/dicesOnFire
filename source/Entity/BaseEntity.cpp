@@ -9,7 +9,8 @@ BaseEntity::BaseEntity()
           std::make_unique<BaseRectangleX2>(),
           100,
           100,
-          2)
+          2,
+          25)
 {
 }
 
@@ -18,10 +19,12 @@ BaseEntity::BaseEntity(
     std::unique_ptr<BaseRectangleX2> healthBar,
     float health,
     float maxHealth,
-    float speed)
+    float speed,
+    int watchRadius)
     : m_health(health),
       m_maxHealth(maxHealth),
-      m_speed(speed)
+      m_speed(speed),
+      m_watchRadius(watchRadius)
 {
   m_body = std::move(body);
   m_healthBar = std::move(healthBar);
@@ -59,6 +62,10 @@ void BaseEntity::setSpeed(float speed)
 {
   m_speed = speed;
 }
+void BaseEntity::setWatchRadius(int watchRadius)
+{
+  m_watchRadius = watchRadius;
+}
 
 BaseRectangle &BaseEntity::getBody()
 {
@@ -79,4 +86,8 @@ float &BaseEntity::getMaxHealth()
 float &BaseEntity::getSpeed()
 {
   return m_speed;
+}
+int &BaseEntity::getWatchRadius()
+{
+  return m_watchRadius;
 }

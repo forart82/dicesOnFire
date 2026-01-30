@@ -9,6 +9,8 @@
 
 Game::Game() : m_rng(std::random_device{}())
 {
+  m_window.setVerticalSyncEnabled(true);
+
   m_debugBar = std::make_unique<DebugBar>();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
   m_hero = std::make_unique<Hero>(
@@ -16,13 +18,13 @@ Game::Game() : m_rng(std::random_device{}())
       std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
-      1500);
+      1500,
+      50);
 
   m_grid = std::make_unique<Grid>(*m_hero);
 
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
-  m_window.setVerticalSyncEnabled(false);
   std::cout << "Game created" << std::endl;
 }
 
@@ -176,5 +178,8 @@ void Game::reloadConfig()
       std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
-      500);
+      500,
+      50);
+  m_grid.reset();
+  m_grid = std::make_unique<Grid>(*m_hero);
 }

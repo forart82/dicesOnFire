@@ -11,7 +11,8 @@ Hero::Hero()
            std::make_unique<BaseRectangleX2>(),
            100,
            100,
-           2)
+           2,
+           25)
 {
 }
 
@@ -20,13 +21,15 @@ Hero::Hero(
     std::unique_ptr<BaseRectangleX2> healthBar,
     float health,
     float maxHealth,
-    float speed)
+    float speed,
+    int watchRadius)
     : BaseEntity(
           std::move(body),
           std::move(healthBar),
           health,
           maxHealth,
-          speed)
+          speed,
+          watchRadius)
 {
 }
 

@@ -4,18 +4,18 @@
 #include <cmath>
 #include <map>
 
-const int TILE_SIZE = 64;
-const int GLOBAL_SCREEN_WIDTH = 3840;
-const int GLOBAL_SCREEN_HEIGHT = 2176;
+inline constexpr int TILE_SIZE = 64;
+inline constexpr int ASSETS_TILE_SIZE = 32;
+inline constexpr int GLOBAL_SCREEN_WIDTH = 3840;
+inline constexpr int GLOBAL_SCREEN_HEIGHT = 2176;
 // const int GLOBAL_SCREEN_WIDTH = 1920;
 // const int GLOBAL_SCREEN_HEIGHT = 1080;
-;
 
-const int START_ZONE_WIDTH = 600;
-const int START_ZONE_HEIGHT = 400;
-const int SCOREBOARD_HEIGHT = 50;
-const int TEXT_SIZE = 16;
+inline constexpr int START_ZONE_WIDTH = 600;
+inline constexpr int START_ZONE_HEIGHT = 400;
+inline constexpr int SCOREBOARD_HEIGHT = 50;
+inline constexpr int TEXT_SIZE = 16;
 
-const float GAP_SIZE = 0.f;
-const float BUTTON_HEIGHT = 20.f;
-const float BUTTON_WIDTH = 80.f;
+inline constexpr float GAP_SIZE = 0.f;
+inline constexpr float BUTTON_HEIGHT = 20.f;
+inline constexpr float BUTTON_WIDTH = 80.f;

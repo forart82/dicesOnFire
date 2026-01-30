@@ -16,7 +16,8 @@ public:
       std::unique_ptr<BaseRectangleX2> healthBar,
       float health,
       float maxHealth,
-      float speed);
+      float speed,
+      int watchRadius);
   ~Hero();
 
   void update(sf::Time &delta) override;
