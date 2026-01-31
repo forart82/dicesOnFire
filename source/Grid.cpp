@@ -1,10 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Grid.h"
-#include "_GLOBALS.h"
-#include "_HELPERS.h"
-#include "_COLORS.h"
-#include "Manager/TextureManager.h"
 
 Grid::Grid(Hero &hero)
     : m_hero(hero)
@@ -49,7 +43,6 @@ void Grid::loadZone()
       if (m_cells.find({x, y}) == m_cells.end())
       {
         m_cells.try_emplace({x, y}, x, y);
-        std::cout << cellCounter << " max: " << 625 * 6 << std::endl;
       }
       sf::Vertex *triangels = &m_vertices[cellCounter * 6];
 
@@ -76,4 +69,9 @@ void Grid::loadZone()
       cellCounter++;
     }
   }
+}
+
+int Grid::getVerticesSize()
+{
+  return m_vertices.getVertexCount();
 }

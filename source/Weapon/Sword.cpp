@@ -1,8 +1,4 @@
-#include <SFML/Graphics.hpp>
 #include "Weapon/Sword.h"
-#include "Weapon/BladedWeapon.h"
-#include "_COLORS.h"
-#include "Form/BaseRectangle.h"
 
 Sword::Sword()
     : Sword(

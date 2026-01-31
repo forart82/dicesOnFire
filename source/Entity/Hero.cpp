@@ -1,10 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Entity/BaseEntity.h"
 #include "Entity/Hero.h"
-#include "Form/BaseRectangle.h"
-#include "Form/BaseRectangleX2.h"
-#include "_ENUMS.h"
 
 Hero::Hero()
     : Hero(std::make_unique<BaseRectangle>(),

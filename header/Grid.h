@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Cell.h"
-#include <vector>
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Cell.h"
 #include "Entity/Hero.h"
+#include "Manager/TextureManager.h"
+#include "_HELPERS.h"
 
 class Grid : public sf::Drawable
 {
@@ -23,4 +25,6 @@ public:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void loadZone();
+
+  int getVerticesSize();
 };

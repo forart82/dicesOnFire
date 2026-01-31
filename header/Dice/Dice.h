@@ -6,6 +6,7 @@
 #include "GameText.h"
 #include "Timer.h"
 #include "Form/BaseCircle.h"
+#include "_HELPERS.h"
 
 class Dice : public BaseCircle
 {

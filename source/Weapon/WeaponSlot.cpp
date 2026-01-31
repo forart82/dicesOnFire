@@ -1,15 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Timer.h"
-#include "_GLOBALS.h"
-#include "_COLORS.h"
-#include "_HELPERS.h"
-#include "Dice/Dice.h"
-#include "Dice/DiceSlot.h"
-#include "Form/BaseRectangle.h"
 #include "Weapon/WeaponSlot.h"
-#include "Weapon/WeaponHelper.h"
-#include "Manager/ConfigManager.h"
 
 WeaponSlot::WeaponSlot()
     : WeaponSlot(

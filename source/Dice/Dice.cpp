@@ -1,12 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Dice/Dice.h"
-#include "Timer.h"
-#include "GameText.h"
-#include "_GLOBALS.h"
-#include "_COLORS.h"
-#include "_HELPERS.h"
-#include "Form/BaseCircle.h"
 
 Dice::Dice()
     : Dice(

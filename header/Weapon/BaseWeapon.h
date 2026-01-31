@@ -5,6 +5,7 @@
 #include "Dice/DiceSlot.h"
 #include "Form/BaseRectangle.h"
 #include "Timer.h"
+#include "Manager/ConfigManager.h"
 
 class BaseWeapon : public BaseRectangle
 {

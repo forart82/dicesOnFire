@@ -1,8 +1,4 @@
-#include <SFML/Graphics.hpp>
 #include "Weapon/BaseWeapon.h"
-#include "_COLORS.h"
-#include "Form/BaseRectangle.h"
-#include "Manager/ConfigManager.h"
 
 BaseWeapon::BaseWeapon()
     : BaseWeapon(

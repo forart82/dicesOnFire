@@ -1,9 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Weapon/WeaponSlotsMenu.h"
-#include "Form/BaseRectangle.h"
-#include "_COLORS.h"
-#include "Manager/ConfigManager.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
     : WeaponSlotsMenu(configManager::getRectangle("WEAPONSLOTSMENU"))

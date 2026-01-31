@@ -1,7 +1,4 @@
-#include <SFML/Graphics.hpp>
 #include "Entity/BaseEntity.h"
-#include "Form/BaseRectangle.h"
-#include "Form/BaseRectangleX2.h"
 
 BaseEntity::BaseEntity()
     : BaseEntity(

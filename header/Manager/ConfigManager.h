@@ -175,6 +175,7 @@ namespace configManager
     m_fileNames.clear();
     configManager::load("configs/gui.config");
     configManager::load("configs/hero.config");
+    configManager::load("configs/debugBar.config");
   }
 
   inline void reload()

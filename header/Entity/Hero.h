@@ -1,8 +1,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/BaseEntity.h"
+#include <iostream>
 #include "_ENUMS.h"
+#include "Entity/BaseEntity.h"
+#include "Form/BaseRectangle.h"
+#include "Form/BaseRectangleX2.h"
 
 class Hero : public BaseEntity
 {

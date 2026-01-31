@@ -7,6 +7,7 @@
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/BladedWeapon.h"
 #include "Form/BaseRectangle.h"
+#include "_HELPERS.h"
 
 class WeaponSlot : public BaseRectangle
 {

@@ -1,9 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Weapon/BladedWeapon.h"
-#include "Weapon/BaseWeapon.h"
-#include "_COLORS.h"
-#include "Form/BaseRectangle.h"
 
 BladedWeapon::BladedWeapon()
     : BladedWeapon(

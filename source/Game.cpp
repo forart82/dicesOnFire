@@ -1,30 +1,9 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <random>
 #include "Game.h"
-#include "DebugBar.h"
-#include "Grid.h"
-#include "_GLOBALS.h"
-#include "Manager/ConfigManager.h"
 
 Game::Game() : m_rng(std::random_device{}())
 {
   m_window.setVerticalSyncEnabled(true);
-
-  m_debugBar = std::make_unique<DebugBar>();
-  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
-  m_hero = std::make_unique<Hero>(
-      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO")),
-      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
-      100,
-      100,
-      1500,
-      50);
-
-  m_grid = std::make_unique<Grid>(*m_hero);
-
-  m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
-
+  init();
   std::cout << "Game created" << std::endl;
 }
 
@@ -35,6 +14,7 @@ Game::~Game()
 
 void Game::run()
 {
+  float z = 1;
   while (m_window.isOpen())
   {
     while (auto event = m_window.pollEvent())
@@ -59,7 +39,13 @@ void Game::run()
           m_debugBar->toggleActive();
           break;
         case sf::Keyboard::Scancode::Comma:
-          reloadConfig();
+          init();
+        case sf::Keyboard::Scancode::PageUp:
+          handlePlayerZoom("up");
+          break;
+        case sf::Keyboard::Scancode::PageDown:
+          handlePlayerZoom("down");
+          break;
         default:
           break;
         }
@@ -94,7 +80,7 @@ void Game::draw()
 {
   // Will be first
   m_window.clear();
-  handleUiViewRatio();
+  handleViewRatio();
 
   // Will be between
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
@@ -110,34 +96,7 @@ void Game::draw()
   m_window.display();
 }
 
-void Game::handlePlayerViewRatio()
-{
-
-  float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
-  float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
-
-  float sizeX = 1.f;
-  float sizeY = 1.f;
-  float posX = 0.f;
-  float posY = 0.f;
-
-  if (windowRatio > targetRatio)
-  {
-    sizeX = targetRatio / windowRatio;
-    posX = (1.f - sizeX) / 2.f;
-  }
-  else
-  {
-    sizeY = windowRatio / targetRatio;
-    posY = (1.f - sizeY) / 2.f;
-  }
-
-  m_uiView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
-  m_uiView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
-  m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-}
-
-void Game::handleUiViewRatio()
+void Game::handleViewRatio()
 {
 
   float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
@@ -161,14 +120,17 @@ void Game::handleUiViewRatio()
 
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
   m_playerView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_playerView.zoom(m_playerZoom);
   m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
   m_uiView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
   m_uiView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
   m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }
 
-void Game::reloadConfig()
+void Game::init()
 {
+  m_playerZoom = 1;
+
   configManager::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
@@ -178,8 +140,32 @@ void Game::reloadConfig()
       std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       100,
       100,
-      500,
-      50);
+      1000,
+      PLAYER_WATCH_RADIUS);
+
+  m_heroEvents.reset();
+  m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);
+
+  m_debugBar.reset();
+  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_grid);
+}
+
+void Game::handlePlayerZoom(std::string zoomDirection)
+{
+  if (m_playerZoom > 0.1f)
+  {
+    if (zoomDirection == "up")
+    {
+      m_playerZoom -= 0.1f;
+    }
+  }
+  if (m_playerZoom < 2.f)
+  {
+    if (zoomDirection == "down")
+    {
+      m_playerZoom += 0.1f;
+    }
+  }
 }

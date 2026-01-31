@@ -11,6 +11,8 @@ inline constexpr int GLOBAL_SCREEN_HEIGHT = 2176;
 // const int GLOBAL_SCREEN_WIDTH = 1920;
 // const int GLOBAL_SCREEN_HEIGHT = 1080;
 
+inline constexpr int PLAYER_WATCH_RADIUS = 50;
+
 inline constexpr int START_ZONE_WIDTH = 600;
 inline constexpr int START_ZONE_HEIGHT = 400;
 inline constexpr int SCOREBOARD_HEIGHT = 50;

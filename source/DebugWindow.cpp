@@ -1,7 +1,4 @@
-#include <SFML/Graphics.hpp>
 #include "DebugWindow.h"
-#include "_GLOBALS.h"
-#include "_COLORS.h"
 
 DebugWindow::DebugWindow()
 {
