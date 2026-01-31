@@ -4,24 +4,34 @@ BaseEntity::BaseEntity()
     : BaseEntity(
           std::make_unique<BaseRectangle>(),
           std::make_unique<BaseRectangleX2>(),
+          std::make_unique<BaseCircle>(),
+          std::make_unique<BaseCircle>(),
           100,
           100,
           2,
-          25)
+          25,
+          25,
+          50)
 {
 }
 
 BaseEntity::BaseEntity(
     std::unique_ptr<BaseRectangle> body,
     std::unique_ptr<BaseRectangleX2> healthBar,
+    std::unique_ptr<BaseCircle> shortRangeCircle,
+    std::unique_ptr<BaseCircle> longRangeCircle,
     float health,
     float maxHealth,
     float speed,
-    int watchRadius)
+    int watchRangeRadius,
+    int shortRangeRadius,
+    int longTangeRadius)
     : m_health(health),
       m_maxHealth(maxHealth),
       m_speed(speed),
-      m_watchRadius(watchRadius)
+      m_watchRangeRadius(watchRangeRadius),
+      m_shortRangeRadius(shortRangeRadius),
+      m_longRangeRadius(longTangeRadius)
 {
   m_body = std::move(body);
   m_healthBar = std::move(healthBar);
@@ -59,9 +69,9 @@ void BaseEntity::setSpeed(float speed)
 {
   m_speed = speed;
 }
-void BaseEntity::setWatchRadius(int watchRadius)
+void BaseEntity::setWatchRangeRadius(int watchRangeRadius)
 {
-  m_watchRadius = watchRadius;
+  m_watchRangeRadius = watchRangeRadius;
 }
 
 BaseRectangle &BaseEntity::getBody()
@@ -71,6 +81,14 @@ BaseRectangle &BaseEntity::getBody()
 BaseRectangleX2 &BaseEntity::getHealthBar()
 {
   return *m_healthBar;
+}
+BaseCircle &BaseEntity::getShortRangeCircle()
+{
+  return *m_shortRangeCircle;
+}
+BaseCircle &BaseEntity::getLongRangeCircle()
+{
+  return *m_longRangeCircle;
 }
 float &BaseEntity::getHealth()
 {
@@ -84,7 +102,15 @@ float &BaseEntity::getSpeed()
 {
   return m_speed;
 }
-int &BaseEntity::getWatchRadius()
+int &BaseEntity::getWatchRangeRadius()
 {
-  return m_watchRadius;
+  return m_watchRangeRadius;
+}
+int &BaseEntity::getShortRangeRadius()
+{
+  return m_shortRangeRadius;
+}
+int &BaseEntity::getLongRangeRadius()
+{
+  return m_longRangeRadius;
 }

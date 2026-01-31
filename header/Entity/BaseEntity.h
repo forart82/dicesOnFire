@@ -3,26 +3,36 @@
 #include <SFML/Graphics.hpp>
 #include "Form/BaseRectangle.h"
 #include "Form/BaseRectangleX2.h"
+#include "Form/BaseCircle.h"
 
 class BaseEntity : public sf::Drawable
 {
 protected:
   std::unique_ptr<BaseRectangle> m_body;
   std::unique_ptr<BaseRectangleX2> m_healthBar;
+  std::unique_ptr<BaseCircle> m_shortRangeCircle;
+  std::unique_ptr<BaseCircle> m_longRangeCircle;
   float m_health;
   float m_maxHealth;
   float m_speed;
-  int m_watchRadius;
+  int m_watchRangeRadius;
+
+  int m_shortRangeRadius;
+  int m_longRangeRadius;
 
 public:
   BaseEntity();
   BaseEntity(
       std::unique_ptr<BaseRectangle> body,
       std::unique_ptr<BaseRectangleX2> healthBar,
+      std::unique_ptr<BaseCircle> shortRangeCircle,
+      std::unique_ptr<BaseCircle> longRangeCircle,
       float health,
       float maxHealth,
       float speed,
-      int watchRadius);
+      int watchRangeRadius,
+      int shortRangeRadius,
+      int longRangeRadius);
   ~BaseEntity();
 
   virtual void update(sf::Time &delta);
@@ -33,12 +43,16 @@ public:
   void setHealth(float health);
   void setMaxHealth(float maxHealth);
   void setSpeed(float speed);
-  void setWatchRadius(int watchRadius);
+  void setWatchRangeRadius(int watchRangeRadius);
 
   BaseRectangle &getBody();
   BaseRectangleX2 &getHealthBar();
+  BaseCircle &getShortRangeCircle();
+  BaseCircle &getLongRangeCircle();
   float &getHealth();
   float &getMaxHealth();
   float &getSpeed();
-  int &getWatchRadius();
+  int &getWatchRangeRadius();
+  int &getShortRangeRadius();
+  int &getLongRangeRadius();
 };

@@ -11,6 +11,7 @@
 #include "Weapon/WeaponSlot.h"
 #include "Weapon/WeaponSlotsMenu.h"
 #include "Entity/Hero.h"
+#include "Entity/Enemy.h"
 #include "Event/HeroEvents.h"
 
 class Game
@@ -36,6 +37,7 @@ private:
   std::unique_ptr<Hero> m_hero;
   std::unique_ptr<HeroEvents> m_heroEvents;
   std::unique_ptr<Grid> m_grid;
+  std::unique_ptr<Enemy> m_enemy;
 
   std::mt19937 m_rng;
 

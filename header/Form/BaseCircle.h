@@ -18,12 +18,12 @@ protected:
 public:
   BaseCircle()
       : BaseCircle(
-            sf::Vector2f(100, 100),
+            sf::Vector2f(1000, 1000),
             50,
             1,
             true,
-            colors::COLOR_RED_DENSE_ROSE,
-            colors::COLOR_GRAYSCALE_BLACK)
+            colors::COLOR_RED_HOT_PINK,
+            colors::COLOR_RED_HOT_PINK)
   {
   }
   BaseCircle(

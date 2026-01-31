@@ -15,12 +15,12 @@ protected:
 public:
   BaseRectangle()
       : BaseRectangle(
-            sf::Vector2f(100, 100),
-            sf::Vector2f(300, 50),
+            sf::Vector2f(300, 300),
+            sf::Vector2f(300, 300),
             1,
             true,
-            colors::COLOR_RED_DENSE_ROSE,
-            colors::COLOR_GRAYSCALE_BLACK)
+            colors::COLOR_RED_RED,
+            colors::COLOR_RED_RED)
   {
   }
   BaseRectangle(

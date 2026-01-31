@@ -70,6 +70,7 @@ void Game::update(sf::Time delta)
   // Elements
   m_grid->update(delta);
   m_hero->update(delta);
+  m_enemy->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -83,10 +84,10 @@ void Game::draw()
   handleViewRatio();
 
   // Will be between
-  m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
   m_window.setView(m_playerView);
   m_window.draw(*m_grid);
   m_window.draw(*m_hero);
+  m_window.draw(*m_enemy);
 
   m_window.setView(m_uiView);
   m_window.draw(*m_weaponSlotsMenu);
@@ -138,13 +139,21 @@ void Game::init()
   m_hero = std::make_unique<Hero>(
       std::make_unique<BaseRectangle>(configManager::getRectangle("HERO")),
       std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
+      std::make_unique<BaseCircle>(configManager::getCircle("HERO_SHORT_RANGE")),
+      std::make_unique<BaseCircle>(configManager::getCircle("HERO_LONG_RANGE")),
       100,
       100,
       1000,
-      PLAYER_WATCH_RADIUS);
+      PLAYER_WATCH_RADIUS,
+      25,
+      50);
 
   m_heroEvents.reset();
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
+
+  m_enemy.reset();
+  m_enemy = std::make_unique<Enemy>(*m_hero);
+
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);
 

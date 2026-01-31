@@ -3,7 +3,7 @@
 Grid::Grid(Hero &hero)
     : m_hero(hero)
 {
-  m_radius = m_hero.getWatchRadius();
+  m_radius = m_hero.getWatchRangeRadius();
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
   loadZone();
 }

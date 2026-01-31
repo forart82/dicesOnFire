@@ -15,19 +15,19 @@ public:
   BaseRectangleX2()
       : BaseRectangleX2(
             BaseRectangle(
-                sf::Vector2f(200, 1000),
-                sf::Vector2f(300, 50),
+                sf::Vector2f(200, 200),
+                sf::Vector2f(200, 200),
                 1,
                 true,
-                colors::COLOR_RED_MILKY_ROSE,
-                colors::COLOR_GRAYSCALE_BLACK),
+                colors::COLOR_BLUE_SKY_BLUE,
+                colors::COLOR_BLUE_SKY_BLUE),
             BaseRectangle(
-                sf::Vector2f(200, 1000),
-                sf::Vector2f(300, 50),
+                sf::Vector2f(1000, 1000),
+                sf::Vector2f(200, 200),
                 1,
                 true,
-                colors::COLOR_GREEN_DARK_GREEN,
-                colors::COLOR_GREEN_DARK_GREEN))
+                colors::COLOR_GREEN_GREEN,
+                colors::COLOR_GREEN_GREEN))
   {
   }
   BaseRectangleX2(
