@@ -70,7 +70,7 @@ void Game::update(sf::Time delta)
   // Elements
   m_grid->update(delta);
   m_hero->update(delta);
-  m_enemy->update(delta);
+  m_enemies->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -87,7 +87,8 @@ void Game::draw()
   m_window.setView(m_playerView);
   m_window.draw(*m_grid);
   m_window.draw(*m_hero);
-  m_window.draw(*m_enemy);
+
+  m_window.draw(*m_enemies);
 
   m_window.setView(m_uiView);
   m_window.draw(*m_weaponSlotsMenu);
@@ -151,18 +152,20 @@ void Game::init()
   m_heroEvents.reset();
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
-  m_enemy.reset();
-  m_enemy = std::make_unique<Enemy>(
-      *m_hero, std::make_unique<BaseRectangle>(configManager::getRectangle("ENEMY_BODY")),
-      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("ENEMY_HEALTHBAR")),
-      std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_SHORT_RANGE")),
-      std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_LONG_RANGE")),
-      100,
-      100,
-      200,
-      PLAYER_WATCH_RADIUS,
-      25,
-      50);
+  m_enemies.reset();
+  m_enemies = std::make_unique<Enemies>();
+  m_enemies->addEnemy(*m_hero);
+  // m_enemy = std::make_unique<Enemy>(
+  //     *m_hero, std::make_unique<BaseRectangle>(configManager::getRectangle("ENEMY_BODY")),
+  //     std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("ENEMY_HEALTHBAR")),
+  //     std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_SHORT_RANGE")),
+  //     std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_LONG_RANGE")),
+  //     100,
+  //     100,
+  //     200,
+  //     PLAYER_WATCH_RADIUS,
+  //     25,
+  //     50);
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);

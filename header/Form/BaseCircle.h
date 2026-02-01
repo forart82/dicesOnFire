@@ -8,12 +8,7 @@ class BaseCircle : public sf::Drawable
 
 protected:
   sf::CircleShape m_shape;
-  sf::Vector2f m_position;
-  float m_radius;
-  int m_thickness;
   bool m_isActive;
-  sf::Color m_fillColor;
-  sf::Color m_outlineColor;
 
 public:
   BaseCircle()
@@ -33,19 +28,13 @@ public:
       bool isActive,
       sf::Color fillColor,
       sf::Color outlineColor)
-      : m_position(position),
-        m_radius(radius),
-        m_thickness(thickness),
-        m_isActive(isActive),
-        m_fillColor(fillColor),
-        m_outlineColor(outlineColor)
+      : m_isActive(isActive)
   {
-    m_shape.setPosition(m_position);
-    m_shape.setRadius(m_radius);
-    m_shape.setOutlineThickness(m_thickness);
-    m_shape.setOrigin({m_radius, m_radius});
-    m_shape.setFillColor(m_fillColor);
-    m_shape.setOutlineColor(m_outlineColor);
+    m_shape.setPosition(position);
+    m_shape.setRadius(radius);
+    m_shape.setOutlineThickness(thickness);
+    m_shape.setOrigin({radius, radius});
+    setColors(fillColor, outlineColor);
   }
 
   ~BaseCircle()
@@ -64,24 +53,10 @@ public:
     }
   }
 
-  // --- Setters ---
-
-  void setPosition(sf::Vector2f position)
+  void addPosition(sf::Vector2f &offset)
   {
-    m_position = position;
-    m_shape.setPosition(m_position);
-  }
-
-  void setRadius(float radius)
-  {
-    m_radius = radius;
-    m_shape.setRadius(m_radius);
-    m_shape.setOrigin({m_radius, m_radius});
-  }
-
-  void setThickness(int thickness)
-  {
-    m_thickness = thickness;
+    sf::Vector2f newPosition = m_shape.getPosition() + offset;
+    m_shape.setPosition(newPosition);
   }
 
   void setActive(bool isActive)
@@ -89,24 +64,10 @@ public:
     m_isActive = isActive;
   }
 
-  void setFillColor(sf::Color fillColor)
-  {
-    m_fillColor = fillColor;
-    m_shape.setFillColor(m_fillColor);
-  }
-
-  void setOutlineColor(sf::Color outlineColor)
-  {
-    m_outlineColor = outlineColor;
-    m_shape.setOutlineColor(m_outlineColor);
-  }
-
   void setColors(sf::Color fillColor, sf::Color outlineColor)
   {
-    m_fillColor = fillColor;
-    m_outlineColor = outlineColor;
-    setFillColor(fillColor);
-    setOutlineColor(outlineColor);
+    m_shape.setFillColor(fillColor);
+    m_shape.setOutlineColor(outlineColor);
   }
 
   void toggleActive()

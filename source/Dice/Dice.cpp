@@ -24,14 +24,14 @@ Dice::Dice(BaseCircle diceMenu, int faces, int rerolls, float cooldown)
 {
   // Dice
   makeFaceValues();
-  setPosition(m_position);
-  setRadius(m_radius);
-  setColors(m_fillColor, m_outlineColor);
-  setFaces(m_faces);
+  // m_shape.setPosition(position);
+  // m_shape.setRadius(m_radius);
+  // setColors(m_fillColor, m_outlineColor);
+  // setFaces(m_faces);
 
   // GameText
-  m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(m_position.x + m_radius / 2, m_position.y + m_radius / 2 - 20.f), colors::COLOR_BLUE_AQUA, "Quantico");
-  m_diceValueText->setFontSize(63);
+  // m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(m_position.x + m_radius / 2, m_position.y + m_radius / 2 - 20.f), colors::COLOR_BLUE_AQUA, "Quantico");
+  // m_diceValueText->setFontSize(63);
 
   // Timer
   m_timer.onTimeout = [this]()
@@ -82,13 +82,13 @@ void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
 {
   if (diceValue < 10)
   {
-    auto newPosition = sf::Vector2f(m_position.x + 28.f, m_position.y + 10.f);
-    m_diceValueText->setPosition(newPosition);
+    // auto newPosition = sf::Vector2f(m_position.x + 28.f, m_position.y + 10.f);
+    // m_diceValueText->setPosition(newPosition);
   }
   else
   {
-    auto newPosition = sf::Vector2f(m_position.x + 10.f, m_position.y + 10.f);
-    m_diceValueText->setPosition(newPosition);
+    // auto newPosition = sf::Vector2f(m_position.x + 10.f, m_position.y + 10.f);
+    // m_diceValueText->setPosition(newPosition);
   }
 }
 
