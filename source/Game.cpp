@@ -137,7 +137,7 @@ void Game::init()
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
-      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO")),
+      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO_BODY")),
       std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
       std::make_unique<BaseCircle>(configManager::getCircle("HERO_SHORT_RANGE")),
       std::make_unique<BaseCircle>(configManager::getCircle("HERO_LONG_RANGE")),
@@ -152,7 +152,17 @@ void Game::init()
   m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
   m_enemy.reset();
-  m_enemy = std::make_unique<Enemy>(*m_hero);
+  m_enemy = std::make_unique<Enemy>(
+      *m_hero, std::make_unique<BaseRectangle>(configManager::getRectangle("ENEMY_BODY")),
+      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("ENEMY_HEALTHBAR")),
+      std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_SHORT_RANGE")),
+      std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_LONG_RANGE")),
+      100,
+      100,
+      200,
+      PLAYER_WATCH_RADIUS,
+      25,
+      50);
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);

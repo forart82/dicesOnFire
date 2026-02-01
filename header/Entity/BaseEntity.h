@@ -38,6 +38,8 @@ public:
   virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+  void move(sf::Vector2f &movement);
+
   void setBody(std::unique_ptr<BaseRectangle> body);
   void setHealthBar(std::unique_ptr<BaseRectangleX2> healthBar);
   void setHealth(float health);

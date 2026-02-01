@@ -67,7 +67,5 @@ void Hero::move(sf::Time &delta)
     m_direction /= length;
   }
   sf::Vector2f movement = m_direction * m_speed * delta.asSeconds();
-  m_body->getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_healthBar->getOuter().getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_healthBar->getInner().getShape().move({std::round(movement.x), std::round(movement.y)});
+  BaseEntity::move(movement);
 }

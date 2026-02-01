@@ -113,4 +113,9 @@ public:
   {
     m_isActive = !m_isActive;
   }
+
+  sf::CircleShape &getShape()
+  {
+    return m_shape;
+  }
 };

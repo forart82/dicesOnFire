@@ -55,5 +55,5 @@ void Enemy::move(sf::Time &delta)
     direction = toPlayer / distance;
   }
   sf::Vector2f movement = direction * m_speed * delta.asSeconds();
-  m_body->getShape().move(movement);
+  BaseEntity::move(movement);
 }

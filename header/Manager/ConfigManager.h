@@ -93,6 +93,8 @@ namespace configManager
     std::getline(ss, blue2, ';');
     std::getline(ss, alpha2, ';');
 
+    std::cout << ss.str() << std::endl;
+
     return {
         {toFloat(x), toFloat(y)},
         toFloat(radius),
@@ -175,6 +177,7 @@ namespace configManager
     m_fileNames.clear();
     configManager::load("configs/gui.config");
     configManager::load("configs/hero.config");
+    configManager::load("configs/enemy.config");
     configManager::load("configs/debugBar.config");
   }
 
