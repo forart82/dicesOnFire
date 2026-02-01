@@ -13,6 +13,14 @@ void Enemies::update(sf::Time &delta)
   }
 }
 
+void Enemies::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+  for (auto &enemy : m_enemies)
+  {
+    target.draw(*enemy, states);
+  }
+}
+
 void Enemies::addEnemy(Hero &hero)
 {
   m_enemies.emplace_back(enemyHelper::CREATE_ENEMY(hero));
@@ -29,4 +37,9 @@ void Enemies::removeEnemyOnDeath()
             return enemy->getHealth() <= 0;
           }),
       m_enemies.end());
+}
+
+const std::vector<std::unique_ptr<Enemy>> &Enemies::getEnemies() const
+{
+  return m_enemies;
 }

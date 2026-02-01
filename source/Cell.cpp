@@ -12,7 +12,7 @@ Cell::Cell(int left, int top)
   m_left = left;
   m_top = top;
 
-  m_assetsLeft = 32 * GET_RANDOM_NUMBER_INT(0, 10);
+  m_assetsLeft = 32 * helper::GET_RANDOM_NUMBER_INT(0, 10);
   m_assetsTop = 224;
 
   m_leftTop = sf::Vector2f(m_left, m_top);

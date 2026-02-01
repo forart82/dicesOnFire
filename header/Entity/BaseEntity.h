@@ -40,6 +40,10 @@ public:
 
   void move(sf::Vector2f &movement);
 
+  bool insideShortRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
+  bool insideLongRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
+  bool insideRadar(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
+
   void setBody(std::unique_ptr<BaseRectangle> body);
   void setHealthBar(std::unique_ptr<BaseRectangleX2> healthBar);
   void setHealth(float health);

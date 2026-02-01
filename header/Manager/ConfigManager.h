@@ -93,8 +93,6 @@ namespace configManager
     std::getline(ss, blue2, ';');
     std::getline(ss, alpha2, ';');
 
-    std::cout << ss.str() << std::endl;
-
     return {
         {toFloat(x), toFloat(y)},
         toFloat(radius),

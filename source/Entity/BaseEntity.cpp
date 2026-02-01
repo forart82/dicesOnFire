@@ -62,6 +62,28 @@ void BaseEntity::move(sf::Vector2f &movement)
   m_longRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
 }
 
+bool BaseEntity::insideShortRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+{
+  return insideRadar(targetPos, radarPtr);
+}
+
+bool BaseEntity::insideLongRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+{
+  return insideRadar(targetPos, radarPtr);
+}
+
+bool BaseEntity::insideRadar(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+{
+
+  float radius = radarPtr.getShape().getRadius();
+  sf::Vector2f center = radarPtr.getShape().getPosition();
+
+  float dx = targetPos.x - center.x;
+  float dy = targetPos.y - center.y;
+
+  return (dx * dx + dy * dy) <= (radius * radius);
+}
+
 void BaseEntity::setBody(std::unique_ptr<BaseRectangle> body)
 {
   m_body = std::move(body);

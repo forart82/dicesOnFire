@@ -43,8 +43,8 @@ void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
 {
   m_bladedWeapon = std::make_unique<BladedWeapon>(
       configManager::getRectangle(weaponSlotKey + "_WEAPON"),
-      GET_RANDOM_NUMBER_INT(3, 5),
-      GET_RANDOM_NUMBER_INT(1, 7),
-      GET_RANDOM_NUMBER_INT(1, 2),
+      helper::GET_RANDOM_NUMBER_INT(3, 5),
+      helper::GET_RANDOM_NUMBER_INT(1, 7),
+      helper::GET_RANDOM_NUMBER_INT(1, 2),
       m_weaponSlotNumber);
 }

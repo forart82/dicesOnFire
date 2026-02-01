@@ -44,7 +44,7 @@ void Dice::update(sf::Time &delta)
   if (!m_stop)
   {
     m_timer.update(delta);
-    int diceValue = GET_RANDOM_NUMBER_INT(1, m_faces);
+    int diceValue = helper::GET_RANDOM_NUMBER_INT(1, m_faces);
     m_diceValueText->addText("dice", std::to_string(diceValue));
     handelTextPositionBasedOnDiceValue(diceValue);
   }

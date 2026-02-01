@@ -54,6 +54,14 @@ public:
     target.draw(m_inner);
   }
 
+  void addPosition(sf::Vector2f &offset)
+  {
+    sf::Vector2f newOuterPosition = m_outer.getShape().getPosition() + offset;
+    m_outer.getShape().setPosition(newOuterPosition);
+    sf::Vector2f newInnerPosition = m_inner.getShape().getPosition() + offset;
+    m_inner.getShape().setPosition(newInnerPosition);
+  }
+
   BaseRectangle &getOuter()
   {
     return m_outer;

@@ -53,6 +53,17 @@ void Game::run()
       if (event->is<sf::Event::MouseButtonPressed>())
       {
       }
+      if (const auto *mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
+      {
+        if (mouseWheelScrolled->delta > 0)
+        {
+          handlePlayerZoom("up");
+        }
+        else
+        {
+          handlePlayerZoom("down");
+        }
+      }
     }
 
     m_timeSinceLastUpdate += m_clock.restart();
@@ -71,6 +82,7 @@ void Game::update(sf::Time delta)
   m_grid->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
+  m_baseEntityAttackService->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -154,18 +166,15 @@ void Game::init()
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  m_enemies->addEnemy(*m_hero);
-  // m_enemy = std::make_unique<Enemy>(
-  //     *m_hero, std::make_unique<BaseRectangle>(configManager::getRectangle("ENEMY_BODY")),
-  //     std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("ENEMY_HEALTHBAR")),
-  //     std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_SHORT_RANGE")),
-  //     std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_LONG_RANGE")),
-  //     100,
-  //     100,
-  //     200,
-  //     PLAYER_WATCH_RADIUS,
-  //     25,
-  //     50);
+  for (int i = 0; i < 2000; i++)
+  {
+    m_enemies->addEnemy(*m_hero);
+  }
+
+  m_baseEntityAttackService =
+      std::make_unique<BaseEntityAttackService>(
+          *m_hero,
+          *m_enemies);
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);

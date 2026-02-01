@@ -29,11 +29,11 @@ void Grid::loadZone()
     m_vertices.resize(numCells * 6);
   }
   int cellCounter = 0;
-  int playerXMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - m_radius * TILE_SIZE);
-  int playerYMin = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - m_radius * TILE_SIZE);
+  int playerXMin = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - m_radius * TILE_SIZE);
+  int playerYMin = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - m_radius * TILE_SIZE);
 
-  int playerXMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + m_radius * TILE_SIZE);
-  int playerYMax = SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + m_radius * TILE_SIZE);
+  int playerXMax = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + m_radius * TILE_SIZE);
+  int playerYMax = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + m_radius * TILE_SIZE);
 
   for (int x = playerXMin; x <= playerXMax; x += TILE_SIZE)
   {

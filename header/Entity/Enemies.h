@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "Entity/BaseEntity.h"
 #include "Entity/Enemy.h"
-#include "Entity/EnemieHelper.h"
+#include "Entity/EnemyHelper.h"
 
 class Enemies : public sf::Drawable
 {
@@ -21,4 +21,6 @@ public:
 
   void addEnemy(Hero &hero);
   void removeEnemyOnDeath();
+
+  const std::vector<std::unique_ptr<Enemy>> &getEnemies() const;
 };
