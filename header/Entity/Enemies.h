@@ -11,6 +11,7 @@ class Enemies : public sf::Drawable
 {
 private:
   std::vector<std::unique_ptr<Enemy>> m_enemies;
+  sf::VertexArray m_vertices;
 
 public:
   Enemies();
@@ -21,6 +22,8 @@ public:
 
   void addEnemy(Hero &hero);
   void removeEnemyOnDeath();
+
+  void makeVertices();
 
   const std::vector<std::unique_ptr<Enemy>> &getEnemies() const;
 };

@@ -37,7 +37,7 @@ public:
     m_shape.setFillColor(fillColor);
     m_shape.setOutlineColor(outlineColor);
 
-    this->setOriginFromSize(size);
+    setOriginFromSize(size);
   }
 
   ~BaseRectangle()

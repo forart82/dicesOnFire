@@ -40,13 +40,22 @@ Enemy::Enemy(Hero &hero,
                  speed,
                  watchRangeRadius,
                  shortRangeRadius,
-                 longRangeRadius) {}
+                 longRangeRadius)
+{
+  m_assetsLeft = 800 + (32 * helper::GET_RANDOM_NUMBER_INT(0, 35));
+  m_assetsTop = 2080 + (32 * helper::GET_RANDOM_NUMBER_INT(0, 1));
+  m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
+  m_assetsRightTop = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop);
+  m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + ASSETS_TILE_SIZE);
+  m_assetsRightBottom = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop + ASSETS_TILE_SIZE);
+}
 
 Enemy::~Enemy() {}
 
 void Enemy::update(sf::Time &delta)
 {
   move(delta);
+  prepareVertex();
 }
 
 void Enemy::move(sf::Time &delta)
@@ -65,6 +74,19 @@ void Enemy::move(sf::Time &delta)
   }
 }
 
+void Enemy::prepareVertex()
+{
+  float left = m_body->getShape().getGlobalBounds().position.x;
+  float top = m_body->getShape().getGlobalBounds().position.y;
+  float width = m_body->getShape().getGlobalBounds().size.x;
+  float height = m_body->getShape().getGlobalBounds().size.y;
+
+  m_leftTop = sf::Vector2f(left, top);
+  m_rightTop = sf::Vector2f(left + width, top);
+  m_leftBottom = sf::Vector2f(left, top + height);
+  m_rightBottom = sf::Vector2f(left + width, top + height);
+}
+
 void Enemy::houndHero()
 {
   m_houndHero = true;
@@ -73,4 +95,44 @@ void Enemy::houndHero()
 bool &Enemy::getHoundHero()
 {
   return m_houndHero;
+}
+
+sf::Vector2f &Enemy::getLeftTop()
+{
+  return m_leftTop;
+}
+
+sf::Vector2f &Enemy::getRightTop()
+{
+  return m_rightTop;
+}
+
+sf::Vector2f &Enemy::getLeftBottom()
+{
+  return m_leftBottom;
+}
+
+sf::Vector2f &Enemy::getRightBottom()
+{
+  return m_rightBottom;
+}
+
+sf::Vector2f &Enemy::getAssetsLeftTop()
+{
+  return m_assetsLeftTop;
+}
+
+sf::Vector2f &Enemy::getAssetsRightTop()
+{
+  return m_assetsRightTop;
+}
+
+sf::Vector2f &Enemy::getAssetsLeftBottom()
+{
+  return m_assetsLeftBottom;
+}
+
+sf::Vector2f &Enemy::getAssetsRightBottom()
+{
+  return m_assetsRightBottom;
 }

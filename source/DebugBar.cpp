@@ -2,14 +2,19 @@
 
 DebugBar::DebugBar(
     Hero &hero,
-    Grid &grid) : m_hero(hero),
-                  m_grid(grid),
-                  m_isActive(false)
+    Enemies &enemies,
+    Grid &grid)
+    : m_hero(hero),
+      m_enemies(enemies),
+      m_grid(grid),
+      m_isActive(false)
 {
   m_textGame.setPosition(configManager::getRectangle("DEBUGBAR_TEXT_GAME").getShape().getPosition());
   m_textManager.setPosition(configManager::getRectangle("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
   m_textHero.setPosition(configManager::getRectangle("DEBUGBAR_TEXT_HERO").getShape().getPosition());
   m_textGrid.setPosition(configManager::getRectangle("DEBUGBAR_TEXT_GRID").getShape().getPosition());
+  m_textRealFps.setPosition(configManager::getRectangle("DEBUGBAR_TEXT_REALFPS").getShape().getPosition());
+  m_textRealFps.setFontSize(72);
 }
 
 DebugBar::~DebugBar()
@@ -48,9 +53,20 @@ void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_textHero, states);
     target.draw(m_textGrid, states);
   }
+  target.draw(m_textRealFps, states);
+}
+
+void DebugBar::setRealFps(float fps)
+{
+  m_textRealFps.addText("RealFps", "RealFps: " + std::to_string(fps));
 }
 
 void DebugBar::toggleActive()
 {
   m_isActive = !m_isActive;
+  m_hero.toggleDebugIsActive();
+  for (const auto &enemy : m_enemies.getEnemies())
+  {
+    enemy->toggleDebugIsActive();
+  }
 }

@@ -38,7 +38,8 @@ BaseEntity::BaseEntity(
       m_speed(speed),
       m_watchRangeRadius(watchRangeRadius),
       m_shortRangeRadius(shortRangeRadius),
-      m_longRangeRadius(longRangeRadius)
+      m_longRangeRadius(longRangeRadius),
+      m_debugIsActive(false)
 {
 }
 
@@ -50,11 +51,14 @@ void BaseEntity::update(sf::Time &delta)
 
 void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(*m_body);
-  target.draw(*m_healthBar);
+  if (m_debugIsActive)
+  {
+    target.draw(*m_body);
+  }
   target.draw(*m_watchRangeCircle);
   target.draw(*m_shortRangeCircle);
   target.draw(*m_longRangeCircle);
+  target.draw(*m_healthBar);
 }
 
 void BaseEntity::move(sf::Vector2f &movement)
@@ -117,6 +121,11 @@ void BaseEntity::setSpeed(float speed)
 void BaseEntity::setWatchRangeRadius(int watchRangeRadius)
 {
   m_watchRangeRadius = watchRangeRadius;
+}
+
+void BaseEntity::toggleDebugIsActive()
+{
+  m_debugIsActive = !m_debugIsActive;
 }
 
 BaseRectangle &BaseEntity::getBody()

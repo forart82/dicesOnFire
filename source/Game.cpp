@@ -66,7 +66,9 @@ void Game::run()
       }
     }
 
-    m_timeSinceLastUpdate += m_clock.restart();
+    sf::Time realDelta = m_clock.restart();
+    m_timeSinceLastUpdate += realDelta;
+    m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
     while (m_timeSinceLastUpdate >= m_timePerFrame)
     {
       m_timeSinceLastUpdate -= m_timePerFrame;
@@ -170,7 +172,7 @@ void Game::init()
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 500; i++)
   {
     m_enemies->addEnemy(*m_hero);
   }
@@ -194,7 +196,7 @@ void Game::init()
   m_grid = std::make_unique<Grid>(*m_hero);
 
   m_debugBar.reset();
-  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_grid);
+  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies, *m_grid);
 }
 
 void Game::handlePlayerZoom(std::string zoomDirection)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "_HELPERS.h"
 #include "Entity/Enemy.h"
 #include "Manager/ConfigManager.h"
@@ -38,12 +39,18 @@ namespace enemyHelper
     auto longRangeCircle = std::make_unique<BaseCircle>(configManager::getCircle("ENEMY_LONG_RANGE"));
 
     watchRangeCircle->getShape().setRadius(watchRangeRadius);
-    watchRangeCircle->getShape().setOrigin({std::round(watchRangeRadius / 2.f), std::round(watchRangeRadius / 2.f)});
-
     shortRangeCircle->getShape().setRadius(shortRangeRadius);
-    shortRangeCircle->getShape().setOrigin({std::round(watchRangeRadius / 2.f), std::round(watchRangeRadius / 2.f)});
     longRangeCircle->getShape().setRadius(longRangeRadius);
-    longRangeCircle->getShape().setOrigin({std::round(watchRangeRadius / 2.f), std::round(watchRangeRadius / 2.f)});
+
+    watchRangeCircle->getShape().setOrigin(
+        {static_cast<float>(std::round(watchRangeRadius)),
+         static_cast<float>(std::round(watchRangeRadius))});
+    shortRangeCircle->getShape().setOrigin(
+        {static_cast<float>(std::round(shortRangeRadius)),
+         static_cast<float>(std::round(shortRangeRadius))});
+    longRangeCircle->getShape().setOrigin(
+        {static_cast<float>(std::round(longRangeRadius)),
+         static_cast<float>(std::round(longRangeRadius))});
 
     body->getShape().setPosition(hero.getBody().getShape().getPosition() + sf::Vector2f(randomX, randomY));
     healthBar->getOuter().getShape().setPosition(hero.getHealthBar().getOuter().getShape().getPosition() + sf::Vector2f(randomX, randomY));

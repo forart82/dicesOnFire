@@ -21,6 +21,8 @@ protected:
   int m_shortRangeRadius;
   int m_longRangeRadius;
 
+  bool m_debugIsActive;
+
 public:
   BaseEntity();
   BaseEntity(
@@ -53,6 +55,8 @@ public:
   void setMaxHealth(float maxHealth);
   void setSpeed(float speed);
   void setWatchRangeRadius(int watchRangeRadius);
+
+  void toggleDebugIsActive();
 
   BaseRectangle &getBody();
   BaseRectangleX2 &getHealthBar();
