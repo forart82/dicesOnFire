@@ -1,20 +1,20 @@
-#include "Entity/BaseEntityAttackService.h"
+#include "Entity/HeroAttackService.h"
 
-BaseEntityAttackService::BaseEntityAttackService(
+HeroAttackService::HeroAttackService(
     Hero &hero,
     Enemies &enemies) : m_hero(hero),
                         m_enemies(enemies)
 {
 }
 
-BaseEntityAttackService::~BaseEntityAttackService() {}
+HeroAttackService::~HeroAttackService() {}
 
-void BaseEntityAttackService::update(sf::Time &delta)
+void HeroAttackService::update(sf::Time &delta)
 {
   checkRadars();
 }
 
-void BaseEntityAttackService::checkRadars()
+void HeroAttackService::checkRadars()
 {
   for (const auto &enemy : m_enemies.getEnemies())
   {

@@ -5,10 +5,11 @@ Hero::Hero()
            std::make_unique<BaseRectangleX2>(),
            std::make_unique<BaseCircle>(),
            std::make_unique<BaseCircle>(),
+           std::make_unique<BaseCircle>(),
            100,
            100,
            2,
-           25,
+           300,
            25,
            50)
 {
@@ -17,6 +18,7 @@ Hero::Hero()
 Hero::Hero(
     std::unique_ptr<BaseRectangle> body,
     std::unique_ptr<BaseRectangleX2> healthBar,
+    std::unique_ptr<BaseCircle> watchRangeCircle,
     std::unique_ptr<BaseCircle> shortRangeCircle,
     std::unique_ptr<BaseCircle> longRangeCircle,
     float health,
@@ -28,6 +30,7 @@ Hero::Hero(
     : BaseEntity(
           std::move(body),
           std::move(healthBar),
+          std::move(watchRangeCircle),
           std::move(shortRangeCircle),
           std::move(longRangeCircle),
           health,

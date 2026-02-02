@@ -10,6 +10,7 @@ class BaseEntity : public sf::Drawable
 protected:
   std::unique_ptr<BaseRectangle> m_body;
   std::unique_ptr<BaseRectangleX2> m_healthBar;
+  std::unique_ptr<BaseCircle> m_watchRangeCircle;
   std::unique_ptr<BaseCircle> m_shortRangeCircle;
   std::unique_ptr<BaseCircle> m_longRangeCircle;
   float m_health;
@@ -25,6 +26,7 @@ public:
   BaseEntity(
       std::unique_ptr<BaseRectangle> body,
       std::unique_ptr<BaseRectangleX2> healthBar,
+      std::unique_ptr<BaseCircle> watchRangeCircle,
       std::unique_ptr<BaseCircle> shortRangeCircle,
       std::unique_ptr<BaseCircle> longRangeCircle,
       float health,
@@ -40,6 +42,7 @@ public:
 
   void move(sf::Vector2f &movement);
 
+  bool insideWatchRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
   bool insideShortRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
   bool insideLongRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
   bool insideRadar(const sf::Vector2f &targetPos, BaseCircle &radarPtr);
@@ -53,6 +56,7 @@ public:
 
   BaseRectangle &getBody();
   BaseRectangleX2 &getHealthBar();
+  BaseCircle &getWatchRangeCircle();
   BaseCircle &getShortRangeCircle();
   BaseCircle &getLongRangeCircle();
   float &getHealth();

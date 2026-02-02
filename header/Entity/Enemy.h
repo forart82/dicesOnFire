@@ -8,12 +8,14 @@ class Enemy : public BaseEntity
 {
 private:
   Hero &m_hero;
+  bool m_houndHero;
 
 public:
   Enemy(Hero &hero);
   Enemy(Hero &hero,
         std::unique_ptr<BaseRectangle> body,
         std::unique_ptr<BaseRectangleX2> healthBar,
+        std::unique_ptr<BaseCircle> watchRangeCircle,
         std::unique_ptr<BaseCircle> shortRangeCircle,
         std::unique_ptr<BaseCircle> longRangeCircle,
         float health,
@@ -27,4 +29,8 @@ public:
   void update(sf::Time &delta) override;
 
   void move(sf::Time &delta);
+
+  void houndHero();
+
+  bool &getHoundHero();
 };

@@ -6,6 +6,7 @@ Enemy::Enemy(Hero &hero)
             std::make_unique<BaseRectangleX2>(),
             std::make_unique<BaseCircle>(),
             std::make_unique<BaseCircle>(),
+            std::make_unique<BaseCircle>(),
             2500,
             100,
             200,
@@ -18,6 +19,7 @@ Enemy::Enemy(Hero &hero)
 Enemy::Enemy(Hero &hero,
              std::unique_ptr<BaseRectangle> body,
              std::unique_ptr<BaseRectangleX2> healthBar,
+             std::unique_ptr<BaseCircle> watchRangeCircle,
              std::unique_ptr<BaseCircle> shortRangeCircle,
              std::unique_ptr<BaseCircle> longRangeCircle,
              float health,
@@ -27,8 +29,10 @@ Enemy::Enemy(Hero &hero,
              int shortRangeRadius,
              int longRangeRadius)
     : m_hero(hero),
+      m_houndHero(false),
       BaseEntity(std::move(body),
                  std::move(healthBar),
+                 std::move(watchRangeCircle),
                  std::move(shortRangeCircle),
                  std::move(longRangeCircle),
                  health,
@@ -47,13 +51,26 @@ void Enemy::update(sf::Time &delta)
 
 void Enemy::move(sf::Time &delta)
 {
-  sf::Vector2f direction;
-  sf::Vector2f toPlayer = m_hero.getBody().getShape().getPosition() - m_body->getShape().getPosition();
-  float distance = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
-  if (distance != 0) // Éviter la division par zéro
+  if (m_houndHero)
   {
-    direction = toPlayer / distance;
+    sf::Vector2f direction;
+    sf::Vector2f toPlayer = m_hero.getBody().getShape().getPosition() - m_body->getShape().getPosition();
+    float distance = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
+    if (distance != 0) // Éviter la division par zéro
+    {
+      direction = toPlayer / distance;
+    }
+    sf::Vector2f movement = direction * m_speed * delta.asSeconds();
+    BaseEntity::move(movement);
   }
-  sf::Vector2f movement = direction * m_speed * delta.asSeconds();
-  BaseEntity::move(movement);
+}
+
+void Enemy::houndHero()
+{
+  m_houndHero = true;
+}
+
+bool &Enemy::getHoundHero()
+{
+  return m_houndHero;
 }

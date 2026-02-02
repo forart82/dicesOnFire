@@ -6,10 +6,11 @@ BaseEntity::BaseEntity()
           std::make_unique<BaseRectangleX2>(),
           std::make_unique<BaseCircle>(),
           std::make_unique<BaseCircle>(),
+          std::make_unique<BaseCircle>(),
           100,
           100,
           2,
-          25,
+          300,
           25,
           50)
 {
@@ -18,6 +19,7 @@ BaseEntity::BaseEntity()
 BaseEntity::BaseEntity(
     std::unique_ptr<BaseRectangle> body,
     std::unique_ptr<BaseRectangleX2> healthBar,
+    std::unique_ptr<BaseCircle> watchRangeCircle,
     std::unique_ptr<BaseCircle> shortRangeCircle,
     std::unique_ptr<BaseCircle> longRangeCircle,
     float health,
@@ -25,9 +27,10 @@ BaseEntity::BaseEntity(
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
-    int longTangeRadius)
+    int longRangeRadius)
     : m_body(std::move(body)),
       m_healthBar(std::move(healthBar)),
+      m_watchRangeCircle(std::move(watchRangeCircle)),
       m_shortRangeCircle(std::move(shortRangeCircle)),
       m_longRangeCircle(std::move(longRangeCircle)),
       m_health(health),
@@ -35,7 +38,7 @@ BaseEntity::BaseEntity(
       m_speed(speed),
       m_watchRangeRadius(watchRangeRadius),
       m_shortRangeRadius(shortRangeRadius),
-      m_longRangeRadius(longTangeRadius)
+      m_longRangeRadius(longRangeRadius)
 {
 }
 
@@ -49,6 +52,7 @@ void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   target.draw(*m_body);
   target.draw(*m_healthBar);
+  target.draw(*m_watchRangeCircle);
   target.draw(*m_shortRangeCircle);
   target.draw(*m_longRangeCircle);
 }
@@ -58,8 +62,14 @@ void BaseEntity::move(sf::Vector2f &movement)
   m_body->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_healthBar->getOuter().getShape().move({std::round(movement.x), std::round(movement.y)});
   m_healthBar->getInner().getShape().move({std::round(movement.x), std::round(movement.y)});
+  m_watchRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_shortRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_longRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
+}
+
+bool BaseEntity::insideWatchRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+{
+  return insideRadar(targetPos, radarPtr);
 }
 
 bool BaseEntity::insideShortRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
@@ -116,6 +126,10 @@ BaseRectangle &BaseEntity::getBody()
 BaseRectangleX2 &BaseEntity::getHealthBar()
 {
   return *m_healthBar;
+}
+BaseCircle &BaseEntity::getWatchRangeCircle()
+{
+  return *m_watchRangeCircle;
 }
 BaseCircle &BaseEntity::getShortRangeCircle()
 {
