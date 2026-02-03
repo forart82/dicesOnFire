@@ -172,7 +172,7 @@ void Game::init()
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < 500; i++)
+  for (int i = 0; i < 1; i++)
   {
     m_enemies->addEnemy(*m_hero);
   }

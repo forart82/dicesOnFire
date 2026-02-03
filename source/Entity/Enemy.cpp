@@ -42,8 +42,8 @@ Enemy::Enemy(Hero &hero,
                  shortRangeRadius,
                  longRangeRadius)
 {
-  m_assetsLeft = 800 + (32 * helper::GET_RANDOM_NUMBER_INT(0, 35));
-  m_assetsTop = 2080 + (32 * helper::GET_RANDOM_NUMBER_INT(0, 1));
+  m_assetsLeft = 800 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 35));
+  m_assetsTop = 2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1));
   m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
   m_assetsRightTop = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop);
   m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + ASSETS_TILE_SIZE);
