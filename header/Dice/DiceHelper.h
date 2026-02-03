@@ -12,7 +12,7 @@ public:
   {
     auto dice = std::make_unique<Dice>();
 
-    dice->setPosition(position);
+    dice->getShape().setPosition(position);
     dice->setColors(colors::COLORS_DICE_ELEMENTS[helper::GET_RANDOM_NUMBER_INT(1, 3)], colors::COLOR_GRAYSCALE_BLACK);
     dice->setFaces(4);
 

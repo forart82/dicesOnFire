@@ -32,7 +32,7 @@ public:
       : m_left(left),
         m_top(top),
         m_assetsLeft(assetsLeft),
-        m_assetsLeftTop(assetsTop)
+        m_assetsTop(assetsTop)
   {
     m_leftTop = sf::Vector2f(m_left, m_top);
     m_rightTop = sf::Vector2f(m_left + TILE_SIZE, m_top);

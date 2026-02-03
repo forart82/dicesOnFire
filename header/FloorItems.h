@@ -2,8 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "Dice/Dice.h"
+#include "Vertex/VertexRectangle.h"
 
-class FloorItems : public sf::Drawable
+class FloorItems : public sf::Drawable, VertexRectangle
 {
 private:
   sf::VertexArray m_vertices;

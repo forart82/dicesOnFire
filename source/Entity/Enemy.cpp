@@ -40,15 +40,12 @@ Enemy::Enemy(Hero &hero,
                  speed,
                  watchRangeRadius,
                  shortRangeRadius,
-                 longRangeRadius)
-{
-  m_assetsLeft = 800 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 35));
-  m_assetsTop = 2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1));
-  m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
-  m_assetsRightTop = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop);
-  m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + ASSETS_TILE_SIZE);
-  m_assetsRightBottom = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop + ASSETS_TILE_SIZE);
-}
+                 longRangeRadius),
+      VertexRectangle(
+          0,
+          0,
+          800 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 35)),
+          2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1))) {}
 
 Enemy::~Enemy() {}
 
@@ -95,44 +92,4 @@ void Enemy::houndHero()
 bool &Enemy::getHoundHero()
 {
   return m_houndHero;
-}
-
-sf::Vector2f &Enemy::getLeftTop()
-{
-  return m_leftTop;
-}
-
-sf::Vector2f &Enemy::getRightTop()
-{
-  return m_rightTop;
-}
-
-sf::Vector2f &Enemy::getLeftBottom()
-{
-  return m_leftBottom;
-}
-
-sf::Vector2f &Enemy::getRightBottom()
-{
-  return m_rightBottom;
-}
-
-sf::Vector2f &Enemy::getAssetsLeftTop()
-{
-  return m_assetsLeftTop;
-}
-
-sf::Vector2f &Enemy::getAssetsRightTop()
-{
-  return m_assetsRightTop;
-}
-
-sf::Vector2f &Enemy::getAssetsLeftBottom()
-{
-  return m_assetsLeftBottom;
-}
-
-sf::Vector2f &Enemy::getAssetsRightBottom()
-{
-  return m_assetsRightBottom;
 }
