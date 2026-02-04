@@ -9,7 +9,7 @@
 #include "_HELPERS.h"
 #include "Vertex/VertexRectangle.h"
 
-class Dice : public sf::Drawable, VertexRectangle
+class Dice : public sf::Drawable, public VertexRectangle
 {
 private:
   BaseCircle m_diceWeaponSlotMenu;

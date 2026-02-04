@@ -44,7 +44,7 @@ public:
     m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + ASSETS_TILE_SIZE);
     m_assetsRightBottom = sf::Vector2f(m_assetsLeft + ASSETS_TILE_SIZE, m_assetsTop + ASSETS_TILE_SIZE);
   }
-  ~VertexRectangle();
+  ~VertexRectangle() {};
 
   sf::Vector2f &getLeftTop()
   {

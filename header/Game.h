@@ -15,7 +15,7 @@
 #include "Entity/Enemies.h"
 #include "Event/HeroEvents.h"
 #include "Entity/HeroAttackService.h"
-#include "Entity/EnemyAttackService.h"
+#include "Entity/EnemiesAttackService.h"
 
 class Game
 {
@@ -42,8 +42,9 @@ private:
   std::unique_ptr<HeroEvents> m_heroEvents;
   std::unique_ptr<Grid> m_grid;
   std::unique_ptr<Enemies> m_enemies;
-  std::unique_ptr<HeroAttackService> m_HeroAttackService;
-  std::vector<std::unique_ptr<EnemyAttackService>> m_EnemiesAttackService;
+  std::unique_ptr<HeroAttackService> m_heroAttackService;
+  std::unique_ptr<EnemiesAttackService> m_enemiesAttackService;
+  std::unique_ptr<FloorItems> m_floorItems;
 
   std::mt19937 m_rng;
 

@@ -2,21 +2,20 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity/Enemies.h"
-#include "Enemy.h"
 #include "Entity/Hero.h"
 
-class EnemyAttackService
+class EnemiesAttackService
 {
 private:
-  Enemy &m_enemy;
+  Enemies &m_enemies;
   Hero &m_hero;
 
 public:
-  EnemyAttackService(
-      Enemy &enemy,
+  EnemiesAttackService(
+      Enemies &enemies,
       Hero &hero);
 
-  ~EnemyAttackService();
+  ~EnemiesAttackService();
 
   void update(sf::Time &delta);
 

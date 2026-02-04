@@ -5,9 +5,8 @@
 #include "_HELPERS.h"
 #include "_COLORS.h"
 
-class DiceHelper
+namespace diceHelper
 {
-public:
   inline std::unique_ptr<Dice> CREATE_DICE(int level = 1)
   {
     auto dice = std::make_unique<Dice>();
@@ -24,4 +23,4 @@ public:
 
     return dice;
   }
-};
+}

@@ -1,34 +1,41 @@
 #include "Entity/Enemy.h"
 
-Enemy::Enemy(Hero &hero)
-    : Enemy(hero,
-            std::make_unique<BaseRectangle>(),
-            std::make_unique<BaseRectangleX2>(),
-            std::make_unique<BaseCircle>(),
-            std::make_unique<BaseCircle>(),
-            std::make_unique<BaseCircle>(),
-            2500,
-            100,
-            200,
-            25,
-            25,
-            50)
+Enemy::Enemy(
+    Hero &hero,
+    FloorItems &floorItmes)
+    : Enemy(
+          hero,
+          floorItmes,
+          std::make_unique<BaseRectangle>(),
+          std::make_unique<BaseRectangleX2>(),
+          std::make_unique<BaseCircle>(),
+          std::make_unique<BaseCircle>(),
+          std::make_unique<BaseCircle>(),
+          2500,
+          100,
+          200,
+          25,
+          25,
+          50)
 {
 }
 
-Enemy::Enemy(Hero &hero,
-             std::unique_ptr<BaseRectangle> body,
-             std::unique_ptr<BaseRectangleX2> healthBar,
-             std::unique_ptr<BaseCircle> watchRangeCircle,
-             std::unique_ptr<BaseCircle> shortRangeCircle,
-             std::unique_ptr<BaseCircle> longRangeCircle,
-             float health,
-             float maxHealth,
-             float speed,
-             int watchRangeRadius,
-             int shortRangeRadius,
-             int longRangeRadius)
+Enemy::Enemy(
+    Hero &hero,
+    FloorItems &floorItems,
+    std::unique_ptr<BaseRectangle> body,
+    std::unique_ptr<BaseRectangleX2> healthBar,
+    std::unique_ptr<BaseCircle> watchRangeCircle,
+    std::unique_ptr<BaseCircle> shortRangeCircle,
+    std::unique_ptr<BaseCircle> longRangeCircle,
+    float health,
+    float maxHealth,
+    float speed,
+    int watchRangeRadius,
+    int shortRangeRadius,
+    int longRangeRadius)
     : m_hero(hero),
+      m_floorItems(floorItems),
       m_houndHero(false),
       BaseEntity(std::move(body),
                  std::move(healthBar),
@@ -45,7 +52,14 @@ Enemy::Enemy(Hero &hero,
           0,
           0,
           800 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 35)),
-          2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1))) {}
+          2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1)))
+{
+  for (int i = helper::GET_RANDOM_NUMBER_INT(0, 1); i < helper::GET_RANDOM_NUMBER_INT(1, 3); i++)
+  {
+    m_dices.emplace_back(diceHelper::CREATE_DICE(1));
+    std::cout << "dices: " << m_dices.size() << std::endl;
+  }
+}
 
 Enemy::~Enemy() {}
 
@@ -87,9 +101,17 @@ void Enemy::prepareVertex()
 void Enemy::removeHealth(int health)
 {
   m_health -= health;
-  float healtninPrecent = m_health / m_maxHealth;
-  sf::Vector2f size = m_healthBar->getInner().getShape().getSize();
-  m_healthBar->getInner().getShape().setSize(sf::Vector2f(size.x * healtninPrecent, size.y));
+  if (m_health < 0)
+  {
+    m_health = 0;
+  }
+  float healthPercent = std::max(0.f, m_health / m_maxHealth);
+  float maxWidth = m_healthBar->getOuter().getShape().getSize().x;
+  m_healthBar->getInner().getShape().setSize({maxWidth * healthPercent, m_healthBar->getInner().getShape().getSize().y});
+}
+
+void Enemy::dropItemsOnFloor()
+{
 }
 
 void Enemy::houndHero()

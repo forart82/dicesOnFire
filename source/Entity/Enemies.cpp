@@ -10,7 +10,7 @@ Enemies::~Enemies() {}
 
 void Enemies::update(sf::Time &delta)
 {
-
+  removeEnemyOnDeath();
   for (auto &enemy : m_enemies)
   {
     enemy->update(delta);
@@ -28,22 +28,25 @@ void Enemies::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_vertices, states);
 }
 
-void Enemies::addEnemy(Hero &hero)
+void Enemies::addEnemy(Hero &hero, FloorItems &floorItems)
 {
-  m_enemies.emplace_back(enemyHelper::CREATE_ENEMY(hero));
+  m_enemies.emplace_back(enemyHelper::CREATE_ENEMY(hero, floorItems));
 }
 
 void Enemies::removeEnemyOnDeath()
 {
-  m_enemies.erase(
-      std::remove_if(
-          m_enemies.begin(),
-          m_enemies.end(),
-          [](const auto &enemy)
-          {
-            return enemy->getHealth() <= 0;
-          }),
-      m_enemies.end());
+  for (auto it = m_enemies.begin(); it != m_enemies.end();)
+  {
+    if ((*it)->getHealth() <= 0)
+    {
+      (*it)->dropItemsOnFloor();
+      it = m_enemies.erase(it);
+    }
+    else
+    {
+      ++it;
+    }
+  }
 }
 
 void Enemies::makeVertices()

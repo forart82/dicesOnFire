@@ -5,6 +5,7 @@
 #include "_HELPERS.h"
 #include "Entity/Enemy.h"
 #include "Manager/ConfigManager.h"
+#include "FloorItems.h"
 
 namespace enemyHelper
 {
@@ -15,7 +16,9 @@ namespace enemyHelper
     component->addPosition(offset);
   };
 
-  inline std::unique_ptr<Enemy> CREATE_ENEMY(Hero &hero)
+  inline std::unique_ptr<Enemy> CREATE_ENEMY(
+      Hero &hero,
+      FloorItems &floorItems)
   {
 
     int health = helper::GET_RANDOM_NUMBER_INT(50, 100);
@@ -61,6 +64,7 @@ namespace enemyHelper
 
     auto enemy = std::make_unique<Enemy>(
         hero,
+        floorItems,
         std::move(body),
         std::move(healthBar),
         std::move(watchRangeCircle),

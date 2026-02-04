@@ -24,7 +24,7 @@ namespace helper
   {
     // This is a placeholder for a better random number generation strategy.
     // It's recommended to have a single std::mt19937 instance in your Game class.
-    std::uniform_int_distribution<float> distrib(min, max);
+    std::uniform_real_distribution<float> distrib(min, max);
     static std::mt19937 gen(std::random_device{}());
     return distrib(gen);
   }

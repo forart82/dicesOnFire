@@ -6,6 +6,8 @@
 #include "Entity/BaseEntity.h"
 #include "Entity/Enemy.h"
 #include "Entity/EnemyHelper.h"
+#include "Vertex/VertexRectangle.h"
+#include "FloorItems.h"
 
 class Enemies : public sf::Drawable
 {
@@ -20,7 +22,7 @@ public:
   virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void addEnemy(Hero &hero);
+  void addEnemy(Hero &hero, FloorItems &floorItems);
   void removeEnemyOnDeath();
 
   void makeVertices();

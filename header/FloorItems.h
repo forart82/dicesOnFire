@@ -5,7 +5,7 @@
 #include "Vertex/VertexRectangle.h"
 #include "Manager/TextureManager.h"
 
-class FloorItems : public sf::Drawable, VertexRectangle
+class FloorItems : public sf::Drawable, public VertexRectangle
 {
 private:
   sf::VertexArray m_vertices;

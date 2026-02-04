@@ -83,7 +83,7 @@ void Game::update(sf::Time delta)
 
   m_autoDamgeTimer += delta;
 
-  if (m_autoDamgeTimer.asSeconds() > 1)
+  if (m_autoDamgeTimer.asSeconds() > 0.1f)
   {
     for (auto &enemy : m_enemies->getEnemies())
     {
@@ -95,11 +95,8 @@ void Game::update(sf::Time delta)
   m_grid->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
-  m_HeroAttackService->update(delta);
-  for (auto &enemyService : m_EnemiesAttackService)
-  {
-    enemyService->update(delta);
-  }
+  m_heroAttackService->update(delta);
+  m_enemiesAttackService->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -164,6 +161,9 @@ void Game::init()
   configManager::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+  m_floorItems.reset();
+  m_floorItems = std::make_unique<FloorItems>();
+
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
       std::make_unique<BaseRectangle>(configManager::getRectangle("HERO_BODY")),
@@ -185,23 +185,19 @@ void Game::init()
   m_enemies = std::make_unique<Enemies>();
   for (int i = 0; i < 1; i++)
   {
-    m_enemies->addEnemy(*m_hero);
+    m_enemies->addEnemy(*m_hero, *m_floorItems);
   }
 
-  m_HeroAttackService.reset();
-  m_HeroAttackService =
+  m_heroAttackService.reset();
+  m_heroAttackService =
       std::make_unique<HeroAttackService>(
           *m_hero,
           *m_enemies);
 
-  m_EnemiesAttackService.clear();
-  for (const auto &enemy : m_enemies->getEnemies())
-  {
-    m_EnemiesAttackService.emplace_back(
-        std::make_unique<EnemyAttackService>(
-            *enemy,
-            *m_hero));
-  }
+  m_enemiesAttackService.reset();
+  m_enemiesAttackService = std::make_unique<EnemiesAttackService>(
+      *m_enemies,
+      *m_hero);
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);
