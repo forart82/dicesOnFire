@@ -2,36 +2,26 @@
 
 Dice::Dice()
     : Dice(
-          BaseCircle(
-              sf::Vector2f(1000, 1000),
-              50,
-              1, true,
-              colors::COLOR_BLUE_CLOUDY_AQUA,
-              colors::COLOR_GREEN_DARK_GREEN),
           4,
           1,
           2)
 {
 }
 
-Dice::Dice(BaseCircle diceMenu, int faces, int rerolls, float cooldown)
-    : m_diceMenu(diceMenu),
-      m_timer(10),
+Dice::Dice(int faces, int rerolls, float cooldown)
+    : VertexRectangle(
+          0,
+          0,
+          0,
+          0),
+      m_timer(cooldown),
       m_faces(faces),
       m_rerolls(rerolls),
-      m_padding(8),
-      m_stop(false)
+      m_stop(false),
+      m_isOnFloor(false)
 {
   // Dice
   makeFaceValues();
-  // m_shape.setPosition(position);
-  // m_shape.setRadius(m_radius);
-  // setColors(m_fillColor, m_outlineColor);
-  // setFaces(m_faces);
-
-  // GameText
-  // m_diceValueText = std::make_unique<GameText>("dice", "1", sf::Vector2f(m_position.x + m_radius / 2, m_position.y + m_radius / 2 - 20.f), colors::COLOR_BLUE_AQUA, "Quantico");
-  // m_diceValueText->setFontSize(63);
 
   // Timer
   m_timer.onTimeout = [this]()
@@ -62,7 +52,6 @@ void Dice::update(sf::Time &delta)
 
 void Dice::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseCircle::draw(target, states);
   target.draw(m_timer);
   target.draw(*m_diceValueText);
 }
@@ -100,7 +89,9 @@ void Dice::toggleStop()
 void Dice::setFaces(int faces)
 {
   m_faces = faces;
-  m_shape.setPointCount(m_faces);
+  m_diceWeaponSlotMenu.getShape().setPointCount(m_faces);
+  m_diceSacMenu.getShape().setPointCount(m_faces);
+  m_diceFloorItem.getShape().setPointCount(m_faces);
   makeFaceValues();
 }
 void Dice::setRerolls(int rerolls)
@@ -117,6 +108,11 @@ void Dice::setFaceValues(std::map<int, float> faceValues)
   {
     m_faceValues = faceValues;
   }
+}
+
+void Dice::setIsOnFloor(bool isOnFloor)
+{
+  m_isOnFloor = isOnFloor;
 }
 
 void Dice::onTimeout()

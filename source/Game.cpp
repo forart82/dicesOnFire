@@ -80,6 +80,17 @@ void Game::run()
 
 void Game::update(sf::Time delta)
 {
+
+  m_autoDamgeTimer += delta;
+
+  if (m_autoDamgeTimer.asSeconds() > 1)
+  {
+    for (auto &enemy : m_enemies->getEnemies())
+    {
+      enemy->removeHealth(1);
+    }
+    m_autoDamgeTimer = sf::Time::Zero;
+  }
   // Elements
   m_grid->update(delta);
   m_hero->update(delta);

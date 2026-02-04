@@ -7,23 +7,29 @@
 #include "Timer.h"
 #include "Form/BaseCircle.h"
 #include "_HELPERS.h"
+#include "Vertex/VertexRectangle.h"
 
-class Dice : public BaseCircle
+class Dice : public sf::Drawable, VertexRectangle
 {
 private:
-  BaseCircle m_diceMenu;
+  BaseCircle m_diceWeaponSlotMenu;
+  BaseCircle m_diceSacMenu;
+  BaseCircle m_diceFloorItem;
+
   std::unique_ptr<GameText> m_diceValueText;
-  Timer m_timer;
+  int m_faces;
   std::map<int, float> m_faceValues;
   int m_rerolls;
-  int m_faces;
-  float m_padding;
-  bool m_stop;
+
+  Timer m_timer;
   sf::Time m_elapsedTime;
+
+  bool m_stop;
+  bool m_isOnFloor;
 
 public:
   Dice();
-  Dice(BaseCircle diceMenu, int faces, int rerolls, float cooldown);
+  Dice(int faces, int rerolls, float cooldown);
 
   ~Dice();
 
@@ -38,8 +44,7 @@ public:
   void setRerolls(int rerolls);
   void setCooldown(float cooldown);
   void setFaceValues(std::map<int, float> faceValues);
+  void setIsOnFloor(bool isOnFloor);
 
   void onTimeout();
-
-  float roll();
 };

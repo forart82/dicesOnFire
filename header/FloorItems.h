@@ -3,12 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include "Dice/Dice.h"
 #include "Vertex/VertexRectangle.h"
+#include "Manager/TextureManager.h"
 
 class FloorItems : public sf::Drawable, VertexRectangle
 {
 private:
   sf::VertexArray m_vertices;
   std::vector<std::unique_ptr<Dice>> m_dices;
+  sf::Texture m_texture;
 
 public:
   FloorItems();

@@ -30,6 +30,7 @@ private:
   // Time
   const sf::Time m_timePerFrame = sf::seconds(1.f / 60.f);
   sf::Time m_timeSinceLastUpdate = sf::Time::Zero;
+  sf::Time m_autoDamgeTimer = sf::Time::Zero;
   sf::Clock m_clock;
 
   bool m_isFontLoaded;

@@ -8,13 +8,19 @@
 class DiceHelper
 {
 public:
-  inline std::unique_ptr<Dice> CREATE_DICE(sf::Vector2f position, sf::Color color)
+  inline std::unique_ptr<Dice> CREATE_DICE(int level = 1)
   {
     auto dice = std::make_unique<Dice>();
 
-    dice->getShape().setPosition(position);
-    dice->setColors(colors::COLORS_DICE_ELEMENTS[helper::GET_RANDOM_NUMBER_INT(1, 3)], colors::COLOR_GRAYSCALE_BLACK);
-    dice->setFaces(4);
+    switch (level)
+    {
+    case 1:
+      dice->setCooldown(helper::GET_RANDOM_NUMBER_INT(1, 5));
+      dice->setFaces(4);
+      dice->setIsOnFloor(false);
+      dice->setRerolls(0);
+      break;
+    }
 
     return dice;
   }

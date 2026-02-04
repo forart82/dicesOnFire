@@ -84,6 +84,14 @@ void Enemy::prepareVertex()
   m_rightBottom = sf::Vector2f(left + width, top + height);
 }
 
+void Enemy::removeHealth(int health)
+{
+  m_health -= health;
+  float healtninPrecent = m_health / m_maxHealth;
+  sf::Vector2f size = m_healthBar->getInner().getShape().getSize();
+  m_healthBar->getInner().getShape().setSize(sf::Vector2f(size.x * healtninPrecent, size.y));
+}
+
 void Enemy::houndHero()
 {
   m_houndHero = true;

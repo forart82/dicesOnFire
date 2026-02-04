@@ -32,6 +32,7 @@ public:
 
   void move(sf::Time &delta);
   void prepareVertex();
+  void removeHealth(int health);
 
   void houndHero();
 

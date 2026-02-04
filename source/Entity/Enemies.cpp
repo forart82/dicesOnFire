@@ -54,7 +54,7 @@ void Enemies::makeVertices()
   }
 
   int enemyCounter = 0;
-  for (const auto &enemy : m_enemies)
+  for (auto &enemy : m_enemies)
   {
     sf::Vertex *triangels = &m_vertices[enemyCounter * 6];
     triangels[0].position = enemy->getLeftTop();
