@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-namespace textureManager
+namespace textureLoader
 {
 
   inline std::map<std::string, sf::Texture> m_textures;

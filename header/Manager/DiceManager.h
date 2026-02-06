@@ -5,7 +5,7 @@
 #include "_HELPERS.h"
 #include "_COLORS.h"
 
-namespace diceHelper
+namespace diceManager
 {
   inline std::unique_ptr<Dice> CREATE_DICE(int level = 1)
   {

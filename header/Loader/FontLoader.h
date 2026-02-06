@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-namespace fontManager
+namespace fontLoader
 {
   inline std::map<std::string, sf::Font> m_fonts;
 

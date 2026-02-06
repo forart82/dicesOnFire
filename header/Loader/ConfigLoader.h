@@ -11,7 +11,7 @@
 #include "Form/BaseRectangle.h"
 #include "Form/BaseRectangleX2.h"
 
-namespace configManager
+namespace configLoader
 {
 
   // Data Storage
@@ -173,10 +173,10 @@ namespace configManager
   inline void loadAll()
   {
     m_fileNames.clear();
-    configManager::load("configs/gui.config");
-    configManager::load("configs/hero.config");
-    configManager::load("configs/enemy.config");
-    configManager::load("configs/debugBar.config");
+    load("configs/gui.config");
+    load("configs/hero.config");
+    load("configs/enemy.config");
+    load("configs/debugBar.config");
   }
 
   inline void reload()

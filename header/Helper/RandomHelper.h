@@ -1,16 +1,9 @@
 #pragma once
 
-#include <cmath>
-#include "_GLOBALS.h"
 #include <random>
 
-namespace helper
+namespace randomHelper
 {
-  inline int SNAP_TO_GRID(int value)
-  {
-    return floor(value / TILE_SIZE) * TILE_SIZE;
-  }
-
   inline int GET_RANDOM_NUMBER_INT(int min, int max)
   {
     // This is a placeholder for a better random number generation strategy.
@@ -28,4 +21,4 @@ namespace helper
     static std::mt19937 gen(std::random_device{}());
     return distrib(gen);
   }
-};
+}
