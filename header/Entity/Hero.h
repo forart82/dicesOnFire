@@ -2,13 +2,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "_ENUMS.h"
-#include "Entity/BaseEntity.h"
-#include "Form/BaseRectangle.h"
-#include "Form/BaseRectangleX2.h"
-#include "Manager/TextureManager.h"
+#include "Entity/CharacterBody.h"
+#include "Entity/Rectangle.h"
+#include "Entity/RectangleX2.h"
+#include "Globals/Enums.h"
+#include "Loader/TextureLoader.h"
 
-class Hero : public BaseEntity
+class Hero : public CharacterBody
 {
 private:
   sf::Vector2f m_direction;
@@ -16,11 +16,11 @@ private:
 public:
   Hero();
   Hero(
-      std::unique_ptr<BaseRectangle> body,
-      std::unique_ptr<BaseRectangleX2> healthBar,
-      std::unique_ptr<BaseCircle> watchRangeCircle,
-      std::unique_ptr<BaseCircle> shortRangeCircle,
-      std::unique_ptr<BaseCircle> longRangeCircle,
+      std::unique_ptr<Rectangle> bodyBox,
+      std::unique_ptr<RectangleX2> healthBar,
+      std::unique_ptr<Circle> watchRangeCircle,
+      std::unique_ptr<Circle> shortRangeCircle,
+      std::unique_ptr<Circle> longRangeCircle,
       float health,
       float maxHealth,
       float speed,

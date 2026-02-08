@@ -1,16 +1,16 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Weapon/BaseWeapon.h"
-#include "Form/BaseRectangle.h"
+#include "Entity/Weapon.h"
+#include "Entity/Rectangle.h"
 
-class BladedWeapon : public BaseWeapon
+class BladedWeapon : public Weapon
 {
 private:
 public:
   BladedWeapon();
   BladedWeapon(
-      BaseRectangle weaponMenu,
+      std::unique_ptr<Rectangle> bodyBox,
       float cooldown,
       int damage,
       int numberOfSlots,

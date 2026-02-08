@@ -1,27 +1,27 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Form/BaseRectangle.h"
-#include "_COLORS.h"
+#include "Entity/Rectangle.h"
+#include "Globals/Colors.h"
 
-class BaseRectangleX2 : public sf::Drawable
+class RectangleX2 : public sf::Drawable
 {
 
 protected:
-  BaseRectangle m_outer;
-  BaseRectangle m_inner;
+  Rectangle m_outer;
+  Rectangle m_inner;
 
 public:
-  BaseRectangleX2()
-      : BaseRectangleX2(
-            BaseRectangle(
+  RectangleX2()
+      : RectangleX2(
+            Rectangle(
                 sf::Vector2f(200, 200),
                 sf::Vector2f(200, 200),
                 1,
                 true,
                 colors::COLOR_BLUE_SKY_BLUE,
                 colors::COLOR_BLUE_SKY_BLUE),
-            BaseRectangle(
+            Rectangle(
                 sf::Vector2f(1000, 1000),
                 sf::Vector2f(200, 200),
                 1,
@@ -30,15 +30,15 @@ public:
                 colors::COLOR_GREEN_GREEN))
   {
   }
-  BaseRectangleX2(
-      BaseRectangle outer,
-      BaseRectangle inner)
+  RectangleX2(
+      Rectangle outer,
+      Rectangle inner)
       : m_outer(outer),
         m_inner(inner)
   {
   }
 
-  ~BaseRectangleX2()
+  ~RectangleX2()
   {
   }
 
@@ -62,12 +62,12 @@ public:
     m_inner.getShape().setPosition(newInnerPosition);
   }
 
-  BaseRectangle &getOuter()
+  Rectangle &getOuter()
   {
     return m_outer;
   }
 
-  BaseRectangle &getInner()
+  Rectangle &getInner()
   {
     return m_inner;
   }

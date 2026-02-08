@@ -1,14 +1,8 @@
-#include "Weapon/Sword.h"
+#include "Entity/Sword.h"
 
 Sword::Sword()
     : Sword(
-          BaseRectangle(
-              sf::Vector2f(100.f, 100.f),
-              sf::Vector2f(100.f, 100.f),
-              1,
-              true,
-              colors::COLOR_BLUE_AQUA,
-              colors::COLOR_BLUE_CLOUDY_AQUA),
+          std::make_unique<Rectangle>(),
           5,
           7,
           2,
@@ -17,13 +11,13 @@ Sword::Sword()
 }
 
 Sword::Sword(
-    BaseRectangle swordMenu,
+    std::unique_ptr<Rectangle> bodyBox,
     float cooldown,
     int damage,
     int numberOfSlots,
     int weaponSlotNumber)
     : BladedWeapon(
-          swordMenu,
+          std::move(bodyBox),
           cooldown,
           damage,
           numberOfSlots,

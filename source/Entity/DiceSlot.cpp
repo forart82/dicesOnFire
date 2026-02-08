@@ -1,12 +1,12 @@
-#include "Dice/DiceSlot.h"
+#include "Entity/DiceSlot.h"
 
 DiceSlot::DiceSlot()
-    : BaseCircle()
+    : m_BodyCircle(std::make_unique<Circle>())
 {
 }
 
-DiceSlot::DiceSlot(BaseCircle diceSlotMenu)
-    : BaseCircle(diceSlotMenu)
+DiceSlot::DiceSlot(std::unique_ptr<Circle> bodyCircle)
+    : m_BodyCircle(std::move(bodyCircle))
 {
 }
 
@@ -16,10 +16,10 @@ DiceSlot::~DiceSlot()
 
 void DiceSlot::update(sf::Time &delta)
 {
-    BaseCircle::update(delta);
+    m_BodyCircle->update(delta);
 }
 
 void DiceSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    BaseCircle::draw(target, states);
+    target.draw(*m_BodyCircle);
 };

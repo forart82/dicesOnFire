@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "_COLORS.h"
+#include "Globals/Colors.h"
 
-class BaseCircle : public sf::Drawable
+class Circle : public sf::Drawable
 {
 
 protected:
@@ -11,8 +11,8 @@ protected:
   bool m_isActive;
 
 public:
-  BaseCircle()
-      : BaseCircle(
+  Circle()
+      : Circle(
             sf::Vector2f(1000, 1000),
             50,
             1,
@@ -21,7 +21,7 @@ public:
             colors::COLOR_RED_HOT_PINK)
   {
   }
-  BaseCircle(
+  Circle(
       sf::Vector2f position,
       float radius,
       int thickness,
@@ -37,7 +37,7 @@ public:
     setColors(fillColor, outlineColor);
   }
 
-  ~BaseCircle()
+  ~Circle()
   {
   }
 

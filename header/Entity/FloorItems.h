@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Dice/Dice.h"
-#include "Vertex/VertexRectangle.h"
-#include "Manager/TextureManager.h"
+#include "Entity/Dice.h"
+#include "Entity/VertexRectangle.h"
+#include "Loader/TextureLoader.h"
 
 class FloorItems : public sf::Drawable, public VertexRectangle
 {

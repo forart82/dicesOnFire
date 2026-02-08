@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "_COLORS.h"
+#include "Globals/Colors.h"
 
-class BaseRectangle : public sf::Drawable
+class Rectangle : public sf::Drawable
 {
 
 protected:
@@ -12,8 +12,8 @@ protected:
   bool m_isActive;
 
 public:
-  BaseRectangle()
-      : BaseRectangle(
+  Rectangle()
+      : Rectangle(
             sf::Vector2f(300, 300),
             sf::Vector2f(300, 300),
             1,
@@ -22,7 +22,7 @@ public:
             colors::COLOR_RED_RED)
   {
   }
-  BaseRectangle(
+  Rectangle(
       sf::Vector2f position,
       sf::Vector2f size,
       int thickness,
@@ -40,7 +40,7 @@ public:
     setOriginFromSize(size);
   }
 
-  ~BaseRectangle()
+  ~Rectangle()
   {
   }
 
@@ -57,7 +57,7 @@ public:
   }
 
   // --- Setters ---
-  void setBaseRectangle(BaseRectangle baseRectangle)
+  void setRectangle(Rectangle baseRectangle)
   {
     m_shape.setPosition(baseRectangle.m_shape.getPosition());
     m_shape.setSize(baseRectangle.m_shape.getSize());

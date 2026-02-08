@@ -2,17 +2,18 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
-#include "Timer.h"
-#include "Dice/DiceSlot.h"
-#include "Weapon/WeaponSlot.h"
-#include "Weapon/BladedWeapon.h"
-#include "Form/BaseRectangle.h"
-#include "_HELPERS.h"
+#include "Entity/Timer.h"
+#include "Entity/DiceSlot.h"
+#include "Entity/WeaponSlot.h"
+#include "Entity/BladedWeapon.h"
+#include "Entity/Rectangle.h"
+#include "Helper/RandomHelper.h"
 
-class WeaponSlot : public BaseRectangle
+class WeaponSlot : public sf::Drawable
 {
 
 private:
+  std::unique_ptr<Rectangle> m_bodyBox;
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<BladedWeapon> m_bladedWeapon;
   int m_weaponSlotNumber;
@@ -20,7 +21,7 @@ private:
 public:
   WeaponSlot();
   WeaponSlot(
-      BaseRectangle m_weaponSlotMenu,
+      std::unique_ptr<Rectangle> bodyBox,
       float cooldown,
       int weaponSlotNumber);
   ~WeaponSlot();

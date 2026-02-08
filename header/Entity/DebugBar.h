@@ -2,14 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Manager/TextureManager.h"
-#include "Manager/ConfigManager.h"
-#include "Manager/FontManager.h"
-#include "GameText.h"
-#include "DebugWindow.h"
+#include "Entity/GameText.h"
+#include "Entity/DebugWindow.h"
 #include "Entity/Hero.h"
 #include "Entity/Enemies.h"
-#include "Grid.h"
+#include "Entity/Grid.h"
+#include "Loader/TextureLoader.h"
+#include "Loader/ConfigLoader.h"
+#include "Loader/FontLoader.h"
 
 class DebugBar : public sf::Drawable
 {

@@ -1,4 +1,4 @@
-#include "Dice/Dice.h"
+#include "Entity/Dice.h"
 
 Dice::Dice()
     : Dice(
@@ -34,7 +34,7 @@ void Dice::update(sf::Time &delta)
   if (!m_stop)
   {
     m_timer.update(delta);
-    int diceValue = helper::GET_RANDOM_NUMBER_INT(1, m_faces);
+    int diceValue = randomHelper::GET_RANDOM_NUMBER_INT(1, m_faces);
     m_diceValueText->addText("dice", std::to_string(diceValue));
     handelTextPositionBasedOnDiceValue(diceValue);
   }

@@ -1,12 +1,12 @@
-#include "Entity/BaseEntity.h"
+#include "Entity/CharacterBody.h"
 
-BaseEntity::BaseEntity()
-    : BaseEntity(
-          std::make_unique<BaseRectangle>(),
-          std::make_unique<BaseRectangleX2>(),
-          std::make_unique<BaseCircle>(),
-          std::make_unique<BaseCircle>(),
-          std::make_unique<BaseCircle>(),
+CharacterBody::CharacterBody()
+    : CharacterBody(
+          std::make_unique<Rectangle>(),
+          std::make_unique<RectangleX2>(),
+          std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
           100,
           100,
           2,
@@ -16,19 +16,19 @@ BaseEntity::BaseEntity()
 {
 }
 
-BaseEntity::BaseEntity(
-    std::unique_ptr<BaseRectangle> body,
-    std::unique_ptr<BaseRectangleX2> healthBar,
-    std::unique_ptr<BaseCircle> watchRangeCircle,
-    std::unique_ptr<BaseCircle> shortRangeCircle,
-    std::unique_ptr<BaseCircle> longRangeCircle,
+CharacterBody::CharacterBody(
+    std::unique_ptr<Rectangle> bodyBox,
+    std::unique_ptr<RectangleX2> healthBar,
+    std::unique_ptr<Circle> watchRangeCircle,
+    std::unique_ptr<Circle> shortRangeCircle,
+    std::unique_ptr<Circle> longRangeCircle,
     float health,
     float maxHealth,
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
     int longRangeRadius)
-    : m_body(std::move(body)),
+    : m_bodyBox(std::move(bodyBox)),
       m_healthBar(std::move(healthBar)),
       m_watchRangeCircle(std::move(watchRangeCircle)),
       m_shortRangeCircle(std::move(shortRangeCircle)),
@@ -43,17 +43,17 @@ BaseEntity::BaseEntity(
 {
 }
 
-BaseEntity::~BaseEntity() {}
+CharacterBody::~CharacterBody() {}
 
-void BaseEntity::update(sf::Time &delta)
+void CharacterBody::update(sf::Time &delta)
 {
 }
 
-void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void CharacterBody::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_debugIsActive)
   {
-    target.draw(*m_body);
+    target.draw(*m_bodyBox);
   }
   target.draw(*m_watchRangeCircle);
   target.draw(*m_shortRangeCircle);
@@ -61,9 +61,9 @@ void BaseEntity::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(*m_healthBar);
 }
 
-void BaseEntity::move(sf::Vector2f &movement)
+void CharacterBody::move(sf::Vector2f &movement)
 {
-  m_body->getShape().move({std::round(movement.x), std::round(movement.y)});
+  m_bodyBox->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_healthBar->getOuter().getShape().move({std::round(movement.x), std::round(movement.y)});
   m_healthBar->getInner().getShape().move({std::round(movement.x), std::round(movement.y)});
   m_watchRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
@@ -71,22 +71,22 @@ void BaseEntity::move(sf::Vector2f &movement)
   m_longRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
 }
 
-bool BaseEntity::insideWatchRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+bool CharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
   return insideRadar(targetPos, radarPtr);
 }
 
-bool BaseEntity::insideShortRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+bool CharacterBody::insideShortRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
   return insideRadar(targetPos, radarPtr);
 }
 
-bool BaseEntity::insideLongRangeCircle(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+bool CharacterBody::insideLongRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
   return insideRadar(targetPos, radarPtr);
 }
 
-bool BaseEntity::insideRadar(const sf::Vector2f &targetPos, BaseCircle &radarPtr)
+bool CharacterBody::insideRadar(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
 
   float radius = radarPtr.getShape().getRadius();
@@ -98,77 +98,77 @@ bool BaseEntity::insideRadar(const sf::Vector2f &targetPos, BaseCircle &radarPtr
   return (dx * dx + dy * dy) <= (radius * radius);
 }
 
-void BaseEntity::setBody(std::unique_ptr<BaseRectangle> body)
+void CharacterBody::setBody(std::unique_ptr<Rectangle> bodyBox)
 {
-  m_body = std::move(body);
+  m_bodyBox = std::move(bodyBox);
 }
-void BaseEntity::setHealthBar(std::unique_ptr<BaseRectangleX2> healthBar)
+void CharacterBody::setHealthBar(std::unique_ptr<RectangleX2> healthBar)
 {
   m_healthBar = std::move(healthBar);
 }
-void BaseEntity::setHealth(float health)
+void CharacterBody::setHealth(float health)
 {
   m_health = health;
 }
-void BaseEntity::setMaxHealth(float maxHealth)
+void CharacterBody::setMaxHealth(float maxHealth)
 {
   m_maxHealth = maxHealth;
 }
-void BaseEntity::setSpeed(float speed)
+void CharacterBody::setSpeed(float speed)
 {
   m_speed = speed;
 }
-void BaseEntity::setWatchRangeRadius(int watchRangeRadius)
+void CharacterBody::setWatchRangeRadius(int watchRangeRadius)
 {
   m_watchRangeRadius = watchRangeRadius;
 }
 
-void BaseEntity::toggleDebugIsActive()
+void CharacterBody::toggleDebugIsActive()
 {
   m_debugIsActive = !m_debugIsActive;
 }
 
-BaseRectangle &BaseEntity::getBody()
+Rectangle &CharacterBody::getBody()
 {
-  return *m_body;
+  return *m_bodyBox;
 }
-BaseRectangleX2 &BaseEntity::getHealthBar()
+RectangleX2 &CharacterBody::getHealthBar()
 {
   return *m_healthBar;
 }
-BaseCircle &BaseEntity::getWatchRangeCircle()
+Circle &CharacterBody::getWatchRangeCircle()
 {
   return *m_watchRangeCircle;
 }
-BaseCircle &BaseEntity::getShortRangeCircle()
+Circle &CharacterBody::getShortRangeCircle()
 {
   return *m_shortRangeCircle;
 }
-BaseCircle &BaseEntity::getLongRangeCircle()
+Circle &CharacterBody::getLongRangeCircle()
 {
   return *m_longRangeCircle;
 }
-float &BaseEntity::getHealth()
+float &CharacterBody::getHealth()
 {
   return m_health;
 }
-float &BaseEntity::getMaxHealth()
+float &CharacterBody::getMaxHealth()
 {
   return m_maxHealth;
 }
-float &BaseEntity::getSpeed()
+float &CharacterBody::getSpeed()
 {
   return m_speed;
 }
-int &BaseEntity::getWatchRangeRadius()
+int &CharacterBody::getWatchRangeRadius()
 {
   return m_watchRangeRadius;
 }
-int &BaseEntity::getShortRangeRadius()
+int &CharacterBody::getShortRangeRadius()
 {
   return m_shortRangeRadius;
 }
-int &BaseEntity::getLongRangeRadius()
+int &CharacterBody::getLongRangeRadius()
 {
   return m_longRangeRadius;
 }

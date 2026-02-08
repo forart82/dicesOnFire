@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Weapon/BladedWeapon.h"
-#include "Form/BaseRectangle.h"
+#include "Entity/BladedWeapon.h"
+#include "Entity/Rectangle.h"
 
 class Sword : public BladedWeapon
 {
@@ -11,7 +11,7 @@ private:
 public:
   Sword();
   Sword(
-      BaseRectangle swordMenu,
+      std::unique_ptr<Rectangle> bodyBox,
       float cooldown,
       int damage,
       int numberOfSlots,

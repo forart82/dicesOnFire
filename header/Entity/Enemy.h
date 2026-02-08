@@ -1,15 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/BaseEntity.h"
+#include "Entity/CharacterBody.h"
 #include "Entity/Hero.h"
-#include "_HELPERS.h"
-#include "Vertex/VertexRectangle.h"
-#include "Dice/Dice.h"
-#include "Dice/DiceHelper.h"
-#include "FloorItems.h"
+#include "Entity/VertexRectangle.h"
+#include "Entity/Dice.h"
+#include "Entity/FloorItems.h"
+#include "Helper/RandomHelper.h"
+#include "Manager/DiceManager.h"
 
-class Enemy : public BaseEntity, public VertexRectangle
+class Enemy : public CharacterBody, public VertexRectangle
 {
 private:
   Hero &m_hero;
@@ -25,11 +25,11 @@ public:
   Enemy(
       Hero &hero,
       FloorItems &floorItems,
-      std::unique_ptr<BaseRectangle> body,
-      std::unique_ptr<BaseRectangleX2> healthBar,
-      std::unique_ptr<BaseCircle> watchRangeCircle,
-      std::unique_ptr<BaseCircle> shortRangeCircle,
-      std::unique_ptr<BaseCircle> longRangeCircle,
+      std::unique_ptr<Rectangle> bodyBox,
+      std::unique_ptr<RectangleX2> healthBar,
+      std::unique_ptr<Circle> watchRangeCircle,
+      std::unique_ptr<Circle> shortRangeCircle,
+      std::unique_ptr<Circle> longRangeCircle,
       float health,
       float maxHealth,
       float speed,

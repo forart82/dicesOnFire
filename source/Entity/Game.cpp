@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Entity/Game.h"
 
 Game::Game() : m_rng(std::random_device{}())
 {
@@ -95,8 +95,7 @@ void Game::update(sf::Time delta)
   m_grid->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
-  m_heroAttackService->update(delta);
-  m_enemiesAttackService->update(delta);
+  m_attackHub->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -126,7 +125,7 @@ void Game::draw()
 void Game::handleViewRatio()
 {
 
-  float targetRatio = (float)GLOBAL_SCREEN_WIDTH / (float)GLOBAL_SCREEN_HEIGHT;
+  float targetRatio = (float)globals::GLOBAL_SCREEN_WIDTH / (float)globals::GLOBAL_SCREEN_HEIGHT;
   float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
 
   float sizeX = 1.f;
@@ -146,11 +145,11 @@ void Game::handleViewRatio()
   }
 
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
-  m_playerView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_playerView.setSize({globals::GLOBAL_SCREEN_WIDTH, globals::GLOBAL_SCREEN_HEIGHT});
   m_playerView.zoom(m_playerZoom);
   m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-  m_uiView.setCenter({GLOBAL_SCREEN_WIDTH / 2, GLOBAL_SCREEN_HEIGHT / 2});
-  m_uiView.setSize({GLOBAL_SCREEN_WIDTH, GLOBAL_SCREEN_HEIGHT});
+  m_uiView.setCenter({globals::GLOBAL_SCREEN_WIDTH / 2, globals::GLOBAL_SCREEN_HEIGHT / 2});
+  m_uiView.setSize({globals::GLOBAL_SCREEN_WIDTH, globals::GLOBAL_SCREEN_HEIGHT});
   m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }
 
@@ -158,7 +157,7 @@ void Game::init()
 {
   m_playerZoom = 1;
 
-  configManager::reload();
+  configLoader::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
   m_floorItems.reset();
@@ -166,20 +165,17 @@ void Game::init()
 
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
-      std::make_unique<BaseRectangle>(configManager::getRectangle("HERO_BODY")),
-      std::make_unique<BaseRectangleX2>(configManager::getRectangleX2("HERO_HEALTHBAR")),
-      std::make_unique<BaseCircle>(configManager::getCircle("HERO_WATCH_RANGE")),
-      std::make_unique<BaseCircle>(configManager::getCircle("HERO_SHORT_RANGE")),
-      std::make_unique<BaseCircle>(configManager::getCircle("HERO_LONG_RANGE")),
+      std::make_unique<Rectangle>(configLoader::getRectangle("HERO_BODY")),
+      std::make_unique<RectangleX2>(configLoader::getRectangleX2("HERO_HEALTHBAR")),
+      std::make_unique<Circle>(configLoader::getCircle("HERO_WATCH_RANGE")),
+      std::make_unique<Circle>(configLoader::getCircle("HERO_SHORT_RANGE")),
+      std::make_unique<Circle>(configLoader::getCircle("HERO_LONG_RANGE")),
       100,
       100,
       1000,
-      PLAYER_WATCH_RADIUS,
+      globals::PLAYER_WATCH_RADIUS,
       25,
       50);
-
-  m_heroEvents.reset();
-  m_heroEvents = std::make_unique<HeroEvents>(*m_hero);
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
@@ -188,16 +184,11 @@ void Game::init()
     m_enemies->addEnemy(*m_hero, *m_floorItems);
   }
 
-  m_heroAttackService.reset();
-  m_heroAttackService =
-      std::make_unique<HeroAttackService>(
+  m_attackHub.reset();
+  m_attackHub =
+      std::make_unique<AttackHub>(
           *m_hero,
           *m_enemies);
-
-  m_enemiesAttackService.reset();
-  m_enemiesAttackService = std::make_unique<EnemiesAttackService>(
-      *m_enemies,
-      *m_hero);
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>(*m_hero);

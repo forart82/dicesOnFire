@@ -3,11 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <algorithm>
-#include "Entity/BaseEntity.h"
+#include "Entity/CharacterBody.h"
 #include "Entity/Enemy.h"
-#include "Entity/EnemyHelper.h"
-#include "Vertex/VertexRectangle.h"
-#include "FloorItems.h"
+#include "Entity/VertexRectangle.h"
+#include "Entity/FloorItems.h"
+#include "Manager/EnemyManager.h"
 
 class Enemies : public sf::Drawable
 {

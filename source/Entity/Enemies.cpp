@@ -20,7 +20,7 @@ void Enemies::update(sf::Time &delta)
 
 void Enemies::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  states.texture = &textureManager::getTexture("Utumno");
+  states.texture = &textureLoader::getTexture("Utumno");
   for (auto &enemy : m_enemies)
   {
     target.draw(*enemy, states);
@@ -30,7 +30,7 @@ void Enemies::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Enemies::addEnemy(Hero &hero, FloorItems &floorItems)
 {
-  m_enemies.emplace_back(enemyHelper::CREATE_ENEMY(hero, floorItems));
+  m_enemies.emplace_back(enemyManager::CREATE_ENEMY(hero, floorItems));
 }
 
 void Enemies::removeEnemyOnDeath()

@@ -6,11 +6,11 @@ Enemy::Enemy(
     : Enemy(
           hero,
           floorItmes,
-          std::make_unique<BaseRectangle>(),
-          std::make_unique<BaseRectangleX2>(),
-          std::make_unique<BaseCircle>(),
-          std::make_unique<BaseCircle>(),
-          std::make_unique<BaseCircle>(),
+          std::make_unique<Rectangle>(),
+          std::make_unique<RectangleX2>(),
+          std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
           2500,
           100,
           200,
@@ -23,11 +23,11 @@ Enemy::Enemy(
 Enemy::Enemy(
     Hero &hero,
     FloorItems &floorItems,
-    std::unique_ptr<BaseRectangle> body,
-    std::unique_ptr<BaseRectangleX2> healthBar,
-    std::unique_ptr<BaseCircle> watchRangeCircle,
-    std::unique_ptr<BaseCircle> shortRangeCircle,
-    std::unique_ptr<BaseCircle> longRangeCircle,
+    std::unique_ptr<Rectangle> bodyBox,
+    std::unique_ptr<RectangleX2> healthBar,
+    std::unique_ptr<Circle> watchRangeCircle,
+    std::unique_ptr<Circle> shortRangeCircle,
+    std::unique_ptr<Circle> longRangeCircle,
     float health,
     float maxHealth,
     float speed,
@@ -37,26 +37,26 @@ Enemy::Enemy(
     : m_hero(hero),
       m_floorItems(floorItems),
       m_houndHero(false),
-      BaseEntity(std::move(body),
-                 std::move(healthBar),
-                 std::move(watchRangeCircle),
-                 std::move(shortRangeCircle),
-                 std::move(longRangeCircle),
-                 health,
-                 maxHealth,
-                 speed,
-                 watchRangeRadius,
-                 shortRangeRadius,
-                 longRangeRadius),
+      CharacterBody(std::move(bodyBox),
+                    std::move(healthBar),
+                    std::move(watchRangeCircle),
+                    std::move(shortRangeCircle),
+                    std::move(longRangeCircle),
+                    health,
+                    maxHealth,
+                    speed,
+                    watchRangeRadius,
+                    shortRangeRadius,
+                    longRangeRadius),
       VertexRectangle(
           0,
           0,
-          800 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 35)),
-          2080 + (ASSETS_TILE_SIZE * helper::GET_RANDOM_NUMBER_INT(0, 1)))
+          800 + (globals::ASSETS_TILE_SIZE * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
+          2080 + (globals::ASSETS_TILE_SIZE * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
 {
-  for (int i = helper::GET_RANDOM_NUMBER_INT(0, 1); i < helper::GET_RANDOM_NUMBER_INT(1, 3); i++)
+  for (int i = randomHelper::GET_RANDOM_NUMBER_INT(0, 1); i < randomHelper::GET_RANDOM_NUMBER_INT(1, 3); i++)
   {
-    m_dices.emplace_back(diceHelper::CREATE_DICE(1));
+    m_dices.emplace_back(diceManager::CREATE_DICE(1));
     std::cout << "dices: " << m_dices.size() << std::endl;
   }
 }
@@ -74,23 +74,23 @@ void Enemy::move(sf::Time &delta)
   if (m_houndHero)
   {
     sf::Vector2f direction;
-    sf::Vector2f toPlayer = m_hero.getBody().getShape().getPosition() - m_body->getShape().getPosition();
+    sf::Vector2f toPlayer = m_hero.getBody().getShape().getPosition() - m_bodyBox->getShape().getPosition();
     float distance = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
     if (distance != 0) // Éviter la division par zéro
     {
       direction = toPlayer / distance;
     }
     sf::Vector2f movement = direction * m_speed * delta.asSeconds();
-    BaseEntity::move(movement);
+    CharacterBody::move(movement);
   }
 }
 
 void Enemy::prepareVertex()
 {
-  float left = m_body->getShape().getGlobalBounds().position.x;
-  float top = m_body->getShape().getGlobalBounds().position.y;
-  float width = m_body->getShape().getGlobalBounds().size.x;
-  float height = m_body->getShape().getGlobalBounds().size.y;
+  float left = m_bodyBox->getShape().getGlobalBounds().position.x;
+  float top = m_bodyBox->getShape().getGlobalBounds().position.y;
+  float width = m_bodyBox->getShape().getGlobalBounds().size.x;
+  float height = m_bodyBox->getShape().getGlobalBounds().size.y;
 
   m_leftTop = sf::Vector2f(left, top);
   m_rightTop = sf::Vector2f(left + width, top);

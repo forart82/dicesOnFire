@@ -1,4 +1,4 @@
-#include "Grid.h"
+#include "Entity/Grid.h"
 
 Grid::Grid(Hero &hero)
     : m_hero(hero)
@@ -16,7 +16,7 @@ void Grid::update(sf::Time &delta)
 
 void Grid::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  states.texture = &textureManager::getTexture("Utumno");
+  states.texture = &textureLoader::getTexture("Utumno");
   target.draw(m_vertices, states);
 }
 
@@ -29,15 +29,15 @@ void Grid::loadZone()
     m_vertices.resize(numCells * 6);
   }
   int cellCounter = 0;
-  int playerXMin = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - m_radius * TILE_SIZE);
-  int playerYMin = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - m_radius * TILE_SIZE);
+  int playerXMin = gridHelper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x - m_radius * globals::TILE_SIZE);
+  int playerYMin = gridHelper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y - m_radius * globals::TILE_SIZE);
 
-  int playerXMax = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + m_radius * TILE_SIZE);
-  int playerYMax = helper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + m_radius * TILE_SIZE);
+  int playerXMax = gridHelper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().x + m_radius * globals::TILE_SIZE);
+  int playerYMax = gridHelper::SNAP_TO_GRID(m_hero.getBody().getShape().getPosition().y + m_radius * globals::TILE_SIZE);
 
-  for (int x = playerXMin; x <= playerXMax; x += TILE_SIZE)
+  for (int x = playerXMin; x <= playerXMax; x += globals::TILE_SIZE)
   {
-    for (int y = playerYMin; y <= playerYMax; y += TILE_SIZE)
+    for (int y = playerYMin; y <= playerYMax; y += globals::TILE_SIZE)
     {
 
       if (m_cells.find({x, y}) == m_cells.end())

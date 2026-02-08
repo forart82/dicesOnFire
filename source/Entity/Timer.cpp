@@ -1,37 +1,22 @@
-#include "Timer.h"
+#include "Entity/Timer.h"
 
 Timer::Timer(float cooldown)
     : Timer(
-          BaseRectangleX2(
-              BaseRectangle(
-                  sf::Vector2f(1250.f, 1020.f),
-                  sf::Vector2f(500.f, 100.f),
-                  1,
-                  true,
-                  colors::COLOR_TIMER_PROGRESSBAR,
-                  colors::COLOR_GRAYSCALE_BLACK),
-              BaseRectangle(
-                  sf::Vector2f(1250.f, 1020.f),
-                  sf::Vector2f(500.f, 100.f),
-                  1,
-                  true,
-                  colors::COLOR_TIMER_PROGRESSBAR,
-                  colors::COLOR_GRAYSCALE_BLACK)),
+          std::make_unique<RectangleX2>(),
           cooldown,
           true)
 {
 }
 
 Timer::Timer(
-    BaseRectangleX2 timerMenu,
+    std::unique_ptr<RectangleX2> bodyBox,
     float cooldown,
     bool isVertical)
-    : BaseRectangleX2(timerMenu),
+    : m_bodyBox(std::move(bodyBox)),
       m_stop(false),
       m_cooldown(cooldown),
       m_isVertical(isVertical),
-      m_progressBarSize(timerMenu.getInner().getShape().getSize())
-
+      m_progressBarSize(m_bodyBox->getInner().getShape().getSize())
 {
 }
 
@@ -50,13 +35,13 @@ void Timer::update(sf::Time &delta)
     if (m_isVertical)
     {
       progressWidth = m_progressBarSize.x - (m_progressBarSize.x * progress);
-      this->getInner().getShape().setSize({progressWidth, progressHeight});
+      m_bodyBox->getInner().getShape().setSize({progressWidth, progressHeight});
     }
 
     if (!m_isVertical)
     {
       progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
-      this->getInner().getShape().setSize({progressWidth, progressHeight});
+      m_bodyBox->getInner().getShape().setSize({progressWidth, progressHeight});
     }
 
     if (seconds >= m_cooldown)
@@ -72,7 +57,7 @@ void Timer::update(sf::Time &delta)
 
 void Timer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseRectangleX2::draw(target, states);
+  target.draw(*m_bodyBox);
 }
 
 void Timer::toggleStop()

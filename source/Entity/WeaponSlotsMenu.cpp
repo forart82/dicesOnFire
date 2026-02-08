@@ -1,13 +1,14 @@
-#include "Weapon/WeaponSlotsMenu.h"
+#include "Entity/WeaponSlotsMenu.h"
 
 WeaponSlotsMenu::WeaponSlotsMenu()
-    : WeaponSlotsMenu(configManager::getRectangle("WEAPONSLOTSMENU"))
+    : WeaponSlotsMenu(
+          std::make_unique<Rectangle>())
 {
 }
 
 WeaponSlotsMenu::WeaponSlotsMenu(
-    BaseRectangle weaponSlotsMenuMenu)
-    : BaseRectangle(weaponSlotsMenuMenu),
+    std::unique_ptr<Rectangle> bodyBox)
+    : m_bodyBox(std::move(bodyBox)),
       m_weaponSlotCounter(1)
 {
   makeWeaponSlotes();
@@ -22,7 +23,7 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
   float index = weaponSlotNumber - 1;
   std::string weaponSlotConfig = "WEAPONSLOT_" + std::to_string(weaponSlotNumber);
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
-      configManager::getRectangle(weaponSlotConfig),
+      std::make_unique<Rectangle>(configLoader::getRectangle(weaponSlotConfig)),
       5,
       weaponSlotNumber);
 }
@@ -40,7 +41,7 @@ void WeaponSlotsMenu::makeWeaponSlotes()
 
 void WeaponSlotsMenu::update(sf::Time &delta)
 {
-  BaseRectangle::update(delta);
+  m_bodyBox->update(delta);
   for (const auto &[key, weaponSlot] : m_weaponSlots)
   {
     weaponSlot->update(delta);
@@ -49,7 +50,7 @@ void WeaponSlotsMenu::update(sf::Time &delta)
 
 void WeaponSlotsMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseRectangle::draw(target, states);
+  target.draw(*m_bodyBox);
   for (const auto &[key, weaponSlot] : m_weaponSlots)
   {
     target.draw(*weaponSlot);

@@ -1,6 +1,4 @@
-#include "Game.h"
-#include "Manager/FontManager.h"
-#include "Manager/ConfigManager.h"
+#include "Entity/Game.h"
 
 int main()
 {

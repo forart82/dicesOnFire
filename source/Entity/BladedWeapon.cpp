@@ -1,14 +1,8 @@
-#include "Weapon/BladedWeapon.h"
+#include "Entity/BladedWeapon.h"
 
 BladedWeapon::BladedWeapon()
     : BladedWeapon(
-          BaseRectangle(
-              sf::Vector2f(100.f, 100.f),
-              sf::Vector2f(100.f, 100.f),
-              1,
-              true,
-              colors::COLOR_BLUE_AQUA,
-              colors::COLOR_BLUE_CLOUDY_AQUA),
+          std::make_unique<Rectangle>(),
           5,
           7,
           2,
@@ -17,13 +11,13 @@ BladedWeapon::BladedWeapon()
 }
 
 BladedWeapon::BladedWeapon(
-    BaseRectangle weaponMenu,
+    std::unique_ptr<Rectangle> bodyBox,
     float cooldown,
     int damage,
     int numberOfSlots,
     int weaponSlotNumber)
-    : BaseWeapon(
-          weaponMenu,
+    : Weapon(
+          std::move(bodyBox),
           cooldown,
           damage,
           numberOfSlots,
@@ -36,10 +30,10 @@ BladedWeapon::~BladedWeapon() {};
 
 void BladedWeapon::update(sf::Time &delta)
 {
-  BaseWeapon::update(delta);
+  Weapon::update(delta);
 }
 
 void BladedWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseWeapon::draw(target, states);
+  Weapon::draw(target, states);
 }

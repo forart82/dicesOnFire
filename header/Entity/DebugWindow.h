@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "_COLORS.h"
-#include "_GLOBALS.h"
+#include "Globals/Colors.h"
+#include "Globals/Globals.h"
 
 class DebugWindow : public sf::Drawable
 {

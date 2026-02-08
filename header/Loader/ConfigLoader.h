@@ -7,24 +7,24 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "Form/BaseCircle.h"
-#include "Form/BaseRectangle.h"
-#include "Form/BaseRectangleX2.h"
+#include "Entity/Circle.h"
+#include "Entity/Rectangle.h"
+#include "Entity/RectangleX2.h"
 
 namespace configLoader
 {
 
   // Data Storage
   inline std::vector<std::string> m_fileNames;
-  inline std::map<std::string, BaseRectangle> m_rectangle;
-  inline std::map<std::string, BaseRectangleX2> m_rectangleX2;
-  inline std::map<std::string, BaseCircle> m_circle;
+  inline std::map<std::string, Rectangle> m_rectangle;
+  inline std::map<std::string, RectangleX2> m_rectangleX2;
+  inline std::map<std::string, Circle> m_circle;
   inline std::string m_form = "";
 
   // Default Values
-  inline const BaseRectangle DEFAULT_RECTANGLE = {{0.f, 0.f}, {0.f, 0.f}, 1, true, sf::Color::Red, sf::Color::Black};
-  inline const BaseRectangleX2 DEFAULT_RECTANGLEX2 = {DEFAULT_RECTANGLE, DEFAULT_RECTANGLE};
-  inline const BaseCircle DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
+  inline const Rectangle DEFAULT_RECTANGLE = {{0.f, 0.f}, {0.f, 0.f}, 1, true, sf::Color::Red, sf::Color::Black};
+  inline const RectangleX2 DEFAULT_RECTANGLEX2 = {DEFAULT_RECTANGLE, DEFAULT_RECTANGLE};
+  inline const Circle DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
 
   // Helper to safely parse strings to float/int
   inline float toFloat(const std::string &s) { return s.empty() ? 0.f : std::stof(s); }
@@ -48,7 +48,7 @@ namespace configLoader
     }
   }
 
-  inline BaseRectangle readRectangle(std::stringstream &ss)
+  inline Rectangle readRectangle(std::stringstream &ss)
   {
     std::string x, y, width, height, thinkess, isActive, red1, green1, blue1, alpha1, red2, green2, blue2, alpha2;
 
@@ -75,7 +75,7 @@ namespace configLoader
             {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
   }
 
-  inline BaseCircle readCircle(std::stringstream &ss)
+  inline Circle readCircle(std::stringstream &ss)
   {
     std::string x, y, radius, thikness, isActive, red1, green1, blue1, alpha1, red2, green2, blue2, alpha2;
 
@@ -173,10 +173,10 @@ namespace configLoader
   inline void loadAll()
   {
     m_fileNames.clear();
-    load("configs/gui.config");
-    load("configs/hero.config");
-    load("configs/enemy.config");
-    load("configs/debugBar.config");
+    load("assets/configs/gui.config");
+    load("assets/configs/hero.config");
+    load("assets/configs/enemy.config");
+    load("assets/configs/debugBar.config");
   }
 
   inline void reload()
@@ -188,7 +188,7 @@ namespace configLoader
   }
 
   // Getters
-  inline BaseRectangle getRectangle(const std::string &key)
+  inline Rectangle getRectangle(const std::string &key)
   {
     if (m_rectangle.empty())
     {
@@ -198,7 +198,7 @@ namespace configLoader
     return (it != m_rectangle.end()) ? it->second : DEFAULT_RECTANGLE;
   }
 
-  inline BaseRectangleX2 getRectangleX2(const std::string &key)
+  inline RectangleX2 getRectangleX2(const std::string &key)
   {
     if (m_rectangleX2.empty())
     {
@@ -208,7 +208,7 @@ namespace configLoader
     return (it != m_rectangleX2.end()) ? it->second : DEFAULT_RECTANGLEX2;
   }
 
-  inline BaseCircle getCircle(const std::string &key)
+  inline Circle getCircle(const std::string &key)
   {
     if (m_circle.empty())
     {

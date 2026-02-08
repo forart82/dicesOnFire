@@ -1,4 +1,4 @@
-#include "GameText.h"
+#include "Entity/GameText.h"
 
 GameText::GameText() : GameText("", "", {10, 10}, colors::COLOR_BLUE_SKY_BLUE, "Quantico")
 {
@@ -10,7 +10,7 @@ GameText::GameText(
     sf::Vector2f position,
     sf::Color color,
     std::string fontName)
-    : m_sfText(fontManager::get(fontName))
+    : m_sfText(fontLoader::get(fontName))
 {
   m_sfText.setPosition(position);
   m_sfText.setFillColor(color);

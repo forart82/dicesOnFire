@@ -1,14 +1,17 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Form/BaseCircle.h"
+#include "Entity/Circle.h"
 
-class DiceSlot : public BaseCircle
+class DiceSlot : public sf::Drawable
 {
 private:
+  std::unique_ptr<Circle> m_BodyCircle;
+
 public:
   DiceSlot();
-  DiceSlot(BaseCircle diceSlotMenu);
+  DiceSlot(
+      std::unique_ptr<Circle> bodyCircle);
   ~DiceSlot();
 
   void update(sf::Time &delta);

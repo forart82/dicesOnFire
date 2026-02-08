@@ -2,11 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include "Form/BaseRectangleX2.h"
+#include "Entity/RectangleX2.h"
 
-class Timer : public BaseRectangleX2
+class Timer : public sf::Drawable
 {
 private:
+  std::unique_ptr<RectangleX2> m_bodyBox;
   sf::Vector2f m_progressBarSize;
   sf::Time m_elapsedTime;
   float m_cooldown;
@@ -16,7 +17,7 @@ private:
 public:
   Timer(float cooldown);
   Timer(
-      BaseRectangleX2 timerMenu,
+      std::unique_ptr<RectangleX2> bodyBox,
       float cooldown,
       bool isVertical);
 

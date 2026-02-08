@@ -1,11 +1,11 @@
 #include "Entity/Hero.h"
 
 Hero::Hero()
-    : Hero(std::make_unique<BaseRectangle>(),
-           std::make_unique<BaseRectangleX2>(),
-           std::make_unique<BaseCircle>(),
-           std::make_unique<BaseCircle>(),
-           std::make_unique<BaseCircle>(),
+    : Hero(std::make_unique<Rectangle>(),
+           std::make_unique<RectangleX2>(),
+           std::make_unique<Circle>(),
+           std::make_unique<Circle>(),
+           std::make_unique<Circle>(),
            100,
            100,
            2,
@@ -16,19 +16,19 @@ Hero::Hero()
 }
 
 Hero::Hero(
-    std::unique_ptr<BaseRectangle> body,
-    std::unique_ptr<BaseRectangleX2> healthBar,
-    std::unique_ptr<BaseCircle> watchRangeCircle,
-    std::unique_ptr<BaseCircle> shortRangeCircle,
-    std::unique_ptr<BaseCircle> longRangeCircle,
+    std::unique_ptr<Rectangle> bodyBox,
+    std::unique_ptr<RectangleX2> healthBar,
+    std::unique_ptr<Circle> watchRangeCircle,
+    std::unique_ptr<Circle> shortRangeCircle,
+    std::unique_ptr<Circle> longRangeCircle,
     float health,
     float maxHealth,
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
     int longRangeRadius)
-    : BaseEntity(
-          std::move(body),
+    : CharacterBody(
+          std::move(bodyBox),
           std::move(healthBar),
           std::move(watchRangeCircle),
           std::move(shortRangeCircle),
@@ -70,5 +70,5 @@ void Hero::move(sf::Time &delta)
     m_direction /= length;
   }
   sf::Vector2f movement = m_direction * m_speed * delta.asSeconds();
-  BaseEntity::move(movement);
+  CharacterBody::move(movement);
 }

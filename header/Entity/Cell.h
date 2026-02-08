@@ -1,7 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Vertex/VertexRectangle.h"
+#include "Entity/VertexRectangle.h"
+#include "Helper/RandomHelper.h"
 
 class Cell : public VertexRectangle
 {

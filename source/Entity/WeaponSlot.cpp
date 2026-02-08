@@ -1,24 +1,24 @@
-#include "Weapon/WeaponSlot.h"
+#include "Entity/WeaponSlot.h"
 
 WeaponSlot::WeaponSlot()
     : WeaponSlot(
-          BaseRectangle(),
+          std::make_unique<Rectangle>(),
           5,
           1)
 {
 }
 
 WeaponSlot::WeaponSlot(
-    BaseRectangle weaponSlotMenu,
+    std::unique_ptr<Rectangle> bodyBox,
     float cooldown,
     int weaponSlotNumber)
-    : BaseRectangle(weaponSlotMenu),
+    : m_bodyBox(std::move(bodyBox)),
       m_weaponSlotNumber(weaponSlotNumber)
 
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
   m_timer = std::make_unique<Timer>(
-      configManager::getRectangleX2(weaponSlotKey + "_TIMER"),
+      std::make_unique<RectangleX2>(configLoader::getRectangleX2(weaponSlotKey + "_TIMER")),
       cooldown,
       true);
   fakeDropWeaponInSlot(weaponSlotKey);
@@ -27,14 +27,14 @@ WeaponSlot::~WeaponSlot() {}
 
 void WeaponSlot::update(sf::Time &delta)
 {
-  BaseRectangle::update(delta);
+  m_bodyBox->update(delta);
   m_timer->update(delta);
   m_bladedWeapon->update(delta);
 }
 
 void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseRectangle::draw(target, states);
+  target.draw(*m_bodyBox);
   target.draw(*m_timer);
   target.draw(*m_bladedWeapon);
 }
@@ -42,9 +42,9 @@ void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
 {
   m_bladedWeapon = std::make_unique<BladedWeapon>(
-      configManager::getRectangle(weaponSlotKey + "_WEAPON"),
-      helper::GET_RANDOM_NUMBER_INT(3, 5),
-      helper::GET_RANDOM_NUMBER_INT(1, 7),
-      helper::GET_RANDOM_NUMBER_INT(1, 2),
+      std::make_unique<Rectangle>(configLoader::getRectangle(weaponSlotKey + "_WEAPON")),
+      randomHelper::GET_RANDOM_NUMBER_INT(3, 5),
+      randomHelper::GET_RANDOM_NUMBER_INT(1, 7),
+      randomHelper::GET_RANDOM_NUMBER_INT(1, 2),
       m_weaponSlotNumber);
 }

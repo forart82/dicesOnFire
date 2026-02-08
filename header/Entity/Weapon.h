@@ -2,14 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
-#include "Dice/DiceSlot.h"
-#include "Form/BaseRectangle.h"
-#include "Timer.h"
-#include "Manager/ConfigManager.h"
+#include "Entity/DiceSlot.h"
+#include "Entity/Rectangle.h"
+#include "Entity/Timer.h"
+#include "Loader/ConfigLoader.h"
 
-class BaseWeapon : public BaseRectangle
+class Weapon : public sf::Drawable
 {
 protected:
+  std::unique_ptr<Rectangle> m_bodyBox;
   int m_damage;
   int m_numberOfSlots;
   int m_weaponSlotNumber;
@@ -17,14 +18,14 @@ protected:
   std::map<int, std::unique_ptr<Timer>> m_timers;
 
 public:
-  BaseWeapon();
-  BaseWeapon(
-      BaseRectangle weaponMenu,
+  Weapon();
+  Weapon(
+      std::unique_ptr<Rectangle> bodyBox,
       float cooldown,
       int damage,
       int numberOfSlots,
       int weaponSlotNumber);
-  virtual ~BaseWeapon() {};
+  virtual ~Weapon() {};
 
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;

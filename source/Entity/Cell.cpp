@@ -1,9 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Cell.h"
-#include "_GLOBALS.h"
-#include "_HELPERS.h"
-#include "Manager/TextureManager.h"
+#include "Entity/Cell.h"
 
 using namespace std;
 
@@ -13,7 +8,7 @@ Cell::Cell(
     : VertexRectangle(
           left,
           top,
-          32 * helper::GET_RANDOM_NUMBER_INT(0, 10),
+          32 * randomHelper::GET_RANDOM_NUMBER_INT(0, 10),
           224) {}
 
 Cell::~Cell() {}

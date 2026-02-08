@@ -4,18 +4,18 @@
 #include "Entity/Enemies.h"
 #include "Entity/Hero.h"
 
-class HeroAttackService
+class AttackHub
 {
 private:
   Hero &m_hero;
   Enemies &m_enemies;
 
 public:
-  HeroAttackService(
+  AttackHub(
       Hero &hero,
       Enemies &enemies);
 
-  ~HeroAttackService();
+  ~AttackHub();
 
   void update(sf::Time &delta);
 

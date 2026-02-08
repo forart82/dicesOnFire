@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
-#include "Manager/FontManager.h"
-#include "_COLORS.h"
+#include "Loader/FontLoader.h"
+#include "Globals/Colors.h"
 
 class GameText : public sf::Drawable
 {

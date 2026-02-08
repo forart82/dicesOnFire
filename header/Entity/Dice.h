@@ -3,18 +3,18 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <random>
-#include "GameText.h"
-#include "Timer.h"
-#include "Form/BaseCircle.h"
-#include "_HELPERS.h"
-#include "Vertex/VertexRectangle.h"
+#include "Entity/GameText.h"
+#include "Entity/Timer.h"
+#include "Entity/Circle.h"
+#include "Entity/VertexRectangle.h"
+#include "Helper/RandomHelper.h"
 
 class Dice : public sf::Drawable, public VertexRectangle
 {
 private:
-  BaseCircle m_diceWeaponSlotMenu;
-  BaseCircle m_diceSacMenu;
-  BaseCircle m_diceFloorItem;
+  Circle m_diceWeaponSlotMenu;
+  Circle m_diceSacMenu;
+  Circle m_diceFloorItem;
 
   std::unique_ptr<GameText> m_diceValueText;
   int m_faces;

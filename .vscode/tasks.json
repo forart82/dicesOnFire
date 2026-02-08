@@ -9,7 +9,7 @@
         "-g",
         "${workspaceFolder}/main.cpp",
         "${workspaceFolder}/source/Entity/*.cpp",
-        "${workspaceFolder}/source/Service/*.cpp",
+        "${workspaceFolder}/source/Hub/*.cpp",
         "-I",
         "${workspaceFolder}/header",
         "-o",

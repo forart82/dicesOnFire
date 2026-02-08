@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "_HELPERS.h"
-#include "Weapon/BladedWeapon.h"
+#include "Helper/RandomHelper.h"
+#include "Entity/BladedWeapon.h"
 
 inline std::unique_ptr<BladedWeapon> CREATE_BLADEDWEAPON()
 {
@@ -10,8 +10,8 @@ inline std::unique_ptr<BladedWeapon> CREATE_BLADEDWEAPON()
 
   );
 
-  weapon->setDamage(helper::GET_RANDOM_NUMBER_INT(1, 10));
-  weapon->setNumberOfSlots(helper::GET_RANDOM_NUMBER_INT(1, 4));
+  weapon->setDamage(randomHelper::GET_RANDOM_NUMBER_INT(1, 10));
+  weapon->setNumberOfSlots(randomHelper::GET_RANDOM_NUMBER_INT(1, 4));
 
   return weapon;
 };

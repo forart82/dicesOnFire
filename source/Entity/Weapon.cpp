@@ -1,14 +1,8 @@
-#include "Weapon/BaseWeapon.h"
+#include "Entity/Weapon.h"
 
-BaseWeapon::BaseWeapon()
-    : BaseWeapon(
-          BaseRectangle(
-              sf::Vector2f(100.f, 100.f),
-              sf::Vector2f(100.f, 100.f),
-              1,
-              true,
-              colors::COLOR_BLUE_AQUA,
-              colors::COLOR_BLUE_CLOUDY_AQUA),
+Weapon::Weapon()
+    : Weapon(
+          std::make_unique<Rectangle>(),
           5,
           7,
           2,
@@ -16,22 +10,22 @@ BaseWeapon::BaseWeapon()
 {
 }
 
-BaseWeapon::BaseWeapon(
-    BaseRectangle weaponMenu,
+Weapon::Weapon(
+    std::unique_ptr<Rectangle> bodyBox,
     float cooldown,
     int damage,
     int numberOfSlots,
     int weaponSlotNumber)
-    : BaseRectangle(weaponMenu),
+    : m_bodyBox(std::move(bodyBox)),
       m_damage(damage),
       m_numberOfSlots(numberOfSlots),
       m_weaponSlotNumber(weaponSlotNumber)
 {
 }
 
-void BaseWeapon::update(sf::Time &delta)
+void Weapon::update(sf::Time &delta)
 {
-  BaseRectangle::update(delta);
+  m_bodyBox->update(delta);
   for (const auto &[key, diceSlot] : m_diceSlots)
   {
     diceSlot->update(delta);
@@ -42,9 +36,9 @@ void BaseWeapon::update(sf::Time &delta)
   }
 }
 
-void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Weapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  BaseRectangle::draw(target, states);
+  target.draw(*m_bodyBox);
   for (const auto &[key, diceSlot] : m_diceSlots)
   {
     target.draw(*diceSlot);
@@ -55,17 +49,17 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
-void BaseWeapon::makeDiceSlot(int slotId)
+void Weapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>(configManager::getCircle(diceSlotKey));
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::getCircle(diceSlotKey)));
   m_timers[slotId] = std::make_unique<Timer>(
-      configManager::getRectangleX2(diceSlotKey + "_TIMER"),
+      std::make_unique<RectangleX2>(configLoader::getRectangleX2(diceSlotKey + "_TIMER")),
       5,
       true);
 }
 
-void BaseWeapon::makeDiceSlots()
+void Weapon::makeDiceSlots()
 {
   for (int i = 1; i <= m_numberOfSlots; i++)
   {
@@ -73,20 +67,20 @@ void BaseWeapon::makeDiceSlots()
   }
 }
 
-void BaseWeapon::setDamage(int damage)
+void Weapon::setDamage(int damage)
 {
   m_damage = damage;
 }
-void BaseWeapon::setNumberOfSlots(int numberOfSlots)
+void Weapon::setNumberOfSlots(int numberOfSlots)
 {
   m_numberOfSlots = numberOfSlots;
 }
 
-const int &BaseWeapon::getDamage() const
+const int &Weapon::getDamage() const
 {
   return m_damage;
 }
-const int &BaseWeapon::getNumberOfSlots() const
+const int &Weapon::getNumberOfSlots() const
 {
   return m_numberOfSlots;
 }

@@ -2,10 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Cell.h"
+#include "Entity/Cell.h"
 #include "Entity/Hero.h"
-#include "Manager/TextureManager.h"
-#include "_HELPERS.h"
+#include "Helper/GridHelper.h"
+#include "Loader/TextureLoader.h"
 
 class Grid : public sf::Drawable
 {
