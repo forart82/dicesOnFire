@@ -28,8 +28,12 @@ public:
   void update(sf::Time &delta);
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+  void initCount();
   void countTotalVertices();
   void countGridVertices();
+  void countEnemiesVertices();
+
   void resizeVertices();
   void gridVertices();
+  void enemiesVertices();
 };

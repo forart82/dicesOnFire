@@ -17,14 +17,21 @@ VertexHub::~VertexHub() {}
 
 void VertexHub::update(sf::Time &delta)
 {
-  m_totalVertices = 0;
-  m_verticesCounter = 0;
+  initCount();
 
   countTotalVertices();
 
   resizeVertices();
 
   gridVertices();
+
+  enemiesVertices();
+}
+
+void VertexHub::initCount()
+{
+  m_totalVertices = 0;
+  m_verticesCounter = 0;
 }
 
 void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -36,6 +43,7 @@ void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void VertexHub::countTotalVertices()
 {
   countGridVertices();
+  countEnemiesVertices();
 }
 
 void VertexHub::countGridVertices()
@@ -44,12 +52,17 @@ void VertexHub::countGridVertices()
   m_totalVertices += side * side;
 }
 
+void VertexHub::countEnemiesVertices()
+{
+  m_totalVertices += m_enemies.getEnemies().size();
+}
+
 void VertexHub::resizeVertices()
 {
   if (m_vertices.getVertexCount() != m_totalVertices * 6)
   {
-    m_vertices.resize(m_totalVertices * 6);
   }
+  m_vertices.resize(m_totalVertices * 6);
 }
 
 void VertexHub::gridVertices()
@@ -93,5 +106,32 @@ void VertexHub::gridVertices()
 
       m_verticesCounter++;
     }
+  }
+}
+
+void VertexHub::enemiesVertices()
+{
+  for (auto &enemy : m_enemies.getEnemies())
+  {
+    sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
+    triangels[0].position = enemy->getLeftTop();
+    triangels[1].position = enemy->getRightTop();
+    triangels[2].position = enemy->getLeftBottom();
+
+    // Triangle 2
+    triangels[3].position = enemy->getRightTop();
+    triangels[4].position = enemy->getRightBottom();
+    triangels[5].position = enemy->getLeftBottom();
+
+    triangels[0].texCoords = enemy->getAssetsLeftTop();
+    triangels[1].texCoords = enemy->getAssetsRightTop();
+    triangels[2].texCoords = enemy->getAssetsLeftBottom();
+
+    // Triangle 2
+    triangels[3].texCoords = enemy->getAssetsRightTop();
+    triangels[4].texCoords = enemy->getAssetsRightBottom();
+    triangels[5].texCoords = enemy->getAssetsLeftBottom();
+
+    m_verticesCounter++;
   }
 }
