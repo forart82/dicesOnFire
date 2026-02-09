@@ -92,7 +92,7 @@ void Game::update(sf::Time delta)
     m_autoDamgeTimer = sf::Time::Zero;
   }
   // Elements
-  m_grid->update(delta);
+  m_vertexHub->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
   m_attackHub->update(delta);
@@ -110,7 +110,7 @@ void Game::draw()
 
   // Will be between
   m_window.setView(m_playerView);
-  m_window.draw(*m_grid);
+  m_window.draw(*m_vertexHub);
   m_window.draw(*m_hero);
   m_window.draw(*m_enemies);
 
@@ -159,7 +159,8 @@ void Game::init()
 
   configLoader::reload();
   m_weaponSlotsMenu.reset();
-  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(
+      std::make_unique<Rectangle>(configLoader::getRectangle("WEAPONSLOTSMENU")));
   m_floorItems.reset();
   m_floorItems = std::make_unique<FloorItems>();
 
@@ -191,10 +192,15 @@ void Game::init()
           *m_enemies);
 
   m_grid.reset();
-  m_grid = std::make_unique<Grid>(*m_hero);
+  m_grid = std::make_unique<Grid>();
+  m_vertexHub.reset();
+  m_vertexHub = std::make_unique<VertexHub>(
+      *m_hero,
+      *m_grid,
+      *m_enemies);
 
   m_debugBar.reset();
-  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies, *m_grid);
+  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies);
 }
 
 void Game::handlePlayerZoom(std::string zoomDirection)

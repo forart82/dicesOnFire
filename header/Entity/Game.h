@@ -14,6 +14,7 @@
 #include "Entity/Enemies.h"
 #include "Globals/Globals.h"
 #include "Hub/AttackHub.h"
+#include "Hub/VertextHub.h"
 
 class Game
 {
@@ -40,6 +41,7 @@ private:
   std::unique_ptr<Grid> m_grid;
   std::unique_ptr<Enemies> m_enemies;
   std::unique_ptr<AttackHub> m_attackHub;
+  std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<FloorItems> m_floorItems;
 
   std::mt19937 m_rng;

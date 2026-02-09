@@ -6,7 +6,6 @@
 #include "Entity/DebugWindow.h"
 #include "Entity/Hero.h"
 #include "Entity/Enemies.h"
-#include "Entity/Grid.h"
 #include "Loader/TextureLoader.h"
 #include "Loader/ConfigLoader.h"
 #include "Loader/FontLoader.h"
@@ -25,10 +24,9 @@ private:
 
   Hero &m_hero;
   Enemies &m_enemies;
-  Grid &m_grid;
 
 public:
-  DebugBar(Hero &hero, Enemies &enemies, Grid &grid);
+  DebugBar(Hero &hero, Enemies &enemies);
   ~DebugBar();
 
   void update(sf::Time &delta);

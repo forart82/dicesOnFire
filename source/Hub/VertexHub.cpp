@@ -1,0 +1,97 @@
+#include "Hub/VertextHub.h"
+
+VertexHub::VertexHub(
+    Hero &hero,
+    Grid &grid,
+    Enemies &enemies)
+    : m_hero(hero),
+      m_grid(grid),
+      m_enemies(enemies),
+      m_totalVertices(0),
+      m_verticesCounter(0)
+{
+  m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
+}
+
+VertexHub::~VertexHub() {}
+
+void VertexHub::update(sf::Time &delta)
+{
+  m_totalVertices = 0;
+  m_verticesCounter = 0;
+
+  countTotalVertices();
+
+  resizeVertices();
+
+  gridVertices();
+}
+
+void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+  states.texture = &textureLoader::getTexture("Utumno");
+  target.draw(m_vertices, states);
+}
+
+void VertexHub::countTotalVertices()
+{
+  countGridVertices();
+}
+
+void VertexHub::countGridVertices()
+{
+  int side = (m_hero.getWatchRangeRadius() * 2) + 1;
+  m_totalVertices += side * side;
+}
+
+void VertexHub::resizeVertices()
+{
+  if (m_vertices.getVertexCount() != m_totalVertices * 6)
+  {
+    m_vertices.resize(m_totalVertices * 6);
+  }
+}
+
+void VertexHub::gridVertices()
+{
+  auto heroPosition = m_hero.getBody().getShape().getPosition();
+  auto heroWatchRangeRadius = m_hero.getWatchRangeRadius();
+
+  int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * globals::TILE_SIZE);
+  int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * globals::TILE_SIZE);
+
+  int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * globals::TILE_SIZE);
+  int playerYMax = gridHelper::SNAP_TO_GRID(heroPosition.y + heroWatchRangeRadius * globals::TILE_SIZE);
+
+  for (int x = playerXMin; x <= playerXMax; x += globals::TILE_SIZE)
+  {
+    for (int y = playerYMin; y <= playerYMax; y += globals::TILE_SIZE)
+    {
+
+      auto &cell = m_grid.findOrMakeCell(x, y);
+
+      sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
+
+      // Triangle 1
+      triangels[0].position = cell.getLeftTop();
+      triangels[1].position = cell.getRightTop();
+      triangels[2].position = cell.getLeftBottom();
+
+      // Triangle 2
+      triangels[3].position = cell.getRightTop();
+      triangels[4].position = cell.getRightBottom();
+      triangels[5].position = cell.getLeftBottom();
+
+      triangels[0].texCoords = cell.getAssetsLeftTop();
+      triangels[1].texCoords = cell.getAssetsRightTop();
+      triangels[2].texCoords = cell.getAssetsLeftBottom();
+
+      // Triangle 2
+      triangels[3].texCoords = cell.getAssetsRightTop();
+      triangels[4].texCoords = cell.getAssetsRightBottom();
+      triangels[5].texCoords = cell.getAssetsLeftBottom();
+
+      m_verticesCounter++;
+    }
+  }
+}

@@ -2,17 +2,14 @@
 
 DebugBar::DebugBar(
     Hero &hero,
-    Enemies &enemies,
-    Grid &grid)
+    Enemies &enemies)
     : m_hero(hero),
       m_enemies(enemies),
-      m_grid(grid),
       m_isActive(false)
 {
   m_textGame.setPosition(configLoader::getRectangle("DEBUGBAR_TEXT_GAME").getShape().getPosition());
   m_textManager.setPosition(configLoader::getRectangle("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
   m_textHero.setPosition(configLoader::getRectangle("DEBUGBAR_TEXT_HERO").getShape().getPosition());
-  m_textGrid.setPosition(configLoader::getRectangle("DEBUGBAR_TEXT_GRID").getShape().getPosition());
   m_textRealFps.setPosition(configLoader::getRectangle("DEBUGBAR_TEXT_REALFPS").getShape().getPosition());
   m_textRealFps.setFontSize(72);
 }
@@ -37,10 +34,6 @@ void DebugBar::update(sf::Time &delta)
   m_textHero.addText(
       "HeroPosition",
       "Hero x: " + std::to_string(m_hero.getBody().getShape().getPosition().x) + " y: " + std::to_string(m_hero.getBody().getShape().getPosition().y));
-
-  m_textGrid.addText(
-      "GridVVertices",
-      "Grid vertices: " + std::to_string(m_grid.getVerticesSize()));
 }
 
 void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -51,7 +44,6 @@ void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_textGame, states);
     target.draw(m_textManager, states);
     target.draw(m_textHero, states);
-    target.draw(m_textGrid, states);
   }
   target.draw(m_textRealFps, states);
 }
