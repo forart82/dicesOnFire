@@ -36,8 +36,11 @@ void VertexHub::initCount()
 
 void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+  if(m_verticesCounter > 0){
+
   states.texture = &textureLoader::getTexture("Utumno");
-  target.draw(m_vertices, states);
+	 target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
+ }
 }
 
 void VertexHub::countTotalVertices()
@@ -61,8 +64,9 @@ void VertexHub::resizeVertices()
 {
   if (m_vertices.getVertexCount() != m_totalVertices * 6)
   {
-  }
+ 
   m_vertices.resize(m_totalVertices * 6);
+  }
 }
 
 void VertexHub::gridVertices()
