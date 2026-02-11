@@ -19,5 +19,8 @@ public:
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void addFloorItem();
+  void addDice(std::unique_ptr<Dice> dice);
+
+  std::vector<std::unique_ptr<Dice>> &getDices();
+  int getDicesSize();
 };

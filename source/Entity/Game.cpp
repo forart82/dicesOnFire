@@ -180,7 +180,7 @@ void Game::init()
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 500; i++)
   {
     m_enemies->addEnemy(*m_hero, *m_floorItems);
   }
@@ -195,8 +195,9 @@ void Game::init()
   m_grid = std::make_unique<Grid>();
   m_vertexHub.reset();
   m_vertexHub = std::make_unique<VertexHub>(
-      *m_hero,
       *m_grid,
+      *m_floorItems,
+      *m_hero,
       *m_enemies);
 
   m_debugBar.reset();

@@ -34,6 +34,20 @@ public:
         m_assetsLeft(assetsLeft),
         m_assetsTop(assetsTop)
   {
+    makeAllCorners();
+  }
+
+  ~VertexRectangle() {}
+
+  void resetLeftTop(sf::Vector2f leftTop)
+  {
+    m_left = leftTop.x;
+    m_top = leftTop.y;
+    makeAllCorners();
+  }
+
+  void makeAllCorners()
+  {
     m_leftTop = sf::Vector2f(m_left, m_top);
     m_rightTop = sf::Vector2f(m_left + globals::TILE_SIZE, m_top);
     m_leftBottom = sf::Vector2f(m_left, m_top + globals::TILE_SIZE);
@@ -44,7 +58,6 @@ public:
     m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + globals::ASSETS_TILE_SIZE);
     m_assetsRightBottom = sf::Vector2f(m_assetsLeft + globals::ASSETS_TILE_SIZE, m_assetsTop + globals::ASSETS_TILE_SIZE);
   }
-  ~VertexRectangle() {};
 
   sf::Vector2f &getLeftTop()
   {

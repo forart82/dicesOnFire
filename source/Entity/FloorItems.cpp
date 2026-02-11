@@ -18,6 +18,17 @@ void FloorItems::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_vertices, states);
 }
 
-void FloorItems::addFloorItem()
+void FloorItems::addDice(std::unique_ptr<Dice> dice)
 {
+  m_dices.emplace_back(std::move(dice));
+}
+
+std::vector<std::unique_ptr<Dice>> &FloorItems::getDices()
+{
+  return m_dices;
+}
+
+int FloorItems::getDicesSize()
+{
+  return m_dices.size();
 }

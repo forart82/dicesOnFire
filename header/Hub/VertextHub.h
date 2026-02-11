@@ -5,6 +5,7 @@
 #include "Entity/Enemies.h"
 #include "Entity/Hero.h"
 #include "Loader/TextureLoader.h"
+#include "Entity/FloorItems.h"
 
 class VertexHub : public sf::Drawable
 {
@@ -14,14 +15,16 @@ private:
   int m_totalVertices;
   int m_verticesCounter;
 
-  Hero &m_hero;
   Grid &m_grid;
+  FloorItems &m_floorItems;
+  Hero &m_hero;
   Enemies &m_enemies;
 
 public:
   VertexHub(
-      Hero &hero,
       Grid &grid,
+      FloorItems &m_floorItems,
+      Hero &hero,
       Enemies &Enemies);
   ~VertexHub();
 
@@ -31,9 +34,11 @@ public:
   void initCount();
   void countTotalVertices();
   void countGridVertices();
+  void countFloorItemsVertices();
   void countEnemiesVertices();
 
   void resizeVertices();
   void gridVertices();
+  void floorItemsVertices();
   void enemiesVertices();
 };
