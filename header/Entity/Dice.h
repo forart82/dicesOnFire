@@ -8,6 +8,7 @@
 #include "Entity/Circle.h"
 #include "Entity/VertexRectangle.h"
 #include "Helper/RandomHelper.h"
+#include "Loader/ConfigLoader.h"
 
 class Dice : public sf::Drawable, public VertexRectangle
 {

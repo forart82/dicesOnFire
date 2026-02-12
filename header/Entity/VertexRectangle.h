@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Helper/RandomHelper.h"
-#include "Globals/Globals.h"
+#include "Loader/ConfigLoader.h"
 
 class VertexRectangle
 {
@@ -49,14 +49,14 @@ public:
   void makeAllCorners()
   {
     m_leftTop = sf::Vector2f(m_left, m_top);
-    m_rightTop = sf::Vector2f(m_left + globals::TILE_SIZE, m_top);
-    m_leftBottom = sf::Vector2f(m_left, m_top + globals::TILE_SIZE);
-    m_rightBottom = sf::Vector2f(m_left + globals::TILE_SIZE, m_top + globals::TILE_SIZE);
+    m_rightTop = sf::Vector2f(m_left + configLoader::getInteger("TILE_SIZE"), m_top);
+    m_leftBottom = sf::Vector2f(m_left, m_top + configLoader::getInteger("TILE_SIZE"));
+    m_rightBottom = sf::Vector2f(m_left + configLoader::getInteger("TILE_SIZE"), m_top + configLoader::getInteger("TILE_SIZE"));
 
     m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
-    m_assetsRightTop = sf::Vector2f(m_assetsLeft + globals::ASSETS_TILE_SIZE, m_assetsTop);
-    m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + globals::ASSETS_TILE_SIZE);
-    m_assetsRightBottom = sf::Vector2f(m_assetsLeft + globals::ASSETS_TILE_SIZE, m_assetsTop + globals::ASSETS_TILE_SIZE);
+    m_assetsRightTop = sf::Vector2f(m_assetsLeft + configLoader::getInteger("ASSETS_TILE_SIZE"), m_assetsTop);
+    m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + configLoader::getInteger("ASSETS_TILE_SIZE"));
+    m_assetsRightBottom = sf::Vector2f(m_assetsLeft + configLoader::getInteger("ASSETS_TILE_SIZE"), m_assetsTop + configLoader::getInteger("ASSETS_TILE_SIZE"));
   }
 
   sf::Vector2f &getLeftTop()

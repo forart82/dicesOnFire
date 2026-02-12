@@ -1,12 +1,12 @@
 #pragma once
 
 #include <cmath>
-#include "Globals/Globals.h"
+#include "Loader/ConfigLoader.h"
 
 namespace gridHelper
 {
   inline int SNAP_TO_GRID(int value)
   {
-    return floor(value / globals::TILE_SIZE) * globals::TILE_SIZE;
+    return floor(value / configLoader::getInteger("TILE_SIZE")) * configLoader::getInteger("TILE_SIZE");
   }
 }

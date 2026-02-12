@@ -68,7 +68,12 @@ void Game::run()
 
     sf::Time realDelta = m_clock.restart();
     m_timeSinceLastUpdate += realDelta;
-    m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
+    m_FpsClock += realDelta;
+    if (m_FpsClock.asSeconds() >= 1.0f)
+    {
+      m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
+      m_FpsClock = sf::Time::Zero;
+    }
     while (m_timeSinceLastUpdate >= m_timePerFrame)
     {
       m_timeSinceLastUpdate -= m_timePerFrame;
@@ -125,7 +130,7 @@ void Game::draw()
 void Game::handleViewRatio()
 {
 
-  float targetRatio = (float)globals::GLOBAL_SCREEN_WIDTH / (float)globals::GLOBAL_SCREEN_HEIGHT;
+  float targetRatio = (float)configLoader::getInteger("GLOBAL_SCREEN_WIDTH") / (float)configLoader::getInteger("GLOBAL_SCREEN_HEIGHT");
   float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
 
   float sizeX = 1.f;
@@ -145,11 +150,17 @@ void Game::handleViewRatio()
   }
 
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
-  m_playerView.setSize({globals::GLOBAL_SCREEN_WIDTH, globals::GLOBAL_SCREEN_HEIGHT});
+  m_playerView.setSize(
+      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
+                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT")));
   m_playerView.zoom(m_playerZoom);
   m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-  m_uiView.setCenter({globals::GLOBAL_SCREEN_WIDTH / 2, globals::GLOBAL_SCREEN_HEIGHT / 2});
-  m_uiView.setSize({globals::GLOBAL_SCREEN_WIDTH, globals::GLOBAL_SCREEN_HEIGHT});
+  m_uiView.setCenter(
+      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH") / 2,
+                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT") / 2));
+  m_uiView.setSize(
+      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
+                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT")));
   m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }
 
@@ -174,13 +185,13 @@ void Game::init()
       100,
       100,
       1000,
-      globals::PLAYER_WATCH_RADIUS,
+      configLoader::getInteger("PLAYER_WATCH_RADIUS"),
       25,
       50);
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < 500; i++)
+  for (int i = 0; i < configLoader::getInteger("MAX_ENEMIES"); i++)
   {
     m_enemies->addEnemy(*m_hero, *m_floorItems);
   }

@@ -19,16 +19,21 @@ namespace configLoader
   inline std::map<std::string, Rectangle> m_rectangle;
   inline std::map<std::string, RectangleX2> m_rectangleX2;
   inline std::map<std::string, Circle> m_circle;
+  inline std::map<std::string, int> m_globalInteger;
+  inline std::map<std::string, float> m_globalFloat;
   inline std::string m_form = "";
 
   // Default Values
   inline const Rectangle DEFAULT_RECTANGLE = {{0.f, 0.f}, {0.f, 0.f}, 1, true, sf::Color::Red, sf::Color::Black};
   inline const RectangleX2 DEFAULT_RECTANGLEX2 = {DEFAULT_RECTANGLE, DEFAULT_RECTANGLE};
   inline const Circle DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
+  inline const int DEFAULT_INTEGER = 0;
+  inline const float DEFAULT_FLOAT = 0.f;
 
   // Helper to safely parse strings to float/int
   inline float toFloat(const std::string &s) { return s.empty() ? 0.f : std::stof(s); }
   inline std::uint8_t toUnit8(const std::string &s) { return s.empty() ? 0 : static_cast<std::uint8_t>(std::stoi(s)); }
+  inline int toInt(const std::string &s) { return s.empty() ? 0 : std::stoi(s); }
   inline bool toBool(const std::string &s)
   {
     if (s.empty())
@@ -102,6 +107,20 @@ namespace configLoader
         {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
   }
 
+  inline int readInteger(std::stringstream &ss)
+  {
+    std::string value;
+    std::getline(ss, value, ';');
+    return toInt(value);
+  }
+
+  inline float readFloat(std::stringstream &ss)
+  {
+    std::string value;
+    std::getline(ss, value, ';');
+    return toFloat(value);
+  }
+
   inline void parseRectangle(std::stringstream &ss, const std::string &key)
   {
     m_rectangle[key] = readRectangle(ss);
@@ -115,6 +134,16 @@ namespace configLoader
   inline void parseCircle(std::stringstream &ss, const std::string &key)
   {
     m_circle[key] = {readCircle(ss)};
+  }
+
+  inline void parseInteger(std::stringstream &ss, const std::string &key)
+  {
+    m_globalInteger[key] = readInteger(ss);
+  }
+
+  inline void parseFloat(std::stringstream &ss, const std::string &key)
+  {
+    m_globalFloat[key] = readFloat(ss);
   }
 
   inline bool load(const std::string &fileName = "")
@@ -149,7 +178,11 @@ namespace configLoader
         std::string firstToken;
         std::getline(ss, firstToken, ';');
 
-        if (firstToken == "RECTANGLE" || firstToken == "CIRCLE" || firstToken == "RECTANGLEX2")
+        if (firstToken == "RECTANGLE" ||
+            firstToken == "CIRCLE" ||
+            firstToken == "RECTANGLEX2" ||
+            firstToken == "INTEGER" ||
+            firstToken == "FLOAT")
         {
           m_form = firstToken;
           continue;
@@ -161,6 +194,10 @@ namespace configLoader
           parseCircle(ss, firstToken);
         else if (m_form == "RECTANGLEX2")
           parseRectangleX2(ss, firstToken);
+        else if (m_form == "INTEGER")
+          parseInteger(ss, firstToken);
+        else if (m_form == "FLOAT")
+          parseFloat(ss, firstToken);
       }
 
       file.close();
@@ -177,6 +214,7 @@ namespace configLoader
     load("assets/configs/hero.config");
     load("assets/configs/enemy.config");
     load("assets/configs/debugBar.config");
+    load("assets/configs/globals.config");
   }
 
   inline void reload()
@@ -184,6 +222,8 @@ namespace configLoader
     m_rectangle.clear();
     m_circle.clear();
     m_rectangleX2.clear();
+    m_globalInteger.clear();
+    m_globalFloat.clear();
     load();
   }
 
@@ -216,5 +256,25 @@ namespace configLoader
     }
     auto it = m_circle.find(key);
     return (it != m_circle.end()) ? it->second : DEFAULT_CIRCLE;
+  }
+
+  inline int getInteger(const std::string &key)
+  {
+    if (m_globalInteger.empty())
+    {
+      loadAll();
+    }
+    auto it = m_globalInteger.find(key);
+    return (it != m_globalInteger.end()) ? it->second : DEFAULT_INTEGER;
+  }
+
+  inline int getFLoat(const std::string &key)
+  {
+    if (m_globalFloat.empty())
+    {
+      loadAll();
+    }
+    auto it = m_globalFloat.find(key);
+    return (it != m_globalFloat.end()) ? it->second : DEFAULT_FLOAT;
   }
 }

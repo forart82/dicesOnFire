@@ -50,7 +50,7 @@ void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void DebugBar::setRealFps(float fps)
 {
-  m_textRealFps.addText("RealFps", "RealFps: " + std::to_string(fps));
+  m_textRealFps.addText("RealFps", "RealFps: " + std::to_string((int)fps));
 }
 
 void DebugBar::toggleActive()

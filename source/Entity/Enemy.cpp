@@ -51,13 +51,12 @@ Enemy::Enemy(
       VertexRectangle(
           0,
           0,
-          800 + (globals::ASSETS_TILE_SIZE * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
-          2080 + (globals::ASSETS_TILE_SIZE * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
+          800 + (configLoader::getInteger("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
+          2080 + (configLoader::getInteger("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
 {
   for (int i = randomHelper::GET_RANDOM_NUMBER_INT(1, 1); i <= randomHelper::GET_RANDOM_NUMBER_INT(1, 2); i++)
   {
     m_dices.emplace_back(diceManager::CREATE_DICE(1));
-    std::cout << "dices: " << m_dices.size() << std::endl;
   }
 }
 

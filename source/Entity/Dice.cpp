@@ -12,7 +12,7 @@ Dice::Dice(int faces, int rerolls, float cooldown)
     : VertexRectangle(
           0,
           0,
-          960 + (globals::ASSETS_TILE_SIZE * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
+          960 + (configLoader::getInteger("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
           1312),
       m_timer(cooldown),
       m_faces(faces),

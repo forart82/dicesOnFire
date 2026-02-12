@@ -8,6 +8,7 @@
 #include "Entity/FloorItems.h"
 #include "Helper/RandomHelper.h"
 #include "Manager/DiceManager.h"
+#include "Loader/ConfigLoader.h"
 
 class Enemy : public CharacterBody, public VertexRectangle
 {

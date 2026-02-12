@@ -10,7 +10,8 @@ VertexHub::VertexHub(
       m_hero(hero),
       m_enemies(enemies),
       m_totalVertices(0),
-      m_verticesCounter(0)
+      m_verticesCounter(0),
+      m_tileSize(configLoader::getInteger("TILE_SIZE"))
 {
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 }
@@ -84,15 +85,15 @@ void VertexHub::gridVertices()
   auto heroPosition = m_hero.getBody().getShape().getPosition();
   auto heroWatchRangeRadius = m_hero.getWatchRangeRadius();
 
-  int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * globals::TILE_SIZE);
-  int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * globals::TILE_SIZE);
+  int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * m_tileSize);
+  int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * m_tileSize);
 
-  int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * globals::TILE_SIZE);
-  int playerYMax = gridHelper::SNAP_TO_GRID(heroPosition.y + heroWatchRangeRadius * globals::TILE_SIZE);
+  int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * m_tileSize);
+  int playerYMax = gridHelper::SNAP_TO_GRID(heroPosition.y + heroWatchRangeRadius * m_tileSize);
 
-  for (int x = playerXMin; x <= playerXMax; x += globals::TILE_SIZE)
+  for (int x = playerXMin; x <= playerXMax; x += m_tileSize)
   {
-    for (int y = playerYMin; y <= playerYMax; y += globals::TILE_SIZE)
+    for (int y = playerYMin; y <= playerYMax; y += m_tileSize)
     {
 
       auto &cell = m_grid.findOrMakeCell(x, y);

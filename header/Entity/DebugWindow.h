@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Globals/Colors.h"
-#include "Globals/Globals.h"
+#include "Loader/ConfigLoader.h"
 
 class DebugWindow : public sf::Drawable
 {
