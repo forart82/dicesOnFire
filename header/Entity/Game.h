@@ -21,17 +21,17 @@ class Game
 
 private:
   // Window
+  int m_screenWidth = configLoader::getInteger("GLOBAL_SCREEN_WIDTH");
+int m_screenHeight= configLoader::getInteger("GLOBAL_SCREEN_HEIGHT");
   sf::RenderWindow m_window = sf::RenderWindow(sf::VideoMode({960, 600}), "Game", sf::State::Windowed);
   sf::View m_uiView = sf::View(
       sf::FloatRect(
           {0, 200},
-          sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
-                       configLoader::getInteger("GLOBAL_SCREEN_HEIGHT"))));
+          sf::Vector2f(m_screenWidth, m_screenHeight)));
   sf::View m_playerView = sf::View(
       sf::FloatRect(
           {0, 0},
-          sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
-                       configLoader::getInteger("GLOBAL_SCREEN_HEIGHT"))));
+          sf::Vector2f(m_screenWidth, m_screenHeight)));
   float m_playerZoom;
 
   // Time
