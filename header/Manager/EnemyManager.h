@@ -9,6 +9,11 @@
 
 namespace enemyManager
 {
+  inline Rectangle ENEMY_BODY = configLoader::getRectangle("ENEMY_BODY");
+  inline RectangleX2 ENEMY_HEALTHBAR = configLoader::getRectangleX2("ENEMY_HEALTHBAR");
+  inline Circle ENEMY_WATCH_RANGE = configLoader::getCircle("ENEMY_WATCH_RANGE");
+  inline Circle ENEMY_SHORT_RANGE = configLoader::getCircle("ENEMY_SHORT_RANGE");
+  inline Circle ENEMY_LONG_RANGE = configLoader::getCircle("ENEMY_LONG_RANGE");
 
   template <typename T>
   inline void ADD_POSITION(std::unique_ptr<T> &component, sf::Vector2f offset)
@@ -35,11 +40,11 @@ namespace enemyManager
     int randomX = randomHelper::GET_RANDOM_NUMBER_INT(heroMinX, heroMaxX);
     int randomY = randomHelper::GET_RANDOM_NUMBER_INT(heroMinY, heroMaxY);
 
-    auto bodyBox = std::make_unique<Rectangle>(configLoader::getRectangle("ENEMY_BODY"));
-    auto healthBar = std::make_unique<RectangleX2>(configLoader::getRectangleX2("ENEMY_HEALTHBAR"));
-    auto watchRangeCircle = std::make_unique<Circle>(configLoader::getCircle("ENEMY_WATCH_RANGE"));
-    auto shortRangeCircle = std::make_unique<Circle>(configLoader::getCircle("ENEMY_SHORT_RANGE"));
-    auto longRangeCircle = std::make_unique<Circle>(configLoader::getCircle("ENEMY_LONG_RANGE"));
+    auto bodyBox = std::make_unique<Rectangle>(ENEMY_BODY);
+    auto healthBar = std::make_unique<RectangleX2>(ENEMY_HEALTHBAR);
+    auto watchRangeCircle = std::make_unique<Circle>(ENEMY_WATCH_RANGE);
+    auto shortRangeCircle = std::make_unique<Circle>(ENEMY_SHORT_RANGE);
+    auto longRangeCircle = std::make_unique<Circle>(ENEMY_LONG_RANGE);
 
     watchRangeCircle->getShape().setRadius(watchRangeRadius);
     shortRangeCircle->getShape().setRadius(shortRangeRadius);

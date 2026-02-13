@@ -130,7 +130,7 @@ void Game::draw()
 void Game::handleViewRatio()
 {
 
-  float targetRatio = (float)configLoader::getInteger("GLOBAL_SCREEN_WIDTH") / (float)configLoader::getInteger("GLOBAL_SCREEN_HEIGHT");
+  float targetRatio = (float)m_screenWidth / m_screenHeight;
   float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
 
   float sizeX = 1.f;
@@ -150,17 +150,11 @@ void Game::handleViewRatio()
   }
 
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
-  m_playerView.setSize(
-      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
-                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT")));
+  m_playerView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
   m_playerView.zoom(m_playerZoom);
   m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-  m_uiView.setCenter(
-      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH") / 2,
-                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT") / 2));
-  m_uiView.setSize(
-      sf::Vector2f(configLoader::getInteger("GLOBAL_SCREEN_WIDTH"),
-                   configLoader::getInteger("GLOBAL_SCREEN_HEIGHT")));
+  m_uiView.setCenter(sf::Vector2f(m_screenWidth / 2, m_screenHeight / 2));
+  m_uiView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
   m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 }
 

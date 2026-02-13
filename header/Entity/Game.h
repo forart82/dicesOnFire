@@ -22,7 +22,7 @@ class Game
 private:
   // Window
   int m_screenWidth = configLoader::getInteger("GLOBAL_SCREEN_WIDTH");
-int m_screenHeight= configLoader::getInteger("GLOBAL_SCREEN_HEIGHT");
+  int m_screenHeight = configLoader::getInteger("GLOBAL_SCREEN_HEIGHT");
   sf::RenderWindow m_window = sf::RenderWindow(sf::VideoMode({960, 600}), "Game", sf::State::Windowed);
   sf::View m_uiView = sf::View(
       sf::FloatRect(

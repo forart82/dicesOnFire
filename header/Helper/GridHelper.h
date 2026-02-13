@@ -5,8 +5,10 @@
 
 namespace gridHelper
 {
+  inline int TILE_SIZE = configLoader::getInteger("TILE_SIZE");
+
   inline int SNAP_TO_GRID(int value)
   {
-    return floor(value / configLoader::getInteger("TILE_SIZE")) * configLoader::getInteger("TILE_SIZE");
+    return floor(value / TILE_SIZE) * TILE_SIZE;
   }
 }

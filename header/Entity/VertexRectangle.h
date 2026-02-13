@@ -12,6 +12,8 @@ protected:
   int m_top;
   int m_assetsLeft;
   int m_assetsTop;
+  int m_tileSize;
+  int m_assetsTileSize;
 
   sf::Vector2f m_leftTop;
   sf::Vector2f m_rightTop;
@@ -32,7 +34,9 @@ public:
       : m_left(left),
         m_top(top),
         m_assetsLeft(assetsLeft),
-        m_assetsTop(assetsTop)
+        m_assetsTop(assetsTop),
+        m_tileSize(configLoader::getInteger("TILE_SIZE")),
+        m_assetsTileSize(configLoader::getInteger("ASSETS_TILE_SIZE"))
   {
     makeAllCorners();
   }
@@ -49,14 +53,14 @@ public:
   void makeAllCorners()
   {
     m_leftTop = sf::Vector2f(m_left, m_top);
-    m_rightTop = sf::Vector2f(m_left + configLoader::getInteger("TILE_SIZE"), m_top);
-    m_leftBottom = sf::Vector2f(m_left, m_top + configLoader::getInteger("TILE_SIZE"));
-    m_rightBottom = sf::Vector2f(m_left + configLoader::getInteger("TILE_SIZE"), m_top + configLoader::getInteger("TILE_SIZE"));
+    m_rightTop = sf::Vector2f(m_left + m_tileSize, m_top);
+    m_leftBottom = sf::Vector2f(m_left, m_top + m_tileSize);
+    m_rightBottom = sf::Vector2f(m_left + m_tileSize, m_top + m_tileSize);
 
     m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
-    m_assetsRightTop = sf::Vector2f(m_assetsLeft + configLoader::getInteger("ASSETS_TILE_SIZE"), m_assetsTop);
-    m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + configLoader::getInteger("ASSETS_TILE_SIZE"));
-    m_assetsRightBottom = sf::Vector2f(m_assetsLeft + configLoader::getInteger("ASSETS_TILE_SIZE"), m_assetsTop + configLoader::getInteger("ASSETS_TILE_SIZE"));
+    m_assetsRightTop = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop);
+    m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + m_assetsTileSize);
+    m_assetsRightBottom = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop + m_assetsTileSize);
   }
 
   sf::Vector2f &getLeftTop()

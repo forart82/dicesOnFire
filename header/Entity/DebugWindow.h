@@ -19,6 +19,9 @@ private:
   sf::RectangleShape m_leftLineShape;
   sf::RectangleShape m_righttLineShape;
 
+  int m_screenWidth;
+  int m_screenHeight;
+
 public:
   DebugWindow();
   ~DebugWindow();
