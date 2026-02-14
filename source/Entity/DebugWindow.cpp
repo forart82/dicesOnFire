@@ -1,8 +1,8 @@
 #include "Entity/DebugWindow.h"
 
 DebugWindow::DebugWindow()
-    : m_screenWidth(configLoader::getInteger("GLOBAL_SCREEN_WIDTH")),
-      m_screenHeight(configLoader::getInteger("GLOBAL_SCREEN_HEIGHT"))
+    : m_screenWidth(configLoader::get<int>("GLOBAL_SCREEN_WIDTH")),
+      m_screenHeight(configLoader::get<int>("GLOBAL_SCREEN_HEIGHT"))
 {
   m_backgroundShape.setFillColor(colors::COLOR_GRAYSCALE_MILKY_DARK_GRAY);
   m_backgroundShape.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));

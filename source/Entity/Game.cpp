@@ -165,28 +165,28 @@ void Game::init()
   configLoader::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(
-      std::make_unique<Rectangle>(configLoader::getRectangle("WEAPONSLOTSMENU")));
+      std::make_unique<Rectangle>(configLoader::get<Rectangle>("WEAPONSLOTSMENU")));
 
   m_floorItems.reset();
   m_floorItems = std::make_unique<FloorItems>();
 
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
-      std::make_unique<Rectangle>(configLoader::getRectangle("HERO_BODY")),
-      std::make_unique<RectangleX2>(configLoader::getRectangleX2("HERO_HEALTHBAR")),
-      std::make_unique<Circle>(configLoader::getCircle("HERO_WATCH_RANGE")),
-      std::make_unique<Circle>(configLoader::getCircle("HERO_SHORT_RANGE")),
-      std::make_unique<Circle>(configLoader::getCircle("HERO_LONG_RANGE")),
+      std::make_unique<Rectangle>(configLoader::get<Rectangle>("HERO_BODY")),
+      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>("HERO_HEALTHBAR")),
+      std::make_unique<Circle>(configLoader::get<Circle>("HERO_WATCH_RANGE")),
+      std::make_unique<Circle>(configLoader::get<Circle>("HERO_SHORT_RANGE")),
+      std::make_unique<Circle>(configLoader::get<Circle>("HERO_LONG_RANGE")),
       100,
       100,
       1000,
-      configLoader::getInteger("PLAYER_WATCH_RADIUS"),
+      configLoader::get<int>("PLAYER_WATCH_RADIUS"),
       25,
       50);
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < configLoader::getInteger("MAX_ENEMIES"); i++)
+  for (int i = 0; i < configLoader::get<int>("MAX_ENEMIES"); i++)
   {
     m_enemies->addEnemy(*m_hero, *m_floorItems);
   }
@@ -199,7 +199,7 @@ void Game::init()
 
   m_bluntWeapon.reset();
   m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();
-  m_bluntWeapon->resetLeftTop(m_hero->getBody().getShape().getPosition());
+  m_bluntWeapon->resetLeftTop(configLoader::get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
   m_floorItems->addWeapon(std::move(m_bluntWeapon));
 
   m_grid.reset();

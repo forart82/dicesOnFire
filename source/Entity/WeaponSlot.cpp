@@ -18,7 +18,7 @@ WeaponSlot::WeaponSlot(
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
   m_timer = std::make_unique<Timer>(
-      std::make_unique<RectangleX2>(configLoader::getRectangleX2(weaponSlotKey + "_TIMER")),
+      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(weaponSlotKey + "_TIMER")),
       cooldown,
       true);
   fakeDropWeaponInSlot(weaponSlotKey);
@@ -42,7 +42,7 @@ void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
 {
   m_bladedWeapon = std::make_unique<BladedWeapon>(
-      std::make_unique<Rectangle>(configLoader::getRectangle(weaponSlotKey + "_WEAPON")),
+      std::make_unique<Rectangle>(configLoader::get<Rectangle>(weaponSlotKey + "_WEAPON")),
       randomHelper::GET_RANDOM_NUMBER_INT(3, 5),
       randomHelper::GET_RANDOM_NUMBER_INT(1, 7),
       randomHelper::GET_RANDOM_NUMBER_INT(1, 2),

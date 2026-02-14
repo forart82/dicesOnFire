@@ -51,8 +51,8 @@ Enemy::Enemy(
       VertexRectangle(
           0,
           0,
-          800 + (configLoader::getInteger("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
-          2080 + (configLoader::getInteger("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
+          800 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
+          2080 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
 {
   for (int i = randomHelper::GET_RANDOM_NUMBER_INT(1, 1); i <= randomHelper::GET_RANDOM_NUMBER_INT(1, 2); i++)
   {

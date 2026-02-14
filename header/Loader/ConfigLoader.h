@@ -16,11 +16,12 @@ namespace configLoader
 
   // Data Storage
   inline std::vector<std::string> m_fileNames;
-  inline std::map<std::string, Rectangle> m_rectangle;
-  inline std::map<std::string, RectangleX2> m_rectangleX2;
-  inline std::map<std::string, Circle> m_circle;
-  inline std::map<std::string, int> m_globalInteger;
-  inline std::map<std::string, float> m_globalFloat;
+  inline std::map<std::string, Rectangle> m_rectangles;
+  inline std::map<std::string, RectangleX2> m_rectangleX2s;
+  inline std::map<std::string, Circle> m_circles;
+  inline std::map<std::string, int> m_integers;
+  inline std::map<std::string, float> m_floats;
+  inline std::map<std::string, sf::Vector2f> m_vector2fs;
   inline std::string m_form = "";
 
   // Default Values
@@ -29,6 +30,7 @@ namespace configLoader
   inline const Circle DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
   inline const int DEFAULT_INTEGER = 0;
   inline const float DEFAULT_FLOAT = 0.f;
+  inline const sf::Vector2f DEFAULT_VECTOR2F = {0.f, 0.f};
 
   // Helper to safely parse strings to float/int
   inline float toFloat(const std::string &s) { return s.empty() ? 0.f : std::stof(s); }
@@ -121,29 +123,44 @@ namespace configLoader
     return toFloat(value);
   }
 
+  inline sf::Vector2f readVector2f(std::stringstream &ss)
+  {
+    std::string x, y;
+    std::getline(ss, x, ';');
+    std::getline(ss, y, ';');
+    return {
+        toFloat(x),
+        toFloat(y)};
+  }
+
   inline void parseRectangle(std::stringstream &ss, const std::string &key)
   {
-    m_rectangle[key] = readRectangle(ss);
+    m_rectangles[key] = readRectangle(ss);
   }
 
   inline void parseRectangleX2(std::stringstream &ss, const std::string &key)
   {
-    m_rectangleX2[key] = {readRectangle(ss), readRectangle(ss)};
+    m_rectangleX2s[key] = {readRectangle(ss), readRectangle(ss)};
   }
 
   inline void parseCircle(std::stringstream &ss, const std::string &key)
   {
-    m_circle[key] = {readCircle(ss)};
+    m_circles[key] = {readCircle(ss)};
   }
 
   inline void parseInteger(std::stringstream &ss, const std::string &key)
   {
-    m_globalInteger[key] = readInteger(ss);
+    m_integers[key] = readInteger(ss);
   }
 
   inline void parseFloat(std::stringstream &ss, const std::string &key)
   {
-    m_globalFloat[key] = readFloat(ss);
+    m_floats[key] = readFloat(ss);
+  }
+
+  inline void parseVector2f(std::stringstream &ss, const std::string &key)
+  {
+    m_vector2fs[key] = readVector2f(ss);
   }
 
   inline bool load(const std::string &fileName = "")
@@ -152,11 +169,6 @@ namespace configLoader
     {
       m_fileNames.push_back(fileName);
     }
-
-    m_rectangle.clear();
-    m_rectangleX2.clear();
-    m_circle.clear();
-    m_form = "";
 
     for (const auto &listedFileName : m_fileNames)
     {
@@ -182,7 +194,8 @@ namespace configLoader
             firstToken == "CIRCLE" ||
             firstToken == "RECTANGLEX2" ||
             firstToken == "INTEGER" ||
-            firstToken == "FLOAT")
+            firstToken == "FLOAT" ||
+            firstToken == "VECTOR2F")
         {
           m_form = firstToken;
           continue;
@@ -198,12 +211,12 @@ namespace configLoader
           parseInteger(ss, firstToken);
         else if (m_form == "FLOAT")
           parseFloat(ss, firstToken);
+        else if (m_form == "VECTOR2F")
+          parseVector2f(ss, firstToken);
       }
 
       file.close();
     }
-    std::cout << " load end " << m_rectangle.size() << " " << m_fileNames.size() << std::endl;
-
     return true;
   }
 
@@ -219,62 +232,78 @@ namespace configLoader
 
   inline void reload()
   {
-    m_rectangle.clear();
-    m_circle.clear();
-    m_rectangleX2.clear();
-    m_globalInteger.clear();
-    m_globalFloat.clear();
+    m_rectangles.clear();
+    m_circles.clear();
+    m_rectangleX2s.clear();
+    m_integers.clear();
+    m_floats.clear();
+    m_vector2fs.clear();
+    m_form = "";
     load();
   }
 
-  // Getters
-  inline Rectangle getRectangle(const std::string &key)
+  template <typename T>
+  inline T get(const std::string &key)
   {
-    if (m_rectangle.empty())
+    if constexpr (std::is_same_v<T, int>)
     {
-      loadAll();
-    }
-    auto it = m_rectangle.find(key);
-    return (it != m_rectangle.end()) ? it->second : DEFAULT_RECTANGLE;
-  }
+      if (m_integers.empty())
+        loadAll();
 
-  inline RectangleX2 getRectangleX2(const std::string &key)
-  {
-    if (m_rectangleX2.empty())
-    {
-      loadAll();
+      auto it = m_integers.find(key);
+      return (it != m_integers.end()) ? it->second : DEFAULT_INTEGER;
     }
-    auto it = m_rectangleX2.find(key);
-    return (it != m_rectangleX2.end()) ? it->second : DEFAULT_RECTANGLEX2;
-  }
+    else if constexpr (std::is_same_v<T, float>)
+    {
+      if (m_floats.empty())
+        loadAll();
 
-  inline Circle getCircle(const std::string &key)
-  {
-    if (m_circle.empty())
-    {
-      loadAll();
+      auto it = m_floats.find(key);
+      return (it != m_floats.end()) ? it->second : DEFAULT_FLOAT;
     }
-    auto it = m_circle.find(key);
-    return (it != m_circle.end()) ? it->second : DEFAULT_CIRCLE;
-  }
+    else if constexpr (std::is_same_v<T, Rectangle>)
+    {
+      if (m_rectangles.empty())
+        loadAll();
 
-  inline int getInteger(const std::string &key)
-  {
-    if (m_globalInteger.empty())
-    {
-      loadAll();
+      auto it = m_rectangles.find(key);
+      return (it != m_rectangles.end()) ? it->second : DEFAULT_RECTANGLE;
     }
-    auto it = m_globalInteger.find(key);
-    return (it != m_globalInteger.end()) ? it->second : DEFAULT_INTEGER;
-  }
+    else if constexpr (std::is_same_v<T, RectangleX2>)
+    {
+      if (m_rectangleX2s.empty())
+        loadAll();
 
-  inline int getFLoat(const std::string &key)
-  {
-    if (m_globalFloat.empty())
-    {
-      loadAll();
+      auto it = m_rectangleX2s.find(key);
+      return (it != m_rectangleX2s.end()) ? it->second : DEFAULT_RECTANGLEX2;
     }
-    auto it = m_globalFloat.find(key);
-    return (it != m_globalFloat.end()) ? it->second : DEFAULT_FLOAT;
+    else if constexpr (std::is_same_v<T, Circle>)
+    {
+      if (m_circles.empty())
+        loadAll();
+
+      auto it = m_circles.find(key);
+      return (it != m_circles.end()) ? it->second : DEFAULT_CIRCLE;
+    }
+    else if constexpr (std::is_same_v<T, sf::Vector2f>)
+    {
+      if (m_vector2fs.empty())
+        loadAll();
+
+      auto it = m_vector2fs.find(key);
+      return (it != m_vector2fs.end()) ? it->second : DEFAULT_VECTOR2F;
+    }
+    else
+    {
+      static_assert(
+          std::is_same_v<T, int> ||
+              std::is_same_v<T, float> ||
+              std::is_same_v<T, Rectangle> ||
+              std::is_same_v<T, RectangleX2> ||
+              std::is_same_v<T, Circle> ||
+              std::is_same_v<T, sf::Vector2f>,
+          "Type non supporté !");
+      return T();
+    }
   }
 }

@@ -71,9 +71,9 @@ void Weapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void Weapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::getCircle(diceSlotKey)));
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::get<Circle>(diceSlotKey)));
   m_timers[slotId] = std::make_unique<Timer>(
-      std::make_unique<RectangleX2>(configLoader::getRectangleX2(diceSlotKey + "_TIMER")),
+      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(diceSlotKey + "_TIMER")),
       5,
       true);
 }

@@ -23,7 +23,7 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
   float index = weaponSlotNumber - 1;
   std::string weaponSlotConfig = "WEAPONSLOT_" + std::to_string(weaponSlotNumber);
   m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>(
-      std::make_unique<Rectangle>(configLoader::getRectangle(weaponSlotConfig)),
+      std::make_unique<Rectangle>(configLoader::get<Rectangle>(weaponSlotConfig)),
       5,
       weaponSlotNumber);
 }

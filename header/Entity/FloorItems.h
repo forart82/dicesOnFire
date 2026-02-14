@@ -25,5 +25,8 @@ public:
   void addWeapon(std::unique_ptr<Weapon> weapon);
 
   std::vector<std::unique_ptr<Dice>> &getDices();
-  int getDicesSize();
+  int getDicesSize() const;
+
+  std::vector<std::unique_ptr<Weapon>> &getWeapons();
+  int getWeaponSize() const;
 };

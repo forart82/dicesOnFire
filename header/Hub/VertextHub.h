@@ -34,6 +34,9 @@ public:
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
   template <typename T>
+  void loopItemsAndMakeTriangles(const T &items);
+
+  template <typename T>
   void makeTriangles(const T &item);
 
   void initCount();

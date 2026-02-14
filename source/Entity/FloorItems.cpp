@@ -33,7 +33,17 @@ std::vector<std::unique_ptr<Dice>> &FloorItems::getDices()
   return m_dices;
 }
 
-int FloorItems::getDicesSize()
+int FloorItems::getDicesSize() const
 {
   return m_dices.size();
+}
+
+std::vector<std::unique_ptr<Weapon>> &FloorItems::getWeapons()
+{
+  return m_weapons;
+}
+
+int FloorItems::getWeaponSize() const
+{
+  return m_weapons.size();
 }

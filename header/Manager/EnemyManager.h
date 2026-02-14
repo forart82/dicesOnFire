@@ -9,11 +9,11 @@
 
 namespace enemyManager
 {
-  inline Rectangle ENEMY_BODY = configLoader::getRectangle("ENEMY_BODY");
-  inline RectangleX2 ENEMY_HEALTHBAR = configLoader::getRectangleX2("ENEMY_HEALTHBAR");
-  inline Circle ENEMY_WATCH_RANGE = configLoader::getCircle("ENEMY_WATCH_RANGE");
-  inline Circle ENEMY_SHORT_RANGE = configLoader::getCircle("ENEMY_SHORT_RANGE");
-  inline Circle ENEMY_LONG_RANGE = configLoader::getCircle("ENEMY_LONG_RANGE");
+  inline Rectangle ENEMY_BODY = configLoader::get<Rectangle>("ENEMY_BODY");
+  inline RectangleX2 ENEMY_HEALTHBAR = configLoader::get<RectangleX2>("ENEMY_HEALTHBAR");
+  inline Circle ENEMY_WATCH_RANGE = configLoader::get<Circle>("ENEMY_WATCH_RANGE");
+  inline Circle ENEMY_SHORT_RANGE = configLoader::get<Circle>("ENEMY_SHORT_RANGE");
+  inline Circle ENEMY_LONG_RANGE = configLoader::get<Circle>("ENEMY_LONG_RANGE");
 
   template <typename T>
   inline void ADD_POSITION(std::unique_ptr<T> &component, sf::Vector2f offset)

@@ -35,8 +35,8 @@ public:
         m_top(top),
         m_assetsLeft(assetsLeft),
         m_assetsTop(assetsTop),
-        m_tileSize(configLoader::getInteger("TILE_SIZE")),
-        m_assetsTileSize(configLoader::getInteger("ASSETS_TILE_SIZE"))
+        m_tileSize(configLoader::get<int>("TILE_SIZE")),
+        m_assetsTileSize(configLoader::get<int>("ASSETS_TILE_SIZE"))
   {
     makeAllCorners();
   }

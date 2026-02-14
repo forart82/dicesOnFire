@@ -11,7 +11,7 @@ VertexHub::VertexHub(
       m_enemies(enemies),
       m_totalVertices(0),
       m_verticesCounter(0),
-      m_tileSize(configLoader::getInteger("TILE_SIZE"))
+      m_tileSize(configLoader::get<int>("TILE_SIZE"))
 {
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 }
@@ -34,6 +34,15 @@ void VertexHub::update(sf::Time &delta)
 }
 
 template <typename T>
+void VertexHub::loopItemsAndMakeTriangles(const T &items)
+{
+  for (auto &item : items)
+  {
+    makeTriangles(item);
+  }
+}
+
+template <typename T>
 void VertexHub::makeTriangles(const T &item)
 {
   sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
@@ -48,6 +57,7 @@ void VertexHub::makeTriangles(const T &item)
   triangels[4].position = item->getRightBottom();
   triangels[5].position = item->getLeftBottom();
 
+  // Triangle 1
   triangels[0].texCoords = item->getAssetsLeftTop();
   triangels[1].texCoords = item->getAssetsRightTop();
   triangels[2].texCoords = item->getAssetsLeftBottom();
@@ -92,6 +102,7 @@ void VertexHub::countGridVertices()
 void VertexHub::countFloorItemsVertices()
 {
   m_totalVertices += m_floorItems.getDicesSize();
+  m_totalVertices += m_floorItems.getWeaponSize();
 }
 
 void VertexHub::countEnemiesVertices()
@@ -130,16 +141,11 @@ void VertexHub::gridVertices()
 
 void VertexHub::floorItemsVertices()
 {
-  for (auto &dice : m_floorItems.getDices())
-  {
-    makeTriangles(dice);
-  }
+  loopItemsAndMakeTriangles(m_floorItems.getDices());
+  loopItemsAndMakeTriangles(m_floorItems.getWeapons());
 }
 
 void VertexHub::enemiesVertices()
 {
-  for (auto &enemy : m_enemies.getEnemies())
-  {
-    makeTriangles(enemy);
-  }
+  loopItemsAndMakeTriangles(m_enemies.getEnemies());
 }
