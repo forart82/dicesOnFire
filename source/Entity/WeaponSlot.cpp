@@ -46,5 +46,9 @@ void WeaponSlot::fakeDropWeaponInSlot(std::string weaponSlotKey)
       randomHelper::GET_RANDOM_NUMBER_INT(3, 5),
       randomHelper::GET_RANDOM_NUMBER_INT(1, 7),
       randomHelper::GET_RANDOM_NUMBER_INT(1, 2),
-      m_weaponSlotNumber);
+      m_weaponSlotNumber,
+      0,
+      0,
+      0,
+      0);
 }

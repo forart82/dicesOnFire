@@ -6,7 +6,11 @@ Weapon::Weapon()
           5,
           7,
           2,
-          1)
+          1,
+          0,
+          0,
+          0,
+          0)
 {
 }
 
@@ -15,8 +19,17 @@ Weapon::Weapon(
     float cooldown,
     int damage,
     int numberOfSlots,
-    int weaponSlotNumber)
-    : m_bodyBox(std::move(bodyBox)),
+    int weaponSlotNumber,
+    int left,
+    int top,
+    int assetsLeft,
+    int assetsTop)
+    : VertexRectangle(
+          left,
+          top,
+          assetsLeft,
+          assetsTop),
+      m_bodyBox(std::move(bodyBox)),
       m_damage(damage),
       m_numberOfSlots(numberOfSlots),
       m_weaponSlotNumber(weaponSlotNumber)
@@ -25,27 +38,33 @@ Weapon::Weapon(
 
 void Weapon::update(sf::Time &delta)
 {
-  m_bodyBox->update(delta);
-  for (const auto &[key, diceSlot] : m_diceSlots)
+  if (m_weaponSlotNumber)
   {
-    diceSlot->update(delta);
-  }
-  for (const auto &[key, timer] : m_timers)
-  {
-    timer->update(delta);
+    m_bodyBox->update(delta);
+    for (const auto &[key, diceSlot] : m_diceSlots)
+    {
+      diceSlot->update(delta);
+    }
+    for (const auto &[key, timer] : m_timers)
+    {
+      timer->update(delta);
+    }
   }
 }
 
 void Weapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(*m_bodyBox);
-  for (const auto &[key, diceSlot] : m_diceSlots)
+  if (m_weaponSlotNumber)
   {
-    target.draw(*diceSlot);
-  }
-  for (const auto &[key, timer] : m_timers)
-  {
-    target.draw(*timer);
+    target.draw(*m_bodyBox);
+    for (const auto &[key, diceSlot] : m_diceSlots)
+    {
+      target.draw(*diceSlot);
+    }
+    for (const auto &[key, timer] : m_timers)
+    {
+      target.draw(*timer);
+    }
   }
 }
 
@@ -74,6 +93,14 @@ void Weapon::setDamage(int damage)
 void Weapon::setNumberOfSlots(int numberOfSlots)
 {
   m_numberOfSlots = numberOfSlots;
+}
+
+void Weapon::setWeaponSlotNumber(int weaponSlotNumber)
+{
+  for (int i = 1; i <= m_diceSlots.size() + 1; i++)
+  {
+    std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(i);
+  }
 }
 
 const int &Weapon::getDamage() const

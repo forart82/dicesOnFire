@@ -59,6 +59,15 @@ public:
     m_shape.setPosition(newPosition);
   }
 
+  void setShape(Circle &shape)
+  {
+    m_shape.setPosition(shape.getShape().getPosition());
+    m_shape.setRadius(shape.getShape().getRadius());
+    m_shape.setOutlineThickness(shape.getShape().getOutlineThickness());
+    m_shape.setOrigin({shape.getShape().getRadius(), shape.getShape().getRadius()});
+    setColors(shape.getShape().getFillColor(), shape.getShape().getOutlineColor());
+  }
+
   void setActive(bool isActive)
   {
     m_isActive = isActive;

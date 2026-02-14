@@ -6,7 +6,11 @@ BladedWeapon::BladedWeapon()
           5,
           7,
           2,
-          1)
+          1,
+          0,
+          0,
+          0,
+          0)
 {
 }
 
@@ -15,13 +19,21 @@ BladedWeapon::BladedWeapon(
     float cooldown,
     int damage,
     int numberOfSlots,
-    int weaponSlotNumber)
+    int weaponSlotNumber,
+    int left,
+    int top,
+    int assetsLeft,
+    int assetsTop)
     : Weapon(
           std::move(bodyBox),
           cooldown,
           damage,
           numberOfSlots,
-          weaponSlotNumber)
+          weaponSlotNumber,
+          left,
+          top,
+          assetsLeft,
+          assetsTop)
 {
   makeDiceSlots();
 }

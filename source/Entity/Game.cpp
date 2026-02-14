@@ -166,6 +166,7 @@ void Game::init()
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(
       std::make_unique<Rectangle>(configLoader::getRectangle("WEAPONSLOTSMENU")));
+
   m_floorItems.reset();
   m_floorItems = std::make_unique<FloorItems>();
 
@@ -195,6 +196,11 @@ void Game::init()
       std::make_unique<AttackHub>(
           *m_hero,
           *m_enemies);
+
+  m_bluntWeapon.reset();
+  m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();
+  m_bluntWeapon->resetLeftTop(m_hero->getBody().getShape().getPosition());
+  m_floorItems->addWeapon(std::move(m_bluntWeapon));
 
   m_grid.reset();
   m_grid = std::make_unique<Grid>();

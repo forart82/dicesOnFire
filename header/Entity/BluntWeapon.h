@@ -2,14 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity/Weapon.h"
-#include "Entity/Rectangle.h"
 
-class BladedWeapon : public Weapon
+class BluntWeapon : public Weapon
 {
 private:
 public:
-  BladedWeapon();
-  BladedWeapon(
+  BluntWeapon(
       std::unique_ptr<Rectangle> bodyBox,
       float cooldown,
       int damage,
@@ -18,9 +16,6 @@ public:
       int left,
       int top,
       int assetsLeft,
-      int assetsRight);
-  ~BladedWeapon();
-
-  void update(sf::Time &delta);
-  virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+      int assetsTop);
+  ~BluntWeapon();
 };

@@ -5,9 +5,10 @@
 #include "Entity/DiceSlot.h"
 #include "Entity/Rectangle.h"
 #include "Entity/Timer.h"
+#include "Entity/VertexRectangle.h"
 #include "Loader/ConfigLoader.h"
 
-class Weapon : public sf::Drawable
+class Weapon : public sf::Drawable, public VertexRectangle
 {
 protected:
   std::unique_ptr<Rectangle> m_bodyBox;
@@ -24,7 +25,11 @@ public:
       float cooldown,
       int damage,
       int numberOfSlots,
-      int weaponSlotNumber);
+      int weaponSlotNumber,
+      int left,
+      int top,
+      int assetsLft,
+      int assetsTop);
   virtual ~Weapon() {};
 
   void update(sf::Time &delta);
@@ -35,6 +40,7 @@ public:
 
   void setDamage(int damage);
   void setNumberOfSlots(int numberOfSlots);
+  void setWeaponSlotNumber(int weaponSlotNumber);
 
   const int &getDamage() const;
   const int &getNumberOfSlots() const;

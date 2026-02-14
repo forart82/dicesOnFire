@@ -23,6 +23,11 @@ void FloorItems::addDice(std::unique_ptr<Dice> dice)
   m_dices.emplace_back(std::move(dice));
 }
 
+void FloorItems::addWeapon(std::unique_ptr<Weapon> weapon)
+{
+  m_weapons.emplace_back(std::move(weapon));
+}
+
 std::vector<std::unique_ptr<Dice>> &FloorItems::getDices()
 {
   return m_dices;

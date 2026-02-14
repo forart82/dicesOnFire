@@ -12,9 +12,12 @@
 #include "Entity/Hero.h"
 #include "Entity/Enemy.h"
 #include "Entity/Enemies.h"
+#include "Entity/BluntWeapon.h"
+#include "Entity/Weapon.h"
 #include "Hub/AttackHub.h"
 #include "Hub/VertextHub.h"
 #include "Loader/ConfigLoader.h"
+#include "Manager/WeaponManager.h"
 
 class Game
 {
@@ -52,6 +55,7 @@ private:
   std::unique_ptr<AttackHub> m_attackHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<FloorItems> m_floorItems;
+  std::unique_ptr<BluntWeapon> m_bluntWeapon;
 
   std::mt19937 m_rng;
 

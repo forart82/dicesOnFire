@@ -15,7 +15,11 @@ public:
       float cooldown,
       int damage,
       int numberOfSlots,
-      int weaponSlotNumber);
+      int weaponSlotNumber,
+      int left,
+      int top,
+      int assetsLeft,
+      int assetsTop);
   ~Sword();
 
   void update(sf::Time &delta);
