@@ -73,29 +73,17 @@ void CharacterBody::move(sf::Vector2f &movement)
 
 bool CharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
-  return insideRadar(targetPos, radarPtr);
+  return collisionHelper::insideRadar(targetPos, radarPtr);
 }
 
 bool CharacterBody::insideShortRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
-  return insideRadar(targetPos, radarPtr);
+  return collisionHelper::insideRadar(targetPos, radarPtr);
 }
 
 bool CharacterBody::insideLongRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
 {
-  return insideRadar(targetPos, radarPtr);
-}
-
-bool CharacterBody::insideRadar(const sf::Vector2f &targetPos, Circle &radarPtr)
-{
-
-  float radius = radarPtr.getShape().getRadius();
-  sf::Vector2f center = radarPtr.getShape().getPosition();
-
-  float dx = targetPos.x - center.x;
-  float dy = targetPos.y - center.y;
-
-  return (dx * dx + dy * dy) <= (radius * radius);
+  return collisionHelper::insideRadar(targetPos, radarPtr);
 }
 
 void CharacterBody::setBody(std::unique_ptr<Rectangle> bodyBox)

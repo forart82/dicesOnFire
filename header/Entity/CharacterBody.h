@@ -4,6 +4,7 @@
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"
 #include "Entity/Circle.h"
+#include "Helper/CollisionHelper.h"
 
 class CharacterBody : public sf::Drawable
 {
@@ -47,7 +48,6 @@ public:
   bool insideWatchRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
   bool insideShortRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
   bool insideLongRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
-  bool insideRadar(const sf::Vector2f &targetPos, Circle &radarPtr);
 
   void setBody(std::unique_ptr<Rectangle> bodyBox);
   void setHealthBar(std::unique_ptr<RectangleX2> healthBar);
