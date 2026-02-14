@@ -33,6 +33,33 @@ void VertexHub::update(sf::Time &delta)
   enemiesVertices();
 }
 
+template <typename T>
+void VertexHub::makeTriangles(const T &item)
+{
+  sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
+
+  // Triangle 1
+  triangels[0].position = item->getLeftTop();
+  triangels[1].position = item->getRightTop();
+  triangels[2].position = item->getLeftBottom();
+
+  // Triangle 2
+  triangels[3].position = item->getRightTop();
+  triangels[4].position = item->getRightBottom();
+  triangels[5].position = item->getLeftBottom();
+
+  triangels[0].texCoords = item->getAssetsLeftTop();
+  triangels[1].texCoords = item->getAssetsRightTop();
+  triangels[2].texCoords = item->getAssetsLeftBottom();
+
+  // Triangle 2
+  triangels[3].texCoords = item->getAssetsRightTop();
+  triangels[4].texCoords = item->getAssetsRightBottom();
+  triangels[5].texCoords = item->getAssetsLeftBottom();
+
+  m_verticesCounter++;
+}
+
 void VertexHub::initCount()
 {
   m_totalVertices = 0;
@@ -95,31 +122,8 @@ void VertexHub::gridVertices()
   {
     for (int y = playerYMin; y <= playerYMax; y += m_tileSize)
     {
-
-      auto &cell = m_grid.findOrMakeCell(x, y);
-
-      sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
-
-      // Triangle 1
-      triangels[0].position = cell.getLeftTop();
-      triangels[1].position = cell.getRightTop();
-      triangels[2].position = cell.getLeftBottom();
-
-      // Triangle 2
-      triangels[3].position = cell.getRightTop();
-      triangels[4].position = cell.getRightBottom();
-      triangels[5].position = cell.getLeftBottom();
-
-      triangels[0].texCoords = cell.getAssetsLeftTop();
-      triangels[1].texCoords = cell.getAssetsRightTop();
-      triangels[2].texCoords = cell.getAssetsLeftBottom();
-
-      // Triangle 2
-      triangels[3].texCoords = cell.getAssetsRightTop();
-      triangels[4].texCoords = cell.getAssetsRightBottom();
-      triangels[5].texCoords = cell.getAssetsLeftBottom();
-
-      m_verticesCounter++;
+      auto *cell = &m_grid.findOrMakeCell(x, y);
+      makeTriangles(cell);
     }
   }
 }
@@ -128,27 +132,7 @@ void VertexHub::floorItemsVertices()
 {
   for (auto &dice : m_floorItems.getDices())
   {
-    sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
-
-    triangels[0].position = dice->getLeftTop();
-    triangels[1].position = dice->getRightTop();
-    triangels[2].position = dice->getLeftBottom();
-
-    // Triangle 2
-    triangels[3].position = dice->getRightTop();
-    triangels[4].position = dice->getRightBottom();
-    triangels[5].position = dice->getLeftBottom();
-
-    triangels[0].texCoords = dice->getAssetsLeftTop();
-    triangels[1].texCoords = dice->getAssetsRightTop();
-    triangels[2].texCoords = dice->getAssetsLeftBottom();
-
-    // Triangle 2
-    triangels[3].texCoords = dice->getAssetsRightTop();
-    triangels[4].texCoords = dice->getAssetsRightBottom();
-    triangels[5].texCoords = dice->getAssetsLeftBottom();
-
-    m_verticesCounter++;
+    makeTriangles(dice);
   }
 }
 
@@ -156,25 +140,6 @@ void VertexHub::enemiesVertices()
 {
   for (auto &enemy : m_enemies.getEnemies())
   {
-    sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
-    triangels[0].position = enemy->getLeftTop();
-    triangels[1].position = enemy->getRightTop();
-    triangels[2].position = enemy->getLeftBottom();
-
-    // Triangle 2
-    triangels[3].position = enemy->getRightTop();
-    triangels[4].position = enemy->getRightBottom();
-    triangels[5].position = enemy->getLeftBottom();
-
-    triangels[0].texCoords = enemy->getAssetsLeftTop();
-    triangels[1].texCoords = enemy->getAssetsRightTop();
-    triangels[2].texCoords = enemy->getAssetsLeftBottom();
-
-    // Triangle 2
-    triangels[3].texCoords = enemy->getAssetsRightTop();
-    triangels[4].texCoords = enemy->getAssetsRightBottom();
-    triangels[5].texCoords = enemy->getAssetsLeftBottom();
-
-    m_verticesCounter++;
+    makeTriangles(enemy);
   }
 }
