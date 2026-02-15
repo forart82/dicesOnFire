@@ -29,17 +29,20 @@ void Game::run()
 
         switch (keyPressed->scancode)
         {
-        case sf::Keyboard::Scancode::F5:
-        case sf::Keyboard::Scancode::Escape:
-          m_window.close();
-          break;
-        case sf::Keyboard::Scancode::R:
+        case sf::Keyboard::Scancode::I:
+          m_inventory->toggleInventory();
           break;
         case sf::Keyboard::Scancode::O:
           m_debugBar->toggleActive();
           break;
+        case sf::Keyboard::Scancode::R:
+          break;
         case sf::Keyboard::Scancode::Comma:
           init();
+        case sf::Keyboard::Scancode::F5:
+        case sf::Keyboard::Scancode::Escape:
+          m_window.close();
+          break;
         case sf::Keyboard::Scancode::PageUp:
           handlePlayerZoom("up");
           break;
@@ -98,6 +101,7 @@ void Game::update(sf::Time delta)
   }
   // Elements
   m_vertexHub->update(delta);
+  m_vertexGuiHub->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
   m_attackHub->update(delta);
@@ -121,6 +125,7 @@ void Game::draw()
 
   m_window.setView(m_uiView);
   m_window.draw(*m_weaponSlotsMenu);
+  m_window.draw(*m_vertexGuiHub);
 
   // Will be last
   m_window.draw(*m_debugBar);
@@ -169,6 +174,8 @@ void Game::init()
 
   m_floorItems.reset();
   m_floorItems = std::make_unique<FloorItems>();
+  m_inventory.reset();
+  m_inventory = std::make_unique<Inventory>();
 
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
@@ -210,6 +217,10 @@ void Game::init()
       *m_floorItems,
       *m_hero,
       *m_enemies);
+
+  m_vertexGuiHub.reset();
+  m_vertexGuiHub = std::make_unique<VertexGuiHub>(
+      *m_inventory);
 
   m_debugBar.reset();
   m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies);

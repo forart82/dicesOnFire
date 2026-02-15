@@ -9,6 +9,10 @@ class Cell : public VertexRectangle
 
 private:
 public:
-  Cell(int left, int top);
+  Cell(
+      int left,
+      int top,
+      int assetsLeft,
+      int assetsTop);
   ~Cell();
 };

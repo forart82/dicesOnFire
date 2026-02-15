@@ -5,7 +5,10 @@ FloorItems::FloorItems()
           0,
           0,
           0,
-          0) {}
+          0)
+{
+  m_texture = &textureLoader::getTexture("Utumno");
+}
 FloorItems::~FloorItems()
 {
 }
@@ -14,36 +17,6 @@ void FloorItems::update(sf::Time &delta) {}
 
 void FloorItems::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  states.texture = &textureLoader::getTexture("Utumno");
+  states.texture = m_texture;
   target.draw(m_vertices, states);
-}
-
-void FloorItems::addDice(std::unique_ptr<Dice> dice)
-{
-  m_dices.emplace_back(std::move(dice));
-}
-
-void FloorItems::addWeapon(std::unique_ptr<Weapon> weapon)
-{
-  m_weapons.emplace_back(std::move(weapon));
-}
-
-std::vector<std::unique_ptr<Dice>> &FloorItems::getDices()
-{
-  return m_dices;
-}
-
-int FloorItems::getDicesSize() const
-{
-  return m_dices.size();
-}
-
-std::vector<std::unique_ptr<Weapon>> &FloorItems::getWeapons()
-{
-  return m_weapons;
-}
-
-int FloorItems::getWeaponSize() const
-{
-  return m_weapons.size();
 }

@@ -80,7 +80,6 @@ void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_verticesCounter > 0)
   {
-
     states.texture = &textureLoader::getTexture("Utumno");
     target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
   }

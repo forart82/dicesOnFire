@@ -14,8 +14,10 @@
 #include "Entity/Enemies.h"
 #include "Entity/BluntWeapon.h"
 #include "Entity/Weapon.h"
+#include "Entity/Inventory.h"
 #include "Hub/AttackHub.h"
 #include "Hub/VertextHub.h"
+#include "Hub/VertexGuiHub.h"
 #include "Loader/ConfigLoader.h"
 #include "Manager/WeaponManager.h"
 
@@ -52,10 +54,13 @@ private:
   std::unique_ptr<Hero> m_hero;
   std::unique_ptr<Grid> m_grid;
   std::unique_ptr<Enemies> m_enemies;
-  std::unique_ptr<AttackHub> m_attackHub;
-  std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<FloorItems> m_floorItems;
   std::unique_ptr<BluntWeapon> m_bluntWeapon;
+  std::unique_ptr<Inventory> m_inventory;
+
+  std::unique_ptr<AttackHub> m_attackHub;
+  std::unique_ptr<VertexHub> m_vertexHub;
+  std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
 
   std::mt19937 m_rng;
 
