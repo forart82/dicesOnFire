@@ -11,11 +11,13 @@ Enemy::Enemy(
           std::make_unique<Circle>(),
           std::make_unique<Circle>(),
           std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
           2500,
           100,
           200,
           25,
           25,
+          50,
           50)
 {
 }
@@ -28,12 +30,14 @@ Enemy::Enemy(
     std::unique_ptr<Circle> watchRangeCircle,
     std::unique_ptr<Circle> shortRangeCircle,
     std::unique_ptr<Circle> longRangeCircle,
+    std::unique_ptr<Circle> pickUpRangeCircle,
     float health,
     float maxHealth,
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
-    int longRangeRadius)
+    int longRangeRadius,
+    int pickUpRangeRadius)
     : m_hero(hero),
       m_floorItems(floorItems),
       m_houndHero(false),
@@ -42,12 +46,14 @@ Enemy::Enemy(
                     std::move(watchRangeCircle),
                     std::move(shortRangeCircle),
                     std::move(longRangeCircle),
+                    std::move(pickUpRangeCircle),
                     health,
                     maxHealth,
                     speed,
                     watchRangeRadius,
                     shortRangeRadius,
-                    longRangeRadius),
+                    longRangeRadius,
+                    pickUpRangeRadius),
       VertexRectangle(
           0,
           0,

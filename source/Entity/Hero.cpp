@@ -6,11 +6,13 @@ Hero::Hero()
            std::make_unique<Circle>(),
            std::make_unique<Circle>(),
            std::make_unique<Circle>(),
+           std::make_unique<Circle>(),
            100,
            100,
            2,
            300,
            25,
+           50,
            50)
 {
 }
@@ -21,24 +23,28 @@ Hero::Hero(
     std::unique_ptr<Circle> watchRangeCircle,
     std::unique_ptr<Circle> shortRangeCircle,
     std::unique_ptr<Circle> longRangeCircle,
+    std::unique_ptr<Circle> pickUpRangeCircle,
     float health,
     float maxHealth,
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
-    int longRangeRadius)
+    int longRangeRadius,
+    int pickUpRangeRadius)
     : CharacterBody(
           std::move(bodyBox),
           std::move(healthBar),
           std::move(watchRangeCircle),
           std::move(shortRangeCircle),
           std::move(longRangeCircle),
+          std::move(pickUpRangeCircle),
           health,
           maxHealth,
           speed,
           watchRangeRadius,
           shortRangeRadius,
-          longRangeRadius)
+          longRangeRadius,
+          pickUpRangeRadius)
 {
 }
 

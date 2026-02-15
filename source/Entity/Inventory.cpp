@@ -35,7 +35,7 @@ void Inventory::makeInventory()
   int tileSize = configLoader::get<int>("TILE_SIZE");
   int assetsLeft = 928;
   int assetsTop = 1600;
-  for (int i = 1; i <= m_size; i++)
+  for (int i = 0; i <= m_size - 1; i++)
   {
     if (i % 5 == 0)
     {
@@ -49,7 +49,7 @@ void Inventory::makeInventory()
 
 void Inventory::toggleInventory()
 {
-  m_isActive != m_isActive;
+  m_isActive = !m_isActive;
 }
 
 std::vector<std::unique_ptr<Cell>> &Inventory::getCells()

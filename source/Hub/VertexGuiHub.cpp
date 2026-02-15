@@ -101,5 +101,7 @@ void VertexGuiHub::inventoryVertices()
   if (m_inventory.getIsActive())
   {
     loopItemsAndMakeTriangles(m_inventory.getCells());
+    loopItemsAndMakeTriangles(m_inventory.getDices());
+    loopItemsAndMakeTriangles(m_inventory.getWeapons());
   }
 }

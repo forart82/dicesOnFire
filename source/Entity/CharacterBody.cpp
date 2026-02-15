@@ -7,12 +7,14 @@ CharacterBody::CharacterBody()
           std::make_unique<Circle>(),
           std::make_unique<Circle>(),
           std::make_unique<Circle>(),
+          std::make_unique<Circle>(),
           100,
           100,
           2,
           300,
           25,
-          50)
+          50,
+          100)
 {
 }
 
@@ -22,23 +24,27 @@ CharacterBody::CharacterBody(
     std::unique_ptr<Circle> watchRangeCircle,
     std::unique_ptr<Circle> shortRangeCircle,
     std::unique_ptr<Circle> longRangeCircle,
+    std::unique_ptr<Circle> pickUpRangeCircle,
     float health,
     float maxHealth,
     float speed,
     int watchRangeRadius,
     int shortRangeRadius,
-    int longRangeRadius)
+    int longRangeRadius,
+    int pickUpRangeRadius)
     : m_bodyBox(std::move(bodyBox)),
       m_healthBar(std::move(healthBar)),
       m_watchRangeCircle(std::move(watchRangeCircle)),
       m_shortRangeCircle(std::move(shortRangeCircle)),
       m_longRangeCircle(std::move(longRangeCircle)),
+      m_pickUpRangeCircle(std::move(pickUpRangeCircle)),
       m_health(health),
       m_maxHealth(maxHealth),
       m_speed(speed),
       m_watchRangeRadius(watchRangeRadius),
       m_shortRangeRadius(shortRangeRadius),
       m_longRangeRadius(longRangeRadius),
+      m_pickUpRangeRadius(pickUpRangeRadius),
       m_debugIsActive(false)
 {
 }
@@ -58,6 +64,7 @@ void CharacterBody::draw(sf::RenderTarget &target, sf::RenderStates states) cons
   target.draw(*m_watchRangeCircle);
   target.draw(*m_shortRangeCircle);
   target.draw(*m_longRangeCircle);
+  target.draw(*m_pickUpRangeCircle);
   target.draw(*m_healthBar);
 }
 
@@ -69,21 +76,27 @@ void CharacterBody::move(sf::Vector2f &movement)
   m_watchRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_shortRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
   m_longRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
+  m_pickUpRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
 }
 
-bool CharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
+bool CharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos)
 {
-  return collisionHelper::insideRadar(targetPos, radarPtr);
+  return collisionHelper::insideRadar(targetPos, *m_watchRangeCircle);
 }
 
-bool CharacterBody::insideShortRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
+bool CharacterBody::insideShortRangeCircle(const sf::Vector2f &targetPos)
 {
-  return collisionHelper::insideRadar(targetPos, radarPtr);
+  return collisionHelper::insideRadar(targetPos, *m_shortRangeCircle);
 }
 
-bool CharacterBody::insideLongRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr)
+bool CharacterBody::insideLongRangeCircle(const sf::Vector2f &targetPos)
 {
-  return collisionHelper::insideRadar(targetPos, radarPtr);
+  return collisionHelper::insideRadar(targetPos, *m_longRangeCircle);
+}
+
+bool CharacterBody::insidePickUpRangeCircle(const sf::Vector2f &targetPos)
+{
+  return collisionHelper::insideRadar(targetPos, *m_pickUpRangeCircle);
 }
 
 void CharacterBody::setBody(std::unique_ptr<Rectangle> bodyBox)
@@ -109,6 +122,10 @@ void CharacterBody::setSpeed(float speed)
 void CharacterBody::setWatchRangeRadius(int watchRangeRadius)
 {
   m_watchRangeRadius = watchRangeRadius;
+}
+void CharacterBody::setPickUpRangeRadius(int pickUpRangeRadius)
+{
+  m_pickUpRangeRadius = pickUpRangeRadius;
 }
 
 void CharacterBody::toggleDebugIsActive()
@@ -136,6 +153,10 @@ Circle &CharacterBody::getLongRangeCircle()
 {
   return *m_longRangeCircle;
 }
+Circle &CharacterBody::getPickUpRangeCircle()
+{
+  return *m_pickUpRangeCircle;
+}
 float &CharacterBody::getHealth()
 {
   return m_health;
@@ -159,4 +180,8 @@ int &CharacterBody::getShortRangeRadius()
 int &CharacterBody::getLongRangeRadius()
 {
   return m_longRangeRadius;
+}
+int &CharacterBody::getPickUpRangeRadius()
+{
+  return m_pickUpRangeRadius;
 }

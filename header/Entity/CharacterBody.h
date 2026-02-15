@@ -14,13 +14,15 @@ protected:
   std::unique_ptr<Circle> m_watchRangeCircle;
   std::unique_ptr<Circle> m_shortRangeCircle;
   std::unique_ptr<Circle> m_longRangeCircle;
+  std::unique_ptr<Circle> m_pickUpRangeCircle;
   float m_health;
   float m_maxHealth;
   float m_speed;
-  int m_watchRangeRadius;
 
+  int m_watchRangeRadius;
   int m_shortRangeRadius;
   int m_longRangeRadius;
+  int m_pickUpRangeRadius;
 
   bool m_debugIsActive;
 
@@ -32,12 +34,14 @@ public:
       std::unique_ptr<Circle> watchRangeCircle,
       std::unique_ptr<Circle> shortRangeCircle,
       std::unique_ptr<Circle> longRangeCircle,
+      std::unique_ptr<Circle> pickUpRangeCircle,
       float health,
       float maxHealth,
       float speed,
       int watchRangeRadius,
       int shortRangeRadius,
-      int longRangeRadius);
+      int longRangeRadius,
+      int pickUpRangeRadius);
   ~CharacterBody();
 
   virtual void update(sf::Time &delta);
@@ -45,9 +49,10 @@ public:
 
   void move(sf::Vector2f &movement);
 
-  bool insideWatchRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
-  bool insideShortRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
-  bool insideLongRangeCircle(const sf::Vector2f &targetPos, Circle &radarPtr);
+  bool insideWatchRangeCircle(const sf::Vector2f &targetPos);
+  bool insideShortRangeCircle(const sf::Vector2f &targetPos);
+  bool insideLongRangeCircle(const sf::Vector2f &targetPos);
+  bool insidePickUpRangeCircle(const sf::Vector2f &targetPos);
 
   void setBody(std::unique_ptr<Rectangle> bodyBox);
   void setHealthBar(std::unique_ptr<RectangleX2> healthBar);
@@ -55,6 +60,7 @@ public:
   void setMaxHealth(float maxHealth);
   void setSpeed(float speed);
   void setWatchRangeRadius(int watchRangeRadius);
+  void setPickUpRangeRadius(int watchRangeRadius);
 
   void toggleDebugIsActive();
 
@@ -63,10 +69,12 @@ public:
   Circle &getWatchRangeCircle();
   Circle &getShortRangeCircle();
   Circle &getLongRangeCircle();
+  Circle &getPickUpRangeCircle();
   float &getHealth();
   float &getMaxHealth();
   float &getSpeed();
   int &getWatchRangeRadius();
   int &getShortRangeRadius();
   int &getLongRangeRadius();
+  int &getPickUpRangeRadius();
 };

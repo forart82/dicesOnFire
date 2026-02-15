@@ -39,6 +39,7 @@ void Game::run()
           break;
         case sf::Keyboard::Scancode::Comma:
           init();
+          break;
         case sf::Keyboard::Scancode::F5:
         case sf::Keyboard::Scancode::Escape:
           m_window.close();
@@ -105,6 +106,7 @@ void Game::update(sf::Time delta)
   m_hero->update(delta);
   m_enemies->update(delta);
   m_attackHub->update(delta);
+  m_pickUpHub->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -184,11 +186,13 @@ void Game::init()
       std::make_unique<Circle>(configLoader::get<Circle>("HERO_WATCH_RANGE")),
       std::make_unique<Circle>(configLoader::get<Circle>("HERO_SHORT_RANGE")),
       std::make_unique<Circle>(configLoader::get<Circle>("HERO_LONG_RANGE")),
+      std::make_unique<Circle>(configLoader::get<Circle>("HERO_PICK_UP_RANGE")),
       100,
       100,
       1000,
       configLoader::get<int>("PLAYER_WATCH_RADIUS"),
       25,
+      50,
       50);
 
   m_enemies.reset();
@@ -199,10 +203,14 @@ void Game::init()
   }
 
   m_attackHub.reset();
-  m_attackHub =
-      std::make_unique<AttackHub>(
-          *m_hero,
-          *m_enemies);
+  m_attackHub = std::make_unique<AttackHub>(
+      *m_hero,
+      *m_enemies);
+  m_pickUpHub.reset();
+  m_pickUpHub = std::make_unique<PickUpHub>(
+      *m_hero,
+      *m_floorItems,
+      *m_inventory);
 
   m_bluntWeapon.reset();
   m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();

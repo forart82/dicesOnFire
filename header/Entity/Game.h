@@ -16,6 +16,7 @@
 #include "Entity/Weapon.h"
 #include "Entity/Inventory.h"
 #include "Hub/AttackHub.h"
+#include "Hub/PickUpHub.h"
 #include "Hub/VertextHub.h"
 #include "Hub/VertexGuiHub.h"
 #include "Loader/ConfigLoader.h"
@@ -59,6 +60,7 @@ private:
   std::unique_ptr<Inventory> m_inventory;
 
   std::unique_ptr<AttackHub> m_attackHub;
+  std::unique_ptr<PickUpHub> m_pickUpHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
 

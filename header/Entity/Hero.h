@@ -21,12 +21,14 @@ public:
       std::unique_ptr<Circle> watchRangeCircle,
       std::unique_ptr<Circle> shortRangeCircle,
       std::unique_ptr<Circle> longRangeCircle,
+      std::unique_ptr<Circle> pickUpRangeCircle,
       float health,
       float maxHealth,
       float speed,
       int watchRangeRadius,
       int shortRangeRadius,
-      int longRangeRadius);
+      int longRangeRadius,
+      int pickUpRangeRadius);
   ~Hero();
 
   void update(sf::Time &delta) override;
