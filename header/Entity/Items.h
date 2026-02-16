@@ -21,12 +21,12 @@ public:
   virtual void update(sf::Time &delta) = 0;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;
 
-  void addDice(std::unique_ptr<Dice> dice);
-  void addWeapon(std::unique_ptr<Weapon> weapon);
+  virtual void addDice(std::unique_ptr<Dice> dice);
+  virtual void addWeapon(std::unique_ptr<Weapon> weapon);
 
-  std::vector<std::unique_ptr<Dice>> &getDices();
-  int getDicesSize() const;
+  virtual std::vector<std::unique_ptr<Dice>> &getDices();
+  virtual int getDicesSize() const;
 
-  std::vector<std::unique_ptr<Weapon>> &getWeapons();
-  int getWeaponSize() const;
+  virtual std::vector<std::unique_ptr<Weapon>> &getWeapons();
+  virtual int getWeaponSize() const;
 };

@@ -12,8 +12,20 @@
 class Inventory : public Items, public VertexRectangle
 {
 private:
+  struct SlotContent
+  {
+    Dice *dice = nullptr;     // Pointer to dice if present
+    Weapon *weapon = nullptr; // Pointer to weapon if present
+
+    bool isEmpty() const { return dice == nullptr && weapon == nullptr; }
+  };
+
   std::vector<std::unique_ptr<Cell>> m_cells;
+  std::vector<SlotContent> m_slots;
+  sf::Vector2f m_inventoryPosition;
   int m_size;
+  int m_sizeMod;
+  int m_tileSize;
   bool m_isActive;
 
 public:
@@ -23,6 +35,9 @@ public:
   void update(sf::Time &delta) override;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+  void addDice(std::unique_ptr<Dice> dice);
+  void addWeapon(std::unique_ptr<Weapon> weapon);
+
   void makeInventory();
   void toggleInventory();
 
@@ -30,4 +45,8 @@ public:
   int getCellsSize() const;
 
   bool getIsActive() const;
+
+  SlotContent &getSlot(int index);
+
+  int getFreeSlotIndex();
 };
