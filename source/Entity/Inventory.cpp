@@ -1,12 +1,7 @@
 #include "Entity/Inventory.h"
 
 Inventory::Inventory()
-    : VertexRectangle(
-          0,
-          0,
-          0,
-          0),
-      m_size(configLoader::get<int>("INVENTORY_SIZE")),
+    : m_size(configLoader::get<int>("INVENTORY_SIZE")),
       m_sizeMod(configLoader::get<int>("INVENTORY_SIZE_MOD")),
       m_tileSize(configLoader::get<int>("TILE_SIZE")),
       m_isActive(false),
@@ -35,17 +30,11 @@ void Inventory::addDice(std::unique_ptr<Dice> dice)
   int freeSlotIndex = getFreeSlotIndex();
   if (freeSlotIndex >= 0)
   {
-    int column = freeSlotIndex % m_sizeMod;
-    int row = freeSlotIndex / m_sizeMod + (column > 0 ? 1 : 0);
-    column = (column == 0 ? 5 : column);
-
-    dice->resetLeftTop(
-        sf::Vector2f(m_inventoryPosition.x + (column * m_tileSize),
-                     m_inventoryPosition.y + (row * m_tileSize)));
+    placeItem(dice, freeSlotIndex);
     Dice *dicePtr = dice.get();
     m_slots[freeSlotIndex].dice = dicePtr;
+    Items::addDice(std::move(dice));
   }
-  Items::addDice(std::move(dice));
 }
 
 void Inventory::addWeapon(std::unique_ptr<Weapon> weapon)
@@ -53,16 +42,21 @@ void Inventory::addWeapon(std::unique_ptr<Weapon> weapon)
   int freeSlotIndex = getFreeSlotIndex();
   if (freeSlotIndex >= 0)
   {
-    int column = freeSlotIndex / m_sizeMod;
-    int row = freeSlotIndex / m_sizeMod + (column > 0 ? 1 : 0);
-
-    weapon->resetLeftTop(
-        sf::Vector2f(m_inventoryPosition.x + (column * m_tileSize),
-                     m_inventoryPosition.y + (row * m_tileSize)));
+    placeItem(weapon, freeSlotIndex);
     Weapon *weaponPtr = weapon.get();
     m_slots[freeSlotIndex].weapon = weaponPtr;
+    Items::addWeapon(std::move(weapon));
   }
-  Items::addWeapon(std::move(weapon));
+}
+
+template <typename T>
+void Inventory::placeItem(T &item, int &freeSlotIndex)
+{
+  int column = freeSlotIndex % m_sizeMod;
+  int row = freeSlotIndex / m_sizeMod + 1;
+  item->resetLeftTop(
+      sf::Vector2f(m_inventoryPosition.x + (column * m_tileSize),
+                   m_inventoryPosition.y + (row * m_tileSize)));
 }
 
 void Inventory::makeInventory()

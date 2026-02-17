@@ -9,7 +9,7 @@
 #include "Entity/Cell.h"
 #include "Loader/ConfigLoader.h"
 
-class Inventory : public Items, public VertexRectangle
+class Inventory : public Items
 {
 private:
   struct SlotContent
@@ -37,6 +37,9 @@ public:
 
   void addDice(std::unique_ptr<Dice> dice);
   void addWeapon(std::unique_ptr<Weapon> weapon);
+
+  template <typename T>
+  void placeItem(T &item, int &freeSlotIndex);
 
   void makeInventory();
   void toggleInventory();

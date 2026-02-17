@@ -25,8 +25,8 @@ namespace fontLoader
 
   inline void loadAll()
   {
-    load("arial", "assets/fonts/arial.ttf");
-    load("Pm", "assets/fonts/PermanentMarker-Regular.ttf");
+    load("Arial", "assets/fonts/arial.ttf");
+    load("PermanentMarker", "assets/fonts/PermanentMarker-Regular.ttf");
     load("Quantico", "assets/fonts/Quantico-Regular.ttf");
     load("SyneMono", "assets/fonts/SyneMono-Regular.ttf");
     load("Emoji", "assets/fonts/NotoEmoji-VariableFont_wght.ttf");

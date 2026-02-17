@@ -19,31 +19,34 @@ void PickUpHub::update(sf::Time &delta)
 
 void PickUpHub::pickUp()
 {
-  auto &weapons = m_floorItems.getWeapons();
-  for (auto it = weapons.begin(); it != weapons.end();)
+  if (m_invenotry.getFreeSlotIndex() >= 0)
   {
-    if (m_hero.insidePickUpRangeCircle((*it)->getLeftTop()))
+    auto &weapons = m_floorItems.getWeapons();
+    for (auto it = weapons.begin(); it != weapons.end();)
     {
-      m_invenotry.addWeapon(std::move(*it));
-      it = weapons.erase(it);
+      if (m_hero.insidePickUpRangeCircle((*it)->getLeftTop()) && m_invenotry.getFreeSlotIndex() >= 0)
+      {
+        m_invenotry.addWeapon(std::move(*it));
+        it = weapons.erase(it);
+      }
+      else
+      {
+        ++it;
+      }
     }
-    else
-    {
-      ++it;
-    }
-  }
 
-  auto &dices = m_floorItems.getDices();
-  for (auto it = dices.begin(); it != dices.end();)
-  {
-    if (m_hero.insidePickUpRangeCircle((*it)->getLeftTop()))
+    auto &dices = m_floorItems.getDices();
+    for (auto it = dices.begin(); it != dices.end();)
     {
-      m_invenotry.addDice(std::move(*it));
-      it = dices.erase(it);
-    }
-    else
-    {
-      ++it;
+      if (m_hero.insidePickUpRangeCircle((*it)->getLeftTop()) && m_invenotry.getFreeSlotIndex() >= 0)
+      {
+        m_invenotry.addDice(std::move(*it));
+        it = dices.erase(it);
+      }
+      else
+      {
+        ++it;
+      }
     }
   }
 }
