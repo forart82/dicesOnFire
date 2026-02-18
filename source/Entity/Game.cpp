@@ -128,6 +128,7 @@ void Game::draw()
   m_window.setView(m_uiView);
   m_window.draw(*m_weaponSlotsMenu);
   m_window.draw(*m_vertexGuiHub);
+  m_window.draw(*m_toolTip);
 
   // Will be last
   m_window.draw(*m_debugBar);
@@ -178,6 +179,8 @@ void Game::init()
   m_floorItems = std::make_unique<FloorItems>();
   m_inventory.reset();
   m_inventory = std::make_unique<Inventory>();
+  m_toolTip.reset();
+  m_toolTip = std::make_unique<ToolTip>();
 
   m_hero.reset();
   m_hero = std::make_unique<Hero>(
@@ -228,7 +231,8 @@ void Game::init()
 
   m_vertexGuiHub.reset();
   m_vertexGuiHub = std::make_unique<VertexGuiHub>(
-      *m_inventory);
+      *m_inventory,
+      *m_toolTip);
 
   m_debugBar.reset();
   m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies);

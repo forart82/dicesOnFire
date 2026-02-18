@@ -7,7 +7,6 @@ Inventory::Inventory()
       m_isActive(false),
       m_inventoryPosition(configLoader::get<sf::Vector2f>("INVENTORY_POSITION"))
 {
-  m_texture = &textureLoader::getTexture("Utumno");
   makeInventory();
 }
 Inventory::~Inventory()
@@ -20,8 +19,6 @@ void Inventory::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_isActive)
   {
-    states.texture = m_texture;
-    target.draw(m_vertices, states);
   }
 }
 

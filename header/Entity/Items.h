@@ -9,10 +9,8 @@
 class Items : public sf::Drawable
 {
 protected:
-  sf::VertexArray m_vertices;
   std::vector<std::unique_ptr<Dice>> m_dices;
   std::vector<std::unique_ptr<Weapon>> m_weapons;
-  const sf::Texture *m_texture;
 
 public:
   Items() = default;

@@ -15,6 +15,7 @@
 #include "Entity/BluntWeapon.h"
 #include "Entity/Weapon.h"
 #include "Entity/Inventory.h"
+#include "Entity/ToolTip.h"
 #include "Hub/AttackHub.h"
 #include "Hub/PickUpHub.h"
 #include "Hub/VertextHub.h"
@@ -63,6 +64,7 @@ private:
   std::unique_ptr<PickUpHub> m_pickUpHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
+  std::unique_ptr<ToolTip> m_toolTip;
 
   std::mt19937 m_rng;
 

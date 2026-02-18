@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity/Inventory.h"
+#include "Entity/ToolTip.h"
 #include "Loader/TextureLoader.h"
 #include "Loader/ConfigLoader.h"
 
@@ -15,10 +16,12 @@ private:
   int m_tileSize;
 
   Inventory &m_inventory;
+  ToolTip &m_toolTip;
 
 public:
   VertexGuiHub(
-      Inventory &inventory);
+      Inventory &inventory,
+      ToolTip &toolTip);
   ~VertexGuiHub();
 
   void update(sf::Time &delta);
@@ -33,7 +36,9 @@ public:
   void initCount();
   void countTotalVertices();
   void countInventoryVertices();
+  void countToolTipVertices();
 
   void resizeVertices();
   void inventoryVertices();
+  void toolTipVertices();
 };

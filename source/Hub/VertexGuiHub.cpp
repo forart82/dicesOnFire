@@ -1,8 +1,10 @@
 #include "Hub/VertexGuiHub.h"
 
 VertexGuiHub::VertexGuiHub(
-    Inventory &inventory)
+    Inventory &inventory,
+    ToolTip &toolTip)
     : m_inventory(inventory),
+      m_toolTip(toolTip),
       m_totalVertices(0),
       m_verticesCounter(0),
       m_tileSize(configLoader::get<int>("TILE_SIZE"))
@@ -21,6 +23,8 @@ void VertexGuiHub::update(sf::Time &delta)
   resizeVertices();
 
   inventoryVertices();
+
+  toolTipVertices();
 }
 
 template <typename T>
@@ -70,15 +74,17 @@ void VertexGuiHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_verticesCounter > 0)
   {
-
     states.texture = &textureLoader::getTexture("Utumno");
     target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
   }
+
+  target.draw(m_toolTip);
 }
 
 void VertexGuiHub::countTotalVertices()
 {
   countInventoryVertices();
+  countToolTipVertices();
 }
 
 void VertexGuiHub::countInventoryVertices()
@@ -86,6 +92,11 @@ void VertexGuiHub::countInventoryVertices()
   m_totalVertices += m_inventory.getCellsSize();
   m_totalVertices += m_inventory.getDicesSize();
   m_totalVertices += m_inventory.getWeaponSize();
+}
+
+void VertexGuiHub::countToolTipVertices()
+{
+  m_totalVertices += 1;
 }
 
 void VertexGuiHub::resizeVertices()
@@ -104,4 +115,9 @@ void VertexGuiHub::inventoryVertices()
     loopItemsAndMakeTriangles(m_inventory.getDices());
     loopItemsAndMakeTriangles(m_inventory.getWeapons());
   }
+}
+
+void VertexGuiHub::toolTipVertices()
+{
+  makeTriangles(&m_toolTip);
 }
