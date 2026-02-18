@@ -1,15 +1,18 @@
 #include "Entity/DebugBar.h"
 
 DebugBar::DebugBar(
+    sf::RenderWindow &window,
     Hero &hero,
     Enemies &enemies)
-    : m_hero(hero),
+    : m_window(window),
+      m_hero(hero),
       m_enemies(enemies),
       m_isActive(false)
 {
   m_textGame.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_GAME").getShape().getPosition());
   m_textManager.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
   m_textHero.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_HERO").getShape().getPosition());
+  m_textMouse.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_MOUSE").getShape().getPosition());
   m_textRealFps.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_REALFPS").getShape().getPosition());
   m_textRealFps.setFontSize(72);
 }
@@ -37,6 +40,11 @@ void DebugBar::update(sf::Time &delta)
   m_textHero.addText(
       "HeroPosition",
       "Hero x: " + std::to_string(m_hero.getBody().getShape().getPosition().x) + " y: " + std::to_string(m_hero.getBody().getShape().getPosition().y));
+
+  sf::Vector2i mousPos = sf::Mouse::getPosition();
+  sf::Vector2f mouseWorldPos = m_window.mapPixelToCoords(mousPos);
+  m_textMouse.addText("Mouse", "Mouse: x: " + std::to_string(mousPos.x) + " y: " + std::to_string(mousPos.y));
+  m_textMouse.addText("MouseWorld", "Mouse World: x: " + std::to_string(mouseWorldPos.x) + " y: " + std::to_string(mouseWorldPos.y));
 }
 
 void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -47,6 +55,7 @@ void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
     target.draw(m_textGame, states);
     target.draw(m_textManager, states);
     target.draw(m_textHero, states);
+    target.draw(m_textMouse, states);
   }
   target.draw(m_textRealFps, states);
 }

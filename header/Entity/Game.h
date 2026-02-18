@@ -15,7 +15,7 @@
 #include "Entity/BluntWeapon.h"
 #include "Entity/Weapon.h"
 #include "Entity/Inventory.h"
-#include "Entity/ToolTip.h"
+#include "Hub/HoverHub.h"
 #include "Hub/AttackHub.h"
 #include "Hub/PickUpHub.h"
 #include "Hub/VertextHub.h"
@@ -59,12 +59,13 @@ private:
   std::unique_ptr<FloorItems> m_floorItems;
   std::unique_ptr<BluntWeapon> m_bluntWeapon;
   std::unique_ptr<Inventory> m_inventory;
+  std::unique_ptr<ToolTip> m_toolTip;
 
   std::unique_ptr<AttackHub> m_attackHub;
   std::unique_ptr<PickUpHub> m_pickUpHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
-  std::unique_ptr<ToolTip> m_toolTip;
+  std::unique_ptr<HoverHub> m_hoverHub;
 
   std::mt19937 m_rng;
 

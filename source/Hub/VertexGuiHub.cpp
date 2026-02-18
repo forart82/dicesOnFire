@@ -39,29 +39,32 @@ void VertexGuiHub::loopItemsAndMakeTriangles(const T &items)
 template <typename T>
 void VertexGuiHub::makeTriangles(const T &item)
 {
-  sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
+  if (item->getIsActive())
+  {
+    sf::Vertex *triangels = &m_vertices[m_verticesCounter * 6];
 
-  // Triangle 1
-  triangels[0].position = item->getLeftTop();
-  triangels[1].position = item->getRightTop();
-  triangels[2].position = item->getLeftBottom();
+    // Triangle 1
+    triangels[0].position = item->getLeftTop();
+    triangels[1].position = item->getRightTop();
+    triangels[2].position = item->getLeftBottom();
 
-  // Triangle 2
-  triangels[3].position = item->getRightTop();
-  triangels[4].position = item->getRightBottom();
-  triangels[5].position = item->getLeftBottom();
+    // Triangle 2
+    triangels[3].position = item->getRightTop();
+    triangels[4].position = item->getRightBottom();
+    triangels[5].position = item->getLeftBottom();
 
-  // Triangle 1
-  triangels[0].texCoords = item->getAssetsLeftTop();
-  triangels[1].texCoords = item->getAssetsRightTop();
-  triangels[2].texCoords = item->getAssetsLeftBottom();
+    // Triangle 1
+    triangels[0].texCoords = item->getAssetsLeftTop();
+    triangels[1].texCoords = item->getAssetsRightTop();
+    triangels[2].texCoords = item->getAssetsLeftBottom();
 
-  // Triangle 2
-  triangels[3].texCoords = item->getAssetsRightTop();
-  triangels[4].texCoords = item->getAssetsRightBottom();
-  triangels[5].texCoords = item->getAssetsLeftBottom();
+    // Triangle 2
+    triangels[3].texCoords = item->getAssetsRightTop();
+    triangels[4].texCoords = item->getAssetsRightBottom();
+    triangels[5].texCoords = item->getAssetsLeftBottom();
 
-  m_verticesCounter++;
+    m_verticesCounter++;
+  }
 }
 
 void VertexGuiHub::initCount()

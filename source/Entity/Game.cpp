@@ -101,12 +101,13 @@ void Game::update(sf::Time delta)
     m_autoDamgeTimer = sf::Time::Zero;
   }
   // Elements
-  m_vertexHub->update(delta);
-  m_vertexGuiHub->update(delta);
   m_hero->update(delta);
   m_enemies->update(delta);
   m_attackHub->update(delta);
   m_pickUpHub->update(delta);
+  m_hoverHub->update(delta);
+  m_vertexHub->update(delta);
+  m_vertexGuiHub->update(delta);
   m_weaponSlotsMenu->update(delta);
 
   // Last element
@@ -156,7 +157,6 @@ void Game::handleViewRatio()
     sizeY = windowRatio / targetRatio;
     posY = (1.f - sizeY) / 2.f;
   }
-
   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
   m_playerView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
   m_playerView.zoom(m_playerZoom);
@@ -234,8 +234,20 @@ void Game::init()
       *m_inventory,
       *m_toolTip);
 
+  m_hoverHub.reset();
+  m_hoverHub = std::make_unique<HoverHub>(
+      m_window,
+      m_playerView,
+      m_uiView,
+      *m_toolTip,
+      *m_floorItems,
+      *m_inventory);
+
   m_debugBar.reset();
-  m_debugBar = std::make_unique<DebugBar>(*m_hero, *m_enemies);
+  m_debugBar = std::make_unique<DebugBar>(
+      m_window,
+      *m_hero,
+      *m_enemies);
 }
 
 void Game::handlePlayerZoom(std::string zoomDirection)

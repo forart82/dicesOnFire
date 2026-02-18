@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
+#include <initializer_list>
 #include "Helper/RandomHelper.h"
 #include "Loader/ConfigLoader.h"
 
@@ -25,6 +27,8 @@ protected:
   sf::Vector2f m_assetsLeftBottom;
   sf::Vector2f m_assetsRightBottom;
 
+  bool m_isActive;
+
 public:
   VertexRectangle(
       int left,
@@ -36,7 +40,8 @@ public:
         m_assetsLeft(assetsLeft),
         m_assetsTop(assetsTop),
         m_tileSize(configLoader::get<int>("TILE_SIZE")),
-        m_assetsTileSize(configLoader::get<int>("ASSETS_TILE_SIZE"))
+        m_assetsTileSize(configLoader::get<int>("ASSETS_TILE_SIZE")),
+        m_isActive(true)
   {
     makeAllCorners();
   }
@@ -61,6 +66,16 @@ public:
     m_assetsRightTop = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop);
     m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + m_assetsTileSize);
     m_assetsRightBottom = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop + m_assetsTileSize);
+  }
+
+  void setIsActive(bool isActive)
+  {
+    m_isActive = isActive;
+  }
+
+  void toggleIsActive()
+  {
+    m_isActive = !m_isActive;
   }
 
   sf::Vector2f &getLeftTop()
@@ -101,5 +116,28 @@ public:
   sf::Vector2f &getAssetsRightBottom()
   {
     return m_assetsRightBottom;
+  }
+
+  sf::FloatRect getGlobalBounds()
+  {
+    // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
+    float minX = std::min({m_leftTop.x, m_rightTop.x, m_leftBottom.x, m_rightBottom.x});
+    float minY = std::min({m_leftTop.y, m_rightTop.y, m_leftBottom.y, m_rightBottom.y});
+
+    // 2. Find the Maximum X and Y (The Bottom-Right of the bounding box)
+    float maxX = std::max({m_leftTop.x, m_rightTop.x, m_leftBottom.x, m_rightBottom.x});
+    float maxY = std::max({m_leftTop.y, m_rightTop.y, m_leftBottom.y, m_rightBottom.y});
+
+    // 3. Calculate Width and Height
+    float width = maxX - minX;
+    float height = maxY - minY;
+
+    // 4. Return the Rectangle
+    return sf::FloatRect({minX, minY}, {width, height});
+  }
+
+  bool &getIsActive()
+  {
+    return m_isActive;
   }
 };

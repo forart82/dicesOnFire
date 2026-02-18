@@ -19,14 +19,16 @@ private:
   GameText m_textHero;
   GameText m_textGrid;
   GameText m_textRealFps;
+  GameText m_textMouse;
   DebugWindow m_debugWindow;
   bool m_isActive;
 
+  sf::RenderWindow &m_window;
   Hero &m_hero;
   Enemies &m_enemies;
 
 public:
-  DebugBar(Hero &hero, Enemies &enemies);
+  DebugBar(sf::RenderWindow &window, Hero &hero, Enemies &enemies);
   ~DebugBar();
 
   void update(sf::Time &delta);
