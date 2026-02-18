@@ -27,7 +27,7 @@ void HoverHub::update(sf::Time &delta)
 
 void HoverHub::checkContains()
 {
-  sf::Vector2i mousPos = sf::Mouse::getPosition();
+  sf::Vector2i mousPos = sf::Mouse::getPosition(m_window);
   sf::Vector2f mouseWorldPos = m_window.mapPixelToCoords(mousPos, m_playerView);
   for (auto &dice : m_floorItems.getDices())
   {
