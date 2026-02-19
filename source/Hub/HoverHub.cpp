@@ -12,7 +12,8 @@ HoverHub::HoverHub(
       m_uiView(uiView),
       m_toolTip(toolTip),
       m_floorItems(floorItems),
-      m_inventory(inventory)
+      m_inventory(inventory),
+      m_showUpTime(configLoader::get<float>("HOVER_SHOW_UP_TIME"))
 {
 }
 
@@ -23,19 +24,40 @@ HoverHub::~HoverHub()
 void HoverHub::update(sf::Time &delta)
 {
   checkContains();
+  handleElapsedTime(delta);
+}
+
+template <typename T>
+void HoverHub::loopItemsAndCheckContains(const T &items, const sf::Vector2f &mouseWorldPosition)
+{
+  for (auto &item : items)
+  {
+    sf::FloatRect bounds = item->getGlobalBounds();
+    if (item->getGlobalBounds().contains(mouseWorldPosition))
+    {
+      m_toolTip.setTitle(item->getName());
+      m_toolTip.setStats(item->getStats());
+      m_toolTip.setIsActive(true);
+      m_elapsedTime = sf::Time::Zero;
+    }
+  }
 }
 
 void HoverHub::checkContains()
 {
-  sf::Vector2i mousPos = sf::Mouse::getPosition(m_window);
-  sf::Vector2f mouseWorldPos = m_window.mapPixelToCoords(mousPos, m_playerView);
-  for (auto &dice : m_floorItems.getDices())
+  sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
+  sf::Vector2f mouseWorldPosition = m_window.mapPixelToCoords(mousePosition, m_playerView);
+  loopItemsAndCheckContains(m_floorItems.getDices(), mouseWorldPosition);
+  loopItemsAndCheckContains(m_floorItems.getWeapons(), mouseWorldPosition);
+  loopItemsAndCheckContains(m_inventory.getDices(), mouseWorldPosition);
+  loopItemsAndCheckContains(m_inventory.getWeapons(), mouseWorldPosition);
+}
+
+void HoverHub::handleElapsedTime(sf::Time &delta)
+{
+  m_elapsedTime += delta;
+  if (m_elapsedTime.asSeconds() >= m_showUpTime)
   {
-    sf::FloatRect bounds = dice->getGlobalBounds();
-    std::cout << bounds.position.x << " " << bounds.position.y << " " << mouseWorldPos.x << " " << mouseWorldPos.y << std::endl;
-    if (dice->getGlobalBounds().contains(mouseWorldPos))
-    {
-      m_toolTip.setIsActive(true);
-    }
+    m_toolTip.setIsActive(false);
   }
 }

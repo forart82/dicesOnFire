@@ -18,7 +18,8 @@ Dice::Dice(int faces, int rerolls, float cooldown)
       m_faces(faces),
       m_rerolls(rerolls),
       m_stop(false),
-      m_isOnFloor(false)
+      m_isOnFloor(false),
+      m_name(randomNameLoader::getRandomDiceName())
 {
   // Dice
   makeFaceValues();
@@ -119,4 +120,18 @@ void Dice::onTimeout()
 {
   m_timer.toggleStop();
   toggleStop();
+}
+
+std::string Dice::getName() const
+{
+  return m_name;
+}
+
+std::string Dice::getStats() const
+{
+  return "Faces: " +
+         std::to_string(m_faces) +
+         "\n"
+         "Rerolls: " +
+         std::to_string(m_rerolls);
 }

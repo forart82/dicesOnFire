@@ -30,6 +30,7 @@ Weapon::Weapon(
           assetsLeft,
           assetsTop),
       m_bodyBox(std::move(bodyBox)),
+      m_name(randomNameLoader::getRandomWeaponName()),
       m_damage(damage),
       m_numberOfSlots(numberOfSlots),
       m_weaponSlotNumber(weaponSlotNumber)
@@ -110,4 +111,14 @@ const int &Weapon::getDamage() const
 const int &Weapon::getNumberOfSlots() const
 {
   return m_numberOfSlots;
+}
+
+std::string Weapon::getName() const
+{
+  return m_name;
+}
+std::string Weapon::getStats() const
+{
+  return "Damage: " +
+         std::to_string(m_damage);
 }

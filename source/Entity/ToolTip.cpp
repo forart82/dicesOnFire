@@ -28,3 +28,13 @@ void ToolTip::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_title);
   target.draw(m_stats);
 }
+
+void ToolTip::setTitle(std::string title)
+{
+  m_title.setString(title);
+}
+
+void ToolTip::setStats(std::string stats)
+{
+  m_stats.setString(stats);
+}

@@ -7,11 +7,13 @@
 #include "Entity/Timer.h"
 #include "Entity/VertexRectangle.h"
 #include "Loader/ConfigLoader.h"
+#include "Loader/RandomNameLoader.h"
 
 class Weapon : public sf::Drawable, public VertexRectangle
 {
 protected:
   std::unique_ptr<Rectangle> m_bodyBox;
+  std::string m_name;
   int m_damage;
   int m_numberOfSlots;
   int m_weaponSlotNumber;
@@ -44,4 +46,7 @@ public:
 
   const int &getDamage() const;
   const int &getNumberOfSlots() const;
+
+  std::string getName() const;
+  std::string getStats() const;
 };

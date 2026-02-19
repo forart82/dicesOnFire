@@ -9,6 +9,7 @@
 #include "Entity/VertexRectangle.h"
 #include "Helper/RandomHelper.h"
 #include "Loader/ConfigLoader.h"
+#include "Loader/RandomNameLoader.h"
 
 class Dice : public sf::Drawable, public VertexRectangle
 {
@@ -21,6 +22,7 @@ private:
   int m_faces;
   std::map<int, float> m_faceValues;
   int m_rerolls;
+  std::string m_name;
 
   Timer m_timer;
   sf::Time m_elapsedTime;
@@ -48,4 +50,7 @@ public:
   void setIsOnFloor(bool isOnFloor);
 
   void onTimeout();
+
+  std::string getName() const;
+  std::string getStats() const;
 };
