@@ -48,6 +48,13 @@ public:
 
   ~VertexRectangle() {}
 
+  void setPosition(const sf::Vector2f &position)
+  {
+    m_left = position.x;
+    m_top = position.y;
+    makeAllCorners();
+  }
+
   void resetLeftTop(sf::Vector2f leftTop)
   {
     m_left = leftTop.x;
@@ -118,7 +125,7 @@ public:
     return m_assetsRightBottom;
   }
 
-  sf::FloatRect getGlobalBounds()
+  sf::FloatRect getGlobalBounds() const
   {
     // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
     float minX = std::min({m_leftTop.x, m_rightTop.x, m_leftBottom.x, m_rightBottom.x});
@@ -134,6 +141,11 @@ public:
 
     // 4. Return the Rectangle
     return sf::FloatRect({minX, minY}, {width, height});
+  }
+
+  sf::Vector2f getPosition() const
+  {
+    return sf::Vector2f(m_left, m_top);
   }
 
   bool &getIsActive()

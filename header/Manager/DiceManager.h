@@ -13,7 +13,7 @@ namespace diceManager
     switch (level)
     {
     case 1:
-      dice->setCooldown(randomHelper::GET_RANDOM_NUMBER_INT(1, 5));
+      dice->setCooldown(randomHelper::GET_RANDOM_NUMBER_FLOAT(1, 5));
       dice->setFaces(4);
       dice->setIsOnFloor(false);
       dice->setRerolls(0);

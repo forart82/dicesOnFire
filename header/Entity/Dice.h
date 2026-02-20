@@ -3,6 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <random>
+#include <sstream>
+#include <iomanip>
+#include "Ability/Dragable.h"
+#include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/Timer.h"
 #include "Entity/Circle.h"
@@ -11,9 +15,10 @@
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class Dice : public sf::Drawable, public VertexRectangle
+class Dice : public sf::Drawable, public VertexRectangle, public Dragable
 {
 private:
+  Game &m_game;
   Circle m_diceWeaponSlotMenu;
   Circle m_diceSacMenu;
   Circle m_diceFloorItem;
@@ -31,9 +36,7 @@ private:
   bool m_isOnFloor;
 
 public:
-  Dice();
-  Dice(int faces, int rerolls, float cooldown);
-
+  Dice(Game &game);
   ~Dice();
 
   void update(sf::Time &delta);
@@ -48,9 +51,13 @@ public:
   void setCooldown(float cooldown);
   void setFaceValues(std::map<int, float> faceValues);
   void setIsOnFloor(bool isOnFloor);
+  void setPosition(const sf::Vector2f &position);
 
   void onTimeout();
 
   std::string getName() const;
   std::string getStats() const;
+
+  sf::FloatRect getGlobalBounds() const;
+  sf::Vector2f getPosition() const;
 };

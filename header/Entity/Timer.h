@@ -29,4 +29,6 @@ public:
 
   void toggleStop();
   void setCooldown(float cooldown);
+
+  const float &getCoolDown() const;
 };

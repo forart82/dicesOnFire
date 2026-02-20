@@ -1,28 +1,28 @@
 #include "Entity/Dice.h"
 
-Dice::Dice()
-    : Dice(
-          4,
-          1,
-          2)
-{
-}
+// Dice::Dice(int faces, int rerolls, float cooldown)
+//     : VertexRectangle(
+//           0,
+//           0,
+//           960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
+//           1312),
+//       m_timer(cooldown),
+//       m_faces(faces),
+//       m_rerolls(rerolls),
+//       m_stop(false),
+//       m_isOnFloor(false),
+//       m_name(randomNameLoader::getRandomDiceName())
 
-Dice::Dice(int faces, int rerolls, float cooldown)
-    : VertexRectangle(
-          0,
-          0,
-          960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
-          1312),
-      m_timer(cooldown),
-      m_faces(faces),
-      m_rerolls(rerolls),
-      m_stop(false),
-      m_isOnFloor(false),
-      m_name(randomNameLoader::getRandomDiceName())
+Dice::Dice(Game &game)
+    : m_game(game)
 {
-  // Dice
-  makeFaceValues();
+  VertexRectangle(
+      0,
+      0,
+      960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
+      1312)
+      // Dice
+      makeFaceValues();
 
   // Timer
   m_timer.onTimeout = [this]()
@@ -110,10 +110,13 @@ void Dice::setFaceValues(std::map<int, float> faceValues)
     m_faceValues = faceValues;
   }
 }
-
 void Dice::setIsOnFloor(bool isOnFloor)
 {
   m_isOnFloor = isOnFloor;
+}
+void Dice::setPosition(const sf::Vector2f &position)
+{
+  VertexRectangle::setPosition(position);
 }
 
 void Dice::onTimeout()
@@ -129,9 +132,26 @@ std::string Dice::getName() const
 
 std::string Dice::getStats() const
 {
+
+  std::stringstream coolDownStream;
+  coolDownStream << std::fixed << std::setprecision(2) << m_timer.getCoolDown();
+
   return "Faces: " +
          std::to_string(m_faces) +
          "\n"
          "Rerolls: " +
-         std::to_string(m_rerolls);
+         std::to_string(m_rerolls) +
+         "\n"
+         "CoolDown: " +
+         coolDownStream.str();
+}
+
+sf::FloatRect Dice::getGlobalBounds() const
+{
+  return VertexRectangle::getGlobalBounds();
+}
+
+sf::Vector2f Dice::getPosition() const
+{
+  return VertexRectangle::getPosition();
 }

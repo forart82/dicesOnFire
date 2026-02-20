@@ -69,3 +69,8 @@ void Timer::setCooldown(float cooldown)
 {
   m_cooldown = cooldown;
 }
+
+const float &Timer::getCoolDown() const
+{
+  return m_cooldown;
+}

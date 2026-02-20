@@ -171,6 +171,7 @@ void Game::init()
   m_playerZoom = 1;
 
   configLoader::reload();
+  randomNameLoader::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(
       std::make_unique<Rectangle>(configLoader::get<Rectangle>("WEAPONSLOTSMENU")));

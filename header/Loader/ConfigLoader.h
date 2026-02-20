@@ -15,13 +15,14 @@ namespace configLoader
 {
 
   // Data Storage
-  inline std::vector<std::string> m_fileNames;
+  inline std::map<std::string, std::string> m_fileNames;
   inline std::map<std::string, Rectangle> m_rectangles;
   inline std::map<std::string, RectangleX2> m_rectangleX2s;
   inline std::map<std::string, Circle> m_circles;
   inline std::map<std::string, int> m_integers;
   inline std::map<std::string, float> m_floats;
   inline std::map<std::string, sf::Vector2f> m_vector2fs;
+  inline std::map<std::string, sf::FloatRect> m_floatRects;
   inline std::string m_form = "";
 
   // Default Values
@@ -31,6 +32,7 @@ namespace configLoader
   inline const int DEFAULT_INTEGER = 0;
   inline const float DEFAULT_FLOAT = 0.f;
   inline const sf::Vector2f DEFAULT_VECTOR2F = {0.f, 0.f};
+  inline const sf::FloatRect DEFAULT_FLOATRECT = sf::FloatRect({0.f, 0.f}, {0.f, 0.f});
 
   // Helper to safely parse strings to float/int
   inline float toFloat(const std::string &s) { return s.empty() ? 0.f : std::stof(s); }
@@ -133,6 +135,20 @@ namespace configLoader
         toFloat(y)};
   }
 
+  inline sf::FloatRect readFloatRect(std::stringstream &ss)
+  {
+    std::string x, y, width, height;
+    std::getline(ss, x, ';');
+    std::getline(ss, y, ';');
+    std::getline(ss, width, ';');
+    std::getline(ss, height, ';');
+    return sf::FloatRect(
+        {toFloat(x),
+         toFloat(y)},
+        {toFloat(width),
+         toFloat(height)});
+  }
+
   inline void parseRectangle(std::stringstream &ss, const std::string &key)
   {
     m_rectangles[key] = readRectangle(ss);
@@ -162,72 +178,77 @@ namespace configLoader
   {
     m_vector2fs[key] = readVector2f(ss);
   }
-
-  inline bool load(const std::string &fileName = "")
+  inline void parseFloatRect(std::stringstream &ss, const std::string &key)
   {
-    if (fileName.length() > 0)
+    m_floatRects[key] = readFloatRect(ss);
+  }
+
+  inline bool load(const std::string &fileName, const std::string &path)
+  {
+    // Check if std::map contains key
+    if (m_fileNames.count(fileName) > 0)
     {
-      m_fileNames.push_back(fileName);
+      return false;
+    }
+    m_fileNames.try_emplace(fileName, path);
+
+    std::ifstream file(path);
+    if (!file.is_open())
+    {
+      return false;
     }
 
-    for (const auto &listedFileName : m_fileNames)
+    std::cout << "load file: " << path << std::endl;
+
+    std::string line;
+    while (std::getline(file, line))
     {
-      std::ifstream file(listedFileName);
-      if (!file.is_open())
+      if (line.empty() || line[0] == '#')
+        continue;
+
+      std::stringstream ss(line);
+      std::string firstToken;
+      std::getline(ss, firstToken, ';');
+
+      if (firstToken == "RECTANGLE" ||
+          firstToken == "CIRCLE" ||
+          firstToken == "RECTANGLEX2" ||
+          firstToken == "INTEGER" ||
+          firstToken == "FLOAT" ||
+          firstToken == "VECTOR2F" ||
+          firstToken == "FLOATRECT")
       {
+        m_form = firstToken;
         continue;
       }
 
-      std::cout << "load file: " << listedFileName << std::endl;
-
-      std::string line;
-      while (std::getline(file, line))
-      {
-        if (line.empty() || line[0] == '#')
-          continue;
-
-        std::stringstream ss(line);
-        std::string firstToken;
-        std::getline(ss, firstToken, ';');
-
-        if (firstToken == "RECTANGLE" ||
-            firstToken == "CIRCLE" ||
-            firstToken == "RECTANGLEX2" ||
-            firstToken == "INTEGER" ||
-            firstToken == "FLOAT" ||
-            firstToken == "VECTOR2F")
-        {
-          m_form = firstToken;
-          continue;
-        }
-
-        if (m_form == "RECTANGLE")
-          parseRectangle(ss, firstToken);
-        else if (m_form == "CIRCLE")
-          parseCircle(ss, firstToken);
-        else if (m_form == "RECTANGLEX2")
-          parseRectangleX2(ss, firstToken);
-        else if (m_form == "INTEGER")
-          parseInteger(ss, firstToken);
-        else if (m_form == "FLOAT")
-          parseFloat(ss, firstToken);
-        else if (m_form == "VECTOR2F")
-          parseVector2f(ss, firstToken);
-      }
-
-      file.close();
+      if (m_form == "RECTANGLE")
+        parseRectangle(ss, firstToken);
+      else if (m_form == "CIRCLE")
+        parseCircle(ss, firstToken);
+      else if (m_form == "RECTANGLEX2")
+        parseRectangleX2(ss, firstToken);
+      else if (m_form == "INTEGER")
+        parseInteger(ss, firstToken);
+      else if (m_form == "FLOAT")
+        parseFloat(ss, firstToken);
+      else if (m_form == "VECTOR2F")
+        parseVector2f(ss, firstToken);
+      else if (m_form == "FLOATRECT")
+        parseFloatRect(ss, firstToken);
     }
+
+    file.close();
     return true;
   }
 
   inline void loadAll()
   {
-    m_fileNames.clear();
-    load("assets/configs/gui.config");
-    load("assets/configs/hero.config");
-    load("assets/configs/enemy.config");
-    load("assets/configs/debugBar.config");
-    load("assets/configs/globals.config");
+    load("gui", "assets/configs/gui.config");
+    load("hero", "assets/configs/hero.config");
+    load("enemy", "assets/configs/enemy.config");
+    load("debugBar", "assets/configs/debugBar.config");
+    load("globals", "assets/configs/globals.config");
   }
 
   inline void reload()
@@ -238,10 +259,14 @@ namespace configLoader
     m_integers.clear();
     m_floats.clear();
     m_vector2fs.clear();
+    m_floatRects.clear();
+
+    m_fileNames.clear();
     m_form = "";
-    load();
+    loadAll();
   }
 
+  // MARK: GET FUNCTION
   template <typename T>
   inline T get(const std::string &key)
   {
@@ -293,6 +318,14 @@ namespace configLoader
       auto it = m_vector2fs.find(key);
       return (it != m_vector2fs.end()) ? it->second : DEFAULT_VECTOR2F;
     }
+    else if constexpr (std::is_same_v<T, sf::FloatRect>)
+    {
+      if (m_floatRects.empty())
+        loadAll();
+
+      auto it = m_floatRects.find(key);
+      return (it != m_floatRects.end()) ? it->second : DEFAULT_FLOATRECT;
+    }
     else
     {
       static_assert(
@@ -301,7 +334,8 @@ namespace configLoader
               std::is_same_v<T, Rectangle> ||
               std::is_same_v<T, RectangleX2> ||
               std::is_same_v<T, Circle> ||
-              std::is_same_v<T, sf::Vector2f>,
+              std::is_same_v<T, sf::Vector2f> ||
+              std::is_same_v<T, sf::FloatRect>,
           "Type non supporté !");
       return T();
     }

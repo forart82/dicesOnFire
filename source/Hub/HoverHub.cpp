@@ -46,9 +46,14 @@ void HoverHub::loopItemsAndCheckContains(const T &items, const sf::Vector2f &mou
 void HoverHub::checkContains()
 {
   sf::Vector2i mousePosition = sf::Mouse::getPosition(m_window);
+
+  // PlayerView
   sf::Vector2f mouseWorldPosition = m_window.mapPixelToCoords(mousePosition, m_playerView);
   loopItemsAndCheckContains(m_floorItems.getDices(), mouseWorldPosition);
   loopItemsAndCheckContains(m_floorItems.getWeapons(), mouseWorldPosition);
+
+  // UiView
+  mouseWorldPosition = m_window.mapPixelToCoords(mousePosition, m_uiView);
   loopItemsAndCheckContains(m_inventory.getDices(), mouseWorldPosition);
   loopItemsAndCheckContains(m_inventory.getWeapons(), mouseWorldPosition);
 }
