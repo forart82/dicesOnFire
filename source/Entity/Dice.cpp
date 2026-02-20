@@ -20,9 +20,9 @@ Dice::Dice(Game &game)
       0,
       0,
       960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
-      1312)
-      // Dice
-      makeFaceValues();
+      1312);
+  // Dice
+  makeFaceValues();
 
   // Timer
   m_timer.onTimeout = [this]()
