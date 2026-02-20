@@ -12,6 +12,7 @@ namespace randomNameLoader
 {
   inline std::map<int, std::string> m_diceNames;
   inline std::map<int, std::string> m_bladedWeapon;
+  inline std::string DEFAULT_NAME = "Some Name";
 
   inline void load(const std::string &name, const std::string &path)
   {
@@ -44,12 +45,12 @@ namespace randomNameLoader
       if (m_form == "DICENAMES")
       {
         int size = m_diceNames.size() + 1;
-        m_diceNames[size] = name;
+        m_diceNames[size] = firstToken;
       }
       else if (m_form == "BLADEDWEAPONNAMES")
       {
         int size = m_bladedWeapon.size() + 1;
-        m_bladedWeapon[size] = name;
+        m_bladedWeapon[size] = firstToken;
       }
     }
   }
@@ -66,6 +67,8 @@ namespace randomNameLoader
     {
       loadAll();
     }
+      if(m_diceNames.size() == 0)
+        return DEFAULT_NAME;
     return m_diceNames.at(randomHelper::GET_RANDOM_NUMBER_INT(1, m_diceNames.size()));
   }
 
@@ -75,6 +78,9 @@ namespace randomNameLoader
     {
       loadAll();
     }
+
+    if(m_bladedWeapon.size() == 0)
+      return DEFAULT_NAME;
     return m_bladedWeapon.at(randomHelper::GET_RANDOM_NUMBER_INT(1, m_bladedWeapon.size()));
   }
 }
