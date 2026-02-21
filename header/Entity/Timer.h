@@ -3,23 +3,22 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include "Entity/RectangleX2.h"
+#include "Entity/Game.h"
 
 class Timer : public sf::Drawable
 {
 private:
-  std::unique_ptr<RectangleX2> m_bodyBox;
+  Game &m_game;
+
+  std::unique_ptr<RectangleX2> m_body;
   sf::Vector2f m_progressBarSize;
   sf::Time m_elapsedTime;
   float m_cooldown;
   bool m_isVertical;
-  bool m_stop;
+  bool m_isStopped;
 
 public:
-  Timer(float cooldown);
-  Timer(
-      std::unique_ptr<RectangleX2> bodyBox,
-      float cooldown,
-      bool isVertical);
+  Timer(Game &game);
 
   ~Timer();
 
@@ -27,8 +26,12 @@ public:
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void toggleStop();
+  void toggleIsStopped();
   void setCooldown(float cooldown);
+  void setBody(std::unique_ptr<RectangleX2> body);
+  void setIsVertical(bool isVertical);
+  void setIsStopped(bool isStopped);
 
-  const float &getCoolDown() const;
+  float getCoolDown() const;
+  bool getIsStopped() const;
 };

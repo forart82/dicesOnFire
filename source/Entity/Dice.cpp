@@ -1,51 +1,34 @@
 #include "Entity/Dice.h"
 
-// Dice::Dice(int faces, int rerolls, float cooldown)
-//     : VertexRectangle(
-//           0,
-//           0,
-//           960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
-//           1312),
-//       m_timer(cooldown),
-//       m_faces(faces),
-//       m_rerolls(rerolls),
-//       m_stop(false),
-//       m_isOnFloor(false),
-//       m_name(randomNameLoader::getRandomDiceName())
-
 Dice::Dice(Game &game)
-    : m_game(game)
+    : m_game(game),
+      m_timer(),
+      Dragable(game),
+      VertexRectangle(game)
 {
-  VertexRectangle(
-      0,
-      0,
-      960 + (configLoader::get<int>("ASSETS_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 5)),
-      1312);
-  // Dice
   makeFaceValues();
-
-  // Timer
-  m_timer.onTimeout = [this]()
+  m_timer.setBody()
+      // Timer
+      m_timer.onTimeout = [this]()
   { onTimeout(); };
 }
 Dice::~Dice() {}
 
 void Dice::update(sf::Time &delta)
 {
-  if (!m_stop)
+  if (!m_timer.getIsStopped())
   {
     m_timer.update(delta);
     int diceValue = randomHelper::GET_RANDOM_NUMBER_INT(1, m_faces);
     m_diceValueText->addText("dice", std::to_string(diceValue));
     handelTextPositionBasedOnDiceValue(diceValue);
   }
-  if (m_stop)
+  if (m_timer.getIsStopped())
   {
     m_elapsedTime += delta;
     if (m_elapsedTime.asSeconds() >= 0.5f)
     {
-      m_timer.toggleStop();
-      toggleStop();
+      m_timer.toggleIsStopped();
       m_elapsedTime = sf::Time::Zero;
     }
   }
@@ -82,12 +65,7 @@ void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
   }
 }
 
-void Dice::toggleStop()
-{
-  m_stop = !m_stop;
-}
-
-void Dice::setFaces(int faces)
+void Dice::setFaces(const int &faces)
 {
   m_faces = faces;
   m_diceWeaponSlotMenu.getShape().setPointCount(m_faces);
@@ -95,25 +73,26 @@ void Dice::setFaces(int faces)
   m_diceFloorItem.getShape().setPointCount(m_faces);
   makeFaceValues();
 }
-void Dice::setRerolls(int rerolls)
+void Dice::setRerolls(const int &rerolls)
 {
   m_rerolls = rerolls;
 }
-void Dice::setCooldown(float cooldown)
+void Dice::setCooldown(const float &cooldown)
 {
   m_timer.setCooldown(cooldown);
 }
-void Dice::setFaceValues(std::map<int, float> faceValues)
+void Dice::setFaceValues(const std::map<int, float> &faceValues)
 {
   if (faceValues.size() == m_faces)
   {
     m_faceValues = faceValues;
   }
 }
-void Dice::setIsOnFloor(bool isOnFloor)
+void Dice::setIsOnFloor(const bool &isOnFloor)
 {
   m_isOnFloor = isOnFloor;
 }
+
 void Dice::setPosition(const sf::Vector2f &position)
 {
   VertexRectangle::setPosition(position);

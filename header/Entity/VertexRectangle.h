@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <initializer_list>
+#include "Entity/Game.h"
 #include "Helper/RandomHelper.h"
 #include "Loader/ConfigLoader.h"
 
@@ -10,74 +11,62 @@ class VertexRectangle
 {
 
 protected:
-  int m_left;
-  int m_top;
-  int m_assetsLeft;
-  int m_assetsTop;
+  Game &m_game;
+
+  int m_bodyLeft;
+  int m_bodyTop;
+  int m_assetLeft;
+  int m_assetTop;
   int m_tileSize;
-  int m_assetsTileSize;
+  int m_assetTileSize;
 
-  sf::Vector2f m_leftTop;
-  sf::Vector2f m_rightTop;
-  sf::Vector2f m_leftBottom;
-  sf::Vector2f m_rightBottom;
+  sf::Vector2f m_bodyLeftTop;
+  sf::Vector2f m_bodyRightTop;
+  sf::Vector2f m_bodyLeftBottom;
+  sf::Vector2f m_bodyRightBottom;
 
-  sf::Vector2f m_assetsLeftTop;
-  sf::Vector2f m_assetsRightTop;
-  sf::Vector2f m_assetsLeftBottom;
-  sf::Vector2f m_assetsRightBottom;
+  sf::Vector2f m_assetLeftTop;
+  sf::Vector2f m_assetRightTop;
+  sf::Vector2f m_assetLeftBottom;
+  sf::Vector2f m_assetRightBottom;
 
   bool m_isActive;
 
 public:
-  VertexRectangle(
-      int left,
-      int top,
-      int assetsLeft,
-      int assetsTop)
-      : m_left(left),
-        m_top(top),
-        m_assetsLeft(assetsLeft),
-        m_assetsTop(assetsTop),
+  VertexRectangle(Game &game)
+      : m_game(game),
+        m_bodyLeft(0),
+        m_bodyTop(0),
+        m_assetLeft(0),
+        m_assetTop(0),
         m_tileSize(configLoader::get<int>("TILE_SIZE")),
-        m_assetsTileSize(configLoader::get<int>("ASSETS_TILE_SIZE")),
+        m_assetTileSize(configLoader::get<int>("ASSET_TILE_SIZE")),
         m_isActive(true)
   {
-    makeAllCorners();
+    makeAll();
   }
 
   ~VertexRectangle() {}
 
-  void setPosition(const sf::Vector2f &position)
+  void makeBody()
   {
-    m_left = position.x;
-    m_top = position.y;
-    makeAllCorners();
+    m_bodyLeftTop = sf::Vector2f(m_bodyLeft, m_bodyTop);
+    m_bodyRightTop = sf::Vector2f(m_bodyLeft + m_tileSize, m_bodyTop);
+    m_bodyLeftBottom = sf::Vector2f(m_bodyLeft, m_bodyTop + m_tileSize);
+    m_bodyRightBottom = sf::Vector2f(m_bodyLeft + m_tileSize, m_bodyTop + m_tileSize);
+  }
+  void makeAsset()
+  {
+    m_assetLeftTop = sf::Vector2f(m_assetLeft, m_assetTop);
+    m_assetRightTop = sf::Vector2f(m_assetLeft + m_assetTileSize, m_assetTop);
+    m_assetLeftBottom = sf::Vector2f(m_assetLeft, m_assetTop + m_assetTileSize);
+    m_assetRightBottom = sf::Vector2f(m_assetLeft + m_assetTileSize, m_assetTop + m_assetTileSize);
   }
 
-  void resetLeftTop(sf::Vector2f leftTop)
+  void makeAll()
   {
-    m_left = leftTop.x;
-    m_top = leftTop.y;
-    makeAllCorners();
-  }
-
-  void makeAllCorners()
-  {
-    m_leftTop = sf::Vector2f(m_left, m_top);
-    m_rightTop = sf::Vector2f(m_left + m_tileSize, m_top);
-    m_leftBottom = sf::Vector2f(m_left, m_top + m_tileSize);
-    m_rightBottom = sf::Vector2f(m_left + m_tileSize, m_top + m_tileSize);
-
-    m_assetsLeftTop = sf::Vector2f(m_assetsLeft, m_assetsTop);
-    m_assetsRightTop = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop);
-    m_assetsLeftBottom = sf::Vector2f(m_assetsLeft, m_assetsTop + m_assetsTileSize);
-    m_assetsRightBottom = sf::Vector2f(m_assetsLeft + m_assetsTileSize, m_assetsTop + m_assetsTileSize);
-  }
-
-  void setIsActive(bool isActive)
-  {
-    m_isActive = isActive;
+    makeBody();
+    makeAsset();
   }
 
   void toggleIsActive()
@@ -85,55 +74,75 @@ public:
     m_isActive = !m_isActive;
   }
 
-  sf::Vector2f &getLeftTop()
+  void setBodyPosition(const sf::Vector2f &position)
   {
-    return m_leftTop;
+    m_bodyLeft = position.x;
+    m_bodyTop = position.y;
+    makeBody();
   }
 
-  sf::Vector2f &getRightTop()
+  void setAssetPosition(const sf::Vector2f &position)
   {
-    return m_rightTop;
+    m_assetLeft = position.x;
+    m_assetTop = position.y;
+    makeAsset();
   }
 
-  sf::Vector2f &getLeftBottom()
+  void setBodyFloatRect(const sf::FloatRect &floatRect)
   {
-    return m_leftBottom;
+    m_bodyLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
+    m_bodyRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
+    m_bodyLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
+    m_bodyRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
   }
 
-  sf::Vector2f &getRightBottom()
+  void setAssetFloatRect(const sf::FloatRect &floatRect)
   {
-    return m_rightBottom;
+    m_assetLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
+    m_assetRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
+    m_assetLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
+    m_assetRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
   }
 
-  sf::Vector2f &getAssetsLeftTop()
+  void setFloatRects(sf::FloatRect &body, sf::FloatRect &asset)
   {
-    return m_assetsLeftTop;
+    setBodyFloatRect(body);
+    setAssetFloatRect(asset);
   }
 
-  sf::Vector2f &getAssetsRightTop()
+  void setIsActive(bool isActive)
   {
-    return m_assetsRightTop;
+    m_isActive = isActive;
   }
 
-  sf::Vector2f &getAssetsLeftBottom()
+  const sf::FloatRect &getBody() const
   {
-    return m_assetsLeftBottom;
+    return sf::FloatRect({m_bodyLeftTop.x, m_bodyLeftTop.y}, {m_bodyRightBottom.x, m_bodyRightBottom.y});
   }
 
-  sf::Vector2f &getAssetsRightBottom()
+  const sf::FloatRect &getAsset() const
   {
-    return m_assetsRightBottom;
+    return sf::FloatRect({m_assetLeftTop.x, m_assetLeftTop.y}, {m_assetRightBottom.x, m_assetRightBottom.y});
+  }
+
+  const sf::Vector2f &getBodyCenter() const
+  {
+    return (m_bodyLeftTop + m_bodyRightBottom) / 2.f;
+  }
+  const sf::Vector2f &getAssetCenter() const
+  {
+    return (m_assetLeftTop + m_assetRightBottom) / 2.f;
   }
 
   sf::FloatRect getGlobalBounds() const
   {
     // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
-    float minX = std::min({m_leftTop.x, m_rightTop.x, m_leftBottom.x, m_rightBottom.x});
-    float minY = std::min({m_leftTop.y, m_rightTop.y, m_leftBottom.y, m_rightBottom.y});
+    float minX = std::min({m_bodyLeftTop.x, m_bodyRightTop.x, m_bodyLeftBottom.x, m_bodyRightBottom.x});
+    float minY = std::min({m_bodyLeftTop.y, m_bodyRightTop.y, m_bodyLeftBottom.y, m_bodyRightBottom.y});
 
     // 2. Find the Maximum X and Y (The Bottom-Right of the bounding box)
-    float maxX = std::max({m_leftTop.x, m_rightTop.x, m_leftBottom.x, m_rightBottom.x});
-    float maxY = std::max({m_leftTop.y, m_rightTop.y, m_leftBottom.y, m_rightBottom.y});
+    float maxX = std::max({m_bodyLeftTop.x, m_bodyRightTop.x, m_bodyLeftBottom.x, m_bodyRightBottom.x});
+    float maxY = std::max({m_bodyLeftTop.y, m_bodyRightTop.y, m_bodyLeftBottom.y, m_bodyRightBottom.y});
 
     // 3. Calculate Width and Height
     float width = maxX - minX;
@@ -143,12 +152,7 @@ public:
     return sf::FloatRect({minX, minY}, {width, height});
   }
 
-  sf::Vector2f getPosition() const
-  {
-    return sf::Vector2f(m_left, m_top);
-  }
-
-  bool &getIsActive()
+  bool &getIsActive() const
   {
     return m_isActive;
   }

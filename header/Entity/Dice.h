@@ -32,7 +32,6 @@ private:
   Timer m_timer;
   sf::Time m_elapsedTime;
 
-  bool m_stop;
   bool m_isOnFloor;
 
 public:
@@ -43,21 +42,20 @@ public:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void makeFaceValues();
-  void handelTextPositionBasedOnDiceValue(int diceValues);
-  void toggleStop();
+  void handelTextPositionBasedOnDiceValue(int &diceValues);
 
   void setFaces(int faces);
   void setRerolls(int rerolls);
   void setCooldown(float cooldown);
-  void setFaceValues(std::map<int, float> faceValues);
-  void setIsOnFloor(bool isOnFloor);
+  void setFaceValues(const std::map<int, float> &faceValues);
+  void setIsOnFloor(bool &isOnFloor);
   void setPosition(const sf::Vector2f &position);
 
   void onTimeout();
 
-  std::string getName() const;
-  std::string getStats() const;
+  const std::string &getName() const;
+  const std::string &getStats() const;
 
-  sf::FloatRect getGlobalBounds() const;
-  sf::Vector2f getPosition() const;
+  const sf::FloatRect &getGlobalBounds() const;
+  const sf::Vector2f &getPosition() const;
 };
