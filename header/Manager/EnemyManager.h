@@ -6,94 +6,26 @@
 #include "Entity/FloorItems.h"
 #include "Helper/RandomHelper.h"
 #include "Loader/ConfigLoader.h"
+#include "Manager/BaseManager.h"
 
-namespace enemyManager
+class EnemyManager : public BaseManager
 {
-  inline Rectangle ENEMY_BODY = configLoader::get<RectangleConfig>("ENEMY_BODY");
-  inline RectangleX2 ENEMY_HEALTHBAR = configLoader::get<RectangleX2Config>("ENEMY_HEALTHBAR");
-  inline Circle ENEMY_WATCH_RANGE = configLoader::get<CircleConfig>("ENEMY_WATCH_RANGE");
-  inline Circle ENEMY_SHORT_RANGE = configLoader::get<CircleConfig>("ENEMY_SHORT_RANGE");
-  inline Circle ENEMY_LONG_RANGE = configLoader::get<CircleConfig>("ENEMY_LONG_RANGE");
-  inline Circle ENEMY_PICK_UP_RANGE = configLoader::get<CircleConfig>("ENEMY_PICK_UP_RANGE");
+private:
+  Hero &m_hero;
+
+  std::unique_ptr<Rectangle> m_enemyBody;
+  std::unique_ptr<RectangleX2> m_enemyHealthBar;
+  std::unique_ptr<Circle> m_enemyWatchRange;
+  std::unique_ptr<Circle> m_enemyShortRange;
+  std::unique_ptr<Circle> m_enemyLongRange;
+  std::unique_ptr<Circle> m_enemyPickUpUpRange;
+
+public:
+  EnemyManager(Game &game);
+  ~EnemyManager();
 
   template <typename T>
-  inline void ADD_POSITION(std::unique_ptr<T> &component, sf::Vector2f offset)
-  {
-    component->addPosition(offset);
-  };
+  void addPosition(const std::unique_ptr<T> &component, const sf::Vector2f &offset);
 
-  inline std::unique_ptr<Enemy> CREATE_ENEMY(
-      Hero &hero,
-      FloorItems &floorItems)
-  {
-
-    int health = randomHelper::GET_RANDOM_NUMBER_INT(50, 100);
-    int maxHealth = health;
-    int speed = randomHelper::GET_RANDOM_NUMBER_INT(50, 100);
-    int watchRangeRadius = randomHelper::GET_RANDOM_NUMBER_INT(800, 1000);
-    int shortRangeRadius = randomHelper::GET_RANDOM_NUMBER_INT(100, 350);
-    int longRangeRadius = randomHelper::GET_RANDOM_NUMBER_INT(shortRangeRadius, shortRangeRadius * 2);
-    int pickUpRangeRadius = 50;
-
-    int heroMinX = hero.getBody().getShape().getPosition().x - 3000;
-    int heroMinY = hero.getBody().getShape().getPosition().y - 3000;
-    int heroMaxX = hero.getBody().getShape().getPosition().x + 2000;
-    int heroMaxY = hero.getBody().getShape().getPosition().y + 2000;
-    int randomX = randomHelper::GET_RANDOM_NUMBER_INT(heroMinX, heroMaxX);
-    int randomY = randomHelper::GET_RANDOM_NUMBER_INT(heroMinY, heroMaxY);
-
-    auto bodyBox = std::make_unique<Rectangle>(ENEMY_BODY);
-    auto healthBar = std::make_unique<RectangleX2>(ENEMY_HEALTHBAR);
-    auto watchRangeCircle = std::make_unique<Circle>(ENEMY_WATCH_RANGE);
-    auto shortRangeCircle = std::make_unique<Circle>(ENEMY_SHORT_RANGE);
-    auto longRangeCircle = std::make_unique<Circle>(ENEMY_LONG_RANGE);
-    auto pickUpRangeCircle = std::make_unique<Circle>(ENEMY_PICK_UP_RANGE);
-
-    watchRangeCircle->getShape().setRadius(watchRangeRadius);
-    shortRangeCircle->getShape().setRadius(shortRangeRadius);
-    longRangeCircle->getShape().setRadius(longRangeRadius);
-    pickUpRangeCircle->getShape().setRadius(pickUpRangeRadius);
-
-    watchRangeCircle->getShape().setOrigin(
-        {static_cast<float>(std::round(watchRangeRadius)),
-         static_cast<float>(std::round(watchRangeRadius))});
-    shortRangeCircle->getShape().setOrigin(
-        {static_cast<float>(std::round(shortRangeRadius)),
-         static_cast<float>(std::round(shortRangeRadius))});
-    longRangeCircle->getShape().setOrigin(
-        {static_cast<float>(std::round(longRangeRadius)),
-         static_cast<float>(std::round(longRangeRadius))});
-    pickUpRangeCircle->getShape().setOrigin(
-        {static_cast<float>(std::round(pickUpRangeRadius)),
-         static_cast<float>(std::round(pickUpRangeRadius))});
-
-    bodyBox->getShape().setPosition(hero.getBody().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    healthBar->getOuter().getShape().setPosition(hero.getHealthBar().getOuter().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    healthBar->getInner().getShape().setPosition(hero.getHealthBar().getInner().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    watchRangeCircle->getShape().setPosition(hero.getWatchRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    shortRangeCircle->getShape().setPosition(hero.getShortRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    longRangeCircle->getShape().setPosition(hero.getLongRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-    pickUpRangeCircle->getShape().setPosition(hero.getPickUpRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-
-    auto enemy = std::make_unique<Enemy>(
-        hero,
-        floorItems,
-        std::move(bodyBox),
-        std::move(healthBar),
-        std::move(watchRangeCircle),
-        std::move(shortRangeCircle),
-        std::move(longRangeCircle),
-        std::move(pickUpRangeCircle),
-        health,
-        maxHealth,
-        speed,
-        watchRangeRadius,
-        shortRangeRadius,
-        longRangeRadius,
-        pickUpRangeRadius);
-
-    // 800 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35));
-    // 2080 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)));
-    return enemy;
-  };
-}
+  std::unique_ptr<Enemy> createEnemy();
+};

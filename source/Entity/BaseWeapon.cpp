@@ -16,10 +16,7 @@ void BaseWeapon::update(sf::Time &delta)
     {
       diceSlot->update(delta);
     }
-    for (const auto &[key, timer] : m_timers)
-    {
-      timer->update(delta);
-    }
+    m_timer->update(delta);
   }
 }
 
@@ -32,10 +29,7 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
       target.draw(*diceSlot);
     }
-    for (const auto &[key, timer] : m_timers)
-    {
-      target.draw(*timer);
-    }
+    target.draw(*m_timer);
   }
 }
 
@@ -43,10 +37,14 @@ void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
   m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::get<Circle>(diceSlotKey)));
-  m_timers[slotId] = std::make_unique<Timer>(
-      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(diceSlotKey + "_TIMER")),
-      5,
-      true);
+
+  // TO REMOVE
+  // TO MODIFY
+  // Its the diceSlot who has the timer
+  // m_timers[slotId] = std::make_unique<Timer>(
+  //     std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(diceSlotKey + "_TIMER")),
+  //     5,
+  //     true);
 }
 
 void BaseWeapon::makeDiceSlots()
@@ -57,9 +55,18 @@ void BaseWeapon::makeDiceSlots()
   }
 }
 
+void BaseWeapon::setBody(std::unique_ptr<Rectangle> body)
+{
+  m_body = std::move(body);
+}
+
 void BaseWeapon::setDamage(int damage)
 {
   m_damage = damage;
+}
+void BaseWeapon::setCooldown(float cooldown)
+{
+  m_timer->setCooldown(cooldown);
 }
 void BaseWeapon::setNumberOfSlots(int numberOfSlots)
 {

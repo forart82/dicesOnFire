@@ -119,7 +119,7 @@ const sf::FloatRect &VertexRectangleDrawable::getGlobalBounds() const
   return sf::FloatRect({minX, minY}, {width, height});
 }
 
-bool &VertexRectangleDrawable::getIsActive() const
+bool VertexRectangleDrawable::getIsActive() const
 {
   return m_isActive;
 }

@@ -17,7 +17,7 @@ void BaseCharacterBody::draw(sf::RenderTarget &target, sf::RenderStates states) 
 {
   if (m_debugIsActive)
   {
-    target.draw(*m_bodyBox);
+    target.draw(*m_body);
   }
   target.draw(*m_watchRangeCircle);
   target.draw(*m_shortRangeCircle);
@@ -28,13 +28,12 @@ void BaseCharacterBody::draw(sf::RenderTarget &target, sf::RenderStates states) 
 
 void BaseCharacterBody::move(sf::Vector2f &movement)
 {
-  m_bodyBox->getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_healthBar->getOuter().getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_healthBar->getInner().getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_watchRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_shortRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_longRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
-  m_pickUpRangeCircle->getShape().move({std::round(movement.x), std::round(movement.y)});
+  m_body->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
+  m_healthBar->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
+  m_watchRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
+  m_shortRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
+  m_longRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
+  m_pickUpRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
 }
 
 bool BaseCharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos) const
@@ -57,14 +56,32 @@ bool BaseCharacterBody::insidePickUpRangeCircle(const sf::Vector2f &targetPos) c
   return collisionHelper::insideRadar(targetPos, *m_pickUpRangeCircle);
 }
 
-void BaseCharacterBody::setBody(std::unique_ptr<Rectangle> bodyBox)
+void BaseCharacterBody::setBody(std::unique_ptr<Rectangle> body)
 {
-  m_bodyBox = std::move(bodyBox);
+  m_body = std::move(body);
 }
 void BaseCharacterBody::setHealthBar(std::unique_ptr<RectangleX2> healthBar)
 {
   m_healthBar = std::move(healthBar);
 }
+
+void BaseCharacterBody::setWatchRangeCircle(std::unique_ptr<Circle> watchRangeCircle)
+{
+  m_watchRangeCircle = std::move(watchRangeCircle);
+}
+void BaseCharacterBody::setShortRangeCircle(std::unique_ptr<Circle> shortRangeCircle)
+{
+  m_shortRangeCircle = std::move(shortRangeCircle);
+}
+void BaseCharacterBody::setLongRangeCircle(std::unique_ptr<Circle> longRangeCircle)
+{
+  m_longRangeCircle = std::move(longRangeCircle);
+}
+void BaseCharacterBody::setPickUpRangeCircle(std::unique_ptr<Circle> pickUpRangeCircle)
+{
+  m_pickUpRangeCircle = std::move(pickUpRangeCircle);
+}
+
 void BaseCharacterBody::setHealth(float health)
 {
   m_health = health;
@@ -81,6 +98,14 @@ void BaseCharacterBody::setWatchRangeRadius(int watchRangeRadius)
 {
   m_watchRangeRadius = watchRangeRadius;
 }
+void BaseCharacterBody::setShortRangeRadius(int shortRangeRadius)
+{
+  m_shortRangeRadius = shortRangeRadius;
+}
+void BaseCharacterBody::setLongRangeRadius(int longRangeRadius)
+{
+  m_longRangeRadius = longRangeRadius;
+}
 void BaseCharacterBody::setPickUpRangeRadius(int pickUpRangeRadius)
 {
   m_pickUpRangeRadius = pickUpRangeRadius;
@@ -93,7 +118,7 @@ void BaseCharacterBody::toggleDebugIsActive()
 
 const Rectangle &BaseCharacterBody::getBody() const
 {
-  return *m_bodyBox;
+  return *m_body;
 }
 const RectangleX2 &BaseCharacterBody::getHealthBar() const
 {
@@ -115,31 +140,31 @@ const Circle &BaseCharacterBody::getPickUpRangeCircle() const
 {
   return *m_pickUpRangeCircle;
 }
-float &BaseCharacterBody::getHealth() const
+float BaseCharacterBody::getHealth() const
 {
   return m_health;
 }
-float &BaseCharacterBody::getMaxHealth() const
+float BaseCharacterBody::getMaxHealth() const
 {
   return m_maxHealth;
 }
-float &BaseCharacterBody::getSpeed() const
+float BaseCharacterBody::getSpeed() const
 {
   return m_speed;
 }
-int &BaseCharacterBody::getWatchRangeRadius() const
+int BaseCharacterBody::getWatchRangeRadius() const
 {
   return m_watchRangeRadius;
 }
-int &BaseCharacterBody::getShortRangeRadius() const
+int BaseCharacterBody::getShortRangeRadius() const
 {
   return m_shortRangeRadius;
 }
-int &BaseCharacterBody::getLongRangeRadius() const
+int BaseCharacterBody::getLongRangeRadius() const
 {
   return m_longRangeRadius;
 }
-int &BaseCharacterBody::getPickUpRangeRadius() const
+int BaseCharacterBody::getPickUpRangeRadius() const
 {
   return m_pickUpRangeRadius;
 }

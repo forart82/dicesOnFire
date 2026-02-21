@@ -12,7 +12,7 @@ class BaseCharacterBody : public sf::Drawable, public VertexRectangleDrawable
 protected:
   Game &m_game;
 
-  std::unique_ptr<Rectangle> m_bodyBox;
+  std::unique_ptr<Rectangle> m_body;
   std::unique_ptr<RectangleX2> m_healthBar;
   std::unique_ptr<Circle> m_watchRangeCircle;
   std::unique_ptr<Circle> m_shortRangeCircle;
@@ -45,13 +45,19 @@ public:
 
   void toggleDebugIsActive();
 
-  void setBody(std::unique_ptr<Rectangle> bodyBox);
+  void setBody(std::unique_ptr<Rectangle> body);
   void setHealthBar(std::unique_ptr<RectangleX2> healthBar);
+  void setWatchRangeCircle(std::unique_ptr<Circle> watchRangeCircle);
+  void setShortRangeCircle(std::unique_ptr<Circle> shortRangeCircle);
+  void setLongRangeCircle(std::unique_ptr<Circle> longRangeCircle);
+  void setPickUpRangeCircle(std::unique_ptr<Circle> pickUpRangeCircle);
   void setHealth(float health);
   void setMaxHealth(float maxHealth);
   void setSpeed(float speed);
   void setWatchRangeRadius(int watchRangeRadius);
-  void setPickUpRangeRadius(int watchRangeRadius);
+  void setShortRangeRadius(int shortRangeRadius);
+  void setLongRangeRadius(int longRangeRadius);
+  void setPickUpRangeRadius(int pickUpRangeRadius);
 
   const Rectangle &getBody() const;
   const RectangleX2 &getHealthBar() const;

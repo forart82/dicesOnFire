@@ -21,13 +21,15 @@ public:
   void update(sf::Time &delta);
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+  void move(const sf::Vector2f &movement);
   void addPosition(const sf::Vector2f &offset);
   void toggleActive();
 
-  void setBody(const Rectangle &baseRectangle);
+  void setBody(const Rectangle &body);
+  void setPosition(const sf::Vector2f &position);
   void setOriginFromSize(const sf::Vector2f &size);
   void setIsActive(bool isActive);
 
-  const sf::RectangleShape &getShape() const;
+  const sf::RectangleShape &getBody() const;
   bool getIsActive() const;
 };

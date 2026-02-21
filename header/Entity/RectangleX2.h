@@ -22,10 +22,14 @@ public:
 
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+  void move(const sf::Vector2f &movement);
   void addPosition(const sf::Vector2f &offset);
 
-  void setInner(const Rectangle &inner);
+  void setBodyX2(const RectangleX2 &rectangleX2);
   void setOuter(const Rectangle &outer);
+  void setInner(const Rectangle &inner);
+  void setOuterPosition(const sf::Vector2f &position);
+  void setInnerPosition(const sf::Vector2f &position);
 
   const Rectangle &getOuter() const;
   const Rectangle &getInner() const;

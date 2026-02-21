@@ -13,7 +13,6 @@ class Enemy : public BaseCharacterBody
 {
 private:
   Game &m_game;
-
   Hero &m_hero;
   FloorItems &m_floorItems;
 
@@ -30,7 +29,6 @@ public:
   void prepareVertex();
   void removeHealth(int health);
   void dropItemsOnFloor();
-
   void houndHero();
 
   bool getHoundHero() const;

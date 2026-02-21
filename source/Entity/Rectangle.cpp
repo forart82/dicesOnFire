@@ -22,6 +22,11 @@ void Rectangle::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
+void Rectangle::move(const sf::Vector2f &movement)
+{
+  m_body.move(movement);
+}
+
 void Rectangle::addPosition(const sf::Vector2f &offset)
 {
   sf::Vector2f newPosition = m_body.getPosition() + offset;
@@ -33,14 +38,19 @@ void Rectangle::toggleActive()
   m_isActive = !m_isActive;
 }
 
-void Rectangle::setBody(const Rectangle &baseRectangle)
+void Rectangle::setBody(const Rectangle &rectangle)
 {
-  m_body.setPosition(baseRectangle.m_body.getPosition());
-  m_body.setSize(baseRectangle.m_body.getSize());
-  m_body.setOutlineThickness(baseRectangle.getShape().getOutlineThickness());
-  m_body.setFillColor(baseRectangle.m_body.getFillColor());
-  m_body.setOutlineColor(baseRectangle.m_body.getOutlineColor());
-  setOriginFromSize(baseRectangle.m_body.getSize());
+  m_body.setPosition(rectangle.getBody().getPosition());
+  m_body.setSize(rectangle.getBody().getSize());
+  m_body.setOutlineThickness(rectangle.getBody().getOutlineThickness());
+  m_body.setFillColor(rectangle.getBody().getFillColor());
+  m_body.setOutlineColor(rectangle.getBody().getOutlineColor());
+  setOriginFromSize(rectangle.getBody().getSize());
+}
+
+void Rectangle::setPosition(const sf::Vector2f &position)
+{
+  m_body.setPosition(position);
 }
 
 void Rectangle::setOriginFromSize(const sf::Vector2f &size)
@@ -53,7 +63,7 @@ void Rectangle::setIsActive(bool isActive)
   m_isActive = isActive;
 }
 
-const sf::RectangleShape &Rectangle::getShape() const
+const sf::RectangleShape &Rectangle::getBody() const
 {
   return m_body;
 }

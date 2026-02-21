@@ -15,7 +15,8 @@ protected:
 
 public:
   Circle(Game &game)
-      : m_isActive(true)
+      : m_game(game),
+        m_isActive(true)
   {
   }
 
@@ -26,12 +27,16 @@ public:
   void update(sf::Time &delta);
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+  void move(const sf::Vector2f &movement);
   void addPosition(const sf::Vector2f &offset);
   void toggleActive();
 
   void setBody(const Circle &body);
+  void setPosition(const sf::Vector2f &position);
+  void setRadius(int radius);
+  void setOrigin(const sf::Vector2f &origin);
   void setColors(const sf::Color &fillColor, const sf::Color &outlineColor);
   void setActive(bool isActive);
 
-  const sf::CircleShape &getShape() const
+  const sf::CircleShape &getBody() const
 };

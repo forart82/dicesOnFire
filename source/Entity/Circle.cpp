@@ -1,7 +1,8 @@
 #include "Entity/Circle.h"
 
 Circle::Circle(Game &game)
-    : m_isActive(true)
+    : m_game(game),
+      m_isActive(true)
 {
 }
 
@@ -21,6 +22,11 @@ void Circle::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
+void Circle::move(const sf::Vector2f &movement)
+{
+  m_body.move(movement);
+}
+
 void Circle::addPosition(const sf::Vector2f &offset)
 {
   sf::Vector2f newPosition = m_body.getPosition() + offset;
@@ -32,18 +38,28 @@ void Circle::toggleActive()
   m_isActive = !m_isActive;
 }
 
-void Circle::setShape(const Circle &body)
+void Circle::setBody(const Circle &body)
 {
-  m_body.setPosition(body.getShape().getPosition());
-  m_body.setRadius(body.getShape().getRadius());
-  m_body.setOutlineThickness(body.getShape().getOutlineThickness());
-  m_body.setOrigin(sf::Vector2f(body.getShape().getRadius(), body.getShape().getRadius()));
-  setColors(body.getShape().getFillColor(), body.getShape().getOutlineColor());
+  m_body.setPosition(body.getBody().getPosition());
+  m_body.setRadius(body.getBody().getRadius());
+  m_body.setOutlineThickness(body.getBody().getOutlineThickness());
+  m_body.setOrigin(sf::Vector2f(body.getBody().getRadius(), body.getBody().getRadius()));
+  setColors(body.getBody().getFillColor(), body.getBody().getOutlineColor());
 }
 
-void Circle::setActive(bool isActive)
+void Circle::setPosition(const sf::Vector2f &position)
 {
-  m_isActive = isActive;
+  m_body.setPosition(position);
+}
+
+void Circle::setRadius(int radius)
+{
+  m_body.setRadius(radius);
+}
+
+void Circle::setOrigin(const sf::Vector2f &origin)
+{
+  m_body.setOrigin(origin);
 }
 
 void Circle::setColors(const sf::Color &fillColor, const sf::Color &outlineColor)
@@ -52,7 +68,12 @@ void Circle::setColors(const sf::Color &fillColor, const sf::Color &outlineColor
   m_body.setOutlineColor(outlineColor);
 }
 
-const sf::CircleShape &Circle::getShape() const
+void Circle::setActive(bool isActive)
+{
+  m_isActive = isActive;
+}
+
+const sf::CircleShape &Circle::getBody() const
 {
   return m_body;
 }

@@ -8,5 +8,6 @@ protected:
   Game &m_game;
 
 public:
-  BaseManager
-}
+  BaseManager(Game &game);
+  virtual ~BaseManager() = default;
+};

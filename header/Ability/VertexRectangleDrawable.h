@@ -53,5 +53,5 @@ public:
   const sf::Vector2f &getBodyCenter() const;
   const sf::Vector2f &getAssetCenter() const;
   const sf::FloatRect &getGlobalBounds() const;
-  bool &getIsActive() const;
+  bool getIsActive() const;
 };

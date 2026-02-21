@@ -22,6 +22,7 @@
 #include "Hub/VertexGuiHub.h"
 #include "Loader/ConfigLoader.h"
 #include "Manager/WeaponManager.h"
+#include "Manager/HeroManager.h"
 
 class Game
 {
@@ -51,6 +52,8 @@ private:
   bool m_isFontLoaded;
 
   // Class elements
+
+  // Entity
   std::unique_ptr<DebugBar> m_debugBar;
   std::unique_ptr<WeaponSlotsMenu> m_weaponSlotsMenu;
   std::unique_ptr<Hero> m_hero;
@@ -61,11 +64,15 @@ private:
   std::unique_ptr<Inventory> m_inventory;
   std::unique_ptr<ToolTip> m_toolTip;
 
+  // Hub
   std::unique_ptr<AttackHub> m_attackHub;
   std::unique_ptr<PickUpHub> m_pickUpHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
   std::unique_ptr<HoverHub> m_hoverHub;
+
+  // Manager
+  std::unique_ptr<HeroManager> m_heroManager;
 
   std::mt19937 m_rng;
 
@@ -82,11 +89,11 @@ public:
   void handleViewRatio();
   void handlePlayerZoom(const std::string &zoomDirection);
 
-  const sf::RenderWindow &getWindow() const;
-  const Hero &getHero() const;
-  const Enemies &getEnemies() const;
-  const Inventory &getInventory() const;
-  const FloorItems &getFloorItems() const;
-  const Grid &getGrid() const;
-  const ToolTip &getToolTip() const;
+  sf::RenderWindow &getWindow() const;
+  Hero &getHero() const;
+  Enemies &getEnemies() const;
+  Inventory &getInventory() const;
+  FloorItems &getFloorItems() const;
+  Grid &getGrid() const;
+  ToolTip &getToolTip() const;
 };
