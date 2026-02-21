@@ -1,9 +1,17 @@
 #include "Entity/Game.h"
 
-Game::Game() : m_rng(std::random_device{}())
+Game::Game()
+    : m_rng(std::random_device{}())
 {
   m_window.setVerticalSyncEnabled(true);
-  init();
+  // m_hero = std::make_unique<Hero>(this);
+  // m_enemies = std::make_unique<Enemies>(this);
+  // m_inventory = std::make_unique<Inventory>(this);
+  // m_floorItems = std::make_unique<FloorItems>(this);
+  // m_grid = std::make_unique<Grid>(this);
+  // m_toolTip = std::make_unique<ToolTip>(this);
+
+  // init();
   std::cout << "Game created" << std::endl;
 }
 
@@ -12,259 +20,291 @@ Game::~Game()
   std::cout << "Game destroyed" << std::endl;
 }
 
-void Game::run()
-{
-  float z = 1;
-  while (m_window.isOpen())
-  {
-    while (auto event = m_window.pollEvent())
-    {
-      if (event->is<sf::Event::Closed>())
-      {
-        m_window.close();
-      }
+// void Game::init()
+// {
+//   m_playerZoom = 1;
 
-      if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
-      {
+//   configLoader::reload();
+//   randomNameLoader::reload();
+//   m_weaponSlotsMenu.reset();
+//   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(this);
+//   m_weaponSlotsMenu->setBody(std::make_unique<Rectangle>(configLoader::get<Rectangle>("WEAPONSLOTSMENU")));
 
-        switch (keyPressed->scancode)
-        {
-        case sf::Keyboard::Scancode::I:
-          m_inventory->toggleInventory();
-          break;
-        case sf::Keyboard::Scancode::O:
-          m_debugBar->toggleActive();
-          break;
-        case sf::Keyboard::Scancode::R:
-          break;
-        case sf::Keyboard::Scancode::Comma:
-          init();
-          break;
-        case sf::Keyboard::Scancode::F5:
-        case sf::Keyboard::Scancode::Escape:
-          m_window.close();
-          break;
-        case sf::Keyboard::Scancode::PageUp:
-          handlePlayerZoom("up");
-          break;
-        case sf::Keyboard::Scancode::PageDown:
-          handlePlayerZoom("down");
-          break;
-        default:
-          break;
-        }
-      }
-      if (event->is<sf::Event::MouseButtonPressed>())
-      {
-      }
-      if (const auto *mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
-      {
-        if (mouseWheelScrolled->delta > 0)
-        {
-          handlePlayerZoom("up");
-        }
-        else
-        {
-          handlePlayerZoom("down");
-        }
-      }
-    }
+//   m_floorItems.reset();
+//   m_floorItems = std::make_unique<FloorItems>(this);
+//   m_inventory.reset();
+//   m_inventory = std::make_unique<Inventory>(this);
+//   m_toolTip.reset();
+//   m_toolTip = std::make_unique<ToolTip>(this);
 
-    sf::Time realDelta = m_clock.restart();
-    m_timeSinceLastUpdate += realDelta;
-    m_FpsClock += realDelta;
-    if (m_FpsClock.asSeconds() >= 1.0f)
-    {
-      m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
-      m_FpsClock = sf::Time::Zero;
-    }
-    while (m_timeSinceLastUpdate >= m_timePerFrame)
-    {
-      m_timeSinceLastUpdate -= m_timePerFrame;
-      update(m_timePerFrame);
-    }
-    draw();
-  }
-}
+//   m_hero.reset();
+//   m_hero = std::make_unique<Hero>(
+//       std::make_unique<Rectangle>(configLoader::get<Rectangle>("HERO_BODY")),
+//       std::make_unique<RectangleX2>(configLoader::get<RectangleX2>("HERO_HEALTHBAR")),
+//       std::make_unique<Circle>(configLoader::get<Circle>("HERO_WATCH_RANGE")),
+//       std::make_unique<Circle>(configLoader::get<Circle>("HERO_SHORT_RANGE")),
+//       std::make_unique<Circle>(configLoader::get<Circle>("HERO_LONG_RANGE")),
+//       std::make_unique<Circle>(configLoader::get<Circle>("HERO_PICK_UP_RANGE")),
+//       100,
+//       100,
+//       1000,
+//       configLoader::get<int>("PLAYER_WATCH_RADIUS"),
+//       25,
+//       50,
+//       50);
 
-void Game::update(sf::Time delta)
-{
+//   m_enemies.reset();
+//   m_enemies = std::make_unique<Enemies>();
+//   for (int i = 0; i < configLoader::get<int>("MAX_ENEMIES"); i++)
+//   {
+//     m_enemies->addEnemy(*m_hero, *m_floorItems);
+//   }
 
-  m_autoDamgeTimer += delta;
+//   m_attackHub.reset();
+//   m_attackHub = std::make_unique<AttackHub>(
+//       *m_hero,
+//       *m_enemies);
+//   m_pickUpHub.reset();
+//   m_pickUpHub = std::make_unique<PickUpHub>(
+//       *m_hero,
+//       *m_floorItems,
+//       *m_inventory);
 
-  if (m_autoDamgeTimer.asSeconds() > 0.1f)
-  {
-    for (auto &enemy : m_enemies->getEnemies())
-    {
-      enemy->removeHealth(1);
-    }
-    m_autoDamgeTimer = sf::Time::Zero;
-  }
-  // Elements
-  m_hero->update(delta);
-  m_enemies->update(delta);
-  m_attackHub->update(delta);
-  m_pickUpHub->update(delta);
-  m_hoverHub->update(delta);
-  m_vertexHub->update(delta);
-  m_vertexGuiHub->update(delta);
-  m_weaponSlotsMenu->update(delta);
+//   m_bluntWeapon.reset();
+//   m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();
+//   m_bluntWeapon->setBodyPosition(configLoader::get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
+//   m_floorItems->addWeapon(std::move(m_bluntWeapon));
 
-  // Last element
-  m_debugBar->update(delta);
-}
+//   m_grid.reset();
+//   m_grid = std::make_unique<Grid>();
+//   m_vertexHub.reset();
+//   m_vertexHub = std::make_unique<VertexHub>(
+//       *m_grid,
+//       *m_floorItems,
+//       *m_hero,
+//       *m_enemies);
 
-void Game::draw()
-{
-  // Will be first
-  m_window.clear();
-  handleViewRatio();
+//   m_vertexGuiHub.reset();
+//   m_vertexGuiHub = std::make_unique<VertexGuiHub>(
+//       *m_inventory,
+//       *m_toolTip);
 
-  // Will be between
-  m_window.setView(m_playerView);
-  m_window.draw(*m_vertexHub);
-  m_window.draw(*m_hero);
-  m_window.draw(*m_enemies);
+//   m_hoverHub.reset();
+//   m_hoverHub = std::make_unique<HoverHub>(
+//       m_window,
+//       m_playerView,
+//       m_uiView,
+//       *m_toolTip,
+//       *m_floorItems,
+//       *m_inventory);
 
-  m_window.setView(m_uiView);
-  m_window.draw(*m_weaponSlotsMenu);
-  m_window.draw(*m_vertexGuiHub);
-  m_window.draw(*m_toolTip);
+//   m_debugBar.reset();
+//   m_debugBar = std::make_unique<DebugBar>(
+//       m_window,
+//       *m_hero,
+//       *m_enemies);
+// }
 
-  // Will be last
-  m_window.draw(*m_debugBar);
-  m_window.display();
-}
+// void Game::run()
+// {
+//   float z = 1;
+//   while (m_window.isOpen())
+//   {
+//     while (auto event = m_window.pollEvent())
+//     {
+//       if (event->is<sf::Event::Closed>())
+//       {
+//         m_window.close();
+//       }
 
-void Game::handleViewRatio()
-{
+//       if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>())
+//       {
 
-  float targetRatio = (float)m_screenWidth / m_screenHeight;
-  float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
+//         switch (keyPressed->scancode)
+//         {
+//         case sf::Keyboard::Scancode::I:
+//           m_inventory->toggleInventory();
+//           break;
+//         case sf::Keyboard::Scancode::O:
+//           m_debugBar->toggleActive();
+//           break;
+//         case sf::Keyboard::Scancode::R:
+//           break;
+//         case sf::Keyboard::Scancode::Comma:
+//           init();
+//           break;
+//         case sf::Keyboard::Scancode::F5:
+//         case sf::Keyboard::Scancode::Escape:
+//           m_window.close();
+//           break;
+//         case sf::Keyboard::Scancode::PageUp:
+//           handlePlayerZoom("up");
+//           break;
+//         case sf::Keyboard::Scancode::PageDown:
+//           handlePlayerZoom("down");
+//           break;
+//         default:
+//           break;
+//         }
+//       }
+//       if (event->is<sf::Event::MouseButtonPressed>())
+//       {
+//       }
+//       if (const auto *mouseWheelScrolled = event->getIf<sf::Event::MouseWheelScrolled>())
+//       {
+//         if (mouseWheelScrolled->delta > 0)
+//         {
+//           handlePlayerZoom("up");
+//         }
+//         else
+//         {
+//           handlePlayerZoom("down");
+//         }
+//       }
+//     }
 
-  float sizeX = 1.f;
-  float sizeY = 1.f;
-  float posX = 0.f;
-  float posY = 0.f;
+//     sf::Time realDelta = m_clock.restart();
+//     m_timeSinceLastUpdate += realDelta;
+//     m_FpsClock += realDelta;
+//     if (m_FpsClock.asSeconds() >= 1.0f)
+//     {
+//       m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
+//       m_FpsClock = sf::Time::Zero;
+//     }
+//     while (m_timeSinceLastUpdate >= m_timePerFrame)
+//     {
+//       m_timeSinceLastUpdate -= m_timePerFrame;
+//       update(m_timePerFrame);
+//     }
+//     draw();
+//   }
+// }
 
-  if (windowRatio > targetRatio)
-  {
-    sizeX = targetRatio / windowRatio;
-    posX = (1.f - sizeX) / 2.f;
-  }
-  else
-  {
-    sizeY = windowRatio / targetRatio;
-    posY = (1.f - sizeY) / 2.f;
-  }
-  m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
-  m_playerView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
-  m_playerView.zoom(m_playerZoom);
-  m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-  m_uiView.setCenter(sf::Vector2f(m_screenWidth / 2, m_screenHeight / 2));
-  m_uiView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
-  m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
-}
+// void Game::update(sf::Time delta)
+// {
 
-void Game::init()
-{
-  m_playerZoom = 1;
+//   m_autoDamgeTimer += delta;
 
-  configLoader::reload();
-  randomNameLoader::reload();
-  m_weaponSlotsMenu.reset();
-  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(
-      std::make_unique<Rectangle>(configLoader::get<Rectangle>("WEAPONSLOTSMENU")));
+//   if (m_autoDamgeTimer.asSeconds() > 0.1f)
+//   {
+//     for (auto &enemy : m_enemies->getEnemies())
+//     {
+//       enemy->removeHealth(1);
+//     }
+//     m_autoDamgeTimer = sf::Time::Zero;
+//   }
+//   // Elements
+//   m_hero->update(delta);
+//   m_enemies->update(delta);
+//   m_attackHub->update(delta);
+//   m_pickUpHub->update(delta);
+//   m_hoverHub->update(delta);
+//   m_vertexHub->update(delta);
+//   m_vertexGuiHub->update(delta);
+//   m_weaponSlotsMenu->update(delta);
 
-  m_floorItems.reset();
-  m_floorItems = std::make_unique<FloorItems>();
-  m_inventory.reset();
-  m_inventory = std::make_unique<Inventory>();
-  m_toolTip.reset();
-  m_toolTip = std::make_unique<ToolTip>();
+//   // Last element
+//   m_debugBar->update(delta);
+// }
 
-  m_hero.reset();
-  m_hero = std::make_unique<Hero>(
-      std::make_unique<Rectangle>(configLoader::get<Rectangle>("HERO_BODY")),
-      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>("HERO_HEALTHBAR")),
-      std::make_unique<Circle>(configLoader::get<Circle>("HERO_WATCH_RANGE")),
-      std::make_unique<Circle>(configLoader::get<Circle>("HERO_SHORT_RANGE")),
-      std::make_unique<Circle>(configLoader::get<Circle>("HERO_LONG_RANGE")),
-      std::make_unique<Circle>(configLoader::get<Circle>("HERO_PICK_UP_RANGE")),
-      100,
-      100,
-      1000,
-      configLoader::get<int>("PLAYER_WATCH_RADIUS"),
-      25,
-      50,
-      50);
+// void Game::draw()
+// {
+//   // Will be first
+//   m_window.clear();
+//   handleViewRatio();
 
-  m_enemies.reset();
-  m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < configLoader::get<int>("MAX_ENEMIES"); i++)
-  {
-    m_enemies->addEnemy(*m_hero, *m_floorItems);
-  }
+//   // Will be between
+//   m_window.setView(m_playerView);
+//   m_window.draw(*m_vertexHub);
+//   m_window.draw(*m_hero);
+//   m_window.draw(*m_enemies);
 
-  m_attackHub.reset();
-  m_attackHub = std::make_unique<AttackHub>(
-      *m_hero,
-      *m_enemies);
-  m_pickUpHub.reset();
-  m_pickUpHub = std::make_unique<PickUpHub>(
-      *m_hero,
-      *m_floorItems,
-      *m_inventory);
+//   m_window.setView(m_uiView);
+//   m_window.draw(*m_weaponSlotsMenu);
+//   m_window.draw(*m_vertexGuiHub);
+//   m_window.draw(*m_toolTip);
 
-  m_bluntWeapon.reset();
-  m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();
-  m_bluntWeapon->resetLeftTop(configLoader::get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
-  m_floorItems->addWeapon(std::move(m_bluntWeapon));
+//   // Will be last
+//   m_window.draw(*m_debugBar);
+//   m_window.display();
+// }
 
-  m_grid.reset();
-  m_grid = std::make_unique<Grid>();
-  m_vertexHub.reset();
-  m_vertexHub = std::make_unique<VertexHub>(
-      *m_grid,
-      *m_floorItems,
-      *m_hero,
-      *m_enemies);
+// void Game::handleViewRatio()
+// {
 
-  m_vertexGuiHub.reset();
-  m_vertexGuiHub = std::make_unique<VertexGuiHub>(
-      *m_inventory,
-      *m_toolTip);
+//   float targetRatio = (float)m_screenWidth / m_screenHeight;
+//   float windowRatio = (float)m_window.getSize().x / (float)m_window.getSize().y;
 
-  m_hoverHub.reset();
-  m_hoverHub = std::make_unique<HoverHub>(
-      m_window,
-      m_playerView,
-      m_uiView,
-      *m_toolTip,
-      *m_floorItems,
-      *m_inventory);
+//   float sizeX = 1.f;
+//   float sizeY = 1.f;
+//   float posX = 0.f;
+//   float posY = 0.f;
 
-  m_debugBar.reset();
-  m_debugBar = std::make_unique<DebugBar>(
-      m_window,
-      *m_hero,
-      *m_enemies);
-}
+//   if (windowRatio > targetRatio)
+//   {
+//     sizeX = targetRatio / windowRatio;
+//     posX = (1.f - sizeX) / 2.f;
+//   }
+//   else
+//   {
+//     sizeY = windowRatio / targetRatio;
+//     posY = (1.f - sizeY) / 2.f;
+//   }
+//   m_playerView.setCenter(m_hero->getBody().getShape().getPosition());
+//   m_playerView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
+//   m_playerView.zoom(m_playerZoom);
+//   m_playerView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+//   m_uiView.setCenter(sf::Vector2f(m_screenWidth / 2, m_screenHeight / 2));
+//   m_uiView.setSize(sf::Vector2f(m_screenWidth, m_screenHeight));
+//   m_uiView.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
+// }
 
-void Game::handlePlayerZoom(std::string zoomDirection)
-{
-  if (m_playerZoom > 0.1f)
-  {
-    if (zoomDirection == "up")
-    {
-      m_playerZoom -= 0.1f;
-    }
-  }
-  if (m_playerZoom < 2.f)
-  {
-    if (zoomDirection == "down")
-    {
-      m_playerZoom += 0.1f;
-    }
-  }
-}
+// void Game::handlePlayerZoom(const std::string &zoomDirection)
+// {
+//   if (m_playerZoom > 0.1f)
+//   {
+//     if (zoomDirection == "up")
+//     {
+//       m_playerZoom -= 0.1f;
+//     }
+//   }
+//   if (m_playerZoom < 2.f)
+//   {
+//     if (zoomDirection == "down")
+//     {
+//       m_playerZoom += 0.1f;
+//     }
+//   }
+// }
+
+// const sf::RenderWindow &Game::getWindow() const
+// {
+//   return m_window;
+// }
+
+// const Hero &Game::getHero() const
+// {
+//   return m_hero;
+// }
+
+// const Enemies &Game::getEnemies() const
+// {
+//   return m_enemies;
+// }
+
+// const Inventory &Game::getInventory() const
+// {
+//   return m_inventory;
+// }
+// const FloorItems &Game::getFloorItems() const
+// {
+//   return m_floorItems;
+// }
+// const Grid &Game::getGrid() const
+// {
+//   return m_grid;
+// }
+// const ToolTip &Game::getToolTip() const
+// {
+//   return m_toolTip;
+// }

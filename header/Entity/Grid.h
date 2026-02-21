@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Entity/Game.h"
 #include "Entity/Cell.h"
 #include "Entity/Hero.h"
 #include "Helper/GridHelper.h"
@@ -11,11 +12,13 @@ class Grid
 {
 
 private:
+  Game &m_game;
+
   std::map<std::pair<int, int>, Cell> m_cells;
 
 public:
-  Grid();
+  Grid(Game &game);
   ~Grid();
 
-  Cell &findOrMakeCell(int x, int y);
+  const Cell &findOrMakeCell(int x, int y) const;
 };

@@ -3,7 +3,7 @@
 ToolTip::ToolTip()
     : m_title(fontLoader::get("PermanentMarker")),
       m_stats(fontLoader::get("Quantico")),
-      VertexRectangle(
+      VertexRectangleDrawable(
           0,
           0,
           928,
@@ -36,12 +36,12 @@ void ToolTip::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
-void ToolTip::setTitle(std::string title)
+void ToolTip::setTitle(const std::string &title)
 {
   m_title.setString(title);
 }
 
-void ToolTip::setStats(std::string stats)
+void ToolTip::setStats(const std::string &stats)
 {
   m_stats.setString(stats);
 }

@@ -1,64 +1,11 @@
 #include "Entity/Enemy.h"
 
-Enemy::Enemy(
-    Hero &hero,
-    FloorItems &floorItmes)
-    : Enemy(
-          hero,
-          floorItmes,
-          std::make_unique<Rectangle>(),
-          std::make_unique<RectangleX2>(),
-          std::make_unique<Circle>(),
-          std::make_unique<Circle>(),
-          std::make_unique<Circle>(),
-          std::make_unique<Circle>(),
-          2500,
-          100,
-          200,
-          25,
-          25,
-          50,
-          50)
-{
-}
-
-Enemy::Enemy(
-    Hero &hero,
-    FloorItems &floorItems,
-    std::unique_ptr<Rectangle> bodyBox,
-    std::unique_ptr<RectangleX2> healthBar,
-    std::unique_ptr<Circle> watchRangeCircle,
-    std::unique_ptr<Circle> shortRangeCircle,
-    std::unique_ptr<Circle> longRangeCircle,
-    std::unique_ptr<Circle> pickUpRangeCircle,
-    float health,
-    float maxHealth,
-    float speed,
-    int watchRangeRadius,
-    int shortRangeRadius,
-    int longRangeRadius,
-    int pickUpRangeRadius)
-    : m_hero(hero),
-      m_floorItems(floorItems),
-      m_houndHero(false),
-      CharacterBody(std::move(bodyBox),
-                    std::move(healthBar),
-                    std::move(watchRangeCircle),
-                    std::move(shortRangeCircle),
-                    std::move(longRangeCircle),
-                    std::move(pickUpRangeCircle),
-                    health,
-                    maxHealth,
-                    speed,
-                    watchRangeRadius,
-                    shortRangeRadius,
-                    longRangeRadius,
-                    pickUpRangeRadius),
-      VertexRectangle(
-          0,
-          0,
-          800 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35)),
-          2080 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)))
+Enemy::Enemy(Game &game)
+    : BaseCharacterBody(game),
+      m_game(game),
+      m_hero(game.getHero()),
+      m_floorItems(game.getFloorItems()),
+      m_houndHero(false)
 {
   for (int i = randomHelper::GET_RANDOM_NUMBER_INT(1, 1); i <= randomHelper::GET_RANDOM_NUMBER_INT(1, 2); i++)
   {
@@ -86,7 +33,7 @@ void Enemy::move(sf::Time &delta)
       direction = toPlayer / distance;
     }
     sf::Vector2f movement = direction * m_speed * delta.asSeconds();
-    CharacterBody::move(movement);
+    BaseCharacterBody::move(movement);
   }
 }
 
@@ -130,7 +77,7 @@ void Enemy::houndHero()
   m_houndHero = true;
 }
 
-bool &Enemy::getHoundHero()
+bool Enemy::getHoundHero() const
 {
   return m_houndHero;
 }

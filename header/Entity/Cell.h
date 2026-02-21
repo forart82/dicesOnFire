@@ -1,18 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/VertexRectangle.h"
+#include "Ability/VertexRectangleDrawable.h"
 #include "Helper/RandomHelper.h"
 
-class Cell : public VertexRectangle
+class Cell : public VertexRectangleDrawable
 {
 
 private:
 public:
-  Cell(
-      int left,
-      int top,
-      int assetsLeft,
-      int assetsTop);
+  Cell(Game &game);
   ~Cell();
 };

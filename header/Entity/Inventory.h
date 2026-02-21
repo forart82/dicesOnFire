@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Entity/VertexRectangle.h"
+#include "Ability/VertexRectangleDrawable.h"
 #include "Entity/Dice.h"
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 #include "Entity/Items.h"
 #include "Entity/Cell.h"
 #include "Loader/ConfigLoader.h"
@@ -14,11 +14,13 @@ class Inventory : public Items
 private:
   struct SlotContent
   {
-    Dice *dice = nullptr;     // Pointer to dice if present
-    Weapon *weapon = nullptr; // Pointer to weapon if present
+    Dice *dice = nullptr;             // Pointer to dice if present
+    BaseWeapon *baseWeapon = nullptr; // Pointer to weapon if present
 
-    bool isEmpty() const { return dice == nullptr && weapon == nullptr; }
+    bool isEmpty() const { return dice == nullptr && baseWeapon == nullptr; }
   };
+
+  Game &m_game;
 
   std::vector<std::unique_ptr<Cell>> m_cells;
   std::vector<SlotContent> m_slots;
@@ -29,27 +31,23 @@ private:
   bool m_isActive;
 
 public:
-  Inventory();
+  Inventory(Game &game);
   ~Inventory();
 
   void update(sf::Time &delta) override;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void addDice(std::unique_ptr<Dice> dice);
-  void addWeapon(std::unique_ptr<Weapon> weapon);
+  void addWeapon(std::unique_ptr<BaseWeapon> baseWeapon);
 
   template <typename T>
-  void placeItem(T &item, int &freeSlotIndex);
+  void placeItem(const T &item, int freeSlotIndex);
 
   void makeInventory();
   void toggleInventory();
 
-  std::vector<std::unique_ptr<Cell>> &getCells();
+  const std::vector<std::unique_ptr<Cell>> &getCells() const;
   int getCellsSize() const;
-
   bool getIsActive() const;
-
-  SlotContent &getSlot(int index);
-
-  int getFreeSlotIndex();
+  int getFreeSlotIndex() const;
 };

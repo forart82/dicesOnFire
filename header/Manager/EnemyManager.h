@@ -9,7 +9,7 @@
 
 namespace enemyManager
 {
-  inline Rectangle ENEMY_BODY = configLoader::get<Rectangle>("ENEMY_BODY");
+  inline Rectangle ENEMY_BODY = configLoader::get<RectangleConfig>("ENEMY_BODY");
   inline RectangleX2 ENEMY_HEALTHBAR = configLoader::get<RectangleX2>("ENEMY_HEALTHBAR");
   inline Circle ENEMY_WATCH_RANGE = configLoader::get<Circle>("ENEMY_WATCH_RANGE");
   inline Circle ENEMY_SHORT_RANGE = configLoader::get<Circle>("ENEMY_SHORT_RANGE");
@@ -92,6 +92,8 @@ namespace enemyManager
         longRangeRadius,
         pickUpRangeRadius);
 
+    // 800 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 35));
+    // 2080 + (configLoader::get<int>("ASSET_TILE_SIZE") * randomHelper::GET_RANDOM_NUMBER_INT(0, 1)));
     return enemy;
   };
 }

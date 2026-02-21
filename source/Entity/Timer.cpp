@@ -6,6 +6,7 @@ Timer::Timer(Game &game)
       m_cooldown(0),
       m_isVertical(false)
 {
+  setBody(std::make_unique<RectangleX2>());
 }
 
 Timer::~Timer() {};
@@ -53,7 +54,7 @@ void Timer::toggleIsStopped()
   m_isStopped = !m_isStopped;
 }
 
-void Timer::setCooldown(const float &cooldown)
+void Timer::setCooldown(float cooldown)
 {
   m_cooldown = cooldown;
 }
@@ -61,24 +62,25 @@ void Timer::setCooldown(const float &cooldown)
 void Timer::setBody(std::unique_ptr<RectangleX2> body)
 {
   m_body = std::move(body);
+  m_progressBarSize = m_body->getInner().getShape().getSize();
 }
 
-void Timer::setIsVertical(const bool &isVertical)
+void Timer::setIsVertical(bool isVertical)
 {
   m_isVertical = isVertical;
 }
 
-void Timer::setIsStopped(const bool &isStopped)
+void Timer::setIsStopped(bool isStopped)
 {
   m_isStopped = isStopped;
 }
 
-const float &Timer::getCoolDown() const
+float Timer::getCoolDown() const
 {
   return m_cooldown;
 }
 
-const bool &Timer::getIsStopped() const
+bool Timer::getIsStopped() const
 {
   return m_isStopped;
 }

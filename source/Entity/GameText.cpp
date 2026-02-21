@@ -1,19 +1,10 @@
 #include "Entity/GameText.h"
 
-GameText::GameText() : GameText("", "", {10, 10}, colors::COLOR_BLUE_SKY_BLUE, "Quantico")
+GameText::GameText(Game &game)
+    : m_game(game),
+      m_sfText(fontLoader::get("Quantico"))
 {
-}
-
-GameText::GameText(
-    std::string key,
-    std::string text,
-    sf::Vector2f position,
-    sf::Color color,
-    std::string fontName)
-    : m_sfText(fontLoader::get(fontName))
-{
-  m_sfText.setPosition(position);
-  m_sfText.setFillColor(color);
+  m_sfText.setFillColor(colors::COLOR_BLUE_SKY_BLUE);
 }
 
 GameText::~GameText()
@@ -25,7 +16,7 @@ void GameText::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_sfText, states);
 }
 
-void GameText::addText(std::string key, std::string value)
+void GameText::addText(const std::string &key, const std::string &value)
 {
   m_texts[key] = value;
   std::string combined;
@@ -42,12 +33,12 @@ void GameText::removeText()
   m_texts.clear();
 }
 
-void GameText::setPosition(sf::Vector2f position)
+void GameText::setPosition(const sf::Vector2f &position)
 {
   m_sfText.setPosition(position);
 }
 
-void GameText::setColor(sf::Color color)
+void GameText::setColor(const sf::Color &color)
 {
   m_sfText.setFillColor(color);
 }
@@ -57,7 +48,7 @@ void GameText::setFontSize(int fontSize)
   m_sfText.setCharacterSize(fontSize);
 }
 
-sf::Text GameText::getSfText()
+const sf::Text &GameText::getSfText() const
 {
   return m_sfText;
 }

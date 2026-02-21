@@ -1,7 +1,9 @@
 #include "Entity/Inventory.h"
 
-Inventory::Inventory()
-    : m_size(configLoader::get<int>("INVENTORY_SIZE")),
+Inventory::Inventory(Game &game)
+    : Items(game),
+      m_game(game),
+      m_size(configLoader::get<int>("INVENTORY_SIZE")),
       m_sizeMod(configLoader::get<int>("INVENTORY_SIZE_MOD")),
       m_tileSize(configLoader::get<int>("TILE_SIZE")),
       m_isActive(false),
@@ -47,7 +49,7 @@ void Inventory::addWeapon(std::unique_ptr<Weapon> weapon)
 }
 
 template <typename T>
-void Inventory::placeItem(T &item, int &freeSlotIndex)
+void Inventory::placeItem(const T &item, int freeSlotIndex)
 {
   int column = freeSlotIndex % m_sizeMod;
   int row = freeSlotIndex / m_sizeMod + 1;
@@ -80,7 +82,7 @@ void Inventory::toggleInventory()
   m_isActive = !m_isActive;
 }
 
-std::vector<std::unique_ptr<Cell>> &Inventory::getCells()
+const std::vector<std::unique_ptr<Cell>> &Inventory::getCells() const
 {
   return m_cells;
 }
@@ -94,8 +96,7 @@ bool Inventory::getIsActive() const
 {
   return m_isActive;
 }
-
-int Inventory::getFreeSlotIndex()
+int Inventory::getFreeSlotIndex() const
 {
   int freeSlotIndex = -1;
   for (size_t i = 0; i < m_slots.size(); ++i)

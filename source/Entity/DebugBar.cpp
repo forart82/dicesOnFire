@@ -1,14 +1,14 @@
 #include "Entity/DebugBar.h"
 
 DebugBar::DebugBar(
-    sf::RenderWindow &window,
-    Hero &hero,
-    Enemies &enemies)
-    : m_window(window),
-      m_hero(hero),
-      m_enemies(enemies),
+    Game &game)
+    : m_game(game),
       m_isActive(false)
 {
+  m_window = m_game.getWindow();
+  m_hero = m_game.getHero();
+  m_enemies = m_game.getEnemies();
+
   m_textGame.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_GAME").getShape().getPosition());
   m_textManager.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
   m_textHero.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_HERO").getShape().getPosition());
@@ -60,11 +60,6 @@ void DebugBar::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(m_textRealFps, states);
 }
 
-void DebugBar::setRealFps(float fps)
-{
-  m_textRealFps.addText("RealFps", "RealFps: " + std::to_string((int)fps));
-}
-
 void DebugBar::toggleActive()
 {
   m_isActive = !m_isActive;
@@ -73,4 +68,9 @@ void DebugBar::toggleActive()
   {
     enemy->toggleDebugIsActive();
   }
+}
+
+void DebugBar::setRealFps(float fps)
+{
+  m_textRealFps.addText("RealFps", "RealFps: " + std::to_string((int)fps));
 }

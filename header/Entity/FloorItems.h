@@ -1,17 +1,20 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Ability/VertexRectangleDrawable.h"
+#include "Entity/Game.h"
 #include "Entity/Dice.h"
-#include "Entity/VertexRectangle.h"
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 #include "Loader/TextureLoader.h"
 #include "Entity/Items.h"
 
-class FloorItems : public Items, public VertexRectangle
+class FloorItems : public Items, public VertexRectangleDrawable
 {
 private:
+  Game &m_game;
+
 public:
-  FloorItems();
+  FloorItems(Game &game);
   ~FloorItems();
 
   void update(sf::Time &delta) override;

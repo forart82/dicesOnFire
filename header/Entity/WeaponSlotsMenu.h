@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
+#include "Entity/Game.h"
 #include "Entity/WeaponSlot.h"
 #include "Entity/Rectangle.h"
 
@@ -9,13 +10,15 @@ class WeaponSlotsMenu : public sf::Drawable
 {
 
 private:
-  std::unique_ptr<Rectangle> m_bodyBox;
+  Game &m_game;
+
+  std::unique_ptr<Rectangle> m_body;
   std::map<int, std::unique_ptr<WeaponSlot>> m_weaponSlots;
+
   int m_weaponSlotCounter;
 
 public:
-  WeaponSlotsMenu();
-  WeaponSlotsMenu(std::unique_ptr<Rectangle> bodyBox);
+  WeaponSlotsMenu(Game &game);
   ~WeaponSlotsMenu();
 
   void update(sf::Time &delta);
@@ -23,4 +26,6 @@ public:
 
   void makeWeaponSlot(int weaponSlotNumber);
   void makeWeaponSlotes();
+
+  void setBody(std::unique_ptr<Rectangle> body);
 };

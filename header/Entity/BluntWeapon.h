@@ -1,21 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 
-class BluntWeapon : public Weapon
+class BluntWeapon : public BaseWeapon
 {
 private:
 public:
-  BluntWeapon(
-      std::unique_ptr<Rectangle> bodyBox,
-      float cooldown,
-      int damage,
-      int numberOfSlots,
-      int weaponSlotNumber,
-      int left,
-      int top,
-      int assetsLeft,
-      int assetsTop);
+  BluntWeapon(Game &game);
   ~BluntWeapon();
 };

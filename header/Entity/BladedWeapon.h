@@ -1,24 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 #include "Entity/Rectangle.h"
 
-class BladedWeapon : public Weapon
+class BladedWeapon : public BaseWeapon
 {
-private:
 public:
-  BladedWeapon();
-  BladedWeapon(
-      std::unique_ptr<Rectangle> bodyBox,
-      float cooldown,
-      int damage,
-      int numberOfSlots,
-      int weaponSlotNumber,
-      int left,
-      int top,
-      int assetsLeft,
-      int assetsRight);
+  BladedWeapon(Game &game);
+
   ~BladedWeapon();
 
   void update(sf::Time &delta);

@@ -1,47 +1,17 @@
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 
-Weapon::Weapon()
-    : Weapon(
-          std::make_unique<Rectangle>(),
-          5,
-          7,
-          2,
-          1,
-          0,
-          0,
-          0,
-          0)
+BaseWeapon::BaseWeapon(Game &game)
+    : VertexRectangleDrawable(game),
+      Dragable(game),
+      m_game(game)
 {
 }
 
-Weapon::Weapon(
-    std::unique_ptr<Rectangle> bodyBox,
-    float cooldown,
-    int damage,
-    int numberOfSlots,
-    int weaponSlotNumber,
-    int left,
-    int top,
-    int assetsLeft,
-    int assetsTop)
-    : VertexRectangle(
-          left,
-          top,
-          assetsLeft,
-          assetsTop),
-      m_bodyBox(std::move(bodyBox)),
-      m_name(randomNameLoader::getRandomWeaponName()),
-      m_damage(damage),
-      m_numberOfSlots(numberOfSlots),
-      m_weaponSlotNumber(weaponSlotNumber)
-{
-}
-
-void Weapon::update(sf::Time &delta)
+void BaseWeapon::update(sf::Time &delta)
 {
   if (m_weaponSlotNumber)
   {
-    m_bodyBox->update(delta);
+    m_body->update(delta);
     for (const auto &[key, diceSlot] : m_diceSlots)
     {
       diceSlot->update(delta);
@@ -53,11 +23,11 @@ void Weapon::update(sf::Time &delta)
   }
 }
 
-void Weapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_weaponSlotNumber)
   {
-    target.draw(*m_bodyBox);
+    target.draw(*m_body);
     for (const auto &[key, diceSlot] : m_diceSlots)
     {
       target.draw(*diceSlot);
@@ -69,7 +39,7 @@ void Weapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
-void Weapon::makeDiceSlot(int slotId)
+void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
   m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::get<Circle>(diceSlotKey)));
@@ -79,7 +49,7 @@ void Weapon::makeDiceSlot(int slotId)
       true);
 }
 
-void Weapon::makeDiceSlots()
+void BaseWeapon::makeDiceSlots()
 {
   for (int i = 1; i <= m_numberOfSlots; i++)
   {
@@ -87,16 +57,16 @@ void Weapon::makeDiceSlots()
   }
 }
 
-void Weapon::setDamage(int damage)
+void BaseWeapon::setDamage(int damage)
 {
   m_damage = damage;
 }
-void Weapon::setNumberOfSlots(int numberOfSlots)
+void BaseWeapon::setNumberOfSlots(int numberOfSlots)
 {
   m_numberOfSlots = numberOfSlots;
 }
 
-void Weapon::setWeaponSlotNumber(int weaponSlotNumber)
+void BaseWeapon::setWeaponSlotNumber(int weaponSlotNumber)
 {
   for (int i = 1; i <= m_diceSlots.size() + 1; i++)
   {
@@ -104,21 +74,36 @@ void Weapon::setWeaponSlotNumber(int weaponSlotNumber)
   }
 }
 
-const int &Weapon::getDamage() const
+void BaseWeapon::setPosition(const sf::Vector2f &position)
+{
+  VertexRectangleDrawable::setBodyPosition(position);
+}
+
+int BaseWeapon::getDamage() const
 {
   return m_damage;
 }
-const int &Weapon::getNumberOfSlots() const
+int BaseWeapon::getNumberOfSlots() const
 {
   return m_numberOfSlots;
 }
 
-std::string Weapon::getName() const
+const std::string &BaseWeapon::getName() const
 {
   return m_name;
 }
-std::string Weapon::getStats() const
+const std::string &BaseWeapon::getStats() const
 {
   return "Damage: " +
          std::to_string(m_damage);
+}
+
+const sf::FloatRect &BaseWeapon::getGlobalBounds() const
+{
+  return VertexRectangleDrawable::getGlobalBounds();
+}
+
+const sf::Vector2f &BaseWeapon::getPosition() const
+{
+  return VertexRectangleDrawable::getBodyCenter();
 }

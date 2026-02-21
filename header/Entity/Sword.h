@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Entity/Game.h"
 #include "Entity/BladedWeapon.h"
 #include "Entity/Rectangle.h"
 
@@ -8,18 +9,10 @@ class Sword : public BladedWeapon
 {
 
 private:
+  Game &m_game;
+
 public:
-  Sword();
-  Sword(
-      std::unique_ptr<Rectangle> bodyBox,
-      float cooldown,
-      int damage,
-      int numberOfSlots,
-      int weaponSlotNumber,
-      int left,
-      int top,
-      int assetsLeft,
-      int assetsTop);
+  Sword(Game &game);
   ~Sword();
 
   void update(sf::Time &delta);

@@ -1,9 +1,12 @@
 #include "Entity/Grid.h"
 
-Grid::Grid() {}
+Grid::Grid(Game &game)
+    : m_game(game)
+{
+}
 Grid::~Grid() {}
 
-Cell &Grid::findOrMakeCell(int x, int y)
+const Cell &Grid::findOrMakeCell(int x, int y) const
 {
   int assetsLeft = 32 * randomHelper::GET_RANDOM_NUMBER_INT(0, 10);
   int assetsTop = 224;

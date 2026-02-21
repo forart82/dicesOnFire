@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/DebugWindow.h"
 #include "Entity/Hero.h"
@@ -14,6 +15,8 @@ class DebugBar : public sf::Drawable
 {
 
 private:
+  Game &m_game;
+
   GameText m_textGame;
   GameText m_textManager;
   GameText m_textHero;
@@ -28,13 +31,13 @@ private:
   Enemies &m_enemies;
 
 public:
-  DebugBar(sf::RenderWindow &window, Hero &hero, Enemies &enemies);
+  DebugBar(Game &game);
   ~DebugBar();
 
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void setRealFps(float fps);
-
   void toggleActive();
+
+  void setRealFps(float fps);
 };

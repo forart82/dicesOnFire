@@ -1,6 +1,9 @@
 #include "Entity/Enemies.h"
 
-Enemies::Enemies() {}
+Enemies::Enemies(Game &game)
+    : m_game(game)
+{
+}
 
 Enemies::~Enemies() {}
 

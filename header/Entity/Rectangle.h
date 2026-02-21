@@ -2,101 +2,32 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "Entity/Game.h"
 #include "Globals/Colors.h"
 
 class Rectangle : public sf::Drawable
 {
 
 protected:
-  sf::RectangleShape m_shape;
+  Game &m_game;
+
+  sf::RectangleShape m_body;
   bool m_isActive;
 
 public:
-  Rectangle()
-      : Rectangle(
-            sf::Vector2f(300, 300),
-            sf::Vector2f(300, 300),
-            1,
-            true,
-            colors::COLOR_RED_RED,
-            colors::COLOR_RED_RED)
-  {
-  }
-  Rectangle(
-      sf::Vector2f position,
-      sf::Vector2f size,
-      int thickness,
-      bool isActive,
-      sf::Color fillColor,
-      sf::Color outlineColor)
-      : m_isActive(isActive)
-  {
-    m_shape.setPosition({std::round(position.x), std::round(position.y)});
-    m_shape.setSize({std::round(size.x), std::round(size.y)});
-    m_shape.setOutlineThickness(thickness);
-    m_shape.setFillColor(fillColor);
-    m_shape.setOutlineColor(outlineColor);
+  Rectangle(Game &game);
+  ~Rectangle();
 
-    setOriginFromSize(size);
-  }
+  void update(sf::Time &delta);
+  void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-  ~Rectangle()
-  {
-  }
+  void addPosition(const sf::Vector2f &offset);
+  void toggleActive();
 
-  void update(sf::Time &delta)
-  {
-  }
+  void setBody(const Rectangle &baseRectangle);
+  void setOriginFromSize(const sf::Vector2f &size);
+  void setIsActive(bool isActive);
 
-  void draw(sf::RenderTarget &target, sf::RenderStates states) const
-  {
-    if (m_isActive)
-    {
-      target.draw(m_shape, states);
-    }
-  }
-
-  // --- Setters ---
-  void setRectangle(Rectangle baseRectangle)
-  {
-    m_shape.setPosition(baseRectangle.m_shape.getPosition());
-    m_shape.setSize(baseRectangle.m_shape.getSize());
-    m_shape.setOutlineThickness(baseRectangle.getShape().getOutlineThickness());
-    m_shape.setFillColor(baseRectangle.m_shape.getFillColor());
-    m_shape.setOutlineColor(baseRectangle.m_shape.getOutlineColor());
-
-    setIsActive(baseRectangle.getIsActive());
-    setOriginFromSize(baseRectangle.m_shape.getSize());
-  }
-
-  void setOriginFromSize(sf::Vector2f size)
-  {
-    m_shape.setOrigin({std::round(size.x / 2.f), std::round(size.y / 2.f)});
-  }
-
-  void setIsActive(bool isActive)
-  {
-    m_isActive = isActive;
-  }
-
-  void addPosition(sf::Vector2f &offset)
-  {
-    sf::Vector2f newPosition = m_shape.getPosition() + offset;
-    m_shape.setPosition(newPosition);
-  }
-
-  void toggleActive()
-  {
-    m_isActive = !m_isActive;
-  }
-
-  sf::RectangleShape &getShape()
-  {
-    return m_shape;
-  }
-
-  bool &getIsActive()
-  {
-    return m_isActive;
-  }
+  const sf::RectangleShape &getShape() const;
+  bool getIsActive() const;
 };

@@ -2,17 +2,20 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
+#include "Ability/Dragable.h"
+#include "Ability/VertexRectangleDrawable.h"
 #include "Entity/DiceSlot.h"
 #include "Entity/Rectangle.h"
 #include "Entity/Timer.h"
-#include "Entity/VertexRectangle.h"
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class Weapon : public sf::Drawable, public VertexRectangle
+class BaseWeapon : public sf::Drawable, public VertexRectangleDrawable, public Dragable
 {
 protected:
-  std::unique_ptr<Rectangle> m_bodyBox;
+  Game &m_game;
+
+  std::unique_ptr<Rectangle> m_body;
   std::string m_name;
   int m_damage;
   int m_numberOfSlots;
@@ -21,18 +24,8 @@ protected:
   std::map<int, std::unique_ptr<Timer>> m_timers;
 
 public:
-  Weapon();
-  Weapon(
-      std::unique_ptr<Rectangle> bodyBox,
-      float cooldown,
-      int damage,
-      int numberOfSlots,
-      int weaponSlotNumber,
-      int left,
-      int top,
-      int assetsLft,
-      int assetsTop);
-  virtual ~Weapon() {};
+  BaseWeapon(Game &game);
+  virtual ~BaseWeapon() = default;
 
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -43,10 +36,14 @@ public:
   void setDamage(int damage);
   void setNumberOfSlots(int numberOfSlots);
   void setWeaponSlotNumber(int weaponSlotNumber);
+  void setPosition(const sf::Vector2f &position);
 
-  const int &getDamage() const;
-  const int &getNumberOfSlots() const;
+  int getDamage() const;
+  int getNumberOfSlots() const;
 
-  std::string getName() const;
-  std::string getStats() const;
+  const std::string &getName() const;
+  const std::string &getStats() const;
+
+  const sf::FloatRect &getGlobalBounds() const;
+  const sf::Vector2f &getPosition() const;
 };

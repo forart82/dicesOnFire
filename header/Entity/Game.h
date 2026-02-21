@@ -13,7 +13,7 @@
 #include "Entity/Enemy.h"
 #include "Entity/Enemies.h"
 #include "Entity/BluntWeapon.h"
-#include "Entity/Weapon.h"
+#include "Entity/BaseWeapon.h"
 #include "Entity/Inventory.h"
 #include "Hub/HoverHub.h"
 #include "Hub/AttackHub.h"
@@ -80,5 +80,13 @@ public:
   void draw();
 
   void handleViewRatio();
-  void handlePlayerZoom(std::string zoomDirection);
+  void handlePlayerZoom(const std::string &zoomDirection);
+
+  const sf::RenderWindow &getWindow() const;
+  const Hero &getHero() const;
+  const Enemies &getEnemies() const;
+  const Inventory &getInventory() const;
+  const FloorItems &getFloorItems() const;
+  const Grid &getGrid() const;
+  const ToolTip &getToolTip() const;
 };

@@ -13,8 +13,8 @@ protected:
   sf::Vector2f m_originalPosition;
 
   // The child classes MUST implement these so Dragable can do the math
-  virtual sf::FloatRect getGlobalBounds() const = 0;
-  virtual sf::Vector2f getPosition() const = 0;
+  virtual const sf::FloatRect &getGlobalBounds() const = 0;
+  virtual const sf::Vector2f &getPosition() const = 0;
   virtual void setPosition(const sf::Vector2f &position) = 0;
 
 public:
@@ -33,5 +33,5 @@ public:
   // 4. Call this if the drop was invalid
   virtual void cancelDrag();
 
-  bool getIsDragged() const { return m_isDragged; }
+  bool getIsDragged() const;
 };

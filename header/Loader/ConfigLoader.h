@@ -14,11 +14,37 @@
 namespace configLoader
 {
 
+  struct RectangleConfig
+  {
+    sf::Vector2f position;
+    sf::Vector2f size;
+    uint8_t thickness;
+    bool isActive;
+    sf::Color fillColor;
+    sf::Color outlineColor;
+  };
+
+  struct CircleConfig
+  {
+    sf::Vector2f position;
+    float radius;
+    uint8_t thickness;
+    bool isActive;
+    sf::Color fillColor;
+    sf::Color outlineColor;
+  };
+
+  struct RectangleX2Config
+  {
+    RectangleConfig inner;
+    RectangleConfig outer;
+  };
+
   // Data Storage
   inline std::map<std::string, std::string> m_fileNames;
-  inline std::map<std::string, Rectangle> m_rectangles;
-  inline std::map<std::string, RectangleX2> m_rectangleX2s;
-  inline std::map<std::string, Circle> m_circles;
+  inline std::map<std::string, RectangleConfig> m_rectangles;
+  inline std::map<std::string, RectangleX2Config> m_rectangleX2s;
+  inline std::map<std::string, CircleConfig> m_circles;
   inline std::map<std::string, int> m_integers;
   inline std::map<std::string, float> m_floats;
   inline std::map<std::string, sf::Vector2f> m_vector2fs;
@@ -26,9 +52,9 @@ namespace configLoader
   inline std::string m_form = "";
 
   // Default Values
-  inline const Rectangle DEFAULT_RECTANGLE = {{0.f, 0.f}, {0.f, 0.f}, 1, true, sf::Color::Red, sf::Color::Black};
-  inline const RectangleX2 DEFAULT_RECTANGLEX2 = {DEFAULT_RECTANGLE, DEFAULT_RECTANGLE};
-  inline const Circle DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
+  inline const RectangleConfig DEFAULT_RECTANGLE = {{0.f, 0.f}, {0.f, 0.f}, 1, true, sf::Color::Red, sf::Color::Black};
+  inline const RectangleX2Config DEFAULT_RECTANGLEX2 = {DEFAULT_RECTANGLE, DEFAULT_RECTANGLE};
+  inline const CircleConfig DEFAULT_CIRCLE = {{0.f, 0.f}, 0.f, 1, true, sf::Color::Red, sf::Color::Black};
   inline const int DEFAULT_INTEGER = 0;
   inline const float DEFAULT_FLOAT = 0.f;
   inline const sf::Vector2f DEFAULT_VECTOR2F = {0.f, 0.f};
@@ -57,7 +83,7 @@ namespace configLoader
     }
   }
 
-  inline Rectangle readRectangle(std::stringstream &ss)
+  inline RectangleConfig readRectangle(std::stringstream &ss)
   {
     std::string x, y, width, height, thinkess, isActive, red1, green1, blue1, alpha1, red2, green2, blue2, alpha2;
 
@@ -84,7 +110,7 @@ namespace configLoader
             {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
   }
 
-  inline Circle readCircle(std::stringstream &ss)
+  inline CircleConfig readCircle(std::stringstream &ss)
   {
     std::string x, y, radius, thikness, isActive, red1, green1, blue1, alpha1, red2, green2, blue2, alpha2;
 
@@ -286,7 +312,7 @@ namespace configLoader
       auto it = m_floats.find(key);
       return (it != m_floats.end()) ? it->second : DEFAULT_FLOAT;
     }
-    else if constexpr (std::is_same_v<T, Rectangle>)
+    else if constexpr (std::is_same_v<T, RectangleConfig>)
     {
       if (m_rectangles.empty())
         loadAll();
@@ -294,7 +320,7 @@ namespace configLoader
       auto it = m_rectangles.find(key);
       return (it != m_rectangles.end()) ? it->second : DEFAULT_RECTANGLE;
     }
-    else if constexpr (std::is_same_v<T, RectangleX2>)
+    else if constexpr (std::is_same_v<T, RectangleX2Config>)
     {
       if (m_rectangleX2s.empty())
         loadAll();
@@ -302,7 +328,7 @@ namespace configLoader
       auto it = m_rectangleX2s.find(key);
       return (it != m_rectangleX2s.end()) ? it->second : DEFAULT_RECTANGLEX2;
     }
-    else if constexpr (std::is_same_v<T, Circle>)
+    else if constexpr (std::is_same_v<T, CircleConfig>)
     {
       if (m_circles.empty())
         loadAll();
@@ -331,9 +357,9 @@ namespace configLoader
       static_assert(
           std::is_same_v<T, int> ||
               std::is_same_v<T, float> ||
-              std::is_same_v<T, Rectangle> ||
-              std::is_same_v<T, RectangleX2> ||
-              std::is_same_v<T, Circle> ||
+              std::is_same_v<T, RectangleConfig> ||
+              std::is_same_v<T, RectangleX2Config> ||
+              std::is_same_v<T, CircleConfig> ||
               std::is_same_v<T, sf::Vector2f> ||
               std::is_same_v<T, sf::FloatRect>,
           "Type non supporté !");

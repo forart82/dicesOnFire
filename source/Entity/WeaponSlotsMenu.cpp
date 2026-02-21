@@ -1,21 +1,32 @@
 #include "Entity/WeaponSlotsMenu.h"
 
-WeaponSlotsMenu::WeaponSlotsMenu()
-    : WeaponSlotsMenu(
-          std::make_unique<Rectangle>())
-{
-}
-
 WeaponSlotsMenu::WeaponSlotsMenu(
-    std::unique_ptr<Rectangle> bodyBox)
-    : m_bodyBox(std::move(bodyBox)),
-      m_weaponSlotCounter(1)
+    Game &game)
+    : m_game(game)
 {
   makeWeaponSlotes();
 }
 
 WeaponSlotsMenu::~WeaponSlotsMenu()
 {
+}
+
+void WeaponSlotsMenu::update(sf::Time &delta)
+{
+  m_bodyBox->update(delta);
+  for (const auto &[key, weaponSlot] : m_weaponSlots)
+  {
+    weaponSlot->update(delta);
+  }
+}
+
+void WeaponSlotsMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+  target.draw(*m_bodyBox);
+  for (const auto &[key, weaponSlot] : m_weaponSlots)
+  {
+    target.draw(*weaponSlot);
+  }
 }
 
 void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
@@ -39,20 +50,7 @@ void WeaponSlotsMenu::makeWeaponSlotes()
   }
 }
 
-void WeaponSlotsMenu::update(sf::Time &delta)
+void WeaponSlotsMenu::setBody(std::unique_ptr<Rectangle> body)
 {
-  m_bodyBox->update(delta);
-  for (const auto &[key, weaponSlot] : m_weaponSlots)
-  {
-    weaponSlot->update(delta);
-  }
-}
-
-void WeaponSlotsMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-  target.draw(*m_bodyBox);
-  for (const auto &[key, weaponSlot] : m_weaponSlots)
-  {
-    target.draw(*weaponSlot);
-  }
+  m_body = std::move(body);
 }

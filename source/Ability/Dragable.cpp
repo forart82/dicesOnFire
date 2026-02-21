@@ -2,7 +2,10 @@
 
 Dragable::Dragable(
     Game &game)
-    : m_game(game), m_isDragged(false) {}
+    : m_game(game),
+      m_isDragged(false)
+{
+}
 
 bool Dragable::startDrag(const sf::Vector2f &mousePos)
 {
@@ -37,4 +40,9 @@ void Dragable::cancelDrag()
 {
   m_isDragged = false;
   setPosition(m_originalPosition); // Snap back to start!
+}
+
+bool Dragable::getIsDragged() const
+{
+  return m_isDragged;
 }

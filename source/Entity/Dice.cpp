@@ -1,34 +1,33 @@
 #include "Entity/Dice.h"
 
 Dice::Dice(Game &game)
-    : m_game(game),
-      m_timer(),
+    : VertexRectangleDrawable(game),
       Dragable(game),
-      VertexRectangle(game)
+      m_game(game),
+      m_timer(std::make_unique<Timer>(game))
 {
   makeFaceValues();
-  m_timer.setBody()
-      // Timer
-      m_timer.onTimeout = [this]()
+  // Timer
+  m_timer->onTimeout = [this]()
   { onTimeout(); };
 }
 Dice::~Dice() {}
 
 void Dice::update(sf::Time &delta)
 {
-  if (!m_timer.getIsStopped())
+  if (!m_timer->getIsStopped())
   {
-    m_timer.update(delta);
+    m_timer->update(delta);
     int diceValue = randomHelper::GET_RANDOM_NUMBER_INT(1, m_faces);
     m_diceValueText->addText("dice", std::to_string(diceValue));
     handelTextPositionBasedOnDiceValue(diceValue);
   }
-  if (m_timer.getIsStopped())
+  if (m_timer->getIsStopped())
   {
     m_elapsedTime += delta;
     if (m_elapsedTime.asSeconds() >= 0.5f)
     {
-      m_timer.toggleIsStopped();
+      m_timer->toggleIsStopped();
       m_elapsedTime = sf::Time::Zero;
     }
   }
@@ -36,7 +35,7 @@ void Dice::update(sf::Time &delta)
 
 void Dice::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-  target.draw(m_timer);
+  target.draw(*m_timer);
   target.draw(*m_diceValueText);
 }
 
@@ -65,21 +64,21 @@ void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
   }
 }
 
-void Dice::setFaces(const int &faces)
+void Dice::setFaces(int faces)
 {
   m_faces = faces;
-  m_diceWeaponSlotMenu.getShape().setPointCount(m_faces);
-  m_diceSacMenu.getShape().setPointCount(m_faces);
-  m_diceFloorItem.getShape().setPointCount(m_faces);
+  m_diceWeaponSlotMenu->getShape().setPointCount(m_faces);
+  m_diceSacMenu->getShape().setPointCount(m_faces);
+  m_diceFloorItem->getShape().setPointCount(m_faces);
   makeFaceValues();
 }
-void Dice::setRerolls(const int &rerolls)
+void Dice::setRerolls(int rerolls)
 {
   m_rerolls = rerolls;
 }
-void Dice::setCooldown(const float &cooldown)
+void Dice::setCooldown(float cooldown)
 {
-  m_timer.setCooldown(cooldown);
+  m_timer->setCooldown(cooldown);
 }
 void Dice::setFaceValues(const std::map<int, float> &faceValues)
 {
@@ -88,32 +87,31 @@ void Dice::setFaceValues(const std::map<int, float> &faceValues)
     m_faceValues = faceValues;
   }
 }
-void Dice::setIsOnFloor(const bool &isOnFloor)
+void Dice::setIsOnFloor(bool isOnFloor)
 {
   m_isOnFloor = isOnFloor;
 }
 
 void Dice::setPosition(const sf::Vector2f &position)
 {
-  VertexRectangle::setPosition(position);
+  VertexRectangleDrawable::setBodyPosition(position);
 }
 
 void Dice::onTimeout()
 {
-  m_timer.toggleStop();
-  toggleStop();
+  m_timer->toggleIsStopped();
 }
 
-std::string Dice::getName() const
+const std::string &Dice::getName() const
 {
   return m_name;
 }
 
-std::string Dice::getStats() const
+const std::string &Dice::getStats() const
 {
 
   std::stringstream coolDownStream;
-  coolDownStream << std::fixed << std::setprecision(2) << m_timer.getCoolDown();
+  coolDownStream << std::fixed << std::setprecision(2) << m_timer->getCoolDown();
 
   return "Faces: " +
          std::to_string(m_faces) +
@@ -125,12 +123,12 @@ std::string Dice::getStats() const
          coolDownStream.str();
 }
 
-sf::FloatRect Dice::getGlobalBounds() const
+const sf::FloatRect &Dice::getGlobalBounds() const
 {
-  return VertexRectangle::getGlobalBounds();
+  return VertexRectangleDrawable::getGlobalBounds();
 }
 
-sf::Vector2f Dice::getPosition() const
+const sf::Vector2f &Dice::getPosition() const
 {
-  return VertexRectangle::getPosition();
+  return VertexRectangleDrawable::getBodyCenter();
 }
