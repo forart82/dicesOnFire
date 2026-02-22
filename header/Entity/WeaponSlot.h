@@ -14,16 +14,14 @@ class WeaponSlot : public sf::Drawable
 {
 
 private:
-  Game &m_game;
-
-  std::unique_ptr<Rectangle> m_body;
+    std::unique_ptr<Rectangle> m_body;
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<BladedWeapon> m_bladedWeapon;
 
   int m_weaponSlotNumber;
 
 public:
-  WeaponSlot(Game &game);
+  WeaponSlot();
   ~WeaponSlot();
 
   void update(sf::Time &delta);

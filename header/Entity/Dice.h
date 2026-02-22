@@ -7,6 +7,7 @@
 #include <iomanip>
 #include "Ability/VertexRectangleDrawable.h"
 #include "Ability/Dragable.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/Timer.h"
@@ -15,10 +16,9 @@
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class Dice : public sf::Drawable, public VertexRectangleDrawable, public Dragable
+class Dice : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable, public Dragable
 {
 private:
-  Game &m_game;
   std::unique_ptr<Circle> m_diceWeaponSlotMenu;
   std::unique_ptr<Circle> m_diceSacMenu;
   std::unique_ptr<Circle> m_diceFloorItem;
@@ -39,7 +39,7 @@ private:
   sf::Time m_elapsedTime;
 
 public:
-  Dice(Game &game);
+  Dice();
   ~Dice();
 
   void update(sf::Time &delta);

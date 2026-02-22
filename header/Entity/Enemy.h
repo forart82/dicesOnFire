@@ -12,15 +12,14 @@
 class Enemy : public BaseCharacterBody
 {
 private:
-  Game &m_game;
-  Hero &m_hero;
+    Hero &m_hero;
   FloorItems &m_floorItems;
 
   bool m_houndHero;
   std::vector<std::unique_ptr<Dice>> m_dices;
 
 public:
-  Enemy(Game &game);
+  Enemy();
   ~Enemy();
 
   void update(sf::Time &delta) override;

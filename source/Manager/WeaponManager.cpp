@@ -1,9 +1,6 @@
 #include "Manager/WeaponManager.h"
 
-WeaponManager::WeaponManager(Game &game)
-    : BaseManager(game)
-{
-}
+WeaponManager::WeaponManager() {}
 
 WeaponManager::~WeaponManager() {}
 
@@ -30,8 +27,8 @@ std::unique_ptr<BluntWeapon> WeaponManager::createBluntWeapon()
   weapon->setCooldown(cooldown);
   weapon->setDamage(damage);
   weapon->setNumberOfSlots(numberOfSlots);
-  weapon->setBodyPosition(sf::Vector2f(0.f, 0.f));
-  weapon->setAssetPosition(sf::Vector2f(assetsLeft, assetsTop));
+  weapon->setVertexBodyPosition(sf::Vector2f(0.f, 0.f));
+  weapon->setVertexAssetBodyPosition(sf::Vector2f(assetsLeft, assetsTop));
 
   return std::move(weapon);
 }

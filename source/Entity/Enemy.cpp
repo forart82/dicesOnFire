@@ -1,6 +1,6 @@
 #include "Entity/Enemy.h"
 
-Enemy::Enemy(Game &game)
+Enemy::Enemy()
     : BaseCharacterBody(game),
       m_game(game),
       m_hero(game.getHero()),

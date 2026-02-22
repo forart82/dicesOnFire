@@ -1,7 +1,6 @@
 #include "Entity/BladedWeapon.h"
 
-BladedWeapon::BladedWeapon(Game &game)
-    : BaseWeapon(game)
+BladedWeapon::BladedWeapon()
 {
   makeDiceSlots();
 }

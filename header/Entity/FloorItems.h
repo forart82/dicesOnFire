@@ -11,10 +11,8 @@
 class FloorItems : public Items, public VertexRectangleDrawable
 {
 private:
-  Game &m_game;
-
 public:
-  FloorItems(Game &game);
+  FloorItems();
   ~FloorItems();
 
   void update(sf::Time &delta) override;

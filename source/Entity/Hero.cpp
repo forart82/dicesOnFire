@@ -1,6 +1,6 @@
 #include "Entity/Hero.h"
 
-Hero::Hero(Game &game)
+Hero::Hero()
     : BaseCharacterBody(game),
       m_game(game)
 {

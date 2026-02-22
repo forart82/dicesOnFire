@@ -1,6 +1,6 @@
 #include "Entity/Sword.h"
 
-Sword::Sword(Game &game)
+Sword::Sword()
     : BladedWeapon(game),
       m_game(game)
 {

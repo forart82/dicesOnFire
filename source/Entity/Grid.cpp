@@ -1,6 +1,6 @@
 #include "Entity/Grid.h"
 
-Grid::Grid(Game &game)
+Grid::Grid()
     : m_game(game)
 {
 }

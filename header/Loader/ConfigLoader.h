@@ -27,7 +27,7 @@ private:
   std::string m_form = "";
 
 public:
-  ConfigLoader(Game &game);
+  ConfigLoader();
   ~ConfigLoader();
 
   // Helper to safely parse strings to float/int

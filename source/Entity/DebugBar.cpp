@@ -1,25 +1,20 @@
 #include "Entity/DebugBar.h"
 
-DebugBar::DebugBar(
-    Game &game)
-    : m_game(game),
+DebugBar::DebugBar()
+    : m_window(m_game->getWindow()),
+      m_hero(m_game->getHero()),
+      m_enemies(m_game->getEnemies()),
       m_isActive(false)
 {
-  m_window = m_game.getWindow();
-  m_hero = m_game.getHero();
-  m_enemies = m_game.getEnemies();
-
-  m_textGame.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_GAME").getShape().getPosition());
-  m_textManager.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
-  m_textHero.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_HERO").getShape().getPosition());
-  m_textMouse.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_MOUSE").getShape().getPosition());
-  m_textRealFps.setPosition(configLoader::get<Rectangle>("DEBUGBAR_TEXT_REALFPS").getShape().getPosition());
+  m_textGame.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_GAME").getShape().getPosition());
+  m_textManager.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
+  m_textHero.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_HERO").getShape().getPosition());
+  m_textMouse.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_MOUSE").getShape().getPosition());
+  m_textRealFps.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_REALFPS").getShape().getPosition());
   m_textRealFps.setFontSize(72);
 }
 
-DebugBar::~DebugBar()
-{
-}
+DebugBar::~DebugBar() {}
 
 void DebugBar::update(sf::Time &delta)
 {
@@ -28,12 +23,6 @@ void DebugBar::update(sf::Time &delta)
   m_textGame.addText("fpsdelta", "Time since last update: " + std::to_string(delta.asSeconds()));
   m_textGame.addText("random", std::to_string(std::rand() % 100000));
 
-  m_textManager.addText("ConfigManagerRectangles", "ConfigManager Rectangles: " + std::to_string(configLoader::m_rectangles.size()));
-  m_textManager.addText("ConfigManagerRectangleX2s", "ConfigManager RectangleX2s: " + std::to_string(configLoader::m_rectangleX2s.size()));
-  m_textManager.addText("ConfigManagerCircles", "ConfigManager Circles: " + std::to_string(configLoader::m_circles.size()));
-  m_textManager.addText("ConfigManagerIntegers", "ConfigManager Integers: " + std::to_string(configLoader::m_integers.size()));
-  m_textManager.addText("ConfigManagerFloats", "ConfigManager Floats: " + std::to_string(configLoader::m_floats.size()));
-  m_textManager.addText("ConfigManagerVector2fs", "ConfigManager Vector2fs: " + std::to_string(configLoader::m_vector2fs.size()));
   m_textManager.addText("TextureManagerTextures", "TextureManager Textures: " + std::to_string(textureLoader::m_textures.size()));
   m_textManager.addText("FontManagerFonts", "FontManager Fonts: " + std::to_string(fontLoader::m_fonts.size()));
 

@@ -9,10 +9,8 @@ class Sword : public BladedWeapon
 {
 
 private:
-  Game &m_game;
-
 public:
-  Sword(Game &game);
+  Sword();
   ~Sword();
 
   void update(sf::Time &delta);

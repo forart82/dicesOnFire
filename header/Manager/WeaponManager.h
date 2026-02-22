@@ -10,7 +10,7 @@
 class WeaponManager : public BaseManager
 {
 public:
-  WeaponManager(Game &game);
+  WeaponManager();
   ~WeaponManager();
 
   std::unique_ptr<BladedWeapon> createBladedWeapon();

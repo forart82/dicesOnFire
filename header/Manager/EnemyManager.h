@@ -21,7 +21,7 @@ private:
   std::unique_ptr<Circle> m_enemyPickUpUpRange;
 
 public:
-  EnemyManager(Game &game);
+  EnemyManager();
   ~EnemyManager();
 
   template <typename T>

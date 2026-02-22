@@ -1,6 +1,6 @@
 #include "Entity/Inventory.h"
 
-Inventory::Inventory(Game &game)
+Inventory::Inventory()
     : Items(game),
       m_game(game),
       m_size(configLoader::get<int>("INVENTORY_SIZE")),

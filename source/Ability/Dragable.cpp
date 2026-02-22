@@ -1,7 +1,6 @@
 #include "Ability/Dragable.h"
 
-Dragable::Dragable(
-    Game &game)
+Dragable::Dragable()
     : m_game(game),
       m_isDragged(false)
 {

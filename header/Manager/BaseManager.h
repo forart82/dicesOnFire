@@ -1,13 +1,10 @@
 #pragma once
 
-#include "Entity/Game.h"
+#include "Ability/Gameable.h"
 
-class BaseManager
+class BaseManager : public Gameable
 {
-protected:
-  Game &m_game;
-
 public:
-  BaseManager(Game &game);
+  BaseManager() = default;
   virtual ~BaseManager() = default;
 };

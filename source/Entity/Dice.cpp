@@ -1,10 +1,7 @@
 #include "Entity/Dice.h"
 
-Dice::Dice(Game &game)
-    : VertexRectangleDrawable(game),
-      Dragable(game),
-      m_game(game),
-      m_timer(std::make_unique<Timer>(game))
+Dice::Dice()
+    : m_timer(std::make_unique<Timer>())
 {
   makeFaceValues();
   // Timer

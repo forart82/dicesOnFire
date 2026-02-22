@@ -1,11 +1,6 @@
 #include "Entity/BaseWeapon.h"
 
-BaseWeapon::BaseWeapon(Game &game)
-    : VertexRectangleDrawable(game),
-      Dragable(game),
-      m_game(game)
-{
-}
+BaseWeapon::BaseWeapon() {}
 
 void BaseWeapon::update(sf::Time &delta)
 {
@@ -36,13 +31,13 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(configLoader::get<Circle>(diceSlotKey)));
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(m_game->getConfigLoader().get<Circle>(diceSlotKey)));
 
   // TO REMOVE
   // TO MODIFY
   // Its the diceSlot who has the timer
   // m_timers[slotId] = std::make_unique<Timer>(
-  //     std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(diceSlotKey + "_TIMER")),
+  //     std::make_unique<RectangleX2>(m_game->getConfigLoader().get<RectangleX2>(diceSlotKey + "_TIMER")),
   //     5,
   //     true);
 }
@@ -83,7 +78,7 @@ void BaseWeapon::setWeaponSlotNumber(int weaponSlotNumber)
 
 void BaseWeapon::setPosition(const sf::Vector2f &position)
 {
-  VertexRectangleDrawable::setBodyPosition(position);
+  VertexRectangleDrawable::setVertexBodyPosition(position);
 }
 
 int BaseWeapon::getDamage() const
@@ -112,5 +107,5 @@ const sf::FloatRect &BaseWeapon::getGlobalBounds() const
 
 const sf::Vector2f &BaseWeapon::getPosition() const
 {
-  return VertexRectangleDrawable::getBodyCenter();
+  return VertexRectangleDrawable::getVertexBodyCenter();
 }

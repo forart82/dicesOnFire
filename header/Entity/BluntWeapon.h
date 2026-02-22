@@ -7,6 +7,6 @@ class BluntWeapon : public BaseWeapon
 {
 private:
 public:
-  BluntWeapon(Game &game);
+  BluntWeapon();
   ~BluntWeapon();
 };

@@ -1,11 +1,11 @@
 #include "Ability/VertexRectangleDrawable.h"
 
-VertexRectangleDrawable::VertexRectangleDrawable(Game &game)
+VertexRectangleDrawable::VertexRectangleDrawable()
     : m_game(game),
-      m_bodyLeft(0),
-      m_bodyTop(0),
-      m_assetLeft(0),
-      m_assetTop(0),
+      m_vertexBodyLeft(0),
+      m_vertexBodyTop(0),
+      m_vertexAssetBodyLeft(0),
+      m_vertexAssetBodyTop(0),
       m_tileSize(configLoader::get<int>("TILE_SIZE")),
       m_assetTileSize(configLoader::get<int>("ASSET_TILE_SIZE")),
       m_isActive(true)
@@ -15,25 +15,25 @@ VertexRectangleDrawable::VertexRectangleDrawable(Game &game)
 
 VertexRectangleDrawable::~VertexRectangleDrawable() {}
 
-void VertexRectangleDrawable::makeBody()
+void VertexRectangleDrawable::makeVertexBody()
 {
-  m_bodyLeftTop = sf::Vector2f(m_bodyLeft, m_bodyTop);
-  m_bodyRightTop = sf::Vector2f(m_bodyLeft + m_tileSize, m_bodyTop);
-  m_bodyLeftBottom = sf::Vector2f(m_bodyLeft, m_bodyTop + m_tileSize);
-  m_bodyRightBottom = sf::Vector2f(m_bodyLeft + m_tileSize, m_bodyTop + m_tileSize);
+  m_vertexBodyLeftTop = sf::Vector2f(m_vertexBodyLeft, m_vertexBodyTop);
+  m_vertexBodyRightTop = sf::Vector2f(m_vertexBodyLeft + m_tileSize, m_vertexBodyTop);
+  m_vertexBodyLeftBottom = sf::Vector2f(m_vertexBodyLeft, m_vertexBodyTop + m_tileSize);
+  m_vertexBodyRightBottom = sf::Vector2f(m_vertexBodyLeft + m_tileSize, m_vertexBodyTop + m_tileSize);
 }
-void VertexRectangleDrawable::makeAsset()
+void VertexRectangleDrawable::makeVertexAssetBody()
 {
-  m_assetLeftTop = sf::Vector2f(m_assetLeft, m_assetTop);
-  m_assetRightTop = sf::Vector2f(m_assetLeft + m_assetTileSize, m_assetTop);
-  m_assetLeftBottom = sf::Vector2f(m_assetLeft, m_assetTop + m_assetTileSize);
-  m_assetRightBottom = sf::Vector2f(m_assetLeft + m_assetTileSize, m_assetTop + m_assetTileSize);
+  m_vertexAssetBodyLeftTop = sf::Vector2f(m_vertexAssetBodyLeft, m_vertexAssetBodyTop);
+  m_vertexAssetBodyRightTop = sf::Vector2f(m_vertexAssetBodyLeft + m_assetTileSize, m_vertexAssetBodyTop);
+  m_vertexAssetBodyLeftBottom = sf::Vector2f(m_vertexAssetBodyLeft, m_vertexAssetBodyTop + m_assetTileSize);
+  m_vertexAssetBodyRightBottom = sf::Vector2f(m_vertexAssetBodyLeft + m_assetTileSize, m_vertexAssetBodyTop + m_assetTileSize);
 }
 
 void VertexRectangleDrawable::makeAll()
 {
-  makeBody();
-  makeAsset();
+  makeVertexBody();
+  makeVertexAssetBody();
 }
 
 void VertexRectangleDrawable::toggleIsActive()
@@ -41,40 +41,40 @@ void VertexRectangleDrawable::toggleIsActive()
   m_isActive = !m_isActive;
 }
 
-void VertexRectangleDrawable::setBodyPosition(const sf::Vector2f &position)
+void VertexRectangleDrawable::setVertexBodyPosition(const sf::Vector2f &position)
 {
-  m_bodyLeft = position.x;
-  m_bodyTop = position.y;
-  makeBody();
+  m_vertexBodyLeft = position.x;
+  m_vertexBodyTop = position.y;
+  makeVertexBody();
 }
 
-void VertexRectangleDrawable::setAssetPosition(const sf::Vector2f &position)
+void VertexRectangleDrawable::setVertexAssetBodyPosition(const sf::Vector2f &position)
 {
-  m_assetLeft = position.x;
-  m_assetTop = position.y;
-  makeAsset();
+  m_vertexAssetBodyLeft = position.x;
+  m_vertexAssetBodyTop = position.y;
+  makeVertexAssetBody();
 }
 
-void VertexRectangleDrawable::setBodyFloatRect(const sf::FloatRect &floatRect)
+void VertexRectangleDrawable::setVertexBodyFloatRect(const sf::FloatRect &floatRect)
 {
-  m_bodyLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
-  m_bodyRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
-  m_bodyLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
-  m_bodyRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
+  m_vertexBodyLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
+  m_vertexBodyRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
+  m_vertexBodyLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
+  m_vertexBodyRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
 }
 
-void VertexRectangleDrawable::setAssetFloatRect(const sf::FloatRect &floatRect)
+void VertexRectangleDrawable::setVertexAssetBodyFloatRect(const sf::FloatRect &floatRect)
 {
-  m_assetLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
-  m_assetRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
-  m_assetLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
-  m_assetRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
+  m_vertexAssetBodyLeftTop = sf::Vector2f(floatRect.position.x, floatRect.position.y);
+  m_vertexAssetBodyRightTop = sf::Vector2f(floatRect.size.x, floatRect.position.y);
+  m_vertexAssetBodyLeftBottom = sf::Vector2f(floatRect.position.x, floatRect.size.y);
+  m_vertexAssetBodyRightBottom = sf::Vector2f(floatRect.size.x, floatRect.size.y);
 }
 
-void VertexRectangleDrawable::setFloatRects(sf::FloatRect &body, sf::FloatRect &asset)
+void VertexRectangleDrawable::setFloatRects(sf::FloatRect &vertexBody, sf::FloatRect &asset)
 {
-  setBodyFloatRect(body);
-  setAssetFloatRect(asset);
+  setVertexBodyFloatRect(vertexBody);
+  setVertexAssetBodyFloatRect(asset);
 }
 
 void VertexRectangleDrawable::setIsActive(bool isActive)
@@ -82,34 +82,34 @@ void VertexRectangleDrawable::setIsActive(bool isActive)
   m_isActive = isActive;
 }
 
-const sf::FloatRect &VertexRectangleDrawable::getBody() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexBody() const
 {
-  return sf::FloatRect({m_bodyLeftTop.x, m_bodyLeftTop.y}, {m_bodyRightBottom.x, m_bodyRightBottom.y});
+  return sf::FloatRect({m_vertexBodyLeftTop.x, m_vertexBodyLeftTop.y}, {m_vertexBodyRightBottom.x, m_vertexBodyRightBottom.y});
 }
 
-const sf::FloatRect &VertexRectangleDrawable::getAsset() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexAssetBody() const
 {
-  return sf::FloatRect({m_assetLeftTop.x, m_assetLeftTop.y}, {m_assetRightBottom.x, m_assetRightBottom.y});
+  return sf::FloatRect({m_vertexAssetBodyLeftTop.x, m_vertexAssetBodyLeftTop.y}, {m_vertexAssetBodyRightBottom.x, m_vertexAssetBodyRightBottom.y});
 }
 
-const sf::Vector2f &VertexRectangleDrawable::getBodyCenter() const
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyCenter() const
 {
-  return (m_bodyLeftTop + m_bodyRightBottom) / 2.f;
+  return (m_vertexBodyLeftTop + m_vertexBodyRightBottom) / 2.f;
 }
-const sf::Vector2f &VertexRectangleDrawable::getAssetCenter() const
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyCenter() const
 {
-  return (m_assetLeftTop + m_assetRightBottom) / 2.f;
+  return (m_vertexAssetBodyLeftTop + m_vertexAssetBodyRightBottom) / 2.f;
 }
 
 const sf::FloatRect &VertexRectangleDrawable::getGlobalBounds() const
 {
   // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
-  float minX = std::min({m_bodyLeftTop.x, m_bodyRightTop.x, m_bodyLeftBottom.x, m_bodyRightBottom.x});
-  float minY = std::min({m_bodyLeftTop.y, m_bodyRightTop.y, m_bodyLeftBottom.y, m_bodyRightBottom.y});
+  float minX = std::min({m_vertexBodyLeftTop.x, m_vertexBodyRightTop.x, m_vertexBodyLeftBottom.x, m_vertexBodyRightBottom.x});
+  float minY = std::min({m_vertexBodyLeftTop.y, m_vertexBodyRightTop.y, m_vertexBodyLeftBottom.y, m_vertexBodyRightBottom.y});
 
   // 2. Find the Maximum X and Y (The Bottom-Right of the bounding box)
-  float maxX = std::max({m_bodyLeftTop.x, m_bodyRightTop.x, m_bodyLeftBottom.x, m_bodyRightBottom.x});
-  float maxY = std::max({m_bodyLeftTop.y, m_bodyRightTop.y, m_bodyLeftBottom.y, m_bodyRightBottom.y});
+  float maxX = std::max({m_vertexBodyLeftTop.x, m_vertexBodyRightTop.x, m_vertexBodyLeftBottom.x, m_vertexBodyRightBottom.x});
+  float maxY = std::max({m_vertexBodyLeftTop.y, m_vertexBodyRightTop.y, m_vertexBodyLeftBottom.y, m_vertexBodyRightBottom.y});
 
   // 3. Calculate Width and Height
   float width = maxX - minX;

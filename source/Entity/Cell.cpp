@@ -2,9 +2,5 @@
 
 using namespace std;
 
-Cell::Cell(Game &game)
-    : VertexRectangleDrawable(game)
-{
-}
-
+Cell::Cell() {}
 Cell::~Cell() {}

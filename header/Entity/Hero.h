@@ -12,12 +12,10 @@
 class Hero : public BaseCharacterBody
 {
 private:
-  Game &m_game;
-
-  sf::Vector2f m_direction;
+    sf::Vector2f m_direction;
 
 public:
-  Hero(Game &game);
+  Hero();
   ~Hero();
 
   void update(sf::Time &delta) override;

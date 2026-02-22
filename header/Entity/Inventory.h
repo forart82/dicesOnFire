@@ -20,9 +20,7 @@ private:
     bool isEmpty() const { return dice == nullptr && baseWeapon == nullptr; }
   };
 
-  Game &m_game;
-
-  std::vector<std::unique_ptr<Cell>> m_cells;
+    std::vector<std::unique_ptr<Cell>> m_cells;
   std::vector<SlotContent> m_slots;
   sf::Vector2f m_inventoryPosition;
   int m_size;
@@ -31,7 +29,7 @@ private:
   bool m_isActive;
 
 public:
-  Inventory(Game &game);
+  Inventory();
   ~Inventory();
 
   void update(sf::Time &delta) override;

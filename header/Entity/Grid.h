@@ -12,12 +12,10 @@ class Grid
 {
 
 private:
-  Game &m_game;
-
-  std::map<std::pair<int, int>, Cell> m_cells;
+    std::map<std::pair<int, int>, Cell> m_cells;
 
 public:
-  Grid(Game &game);
+  Grid();
   ~Grid();
 
   const Cell &findOrMakeCell(int x, int y) const;

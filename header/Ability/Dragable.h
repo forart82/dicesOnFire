@@ -6,8 +6,6 @@
 class Dragable
 {
 protected:
-  Game &m_game;
-
   bool m_isDragged;
   sf::Vector2f m_dragOffset;
   sf::Vector2f m_originalPosition;
@@ -18,7 +16,7 @@ protected:
   virtual void setPosition(const sf::Vector2f &position) = 0;
 
 public:
-  Dragable(Game &game);
+  Dragable();
   virtual ~Dragable() = default;
 
   // 1. Triggered when the mouse is pressed. Returns true if this item was clicked.

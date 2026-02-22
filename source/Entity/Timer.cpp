@@ -1,6 +1,6 @@
 #include "Entity/Timer.h"
 
-Timer::Timer(Game &game)
+Timer::Timer()
     : m_game(game),
       m_isStopped(false),
       m_cooldown(0),

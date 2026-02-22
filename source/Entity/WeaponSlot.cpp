@@ -1,6 +1,6 @@
 #include "Entity/WeaponSlot.h"
 
-WeaponSlot::WeaponSlot(Game &game)
+WeaponSlot::WeaponSlot()
     : m_game(game)
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);

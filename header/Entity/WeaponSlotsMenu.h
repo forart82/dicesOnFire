@@ -10,15 +10,13 @@ class WeaponSlotsMenu : public sf::Drawable
 {
 
 private:
-  Game &m_game;
-
-  std::unique_ptr<Rectangle> m_body;
+    std::unique_ptr<Rectangle> m_body;
   std::map<int, std::unique_ptr<WeaponSlot>> m_weaponSlots;
 
   int m_weaponSlotCounter;
 
 public:
-  WeaponSlotsMenu(Game &game);
+  WeaponSlotsMenu();
   ~WeaponSlotsMenu();
 
   void update(sf::Time &delta);

@@ -29,17 +29,11 @@ class Game
 
 private:
   // Window
-  int m_screenWidth = configLoader::get<int>("GLOBAL_SCREEN_WIDTH");
-  int m_screenHeight = configLoader::get<int>("GLOBAL_SCREEN_HEIGHT");
+  int m_screenWidth;
+  int m_screenHeight;
   sf::RenderWindow m_window = sf::RenderWindow(sf::VideoMode({960, 600}), "Game", sf::State::Windowed);
-  sf::View m_uiView = sf::View(
-      sf::FloatRect(
-          {0, 200},
-          sf::Vector2f(m_screenWidth, m_screenHeight)));
-  sf::View m_playerView = sf::View(
-      sf::FloatRect(
-          {0, 0},
-          sf::Vector2f(m_screenWidth, m_screenHeight)));
+  sf::View m_uiView;
+  sf::View m_playerView;
   float m_playerZoom;
 
   // Time
@@ -71,8 +65,12 @@ private:
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
   std::unique_ptr<HoverHub> m_hoverHub;
 
+  // Loader
+  std::unique_ptr<ConfigLoader> m_configLoader;
+
   // Manager
   std::unique_ptr<HeroManager> m_heroManager;
+  std::unique_ptr<WeaponManager> m_weaponManager;
 
   std::mt19937 m_rng;
 
@@ -89,11 +87,19 @@ public:
   void handleViewRatio();
   void handlePlayerZoom(const std::string &zoomDirection);
 
-  sf::RenderWindow &getWindow() const;
+  sf::RenderWindow &getWindow();
+
+  // Entity
   Hero &getHero() const;
   Enemies &getEnemies() const;
   Inventory &getInventory() const;
   FloorItems &getFloorItems() const;
   Grid &getGrid() const;
   ToolTip &getToolTip() const;
+
+  // Loader
+  ConfigLoader &getConfigLoader() const;
+
+  // Manager
+  WeaponManager &getWeaponManager() const;
 };

@@ -10,12 +10,10 @@
 class Enemies : public sf::Drawable
 {
 private:
-  Game &m_game;
-
-  std::vector<std::unique_ptr<Enemy>> m_enemies;
+    std::vector<std::unique_ptr<Enemy>> m_enemies;
 
 public:
-  Enemies(Game &game);
+  Enemies();
   ~Enemies();
 
   virtual void update(sf::Time &delta);

@@ -1,6 +1,6 @@
 #include "Entity/GameText.h"
 
-GameText::GameText(Game &game)
+GameText::GameText()
     : m_game(game),
       m_sfText(fontLoader::get("Quantico"))
 {

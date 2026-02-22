@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Entity/BaseEntity.h"
 #include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/DebugWindow.h"
@@ -11,12 +12,10 @@
 #include "Loader/ConfigLoader.h"
 #include "Loader/FontLoader.h"
 
-class DebugBar : public sf::Drawable
+class DebugBar : public BaseEntity, public sf::Drawable
 {
 
 private:
-  Game &m_game;
-
   GameText m_textGame;
   GameText m_textManager;
   GameText m_textHero;
@@ -31,7 +30,7 @@ private:
   Enemies &m_enemies;
 
 public:
-  DebugBar(Game &game);
+  DebugBar();
   ~DebugBar();
 
   void update(sf::Time &delta);

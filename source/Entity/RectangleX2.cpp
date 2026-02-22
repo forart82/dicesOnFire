@@ -1,11 +1,6 @@
 #include "Entity/RectangleX2.h"
 
-RectangleX2::RectangleX2(Game &game)
-    : m_inner(game),
-      m_outer(game),
-      m_game(game)
-{
-}
+RectangleX2::RectangleX2() {}
 
 RectangleX2::~RectangleX2() {}
 
@@ -29,26 +24,26 @@ void RectangleX2::move(const sf::Vector2f &movement)
 
 void RectangleX2::addPosition(const sf::Vector2f &offset)
 {
-  sf::Vector2f newOuterPosition = m_outer.getBody().getPosition() + offset;
+  sf::Vector2f newOuterPosition = m_outer.getShape().getPosition() + offset;
   m_outer.setPosition(newOuterPosition);
-  sf::Vector2f newInnerPosition = m_inner.getBody().getPosition() + offset;
+  sf::Vector2f newInnerPosition = m_inner.getShape().getPosition() + offset;
   m_inner.setPosition(newInnerPosition);
 }
 
-void RectangleX2::setBodyX2(const RectangleX2 &rectangleX2)
+void RectangleX2::setRectangleX2(const RectangleX2 &rectangleX2)
 {
-  m_inner.setBody(rectangleX2.getInner());
-  m_outer.setBody(rectangleX2.getOuter());
+  m_inner.setRectangle(rectangleX2.getInner());
+  m_outer.setRectangle(rectangleX2.getOuter());
 }
 
 void RectangleX2::setOuter(const Rectangle &outer)
 {
-  m_outer.setBody(outer);
+  m_outer.setRectangle(outer);
 }
 
 void RectangleX2::setInner(const Rectangle &inner)
 {
-  m_inner.setBody(inner);
+  m_inner.setRectangle(inner);
 }
 
 void RectangleX2::setOuterPosition(const sf::Vector2f &position)

@@ -3,6 +3,22 @@
 Game::Game()
     : m_rng(std::random_device{}())
 {
+  m_configLoader = std::make_unique<ConfigLoader>();
+  m_configLoader->setGame(this);
+  m_weaponManager = std::make_unique<WeaponManager>();
+  m_weaponManager->setGame(this);
+
+  int m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
+  int m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
+  m_uiView = sf::View(
+      sf::FloatRect(
+          {0, 200},
+          sf::Vector2f(m_screenWidth, m_screenHeight)));
+  m_playerView = sf::View(
+      sf::FloatRect(
+          {0, 0},
+          sf::Vector2f(m_screenWidth, m_screenHeight)));
+
   m_window.setVerticalSyncEnabled(true);
   m_hero = std::make_unique<Hero>(this);
   m_enemies = std::make_unique<Enemies>(this);
@@ -26,11 +42,11 @@ void Game::init()
 {
   m_playerZoom = 1;
 
-  configLoader::reload();
+  m_configLoader->reload();
   randomNameLoader::reload();
   m_weaponSlotsMenu.reset();
   m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(this);
-  m_weaponSlotsMenu->setBody(std::make_unique<Rectangle>(configLoader::get<Rectangle>("WEAPONSLOTSMENU")));
+  m_weaponSlotsMenu->setBody(std::make_unique<Rectangle>(m_configLoader->get<Rectangle>("WEAPONSLOTSMENU")));
 
   m_floorItems.reset();
   m_floorItems = std::make_unique<FloorItems>(this);
@@ -44,7 +60,7 @@ void Game::init()
 
   m_enemies.reset();
   m_enemies = std::make_unique<Enemies>();
-  for (int i = 0; i < configLoader::get<int>("MAX_ENEMIES"); i++)
+  for (int i = 0; i < m_configLoader->get<int>("MAX_ENEMIES"); i++)
   {
     m_enemies->addEnemy(*m_hero, *m_floorItems);
   }
@@ -60,8 +76,8 @@ void Game::init()
       *m_inventory);
 
   m_bluntWeapon.reset();
-  m_bluntWeapon = weaponManager::CREATE_BLUNTWEAPON();
-  m_bluntWeapon->setBodyPosition(configLoader::get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
+  m_bluntWeapon = m_weaponManager->createBluntWeapon();
+  m_bluntWeapon->setVertexBodyPosition(m_configLoader->get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
   m_floorItems->addWeapon(std::move(m_bluntWeapon));
 
   m_grid.reset();
@@ -266,7 +282,7 @@ void Game::handlePlayerZoom(const std::string &zoomDirection)
   }
 }
 
-sf::RenderWindow &Game::getWindow() const
+sf::RenderWindow &Game::getWindow()
 {
   return m_window;
 }
@@ -296,4 +312,14 @@ Grid &Game::getGrid() const
 ToolTip &Game::getToolTip() const
 {
   return *m_toolTip;
+}
+
+ConfigLoader &Game::getConfigLoader() const
+{
+  return *m_configLoader;
+}
+
+WeaponManager &Game::getWeaponManager() const
+{
+  return *m_weaponManager;
 }

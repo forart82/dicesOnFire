@@ -2,16 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ability/VertexRectangleDrawable.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"
 #include "Entity/Circle.h"
 #include "Helper/CollisionHelper.h"
 
-class BaseCharacterBody : public sf::Drawable, public VertexRectangleDrawable
+class BaseCharacterBody : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable
 {
 protected:
-  Game &m_game;
-
   std::unique_ptr<Rectangle> m_body;
   std::unique_ptr<RectangleX2> m_healthBar;
   std::unique_ptr<Circle> m_watchRangeCircle;
@@ -30,7 +29,7 @@ protected:
   bool m_debugIsActive;
 
 public:
-  BaseCharacterBody(Game &game);
+  BaseCharacterBody();
   ~BaseCharacterBody();
 
   virtual void update(sf::Time &delta);

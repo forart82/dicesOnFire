@@ -7,11 +7,10 @@
 class DiceSlot : public sf::Drawable
 {
 private:
-  Game &m_game;
-  std::unique_ptr<Circle> m_body;
+    std::unique_ptr<Circle> m_body;
 
 public:
-  DiceSlot(Game &game);
+  DiceSlot();
   ~DiceSlot();
 
   void update(sf::Time &delta);

@@ -6,7 +6,7 @@ class HeroManager : public BaseManager
 {
 private:
 public:
-  HeroManager(Game &game);
+  HeroManager();
   ~HeroManager();
 
   std::unique_ptr<Hero> createHero();

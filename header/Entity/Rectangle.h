@@ -2,20 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "Entity/BaseEntity.h"
 #include "Entity/Game.h"
 #include "Globals/Colors.h"
 
-class Rectangle : public sf::Drawable
+class Rectangle : public BaseEntity, public sf::Drawable
 {
 
 protected:
-  Game &m_game;
-
-  sf::RectangleShape m_body;
+  sf::RectangleShape m_shape;
   bool m_isActive;
 
 public:
-  Rectangle(Game &game);
+  Rectangle();
   ~Rectangle();
 
   void update(sf::Time &delta);
@@ -25,11 +24,14 @@ public:
   void addPosition(const sf::Vector2f &offset);
   void toggleActive();
 
-  void setBody(const Rectangle &body);
+  void setRectangle(const Rectangle &rectangle);
   void setPosition(const sf::Vector2f &position);
-  void setOriginFromSize(const sf::Vector2f &size);
+  void setSize(const sf::Vector2f &size);
+  void setOutlineThickness(int outlineThickness);
+  void setOrigin();
+  void setColors(const sf::Color &fillColor, const sf::Color &outlineColor);
   void setIsActive(bool isActive);
 
-  const sf::RectangleShape &getBody() const;
+  const sf::RectangleShape &getShape() const;
   bool getIsActive() const;
 };

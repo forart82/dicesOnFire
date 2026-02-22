@@ -1,6 +1,6 @@
 #include "Entity/FloorItems.h"
 
-FloorItems::FloorItems(Game &game)
+FloorItems::FloorItems()
     : VertexRectangleDrawable(game)
 {
 }

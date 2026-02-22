@@ -10,13 +10,11 @@ class GameText : public sf::Drawable
 {
 
 private:
-  Game &m_game;
-
-  sf::Text m_sfText;
+    sf::Text m_sfText;
   std::map<std::string, std::string> m_texts;
 
 public:
-  GameText(Game &game);
+  GameText();
   ~GameText();
 
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

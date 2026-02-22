@@ -1,7 +1,6 @@
 #include "Entity/WeaponSlotsMenu.h"
 
-WeaponSlotsMenu::WeaponSlotsMenu(
-    Game &game)
+WeaponSlotsMenu::WeaponSlotsMenu()
     : m_game(game)
 {
   makeWeaponSlotes();

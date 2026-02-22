@@ -1,11 +1,6 @@
 #include "Entity/BaseCharacterBody.h"
 
-BaseCharacterBody::BaseCharacterBody(
-    Game &game)
-    : VertexRectangleDrawable(game),
-      m_game(game)
-{
-}
+BaseCharacterBody::BaseCharacterBody() {}
 
 BaseCharacterBody::~BaseCharacterBody() {}
 

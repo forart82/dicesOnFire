@@ -1,7 +1,6 @@
 #include "Loader/ConfigLoader.h"
 
-ConfigLoader::ConfigLoader(Game &game)
-    : BaseLoader(game) {}
+ConfigLoader::ConfigLoader() {}
 
 ConfigLoader::~ConfigLoader() {}
 
@@ -59,13 +58,18 @@ const Rectangle &ConfigLoader::readRectangle(std::stringstream &ss) const
   std::getline(ss, blue2, ';');
   std::getline(ss, alpha2, ';');
 
-  return {{toFloat(x), toFloat(y)},
-          {toFloat(width), toFloat(height)},
-          toUnit8(thinkess),
-          toBool(isActive),
-          {toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)},
-          {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
-}
+  Rectangle rectangle;
+  rectangle.setGame(m_game);
+  rectangle.setPosition(sf::Vector2f(toFloat(x), toFloat(y)));
+
+  rectangle.setSize(sf::Vector2f(toFloat(width), toFloat(height)));
+  rectangle.setOutlineThickness(toUnit8(thinkess));
+  rectangle.setIsActive(toBool(isActive));
+  rectangle.setColors(
+      sf::Color(toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)),
+      sf::Color(toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)));
+  return rectangle;
+};
 
 const Circle &ConfigLoader::readCircle(std::stringstream &ss) const
 {
@@ -85,13 +89,15 @@ const Circle &ConfigLoader::readCircle(std::stringstream &ss) const
   std::getline(ss, blue2, ';');
   std::getline(ss, alpha2, ';');
 
-  return {
-      {toFloat(x), toFloat(y)},
-      toFloat(radius),
-      toUnit8(thikness),
-      toBool(isActive),
-      {toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)},
-      {toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)}};
+  Circle circle;
+  circle.setGame(m_game);
+  circle.setPosition(sf::Vector2f(toFloat(x), toFloat(y)));
+  circle.setRadius(toFloat(radius));
+  circle.setOutlineThickness(toUnit8(thikness));
+  circle.setIsActive(toBool(isActive));
+  circle.setColors(
+      sf::Color(toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)),
+      sf::Color(toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)));
 }
 
 int ConfigLoader::readInteger(std::stringstream &ss) const
@@ -139,7 +145,11 @@ void ConfigLoader::parseRectangle(std::stringstream &ss, const std::string &key)
 
 void ConfigLoader::parseRectangleX2(std::stringstream &ss, const std::string &key)
 {
-  m_rectangleX2s[key] = {readRectangle(ss), readRectangle(ss)};
+  RectangleX2 rectangleX2;
+  rectangleX2.setGame(m_game);
+  rectangleX2.setInner(readRectangle(ss));
+  rectangleX2.setOuter(readRectangle(ss));
+  m_rectangleX2s[key] = rectangleX2;
 }
 
 void ConfigLoader::parseCircle(std::stringstream &ss, const std::string &key)
@@ -251,7 +261,7 @@ void ConfigLoader::reload()
 
 // MARK: GET FUNCTION
 template <typename T>
-T ConfigLoader::get(const std::string &key)
+const T &ConfigLoader::get(const std::string &key) const
 {
   if constexpr (std::is_same_v<T, int>)
   {

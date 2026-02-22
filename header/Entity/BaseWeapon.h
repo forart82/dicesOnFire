@@ -4,17 +4,16 @@
 #include <map>
 #include "Ability/Dragable.h"
 #include "Ability/VertexRectangleDrawable.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/DiceSlot.h"
 #include "Entity/Rectangle.h"
 #include "Entity/Timer.h"
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class BaseWeapon : public sf::Drawable, public VertexRectangleDrawable, public Dragable
+class BaseWeapon : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable, public Dragable
 {
 protected:
-  Game &m_game;
-
   std::unique_ptr<Rectangle> m_body;
   std::map<int, std::unique_ptr<DiceSlot>> m_diceSlots;
   std::unique_ptr<Timer> m_timer;
@@ -25,7 +24,7 @@ protected:
   int m_weaponSlotNumber;
 
 public:
-  BaseWeapon(Game &game);
+  BaseWeapon();
   virtual ~BaseWeapon() = default;
 
   void update(sf::Time &delta);

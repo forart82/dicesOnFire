@@ -1,6 +1,6 @@
 #include "Entity/BluntWeapon.h"
 
-BluntWeapon::BluntWeapon(Game &game)
+BluntWeapon::BluntWeapon()
     : BaseWeapon(game)
 {
 }
