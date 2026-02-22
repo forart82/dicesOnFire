@@ -1,14 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Ability/VertexRectangleDrawable.h"
-#include "Entity/Game.h"
-#include "Entity/Dice.h"
-#include "Entity/BaseWeapon.h"
-#include "Loader/TextureLoader.h"
-#include "Entity/Items.h"
+#include "Entity/BaseItems.h"
 
-class FloorItems : public Items, public VertexRectangleDrawable
+class FloorItems : public BaseItems, public VertexRectangleDrawable
 {
 private:
 public:

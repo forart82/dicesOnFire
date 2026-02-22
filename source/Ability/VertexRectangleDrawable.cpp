@@ -1,13 +1,12 @@
 #include "Ability/VertexRectangleDrawable.h"
 
 VertexRectangleDrawable::VertexRectangleDrawable()
-    : m_game(game),
-      m_vertexBodyLeft(0),
+    : m_vertexBodyLeft(0),
       m_vertexBodyTop(0),
       m_vertexAssetBodyLeft(0),
       m_vertexAssetBodyTop(0),
-      m_tileSize(configLoader::get<int>("TILE_SIZE")),
-      m_assetTileSize(configLoader::get<int>("ASSET_TILE_SIZE")),
+      m_tileSize(0),
+      m_assetTileSize(0),
       m_isActive(true)
 {
   makeAll();
@@ -75,6 +74,16 @@ void VertexRectangleDrawable::setFloatRects(sf::FloatRect &vertexBody, sf::Float
 {
   setVertexBodyFloatRect(vertexBody);
   setVertexAssetBodyFloatRect(asset);
+}
+
+void VertexRectangleDrawable::setTileSize(int tileSize)
+{
+  m_tileSize = tileSize;
+}
+
+void VertexRectangleDrawable::setAssetTileSize(int assetTileSize)
+{
+  m_assetTileSize = assetTileSize;
 }
 
 void VertexRectangleDrawable::setIsActive(bool isActive)

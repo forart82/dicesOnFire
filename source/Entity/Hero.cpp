@@ -1,10 +1,6 @@
 #include "Entity/Hero.h"
 
-Hero::Hero()
-    : BaseCharacterBody(game),
-      m_game(game)
-{
-}
+Hero::Hero() {}
 
 Hero::~Hero() {}
 

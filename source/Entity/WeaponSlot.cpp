@@ -1,13 +1,14 @@
 #include "Entity/WeaponSlot.h"
 
 WeaponSlot::WeaponSlot()
-    : m_game(game)
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
-  m_timer = std::make_unique<Timer>(
-      std::make_unique<RectangleX2>(configLoader::get<RectangleX2>(weaponSlotKey + "_TIMER")),
-      cooldown,
-      true);
+  m_timer = std::make_unique<Timer>();
+  m_timer->setGame(m_game);
+
+  m_timer->setBody(std::make_unique<RectangleX2>(m_game->getConfigLoader().get<RectangleX2>(weaponSlotKey + "_TIMER")));
+  m_timer->setCooldown(3);
+  m_timer->setIsVertical(true);
   fakeDropWeaponInSlot(weaponSlotKey);
 }
 WeaponSlot::~WeaponSlot() {}
@@ -28,29 +29,19 @@ void WeaponSlot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void WeaponSlot::fakeDropWeaponInSlot(const std::string &weaponSlotKey)
 {
-  m_bladedWeapon = std::make_unique<BladedWeapon>(
-      std::make_unique<Rectangle>(configLoader::get<Rectangle>(weaponSlotKey + "_WEAPON")),
-      randomHelper::GET_RANDOM_NUMBER_INT(3, 5),
-      randomHelper::GET_RANDOM_NUMBER_INT(1, 7),
-      randomHelper::GET_RANDOM_NUMBER_INT(1, 2),
-      m_weaponSlotNumber,
-      0,
-      0,
-      0,
-      0);
 }
 
 void WeaponSlot::setBody(std::unique_ptr<Rectangle> body)
 {
-  m_body = std::move(body)
+  m_body = std::move(body);
 }
 void WeaponSlot::setTimer(std::unique_ptr<Timer> timer)
 {
-  m_timer = std::move(timer)
+  m_timer = std::move(timer);
 }
 void WeaponSlot::setBladedWeapon(std::unique_ptr<BladedWeapon> bladedWeapon)
 {
-  m_bladedWeapon = std::move(bladedWeapon)
+  m_bladedWeapon = std::move(bladedWeapon);
 }
 void WeaponSlot::setWeaponSlotNumber(int weaponSlotNumber)
 {

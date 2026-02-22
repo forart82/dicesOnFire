@@ -1,8 +1,7 @@
 #include "Entity/Timer.h"
 
 Timer::Timer()
-    : m_game(game),
-      m_isStopped(false),
+    : m_isStopped(false),
       m_cooldown(0),
       m_isVertical(false)
 {
@@ -24,14 +23,15 @@ void Timer::update(sf::Time &delta)
     if (m_isVertical)
     {
       progressWidth = m_progressBarSize.x - (m_progressBarSize.x * progress);
-      m_body->getInner().getShape().setSize({progressWidth, progressHeight});
     }
 
     if (!m_isVertical)
     {
       progressHeight = m_progressBarSize.y - (m_progressBarSize.y * progress);
-      m_body->getInner().getShape().setSize({progressWidth, progressHeight});
     }
+
+    m_body->setInnerSize(
+        sf::Vector2f(progressWidth, progressHeight));
 
     if (seconds >= m_cooldown)
     {

@@ -11,8 +11,6 @@
 class EnemyManager : public BaseManager
 {
 private:
-  Hero &m_hero;
-
   std::unique_ptr<Rectangle> m_enemyBody;
   std::unique_ptr<RectangleX2> m_enemyHealthBar;
   std::unique_ptr<Circle> m_enemyWatchRange;

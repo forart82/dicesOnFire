@@ -1,8 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
-#include "Entity/Game.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/Timer.h"
 #include "Entity/DiceSlot.h"
 #include "Entity/WeaponSlot.h"
@@ -10,11 +8,11 @@
 #include "Entity/Rectangle.h"
 #include "Helper/RandomHelper.h"
 
-class WeaponSlot : public sf::Drawable
+class WeaponSlot : public BaseEntity, public sf::Drawable
 {
 
 private:
-    std::unique_ptr<Rectangle> m_body;
+  std::unique_ptr<Rectangle> m_body;
   std::unique_ptr<Timer> m_timer;
   std::unique_ptr<BladedWeapon> m_bladedWeapon;
 

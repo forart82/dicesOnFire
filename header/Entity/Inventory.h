@@ -1,15 +1,13 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <vector>
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/Dice.h"
 #include "Entity/BaseWeapon.h"
-#include "Entity/Items.h"
+#include "Entity/BaseItems.h"
 #include "Entity/Cell.h"
 #include "Loader/ConfigLoader.h"
 
-class Inventory : public Items
+class Inventory : public BaseItems
 {
 private:
   struct SlotContent
@@ -20,7 +18,7 @@ private:
     bool isEmpty() const { return dice == nullptr && baseWeapon == nullptr; }
   };
 
-    std::vector<std::unique_ptr<Cell>> m_cells;
+  std::vector<std::unique_ptr<Cell>> m_cells;
   std::vector<SlotContent> m_slots;
   sf::Vector2f m_inventoryPosition;
   int m_size;
@@ -46,6 +44,6 @@ public:
 
   const std::vector<std::unique_ptr<Cell>> &getCells() const;
   int getCellsSize() const;
-  bool getIsActive() const;
   int getFreeSlotIndex() const;
+  bool getIsActive() const;
 };

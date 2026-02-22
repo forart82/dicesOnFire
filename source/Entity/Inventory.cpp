@@ -1,13 +1,11 @@
 #include "Entity/Inventory.h"
 
 Inventory::Inventory()
-    : Items(game),
-      m_game(game),
-      m_size(configLoader::get<int>("INVENTORY_SIZE")),
-      m_sizeMod(configLoader::get<int>("INVENTORY_SIZE_MOD")),
-      m_tileSize(configLoader::get<int>("TILE_SIZE")),
-      m_isActive(false),
-      m_inventoryPosition(configLoader::get<sf::Vector2f>("INVENTORY_POSITION"))
+    : m_size(m_game->getConfigLoader().get<int>("INVENTORY_SIZE")),
+      m_sizeMod(m_game->getConfigLoader().get<int>("INVENTORY_SIZE_MOD")),
+      m_tileSize(m_game->getConfigLoader().get<int>("TILE_SIZE")),
+      m_inventoryPosition(m_game->getConfigLoader().get<sf::Vector2f>("INVENTORY_POSITION")),
+      m_isActive(false)
 {
   makeInventory();
 }
@@ -32,19 +30,19 @@ void Inventory::addDice(std::unique_ptr<Dice> dice)
     placeItem(dice, freeSlotIndex);
     Dice *dicePtr = dice.get();
     m_slots[freeSlotIndex].dice = dicePtr;
-    Items::addDice(std::move(dice));
+    BaseItems::addDice(std::move(dice));
   }
 }
 
-void Inventory::addWeapon(std::unique_ptr<Weapon> weapon)
+void Inventory::addWeapon(std::unique_ptr<BaseWeapon> weapon)
 {
   int freeSlotIndex = getFreeSlotIndex();
   if (freeSlotIndex >= 0)
   {
     placeItem(weapon, freeSlotIndex);
-    Weapon *weaponPtr = weapon.get();
-    m_slots[freeSlotIndex].weapon = weaponPtr;
-    Items::addWeapon(std::move(weapon));
+    BaseWeapon *weaponPtr = weapon.get();
+    m_slots[freeSlotIndex].baseWeapon = weaponPtr;
+    BaseItems::addWeapon(std::move(weapon));
   }
 }
 

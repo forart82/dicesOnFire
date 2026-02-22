@@ -1,20 +1,16 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Entity/BaseCharacterBody.h"
-#include "Entity/Hero.h"
 #include "Entity/Dice.h"
 #include "Entity/FloorItems.h"
+#include "Entity/Hero.h"
 #include "Helper/RandomHelper.h"
-#include "Manager/DiceManager.h"
 #include "Loader/ConfigLoader.h"
+#include "Manager/DiceManager.h"
 
 class Enemy : public BaseCharacterBody
 {
 private:
-    Hero &m_hero;
-  FloorItems &m_floorItems;
-
   bool m_houndHero;
   std::vector<std::unique_ptr<Dice>> m_dices;
 

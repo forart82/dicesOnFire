@@ -1,8 +1,7 @@
 #include "Entity/GameText.h"
 
 GameText::GameText()
-    : m_game(game),
-      m_sfText(fontLoader::get("Quantico"))
+    : m_sfText(m_game->getFontLoader().get("Quantico"))
 {
   m_sfText.setFillColor(colors::COLOR_BLUE_SKY_BLUE);
 }

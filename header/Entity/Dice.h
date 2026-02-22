@@ -1,14 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
-#include <random>
-#include <sstream>
-#include <iomanip>
 #include "Ability/VertexRectangleDrawable.h"
 #include "Ability/Dragable.h"
 #include "Entity/BaseEntity.h"
-#include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/Timer.h"
 #include "Entity/Circle.h"

@@ -1,6 +1,21 @@
 #include "Loader/ConfigLoader.h"
 
-ConfigLoader::ConfigLoader() {}
+ConfigLoader::ConfigLoader()
+{
+  m_form = "";
+
+  m_defaultRectangle = Rectangle();
+  m_defaultRectangle.setGame(m_game);
+  m_defaultRectangleX2 = RectangleX2();
+  m_defaultRectangleX2.setGame(m_game);
+  m_defaultCircle = Circle();
+  m_defaultCircle.setGame(m_game);
+  m_defaultVector2f = sf::Vector2f(0.f, 0.f);
+  m_defaultFloatRect = sf::FloatRect(m_defaultVector2f, m_defaultVector2f);
+  m_defaultString = "Default String";
+  m_defaultFloat = 0.f;
+  m_defaultInt = 0;
+}
 
 ConfigLoader::~ConfigLoader() {}
 
@@ -269,7 +284,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_integers.find(key);
-    return (it != m_integers.end()) ? it->second : DEFAULT_INTEGER;
+    return (it != m_integers.end()) ? it->second : m_defaultInt;
   }
   else if constexpr (std::is_same_v<T, float>)
   {
@@ -277,7 +292,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_floats.find(key);
-    return (it != m_floats.end()) ? it->second : DEFAULT_FLOAT;
+    return (it != m_floats.end()) ? it->second : m_defaultFloat;
   }
   else if constexpr (std::is_same_v<T, Rectangle>)
   {
@@ -285,7 +300,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_rectangles.find(key);
-    return (it != m_rectangles.end()) ? it->second : DEFAULT_RECTANGLE;
+    return (it != m_rectangles.end()) ? it->second : m_defaultRectangle;
   }
   else if constexpr (std::is_same_v<T, RectangleX2>)
   {
@@ -293,7 +308,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_rectangleX2s.find(key);
-    return (it != m_rectangleX2s.end()) ? it->second : DEFAULT_RECTANGLEX2;
+    return (it != m_rectangleX2s.end()) ? it->second : m_defaultRectangleX2;
   }
   else if constexpr (std::is_same_v<T, Circle>)
   {
@@ -301,7 +316,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_circles.find(key);
-    return (it != m_circles.end()) ? it->second : DEFAULT_CIRCLE;
+    return (it != m_circles.end()) ? it->second : m_defaultCircle;
   }
   else if constexpr (std::is_same_v<T, sf::Vector2f>)
   {
@@ -309,7 +324,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_vector2fs.find(key);
-    return (it != m_vector2fs.end()) ? it->second : DEFAULT_VECTOR2F;
+    return (it != m_vector2fs.end()) ? it->second : m_defaultVector2f;
   }
   else if constexpr (std::is_same_v<T, sf::FloatRect>)
   {
@@ -317,7 +332,7 @@ const T &ConfigLoader::get(const std::string &key) const
       loadAll();
 
     auto it = m_floatRects.find(key);
-    return (it != m_floatRects.end()) ? it->second : DEFAULT_FLOATRECT;
+    return (it != m_floatRects.end()) ? it->second : m_defaultFloatRect;
   }
   else
   {

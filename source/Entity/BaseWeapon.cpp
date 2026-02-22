@@ -31,7 +31,8 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void BaseWeapon::makeDiceSlot(int slotId)
 {
   std::string diceSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber) + "_WEAPON_DICESLOT_" + std::to_string(slotId);
-  m_diceSlots[slotId] = std::make_unique<DiceSlot>(std::make_unique<Circle>(m_game->getConfigLoader().get<Circle>(diceSlotKey)));
+  m_diceSlots[slotId] = std::make_unique<DiceSlot>();
+  m_diceSlots[slotId]->setGame(m_game);
 
   // TO REMOVE
   // TO MODIFY

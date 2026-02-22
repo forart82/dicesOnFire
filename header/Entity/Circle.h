@@ -1,8 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Entity/BaseEntity.h"
-#include "Entity/Game.h"
 #include "Globals/Colors.h"
 
 class Circle : public BaseEntity, public sf::Drawable

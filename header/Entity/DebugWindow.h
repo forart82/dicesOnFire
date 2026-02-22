@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Globals/Colors.h"
 #include "Loader/ConfigLoader.h"
 

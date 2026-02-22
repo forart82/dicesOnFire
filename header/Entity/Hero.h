@@ -1,18 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include "Entity/Game.h"
 #include "Entity/BaseCharacterBody.h"
-#include "Entity/Rectangle.h"
-#include "Entity/RectangleX2.h"
-#include "Globals/Enums.h"
-#include "Loader/TextureLoader.h"
 
 class Hero : public BaseCharacterBody
 {
 private:
-    sf::Vector2f m_direction;
+  sf::Vector2f m_direction;
 
 public:
   Hero();

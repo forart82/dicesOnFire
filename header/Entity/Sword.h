@@ -1,9 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Entity/Game.h"
 #include "Entity/BladedWeapon.h"
-#include "Entity/Rectangle.h"
 
 class Sword : public BladedWeapon
 {

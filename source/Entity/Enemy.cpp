@@ -1,15 +1,11 @@
 #include "Entity/Enemy.h"
 
 Enemy::Enemy()
-    : BaseCharacterBody(game),
-      m_game(game),
-      m_hero(game.getHero()),
-      m_floorItems(game.getFloorItems()),
-      m_houndHero(false)
+    : m_houndHero(false)
 {
   for (int i = randomHelper::GET_RANDOM_NUMBER_INT(1, 1); i <= randomHelper::GET_RANDOM_NUMBER_INT(1, 2); i++)
   {
-    m_dices.emplace_back(diceManager::CREATE_DICE(1));
+    m_dices.emplace_back(m_game->getDiceManager().createDice(1));
   }
 }
 
@@ -21,12 +17,12 @@ void Enemy::update(sf::Time &delta)
   prepareVertex();
 }
 
-void Enemy::move(sf::Time &delta)
+void Enemy::move(const sf::Time &delta)
 {
   if (m_houndHero)
   {
     sf::Vector2f direction;
-    sf::Vector2f toPlayer = m_hero.getBody().getShape().getPosition() - m_bodyBox->getShape().getPosition();
+    sf::Vector2f toPlayer = m_game->getHero().getBody().getShape().getPosition() - m_body->getShape().getPosition();
     float distance = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
     if (distance != 0) // Éviter la division par zéro
     {
@@ -39,15 +35,15 @@ void Enemy::move(sf::Time &delta)
 
 void Enemy::prepareVertex()
 {
-  float left = m_bodyBox->getShape().getGlobalBounds().position.x;
-  float top = m_bodyBox->getShape().getGlobalBounds().position.y;
-  float width = m_bodyBox->getShape().getGlobalBounds().size.x;
-  float height = m_bodyBox->getShape().getGlobalBounds().size.y;
+  float left = m_body->getShape().getGlobalBounds().position.x;
+  float top = m_body->getShape().getGlobalBounds().position.y;
+  float width = m_body->getShape().getGlobalBounds().size.x;
+  float height = m_body->getShape().getGlobalBounds().size.y;
 
-  m_leftTop = sf::Vector2f(left, top);
-  m_rightTop = sf::Vector2f(left + width, top);
-  m_leftBottom = sf::Vector2f(left, top + height);
-  m_rightBottom = sf::Vector2f(left + width, top + height);
+  setVertexAssetBodyFloatRect(
+      sf::FloatRect(
+          sf::Vector2f(left, top),
+          sf::Vector2f(width, height)));
 }
 
 void Enemy::removeHealth(int health)
@@ -59,15 +55,16 @@ void Enemy::removeHealth(int health)
   }
   float healthPercent = std::max(0.f, m_health / m_maxHealth);
   float maxWidth = m_healthBar->getOuter().getShape().getSize().x;
-  m_healthBar->getInner().getShape().setSize({maxWidth * healthPercent, m_healthBar->getInner().getShape().getSize().y});
+  m_healthBar->setInnerSize(
+      sf::Vector2f(maxWidth * healthPercent, m_healthBar->getInner().getShape().getSize().y));
 }
 
 void Enemy::dropItemsOnFloor()
 {
   for (auto it = m_dices.begin(); it != m_dices.end();)
   {
-    (*it)->resetLeftTop(m_leftTop);
-    m_floorItems.addDice(std::move(*it));
+    (*it)->makeAll();
+    m_game->getFloorItems().addDice(std::move(*it));
     it = m_dices.erase(it);
   }
 }

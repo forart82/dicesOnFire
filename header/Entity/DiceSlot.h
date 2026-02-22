@@ -1,10 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Entity/Game.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/Circle.h"
 
-class DiceSlot : public sf::Drawable
+class DiceSlot : public Gameable, public sf::Drawable
 {
 private:
 public:

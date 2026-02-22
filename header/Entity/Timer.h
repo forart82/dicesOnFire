@@ -1,14 +1,12 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <functional>
+#include "Entity/BaseEntity.h"
 #include "Entity/RectangleX2.h"
-#include "Entity/Game.h"
 
-class Timer : public sf::Drawable
+class Timer : public BaseEntity, public sf::Drawable
 {
 private:
-    std::unique_ptr<RectangleX2> m_body;
+  std::unique_ptr<RectangleX2> m_body;
   sf::Vector2f m_progressBarSize;
   sf::Time m_elapsedTime;
   float m_cooldown;
@@ -17,7 +15,6 @@ private:
 
 public:
   Timer();
-
   ~Timer();
 
   std::function<void()> onTimeout;

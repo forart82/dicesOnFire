@@ -1,12 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include "Entity/Circle.h"
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"
@@ -24,7 +17,16 @@ private:
   std::map<std::string, float> m_floats;
   std::map<std::string, sf::Vector2f> m_vector2fs;
   std::map<std::string, sf::FloatRect> m_floatRects;
-  std::string m_form = "";
+  std::string m_form;
+
+  Rectangle m_defaultRectangle;
+  RectangleX2 m_defaultRectangleX2;
+  Circle m_defaultCircle;
+  sf::Vector2f m_defaultVector2f;
+  sf::FloatRect m_defaultFloatRect;
+  std::string m_defaultString;
+  float m_defaultFloat;
+  int m_defaultInt;
 
 public:
   ConfigLoader();

@@ -7,6 +7,8 @@ HeroManager::~HeroManager() {}
 std::unique_ptr<Hero> HeroManager::createHero()
 {
   auto hero = std::make_unique<Hero>();
+  hero->setGame(m_game);
+
   hero->setBody(std::make_unique<Rectangle>(m_game->getConfigLoader().get<Rectangle>("HERO_BODY")));
   hero->setHealthBar(std::make_unique<RectangleX2>(m_game->getConfigLoader().get<RectangleX2>("HERO_HEALTHBAR")));
   hero->setWatchRangeCircle(std::make_unique<Circle>(m_game->getConfigLoader().get<Circle>("HERO_WATCH_RANGE")));

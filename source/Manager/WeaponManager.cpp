@@ -6,7 +6,8 @@ WeaponManager::~WeaponManager() {}
 
 std::unique_ptr<BladedWeapon> WeaponManager::createBladedWeapon()
 {
-  auto weapon = std::make_unique<BladedWeapon>(m_game);
+  auto weapon = std::make_unique<BladedWeapon>();
+  weapon->setGame(m_game);
 
   weapon->setDamage(randomHelper::GET_RANDOM_NUMBER_INT(1, 10));
   weapon->setNumberOfSlots(randomHelper::GET_RANDOM_NUMBER_INT(1, 4));
@@ -22,7 +23,9 @@ std::unique_ptr<BluntWeapon> WeaponManager::createBluntWeapon()
   int assetsLeft = 1376;
   int assetsTop = 1504;
 
-  auto weapon = std::make_unique<BluntWeapon>(m_game);
+  auto weapon = std::make_unique<BluntWeapon>();
+  weapon->setGame(m_game);
+
   weapon->setBody(std::make_unique<Rectangle>());
   weapon->setCooldown(cooldown);
   weapon->setDamage(damage);

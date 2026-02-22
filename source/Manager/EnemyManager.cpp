@@ -31,6 +31,8 @@ void EnemyManager::addPosition(const std::unique_ptr<T> &component, const sf::Ve
 
 std::unique_ptr<Enemy> EnemyManager::createEnemy()
 {
+  auto &hero = m_game->getHero();
+
   int health = randomHelper::GET_RANDOM_NUMBER_INT(50, 100);
   int maxHealth = health;
   int speed = randomHelper::GET_RANDOM_NUMBER_INT(50, 100);
@@ -39,10 +41,10 @@ std::unique_ptr<Enemy> EnemyManager::createEnemy()
   int longRangeRadius = randomHelper::GET_RANDOM_NUMBER_INT(shortRangeRadius, shortRangeRadius * 2);
   int pickUpRangeRadius = 50;
 
-  int heroMinX = m_hero.getBody().getShape().getPosition().x - 3000;
-  int heroMinY = m_hero.getBody().getShape().getPosition().y - 3000;
-  int heroMaxX = m_hero.getBody().getShape().getPosition().x + 2000;
-  int heroMaxY = m_hero.getBody().getShape().getPosition().y + 2000;
+  int heroMinX = hero.getBody().getShape().getPosition().x - 3000;
+  int heroMinY = hero.getBody().getShape().getPosition().y - 3000;
+  int heroMaxX = hero.getBody().getShape().getPosition().x + 2000;
+  int heroMaxY = hero.getBody().getShape().getPosition().y + 2000;
   int randomX = randomHelper::GET_RANDOM_NUMBER_INT(heroMinX, heroMaxX);
   int randomY = randomHelper::GET_RANDOM_NUMBER_INT(heroMinY, heroMaxY);
 
@@ -58,13 +60,14 @@ std::unique_ptr<Enemy> EnemyManager::createEnemy()
   longRangeCircle->setRadius(longRangeRadius);
   pickUpRangeCircle->setRadius(pickUpRangeRadius);
 
-  body->setPosition(m_hero.getBody().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-  healthBar->setOuterPosition(m_hero.getHealthBar().getOuter().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-  healthBar->setInnerPosition(m_hero.getHealthBar().getInner().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-  shortRangeCircle->setPosition(m_hero.getShortRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
-  longRangeCircle->setPosition(m_hero.getPickUpRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
+  body->setPosition(hero.getBody().getShape().getPosition() + sf::Vector2f(randomX, randomY));
+  healthBar->setOuterPosition(hero.getHealthBar().getOuter().getShape().getPosition() + sf::Vector2f(randomX, randomY));
+  healthBar->setInnerPosition(hero.getHealthBar().getInner().getShape().getPosition() + sf::Vector2f(randomX, randomY));
+  shortRangeCircle->setPosition(hero.getShortRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
+  longRangeCircle->setPosition(hero.getPickUpRangeCircle().getShape().getPosition() + sf::Vector2f(randomX, randomY));
 
   auto enemy = std::make_unique<Enemy>();
+  enemy->setGame(m_game);
 
   enemy->setBody(std::move(body));
   enemy->setHealthBar(std::move(healthBar));

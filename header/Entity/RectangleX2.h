@@ -1,10 +1,7 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Entity/BaseEntity.h"
-#include "Entity/Game.h"
 #include "Entity/Rectangle.h"
-#include "Globals/Colors.h"
 
 class RectangleX2 : public BaseEntity, public sf::Drawable
 {
@@ -29,6 +26,8 @@ public:
   void setInner(const Rectangle &inner);
   void setOuterPosition(const sf::Vector2f &position);
   void setInnerPosition(const sf::Vector2f &position);
+  void setOuterSize(const sf::Vector2f &size);
+  void setInnerSize(const sf::Vector2f &size);
 
   const Rectangle &getOuter() const;
   const Rectangle &getInner() const;

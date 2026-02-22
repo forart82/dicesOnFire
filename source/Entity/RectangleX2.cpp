@@ -55,6 +55,15 @@ void RectangleX2::setInnerPosition(const sf::Vector2f &position)
   m_inner.setPosition(position);
 }
 
+void RectangleX2::setOuterSize(const sf::Vector2f &size)
+{
+  m_outer.setSize(size);
+}
+void RectangleX2::setInnerSize(const sf::Vector2f &size)
+{
+  m_inner.setSize(size);
+}
+
 const Rectangle &RectangleX2::getOuter() const
 {
   return m_outer;

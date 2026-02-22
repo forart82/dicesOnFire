@@ -3,9 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm>
 #include <initializer_list>
-#include "Entity/Game.h"
-#include "Helper/RandomHelper.h"
-#include "Loader/ConfigLoader.h"
 
 class VertexRectangleDrawable
 {
@@ -46,6 +43,8 @@ public:
   void setVertexBodyFloatRect(const sf::FloatRect &floatRect);
   void setVertexAssetBodyFloatRect(const sf::FloatRect &floatRect);
   void setFloatRects(sf::FloatRect &vertexBody, sf::FloatRect &vertexAssetBody);
+  void setTileSize(int tileSize);
+  void setAssetTileSize(int assetTileSize);
   void setIsActive(bool isActive);
 
   const sf::FloatRect &getVertexBody() const;

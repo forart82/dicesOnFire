@@ -1,9 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Entity/BaseEntity.h"
-#include "Entity/Game.h"
 #include "Entity/GameText.h"
 #include "Entity/DebugWindow.h"
 #include "Entity/Hero.h"

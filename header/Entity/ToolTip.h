@@ -1,11 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Ability/VertexRectangleDrawable.h"
-#include "Loader/TextureLoader.h"
-#include "Loader/FontLoader.h"
+#include "Entity/BaseEntity.h"
 
-class ToolTip : public sf::Drawable, public VertexRectangleDrawable
+class ToolTip : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable
 {
 private:
   sf::Text m_title;

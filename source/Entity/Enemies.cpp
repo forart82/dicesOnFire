@@ -1,9 +1,6 @@
 #include "Entity/Enemies.h"
 
-Enemies::Enemies()
-    : m_game(game)
-{
-}
+Enemies::Enemies() {}
 
 Enemies::~Enemies() {}
 
@@ -24,9 +21,9 @@ void Enemies::draw(sf::RenderTarget &target, sf::RenderStates states) const
   }
 }
 
-void Enemies::addEnemy(Hero &hero, FloorItems &floorItems)
+void Enemies::addEnemy()
 {
-  m_enemies.emplace_back(enemyManager::CREATE_ENEMY(hero, floorItems));
+  m_enemies.emplace_back(m_game->getEnemyManager().createEnemy());
 }
 
 void Enemies::removeEnemyOnDeath()

@@ -1,16 +1,14 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
-#include "Entity/Game.h"
+#include "Entity/BaseEntity.h"
 #include "Loader/FontLoader.h"
 #include "Globals/Colors.h"
 
-class GameText : public sf::Drawable
+class GameText : public BaseEntity, public sf::Drawable
 {
 
 private:
-    sf::Text m_sfText;
+  sf::Text m_sfText;
   std::map<std::string, std::string> m_texts;
 
 public:

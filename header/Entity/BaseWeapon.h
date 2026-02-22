@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
 #include "Ability/Dragable.h"
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"

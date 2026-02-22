@@ -1,8 +1,9 @@
 #include "Entity/Dice.h"
 
 Dice::Dice()
-    : m_timer(std::make_unique<Timer>())
+    : m_timer(m_game->getTimerManager().createTimer())
 {
+
   makeFaceValues();
   // Timer
   m_timer->onTimeout = [this]()

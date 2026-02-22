@@ -1,10 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <cmath>
 #include "Entity/BaseEntity.h"
-#include "Entity/Game.h"
-#include "Globals/Colors.h"
 
 class Rectangle : public BaseEntity, public sf::Drawable
 {

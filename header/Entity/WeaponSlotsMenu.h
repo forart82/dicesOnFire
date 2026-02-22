@@ -1,16 +1,14 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <map>
-#include "Entity/Game.h"
+#include "Entity/BaseEntity.h"
 #include "Entity/WeaponSlot.h"
 #include "Entity/Rectangle.h"
 
-class WeaponSlotsMenu : public sf::Drawable
+class WeaponSlotsMenu : public BaseEntity, public sf::Drawable
 {
 
 private:
-    std::unique_ptr<Rectangle> m_body;
+  std::unique_ptr<Rectangle> m_body;
   std::map<int, std::unique_ptr<WeaponSlot>> m_weaponSlots;
 
   int m_weaponSlotCounter;

@@ -1,16 +1,16 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <vector>
-#include <algorithm>
+
+#include "Entity/BaseEntity.h"
 #include "Entity/Enemy.h"
 #include "Entity/FloorItems.h"
 #include "Manager/EnemyManager.h"
 
-class Enemies : public sf::Drawable
+class Enemies : public BaseEntity, public sf::Drawable
 {
 private:
-    std::vector<std::unique_ptr<Enemy>> m_enemies;
+  std::vector<std::unique_ptr<Enemy>> m_enemies;
 
 public:
   Enemies();
@@ -19,7 +19,7 @@ public:
   virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void addEnemy(const Hero &hero, const FloorItems &floorItems);
+  void addEnemy();
   void removeEnemyOnDeath();
 
   const std::vector<std::unique_ptr<Enemy>> &getEnemies() const;

@@ -33,10 +33,16 @@ Game::Game()
   m_hoverHub->setGame(this);
   m_configLoader = std::make_unique<ConfigLoader>();
   m_configLoader->setGame(this);
+  m_fontLoader = std::make_unique<FontLoader>();
+  m_fontLoader->setGame(this);
+  m_enemyManager = std::make_unique<EnemyManager>();
+  m_enemyManager->setGame(this);
   m_heroManager = std::make_unique<HeroManager>();
   m_heroManager->setGame(this);
   m_weaponManager = std::make_unique<WeaponManager>();
   m_weaponManager->setGame(this);
+  m_diceManager = std::make_unique<DiceManager>();
+  m_diceManager->setGame(this);
 
   int m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
   int m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
@@ -92,7 +98,7 @@ void Game::init()
   m_enemies = std::make_unique<Enemies>();
   for (int i = 0; i < m_configLoader->get<int>("MAX_ENEMIES"); i++)
   {
-    m_enemies->addEnemy(*m_hero, *m_floorItems);
+    m_enemies->addEnemy();
   }
 
   m_attackHub.reset();
@@ -349,7 +355,30 @@ ConfigLoader &Game::getConfigLoader() const
   return *m_configLoader;
 }
 
+FontLoader &Game::getFontLoader() const
+{
+  return *m_fontLoader;
+}
+
+EnemyManager &Game::getEnemyManager() const
+{
+  return *m_enemyManager;
+}
+
+HeroManager &Game::getHeroManager() const
+{
+  return *m_heroManager;
+}
 WeaponManager &Game::getWeaponManager() const
 {
   return *m_weaponManager;
+}
+
+DiceManager &Game::getDiceManager() const
+{
+  return *m_diceManager;
+}
+TimerManager &Game::getTimerManager() const
+{
+  return *m_timerManager;
 }
