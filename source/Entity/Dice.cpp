@@ -16,8 +16,6 @@ void Dice::update(sf::Time &delta)
   {
     m_timer->update(delta);
     int diceValue = randomHelper::GET_RANDOM_NUMBER_INT(1, m_faces);
-    m_diceValueText->addText("dice", std::to_string(diceValue));
-    handelTextPositionBasedOnDiceValue(diceValue);
   }
   if (m_timer->getIsStopped())
   {
@@ -33,7 +31,6 @@ void Dice::update(sf::Time &delta)
 void Dice::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   target.draw(*m_timer);
-  target.draw(*m_diceValueText);
 }
 
 void Dice::makeFaceValues()
@@ -47,26 +44,9 @@ void Dice::makeFaceValues()
   }
 }
 
-void Dice::handelTextPositionBasedOnDiceValue(int diceValue)
-{
-  if (diceValue < 10)
-  {
-    // auto newPosition = sf::Vector2f(m_position.x + 28.f, m_position.y + 10.f);
-    // m_diceValueText->setPosition(newPosition);
-  }
-  else
-  {
-    // auto newPosition = sf::Vector2f(m_position.x + 10.f, m_position.y + 10.f);
-    // m_diceValueText->setPosition(newPosition);
-  }
-}
-
-void Dice::setFaces(int faces)
+void Dice::setFaces(size_t faces)
 {
   m_faces = faces;
-  m_diceWeaponSlotMenu->getShape().setPointCount(m_faces);
-  m_diceSacMenu->getShape().setPointCount(m_faces);
-  m_diceFloorItem->getShape().setPointCount(m_faces);
   makeFaceValues();
 }
 void Dice::setRerolls(int rerolls)
@@ -91,7 +71,7 @@ void Dice::setIsOnFloor(bool isOnFloor)
 
 void Dice::setPosition(const sf::Vector2f &position)
 {
-  VertexRectangleDrawable::setBodyPosition(position);
+  VertexRectangleDrawable::setVertexBodyPosition(position);
 }
 
 void Dice::onTimeout()
@@ -127,5 +107,5 @@ const sf::FloatRect &Dice::getGlobalBounds() const
 
 const sf::Vector2f &Dice::getPosition() const
 {
-  return VertexRectangleDrawable::getBodyCenter();
+  return VertexRectangleDrawable::getVertexBodyCenter();
 }

@@ -19,16 +19,12 @@
 class Dice : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable, public Dragable
 {
 private:
-  std::unique_ptr<Circle> m_diceWeaponSlotMenu;
-  std::unique_ptr<Circle> m_diceSacMenu;
-  std::unique_ptr<Circle> m_diceFloorItem;
-  std::unique_ptr<GameText> m_diceValueText;
   std::unique_ptr<Timer> m_timer;
 
   std::map<int, float> m_faceValues;
   std::string m_name;
 
-  int m_faces;
+  size_t m_faces;
   int m_rerolls;
 
   bool m_isOnFloor;
@@ -46,9 +42,8 @@ public:
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void makeFaceValues();
-  void handelTextPositionBasedOnDiceValue(int diceValues);
 
-  void setFaces(int faces);
+  void setFaces(size_t faces);
   void setRerolls(int rerolls);
   void setCooldown(float cooldown);
   void setFaceValues(const std::map<int, float> &faceValues);

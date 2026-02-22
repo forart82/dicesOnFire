@@ -3,8 +3,38 @@
 Game::Game()
     : m_rng(std::random_device{}())
 {
+  m_debugBar = std::make_unique<DebugBar>();
+  m_debugBar->setGame(this);
+  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
+  m_weaponSlotsMenu->setGame(this);
+  m_hero = std::make_unique<Hero>();
+  m_hero->setGame(this);
+  m_grid = std::make_unique<Grid>();
+  m_grid->setGame(this);
+  m_enemies = std::make_unique<Enemies>();
+  m_enemies->setGame(this);
+  m_floorItems = std::make_unique<FloorItems>();
+  m_floorItems->setGame(this);
+  m_bluntWeapon = std::make_unique<BluntWeapon>();
+  m_bluntWeapon->setGame(this);
+  m_inventory = std::make_unique<Inventory>();
+  m_inventory->setGame(this);
+  m_toolTip = std::make_unique<ToolTip>();
+  m_toolTip->setGame(this);
+  m_attackHub = std::make_unique<AttackHub>();
+  m_attackHub->setGame(this);
+  m_pickUpHub = std::make_unique<PickUpHub>();
+  m_pickUpHub->setGame(this);
+  m_vertexHub = std::make_unique<VertexHub>();
+  m_vertexHub->setGame(this);
+  m_vertexGuiHub = std::make_unique<VertexGuiHub>();
+  m_vertexGuiHub->setGame(this);
+  m_hoverHub = std::make_unique<HoverHub>();
+  m_hoverHub->setGame(this);
   m_configLoader = std::make_unique<ConfigLoader>();
   m_configLoader->setGame(this);
+  m_heroManager = std::make_unique<HeroManager>();
+  m_heroManager->setGame(this);
   m_weaponManager = std::make_unique<WeaponManager>();
   m_weaponManager->setGame(this);
 

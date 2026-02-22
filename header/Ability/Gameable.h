@@ -10,6 +10,5 @@ protected:
 public:
   Gameable() = default;
   virtual ~Gameable() = default;
-
-  void setGame(Game *game) { m_game = game; }
+  virtual void setGame(Game *game) { m_game = game; }
 };

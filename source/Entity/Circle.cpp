@@ -70,6 +70,11 @@ void Circle::setOrigin()
           std::round(m_shape.getRadius())));
 }
 
+void Circle::setPointCount(size_t points)
+{
+  m_shape.setPointCount(points);
+}
+
 void Circle::setColors(const sf::Color &fillColor, const sf::Color &outlineColor)
 {
   m_shape.setFillColor(fillColor);

@@ -28,6 +28,7 @@ public:
   void setRadius(int radius);
   void setOutlineThickness(int outlineTickness);
   void setOrigin();
+  void setPointCount(size_t points);
   void setColors(const sf::Color &fillColor, const sf::Color &outlineColor);
   void setIsActive(bool isActive);
 
