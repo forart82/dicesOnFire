@@ -1,11 +1,13 @@
 #include "Entity/BaseItems.h"
 
+BaseItems::~BaseItems() = default;
+
 void BaseItems::addDice(std::unique_ptr<Dice> dice)
 {
   m_dices.emplace_back(std::move(dice));
 }
 
-void BaseItems::addWeapon(std::unique_ptr<Weapon> weapon)
+void BaseItems::addWeapon(std::unique_ptr<BaseWeapon> weapon)
 {
   m_weapons.emplace_back(std::move(weapon));
 }
@@ -20,7 +22,7 @@ int BaseItems::getDicesSize() const
   return m_dices.size();
 }
 
-const std::vector<std::unique_ptr<Weapon>> &BaseItems::getWeapons() const
+const std::vector<std::unique_ptr<BaseWeapon>> &BaseItems::getWeapons() const
 {
   return m_weapons;
 }

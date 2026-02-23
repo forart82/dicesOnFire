@@ -3,30 +3,6 @@
 Game::Game()
     : m_rng(std::random_device{}())
 {
-  m_debugBar = initManager<DebugBar>();
-  m_weaponSlotsMenu = initManager<WeaponSlotsMenu>();
-  m_hero = initManager<Hero>();
-  m_grid = initManager<Grid>();
-  m_enemies = initManager<Enemies>();
-  m_floorItems = initManager<FloorItems>();
-  m_bluntWeapon = initManager<BluntWeapon>();
-  m_inventory = initManager<Inventory>();
-  m_toolTip = initManager<ToolTip>();
-  m_attackHub = initManager<AttackHub>();
-  m_pickUpHub = initManager<PickUpHub>();
-  m_vertexHub = initManager<VertexHub>();
-  m_vertexGuiHub = initManager<VertexGuiHub>();
-  m_hoverHub = initManager<HoverHub>();
-  m_configLoader = initManager<ConfigLoader>();
-  m_fontLoader = initManager<FontLoader>();
-  m_enemyManager = initManager<EnemyManager>();
-  m_heroManager = initManager<HeroManager>();
-  m_weaponManager = initManager<WeaponManager>();
-  m_diceManager = initManager<DiceManager>();
-  m_diceSlotManager = initManager<DiceSlotManager>();
-  m_cellManager = initManager<CellManager>();
-  m_rectangleX2Manager = initManager<RectangleX2Manager>();
-  m_weaponSlotManager = initManager<WeaponSlotManager>();
 
   int m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
   int m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
@@ -40,14 +16,6 @@ Game::Game()
           sf::Vector2f(m_screenWidth, m_screenHeight)));
 
   m_window.setVerticalSyncEnabled(true);
-  m_hero = std::make_unique<Hero>(this);
-  m_enemies = std::make_unique<Enemies>(this);
-  m_inventory = std::make_unique<Inventory>(this);
-  m_floorItems = std::make_unique<FloorItems>(this);
-  m_grid = std::make_unique<Grid>(this);
-  m_toolTip = std::make_unique<ToolTip>(this);
-
-  m_heroManager = std::make_unique<HeroManager>(this);
 
   init();
   std::cout << "Game created" << std::endl;
@@ -60,48 +28,67 @@ Game::~Game()
 
 void Game::init()
 {
+  // Loader
+  m_configLoader = initGameableClass<ConfigLoader>();
+  m_fontLoader = initGameableClass<FontLoader>();
+  m_textureLoader = initGameableClass<TextureLoader>();
+  m_randomNameLoader = initGameableClass<RandomNameLoader>();
+
+  // Entity
+  m_debugBar = initGameableClass<DebugBar>();
+  m_weaponSlotsMenu = initGameableClass<WeaponSlotsMenu>();
+  m_hero = initGameableClass<Hero>();
+  m_grid = initGameableClass<Grid>();
+  m_enemies = initGameableClass<Enemies>();
+  m_floorItems = initGameableClass<FloorItems>();
+  m_bluntWeapon = initGameableClass<BluntWeapon>();
+  m_inventory = initGameableClass<Inventory>();
+  m_toolTip = initGameableClass<ToolTip>();
+
+  // Hub
+  m_attackHub = initGameableClass<AttackHub>();
+  m_pickUpHub = initGameableClass<PickUpHub>();
+  m_vertexHub = initGameableClass<VertexHub>();
+  m_vertexGuiHub = initGameableClass<VertexGuiHub>();
+  m_hoverHub = initGameableClass<HoverHub>();
+
+  // Manager
+  m_heroManager = initGameableClass<HeroManager>();
+  m_enemyManager = initGameableClass<EnemyManager>();
+  m_weaponManager = initGameableClass<WeaponManager>();
+  m_diceManager = initGameableClass<DiceManager>();
+  m_diceSlotManager = initGameableClass<DiceSlotManager>();
+  m_cellManager = initGameableClass<CellManager>();
+  m_rectangleX2Manager = initGameableClass<RectangleX2Manager>();
+  m_weaponSlotManager = initGameableClass<WeaponSlotManager>();
+  m_weaponSlotMenuManager = initGameableClass<WeaponSlotMenuManager>();
+
   m_playerZoom = 1;
 
   m_configLoader->reload();
-  randomNameLoader::reload();
-  m_weaponSlotsMenu.reset();
-  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>(this);
+  m_fontLoader->reload();
+  m_randomNameLoader->reload();
+
   m_weaponSlotsMenu->setBody(std::make_unique<Rectangle>(m_configLoader->get<Rectangle>("WEAPONSLOTSMENU")));
 
-  m_floorItems.reset();
-  m_floorItems = std::make_unique<FloorItems>(this);
-  m_inventory.reset();
-  m_inventory = std::make_unique<Inventory>(this);
-  m_toolTip.reset();
-  m_toolTip = std::make_unique<ToolTip>(this);
-
-  m_hero.reset();
   m_hero = m_heroManager->createHero();
-
-  m_enemies.reset();
-  m_enemies = std::make_unique<Enemies>();
   for (int i = 0; i < m_configLoader->get<int>("MAX_ENEMIES"); i++)
   {
     m_enemies->addEnemy();
   }
 
-  m_attackHub.reset();
   m_attackHub = std::make_unique<AttackHub>(
       *m_hero,
       *m_enemies);
-  m_pickUpHub.reset();
   m_pickUpHub = std::make_unique<PickUpHub>(
       *m_hero,
       *m_floorItems,
       *m_inventory);
 
-  m_bluntWeapon.reset();
   m_bluntWeapon = m_weaponManager->createBluntWeapon();
   m_bluntWeapon->setVertexBodyPosition(m_configLoader->get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
   m_floorItems->addWeapon(std::move(m_bluntWeapon));
 
-  m_grid.reset();
-  m_grid = std::make_unique<Grid>();
   m_vertexHub.reset();
   m_vertexHub = std::make_unique<VertexHub>(
       *m_grid,
@@ -109,12 +96,10 @@ void Game::init()
       *m_hero,
       *m_enemies);
 
-  m_vertexGuiHub.reset();
   m_vertexGuiHub = std::make_unique<VertexGuiHub>(
       *m_inventory,
       *m_toolTip);
 
-  m_hoverHub.reset();
   m_hoverHub = std::make_unique<HoverHub>(
       m_window,
       m_playerView,
@@ -122,15 +107,9 @@ void Game::init()
       *m_toolTip,
       *m_floorItems,
       *m_inventory);
-
-  m_debugBar.reset();
-  m_debugBar = std::make_unique<DebugBar>(
-      m_window,
-      *m_hero,
-      *m_enemies);
 }
 template <typename T>
-std::unique_ptr<T> initManager()
+std::unique_ptr<T> Game::initGameableClass()
 {
   auto manager = std::make_unique<T>();
   manager->setGame(this);
@@ -314,6 +293,7 @@ sf::RenderWindow &Game::getWindow()
   return m_window;
 }
 
+// MARK: Entity
 Hero &Game::getHero() const
 {
   return *m_hero;
@@ -341,6 +321,7 @@ ToolTip &Game::getToolTip() const
   return *m_toolTip;
 }
 
+// MARK: Loader
 ConfigLoader &Game::getConfigLoader() const
 {
   return *m_configLoader;
@@ -351,6 +332,17 @@ FontLoader &Game::getFontLoader() const
   return *m_fontLoader;
 }
 
+TextureLoader &Game::getTextureLoader() const
+{
+  return *m_textureLoader;
+}
+
+RandomNameLoader &Game::getRandomNameLoader() const
+{
+  return *m_randomNameLoader;
+}
+
+// MARK: Manager
 EnemyManager &Game::getEnemyManager() const
 {
   return *m_enemyManager;
@@ -392,4 +384,9 @@ RectangleX2Manager &Game::getRectangleX2Manager() const
 WeaponSlotManager &Game::getWeaponSlotManager() const
 {
   return *m_weaponSlotManager;
+}
+
+WeaponSlotMenuManager &Game::getWeaponSlotMenuManager() const
+{
+  return *m_weaponSlotMenuManager;
 }

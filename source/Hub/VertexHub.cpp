@@ -50,24 +50,24 @@ void VertexHub::makeTriangles(const T &item)
   if (item->getIsActive())
   {
     // Triangle 1
-    triangels[0].position = item->getLeftTop();
-    triangels[1].position = item->getRightTop();
-    triangels[2].position = item->getLeftBottom();
+    triangels[0].position = item->getVertexBodyLeftTop();
+    triangels[1].position = item->getVertexBodyRightTop();
+    triangels[2].position = item->getVertexBodyLeftBottom();
 
     // Triangle 2
-    triangels[3].position = item->getRightTop();
-    triangels[4].position = item->getRightBottom();
-    triangels[5].position = item->getLeftBottom();
+    triangels[3].position = item->getVertexBodyRightTop();
+    triangels[4].position = item->getVertexBodyRightBottom();
+    triangels[5].position = item->getVertexBodyLeftBottom();
 
     // Triangle 1
-    triangels[0].texCoords = item->getAssetsLeftTop();
-    triangels[1].texCoords = item->getAssetsRightTop();
-    triangels[2].texCoords = item->getAssetsLeftBottom();
+    triangels[0].texCoords = item->getVertexAssetBodyLeftTop();
+    triangels[1].texCoords = item->getVertexAssetBodyRightTop();
+    triangels[2].texCoords = item->getVertexAssetBodyLeftBottom();
 
     // Triangle 2
-    triangels[3].texCoords = item->getAssetsRightTop();
-    triangels[4].texCoords = item->getAssetsRightBottom();
-    triangels[5].texCoords = item->getAssetsLeftBottom();
+    triangels[3].texCoords = item->getVertexAssetBodyRightTop();
+    triangels[4].texCoords = item->getVertexAssetBodyRightBottom();
+    triangels[5].texCoords = item->getVertexAssetBodyLeftBottom();
 
     m_verticesCounter++;
   }

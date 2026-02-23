@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "Entity/BaseEntity.h"
 #include "Entity/RectangleX2.h"
 

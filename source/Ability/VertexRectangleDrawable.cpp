@@ -128,6 +128,40 @@ const sf::FloatRect &VertexRectangleDrawable::getGlobalBounds() const
   return sf::FloatRect({minX, minY}, {width, height});
 }
 
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyLeftTop() const
+{
+  return m_vertexBodyLeftTop;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyRightTop() const
+{
+  return m_vertexBodyRightTop;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyLeftBottom() const
+{
+  return m_vertexBodyLeftBottom;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyRightBottom() const
+{
+  return m_vertexBodyRightBottom;
+}
+
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyLeftTop() const
+{
+  return m_vertexAssetBodyLeftTop;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyRightTop() const
+{
+  return m_vertexAssetBodyRightTop;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyLeftBottom() const
+{
+  return m_vertexAssetBodyLeftBottom;
+}
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyRightBottom() const
+{
+  return m_vertexAssetBodyRightBottom;
+}
+
 bool VertexRectangleDrawable::getIsActive() const
 {
   return m_isActive;

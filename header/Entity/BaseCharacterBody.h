@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/Rectangle.h"

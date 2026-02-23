@@ -2,9 +2,10 @@
 
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
-#include "Entity/Dice.h"
-#include "Entity/BaseWeapon.h"
 #include "Loader/TextureLoader.h"
+
+class Dice;
+class BaseWeapon;
 
 class BaseItems : public BaseEntity, public sf::Drawable
 {
@@ -14,7 +15,6 @@ protected:
 
 public:
   BaseItems() = default;
-  virtual ~BaseItems() = default;
 
   virtual void update(sf::Time &delta) = 0;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;

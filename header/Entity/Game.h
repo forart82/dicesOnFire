@@ -26,14 +26,19 @@
 #include "Entity/Timer.h"
 #include "Entity/WeaponSlot.h"
 #include "Entity/WeaponSlotsMenu.h"
+
 #include "Hub/AttackHub.h"
 #include "Hub/HoverHub.h"
 #include "Hub/PickUpHub.h"
 #include "Hub/VertexGuiHub.h"
 #include "Hub/VertextHub.h"
+
 #include "Loader/ConfigLoader.h"
 #include "Loader/FontLoader.h"
-#include "Manager/DiceManager.h
+#include "Loader/TextureLoader.h"
+#include "Loader/RandomNameLoader.h"
+
+#include "Manager/DiceManager.h"
 #include "Manager/EnemyManager.h"
 #include "Manager/HeroManager.h"
 #include "Manager/WeaponManager.h"
@@ -42,6 +47,7 @@
 #include "Manager/CellManager.h"
 #include "Manager/RectangleX2Manager.h"
 #include "Manager/WeaponSlotManager.h"
+#include "Manager/WeaponSlotMenuManager.h"
 
 class Game
 {
@@ -87,6 +93,8 @@ private:
   // Loader
   std::unique_ptr<ConfigLoader> m_configLoader;
   std::unique_ptr<FontLoader> m_fontLoader;
+  std::unique_ptr<TextureLoader> m_textureLoader;
+  std::unique_ptr<RandomNameLoader> m_randomNameLoader;
 
   // Manager
   std::unique_ptr<EnemyManager> m_enemyManager;
@@ -98,6 +106,7 @@ private:
   std::unique_ptr<CellManager> m_cellManager;
   std::unique_ptr<RectangleX2Manager> m_rectangleX2Manager;
   std::unique_ptr<WeaponSlotManager> m_weaponSlotManager;
+  std::unique_ptr<WeaponSlotMenuManager> m_weaponSlotMenuManager;
 
   std::mt19937 m_rng;
 
@@ -107,7 +116,7 @@ public:
 
   void init();
   template <typename T>
-  std::unique_ptr<T> initManager();
+  std::unique_ptr<T> initGameableClass();
 
   void run();
   void update(sf::Time delta);
@@ -129,6 +138,8 @@ public:
   // Loader
   ConfigLoader &getConfigLoader() const;
   FontLoader &getFontLoader() const;
+  TextureLoader &getTextureLoader() const;
+  RandomNameLoader &getRandomNameLoader() const;
 
   // Manager
   EnemyManager &getEnemyManager() const;
@@ -140,4 +151,5 @@ public:
   CellManager &getCellManager() const;
   RectangleX2Manager &getRectangleX2Manager() const;
   WeaponSlotManager &getWeaponSlotManager() const;
+  WeaponSlotMenuManager &getWeaponSlotMenuManager() const;
 };

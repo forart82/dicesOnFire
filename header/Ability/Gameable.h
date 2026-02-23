@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity/Game.h"
+class Game;
 
 class Gameable
 {

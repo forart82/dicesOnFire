@@ -28,6 +28,12 @@ void FontLoader::loadAll()
   load("BarcodeText", "assets/fonts/LibreBarcode39ExtendedText-Regular.ttf");
 }
 
+void FontLoader::reload()
+{
+  m_fonts.clear();
+  loadAll();
+}
+
 const sf::Font &FontLoader::get(std::string name)
 {
   if (m_fonts.empty())

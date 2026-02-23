@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity/Game.h"
 
 class Dragable
 {
