@@ -3,46 +3,30 @@
 Game::Game()
     : m_rng(std::random_device{}())
 {
-  m_debugBar = std::make_unique<DebugBar>();
-  m_debugBar->setGame(this);
-  m_weaponSlotsMenu = std::make_unique<WeaponSlotsMenu>();
-  m_weaponSlotsMenu->setGame(this);
-  m_hero = std::make_unique<Hero>();
-  m_hero->setGame(this);
-  m_grid = std::make_unique<Grid>();
-  m_grid->setGame(this);
-  m_enemies = std::make_unique<Enemies>();
-  m_enemies->setGame(this);
-  m_floorItems = std::make_unique<FloorItems>();
-  m_floorItems->setGame(this);
-  m_bluntWeapon = std::make_unique<BluntWeapon>();
-  m_bluntWeapon->setGame(this);
-  m_inventory = std::make_unique<Inventory>();
-  m_inventory->setGame(this);
-  m_toolTip = std::make_unique<ToolTip>();
-  m_toolTip->setGame(this);
-  m_attackHub = std::make_unique<AttackHub>();
-  m_attackHub->setGame(this);
-  m_pickUpHub = std::make_unique<PickUpHub>();
-  m_pickUpHub->setGame(this);
-  m_vertexHub = std::make_unique<VertexHub>();
-  m_vertexHub->setGame(this);
-  m_vertexGuiHub = std::make_unique<VertexGuiHub>();
-  m_vertexGuiHub->setGame(this);
-  m_hoverHub = std::make_unique<HoverHub>();
-  m_hoverHub->setGame(this);
-  m_configLoader = std::make_unique<ConfigLoader>();
-  m_configLoader->setGame(this);
-  m_fontLoader = std::make_unique<FontLoader>();
-  m_fontLoader->setGame(this);
-  m_enemyManager = std::make_unique<EnemyManager>();
-  m_enemyManager->setGame(this);
-  m_heroManager = std::make_unique<HeroManager>();
-  m_heroManager->setGame(this);
-  m_weaponManager = std::make_unique<WeaponManager>();
-  m_weaponManager->setGame(this);
-  m_diceManager = std::make_unique<DiceManager>();
-  m_diceManager->setGame(this);
+  m_debugBar = initManager<DebugBar>();
+  m_weaponSlotsMenu = initManager<WeaponSlotsMenu>();
+  m_hero = initManager<Hero>();
+  m_grid = initManager<Grid>();
+  m_enemies = initManager<Enemies>();
+  m_floorItems = initManager<FloorItems>();
+  m_bluntWeapon = initManager<BluntWeapon>();
+  m_inventory = initManager<Inventory>();
+  m_toolTip = initManager<ToolTip>();
+  m_attackHub = initManager<AttackHub>();
+  m_pickUpHub = initManager<PickUpHub>();
+  m_vertexHub = initManager<VertexHub>();
+  m_vertexGuiHub = initManager<VertexGuiHub>();
+  m_hoverHub = initManager<HoverHub>();
+  m_configLoader = initManager<ConfigLoader>();
+  m_fontLoader = initManager<FontLoader>();
+  m_enemyManager = initManager<EnemyManager>();
+  m_heroManager = initManager<HeroManager>();
+  m_weaponManager = initManager<WeaponManager>();
+  m_diceManager = initManager<DiceManager>();
+  m_diceSlotManager = initManager<DiceSlotManager>();
+  m_cellManager = initManager<CellManager>();
+  m_rectangleX2Manager = initManager<RectangleX2Manager>();
+  m_weaponSlotManager = initManager<WeaponSlotManager>();
 
   int m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
   int m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
@@ -144,6 +128,13 @@ void Game::init()
       m_window,
       *m_hero,
       *m_enemies);
+}
+template <typename T>
+std::unique_ptr<T> initManager()
+{
+  auto manager = std::make_unique<T>();
+  manager->setGame(this);
+  return manager;
 }
 
 void Game::run()
@@ -381,4 +372,24 @@ DiceManager &Game::getDiceManager() const
 TimerManager &Game::getTimerManager() const
 {
   return *m_timerManager;
+}
+
+DiceSlotManager &Game::getDiceSlotManager() const
+{
+  return *m_diceSlotManager;
+}
+
+CellManager &Game::getCellManager() const
+{
+  return *m_cellManager;
+}
+
+RectangleX2Manager &Game::getRectangleX2Manager() const
+{
+  return *m_rectangleX2Manager;
+}
+
+WeaponSlotManager &Game::getWeaponSlotManager() const
+{
+  return *m_weaponSlotManager;
 }

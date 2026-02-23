@@ -7,4 +7,7 @@ class BaseManager : public Gameable
 public:
   BaseManager() = default;
   virtual ~BaseManager() = default;
+
+  template <typename T>
+  std::unique_ptr<T> create();
 };

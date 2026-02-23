@@ -69,7 +69,7 @@ void Inventory::makeInventory()
       x = m_inventoryPosition.x;
       y += m_tileSize;
     }
-    m_cells.emplace_back(std::make_unique<Cell>(x, y, assetsLeft, assetsTop));
+    m_cells.emplace_back(m_game->getCellManager().create<Cell>());
     x += m_tileSize;
   }
   m_slots.resize(m_size);

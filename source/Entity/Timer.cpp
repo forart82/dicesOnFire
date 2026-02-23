@@ -5,7 +5,7 @@ Timer::Timer()
       m_cooldown(0),
       m_isVertical(false)
 {
-  setBody(std::make_unique<RectangleX2>());
+  setBody(m_game->getRectangleX2Manager().create<RectangleX2>());
 }
 
 Timer::~Timer() {};

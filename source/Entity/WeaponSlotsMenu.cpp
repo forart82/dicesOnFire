@@ -31,9 +31,10 @@ void WeaponSlotsMenu::makeWeaponSlot(int weaponSlotNumber)
 {
   float index = weaponSlotNumber - 1;
   std::string weaponSlotConfig = "WEAPONSLOT_" + std::to_string(weaponSlotNumber);
-  m_weaponSlots[weaponSlotNumber] = std::make_unique<WeaponSlot>();
-  m_weaponSlots[weaponSlotNumber]->setGame(m_game);
-  m_weaponSlots[weaponSlotNumber]->setBody(std::make_unique<Rectangle>(m_game->getConfigLoader().get<Rectangle>(weaponSlotConfig)));
+  m_weaponSlots[weaponSlotNumber] = m_game->getWeaponSlotManager().create<WeaponSlot>();
+  m_weaponSlots[weaponSlotNumber]->setBody(
+      std::make_unique<Rectangle>(
+          m_game->getConfigLoader().get<Rectangle>(weaponSlotConfig)));
   m_weaponSlots[weaponSlotNumber]->setCooldown(3);
   m_weaponSlots[weaponSlotNumber]->setWeaponSlotNumber(weaponSlotNumber);
 }

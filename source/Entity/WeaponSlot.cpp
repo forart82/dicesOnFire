@@ -3,10 +3,10 @@
 WeaponSlot::WeaponSlot()
 {
   std::string weaponSlotKey = "WEAPONSLOT_" + std::to_string(m_weaponSlotNumber);
-  m_timer = std::make_unique<Timer>();
-  m_timer->setGame(m_game);
-
-  m_timer->setBody(std::make_unique<RectangleX2>(m_game->getConfigLoader().get<RectangleX2>(weaponSlotKey + "_TIMER")));
+  m_timer = m_game->getTimerManager().create<Timer>();
+  m_timer->setBody(
+      std::make_unique<RectangleX2>(
+          m_game->getConfigLoader().get<RectangleX2>(weaponSlotKey + "_TIMER")));
   m_timer->setCooldown(3);
   m_timer->setIsVertical(true);
   fakeDropWeaponInSlot(weaponSlotKey);

@@ -2,23 +2,23 @@
 
 EnemyManager::EnemyManager()
 {
-  m_enemyBody = std::make_unique<Rectangle>();
-  m_enemyBody->setRectangle(m_game->getConfigLoader().get<Rectangle>("ENEMY_BODY"));
+  m_enemyBody = std::make_unique<Rectangle>(
+      m_game->getConfigLoader().get<Rectangle>("ENEMY_BODY"));
 
-  m_enemyHealthBar = std::make_unique<RectangleX2>();
-  m_enemyHealthBar->setRectangleX2(m_game->getConfigLoader().get<RectangleX2>("ENEMY_HEALTHBAR"));
+  m_enemyHealthBar = std::make_unique<RectangleX2>(
+      m_game->getConfigLoader().get<RectangleX2>("ENEMY_HEALTHBAR"));
 
-  m_enemyWatchRange = std::make_unique<Circle>();
-  m_enemyWatchRange->setCircle(m_game->getConfigLoader().get<Circle>("ENEMY_WATCH_RANGE"));
+  m_enemyWatchRange = std::make_unique<Circle>(
+      m_game->getConfigLoader().get<Circle>("ENEMY_WATCH_RANGE"));
 
-  m_enemyShortRange = std::make_unique<Circle>();
-  m_enemyShortRange->setCircle(m_game->getConfigLoader().get<Circle>("ENEMY_SHORT_RANGE"));
+  m_enemyShortRange = std::make_unique<Circle>(
+      m_game->getConfigLoader().get<Circle>("ENEMY_SHORT_RANGE"));
 
-  m_enemyLongRange = std::make_unique<Circle>();
-  m_enemyLongRange->setCircle(m_game->getConfigLoader().get<Circle>("ENEMY_LONG_RANGE"));
+  m_enemyLongRange = std::make_unique<Circle>(
+      m_game->getConfigLoader().get<Circle>("ENEMY_LONG_RANGE"));
 
-  m_enemyPickUpUpRange = std::make_unique<Circle>();
-  m_enemyPickUpUpRange->setCircle(m_game->getConfigLoader().get<Circle>("ENEMY_PICK_UP_RANGE"));
+  m_enemyPickUpUpRange = std::make_unique<Circle>(
+      m_game->getConfigLoader().get<Circle>("ENEMY_PICK_UP_RANGE"));
 }
 
 EnemyManager::~EnemyManager() {}
@@ -48,12 +48,12 @@ std::unique_ptr<Enemy> EnemyManager::createEnemy()
   int randomX = randomHelper::GET_RANDOM_NUMBER_INT(heroMinX, heroMaxX);
   int randomY = randomHelper::GET_RANDOM_NUMBER_INT(heroMinY, heroMaxY);
 
-  auto body = std::make_unique<Rectangle>(m_enemyBody);
-  auto healthBar = std::make_unique<RectangleX2>(m_enemyHealthBar);
-  auto watchRangeCircle = std::make_unique<Circle>(m_enemyWatchRange);
-  auto shortRangeCircle = std::make_unique<Circle>(m_enemyShortRange);
-  auto longRangeCircle = std::make_unique<Circle>(m_enemyLongRange);
-  auto pickUpRangeCircle = std::make_unique<Circle>(m_enemyPickUpUpRange);
+  auto body = std::make_unique<Rectangle>(*m_enemyBody);
+  auto healthBar = std::make_unique<RectangleX2>(*m_enemyHealthBar);
+  auto watchRangeCircle = std::make_unique<Circle>(*m_enemyWatchRange);
+  auto shortRangeCircle = std::make_unique<Circle>(*m_enemyShortRange);
+  auto longRangeCircle = std::make_unique<Circle>(*m_enemyLongRange);
+  auto pickUpRangeCircle = std::make_unique<Circle>(*m_enemyPickUpUpRange);
 
   watchRangeCircle->setRadius(watchRangeRadius);
   shortRangeCircle->setRadius(shortRangeRadius);

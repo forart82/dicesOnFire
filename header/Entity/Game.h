@@ -38,6 +38,10 @@
 #include "Manager/HeroManager.h"
 #include "Manager/WeaponManager.h"
 #include "Manager/TimerManager.h"
+#include "Manager/DiceSlotManager.h"
+#include "Manager/CellManager.h"
+#include "Manager/RectangleX2Manager.h"
+#include "Manager/WeaponSlotManager.h"
 
 class Game
 {
@@ -90,6 +94,10 @@ private:
   std::unique_ptr<WeaponManager> m_weaponManager;
   std::unique_ptr<DiceManager> m_diceManager;
   std::unique_ptr<TimerManager> m_timerManager;
+  std::unique_ptr<DiceSlotManager> m_diceSlotManager;
+  std::unique_ptr<CellManager> m_cellManager;
+  std::unique_ptr<RectangleX2Manager> m_rectangleX2Manager;
+  std::unique_ptr<WeaponSlotManager> m_weaponSlotManager;
 
   std::mt19937 m_rng;
 
@@ -98,6 +106,8 @@ public:
   ~Game();
 
   void init();
+  template <typename T>
+  std::unique_ptr<T> initManager();
 
   void run();
   void update(sf::Time delta);
@@ -126,4 +136,8 @@ public:
   WeaponManager &getWeaponManager() const;
   DiceManager &getDiceManager() const;
   TimerManager &getTimerManager() const;
+  DiceSlotManager &getDiceSlotManager() const;
+  CellManager &getCellManager() const;
+  RectangleX2Manager &getRectangleX2Manager() const;
+  WeaponSlotManager &getWeaponSlotManager() const;
 };

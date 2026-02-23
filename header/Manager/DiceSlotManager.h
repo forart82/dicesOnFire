@@ -2,6 +2,6 @@
 
 #include "Manager/BaseManager.h"
 
-class TimerManager : public BaseManager
+class DiceSlotManager : public BaseManager
 {
 };
