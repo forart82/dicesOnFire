@@ -18,8 +18,7 @@ protected:
   std::unique_ptr<Circle> m_shortRangeCircle;
   std::unique_ptr<Circle> m_longRangeCircle;
   std::unique_ptr<Circle> m_pickUpRangeCircle;
-  float m_health;
-  float m_maxHealth;
+
   float m_speed;
 
   int m_watchRangeRadius;
@@ -51,8 +50,7 @@ public:
   void setShortRangeCircle(std::unique_ptr<Circle> shortRangeCircle);
   void setLongRangeCircle(std::unique_ptr<Circle> longRangeCircle);
   void setPickUpRangeCircle(std::unique_ptr<Circle> pickUpRangeCircle);
-  void setHealth(float health);
-  void setMaxHealth(float maxHealth);
+
   void setSpeed(float speed);
   void setWatchRangeRadius(int watchRangeRadius);
   void setShortRangeRadius(int shortRangeRadius);
@@ -65,8 +63,7 @@ public:
   const Circle &getShortRangeCircle() const;
   const Circle &getLongRangeCircle() const;
   const Circle &getPickUpRangeCircle() const;
-  float getHealth() const;
-  float getMaxHealth() const;
+
   float getSpeed() const;
   int getWatchRangeRadius() const;
   int getShortRangeRadius() const;

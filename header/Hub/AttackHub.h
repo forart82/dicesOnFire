@@ -11,11 +11,7 @@ private:
   Enemies &m_enemies;
 
 public:
-  AttackHub(
-      Hero &hero,
-      Enemies &enemies);
-
-  ~AttackHub();
+  AttackHub() ~AttackHub();
 
   void update(sf::Time &delta);
 

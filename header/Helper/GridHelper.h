@@ -1,14 +1,11 @@
 #pragma once
 
 #include <cmath>
-#include "Loader/ConfigLoader.h"
 
 namespace gridHelper
 {
-  inline int TILE_SIZE = configLoader::get<int>("TILE_SIZE");
-
-  inline int SNAP_TO_GRID(int value)
+  inline int SNAP_TO_GRID(int value, int tileSize)
   {
-    return floor(value / TILE_SIZE) * TILE_SIZE;
+    return floor(value / tileSize) * tileSize;
   }
 }

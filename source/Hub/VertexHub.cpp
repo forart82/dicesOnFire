@@ -124,8 +124,9 @@ void VertexHub::gridVertices()
 {
   auto heroPosition = m_hero.getBody().getShape().getPosition();
   auto heroWatchRangeRadius = m_hero.getWatchRangeRadius();
+  int tileSize
 
-  int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * m_tileSize);
+      int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * m_tileSize);
   int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * m_tileSize);
 
   int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * m_tileSize);
