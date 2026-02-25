@@ -6,11 +6,11 @@ Hero::~Hero() {}
 
 void Hero::update(sf::Time &delta)
 {
-  move(delta);
+  getDirectionAndMove(delta);
   m_direction = {};
 }
 
-void Hero::move(const sf::Time &delta)
+void Hero::getDirectionAndMove(const sf::Time &delta)
 {
   // Up Down
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W))
@@ -29,6 +29,5 @@ void Hero::move(const sf::Time &delta)
   {
     m_direction /= length;
   }
-  sf::Vector2f movement = m_direction * m_speed * delta.asSeconds();
-  BaseCharacterBody::move(movement);
+  BaseCharacterBody::move(m_direction, delta);
 }

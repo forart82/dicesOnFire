@@ -3,13 +3,20 @@
 #include <cmath>
 
 #include "Ability/VertexRectangleDrawable.h"
+#include "Ability/Damageable.h"
+#include "Ability/Moveable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"
 #include "Entity/Circle.h"
 #include "Helper/CollisionHelper.h"
 
-class BaseCharacterBody : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable
+class BaseCharacterBody
+    : public BaseEntity,
+      public sf::Drawable,
+      public VertexRectangleDrawable,
+      public Damageable,
+      public Moveable
 {
 protected:
   std::unique_ptr<Rectangle> m_body;
@@ -18,8 +25,6 @@ protected:
   std::unique_ptr<Circle> m_shortRangeCircle;
   std::unique_ptr<Circle> m_longRangeCircle;
   std::unique_ptr<Circle> m_pickUpRangeCircle;
-
-  float m_speed;
 
   int m_watchRangeRadius;
   int m_shortRangeRadius;
@@ -35,8 +40,6 @@ public:
   virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void move(sf::Vector2f &movement);
-
   bool insideWatchRangeCircle(const sf::Vector2f &targetPos) const;
   bool insideShortRangeCircle(const sf::Vector2f &targetPos) const;
   bool insideLongRangeCircle(const sf::Vector2f &targetPos) const;
@@ -46,12 +49,12 @@ public:
 
   void setBody(std::unique_ptr<Rectangle> body);
   void setHealthBar(std::unique_ptr<RectangleX2> healthBar);
+
   void setWatchRangeCircle(std::unique_ptr<Circle> watchRangeCircle);
   void setShortRangeCircle(std::unique_ptr<Circle> shortRangeCircle);
   void setLongRangeCircle(std::unique_ptr<Circle> longRangeCircle);
   void setPickUpRangeCircle(std::unique_ptr<Circle> pickUpRangeCircle);
 
-  void setSpeed(float speed);
   void setWatchRangeRadius(int watchRangeRadius);
   void setShortRangeRadius(int shortRangeRadius);
   void setLongRangeRadius(int longRangeRadius);
@@ -59,12 +62,12 @@ public:
 
   const Rectangle &getBody() const;
   const RectangleX2 &getHealthBar() const;
+
   const Circle &getWatchRangeCircle() const;
   const Circle &getShortRangeCircle() const;
   const Circle &getLongRangeCircle() const;
   const Circle &getPickUpRangeCircle() const;
 
-  float getSpeed() const;
   int getWatchRangeRadius() const;
   int getShortRangeRadius() const;
   int getLongRangeRadius() const;

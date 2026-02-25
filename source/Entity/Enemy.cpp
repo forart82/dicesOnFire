@@ -13,23 +13,22 @@ Enemy::~Enemy() {}
 
 void Enemy::update(sf::Time &delta)
 {
-  move(delta);
+  getDirectionAndMove(delta);
   prepareVertex();
 }
 
-void Enemy::move(const sf::Time &delta)
+void Enemy::getDirectionAndMove(const sf::Time &delta)
 {
   if (m_houndHero)
   {
-    sf::Vector2f direction;
+    sf::Vector2f direction = sf::Vector2f(0.f, 0.f);
     sf::Vector2f toPlayer = m_game->getHero().getBody().getShape().getPosition() - m_body->getShape().getPosition();
     float distance = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
     if (distance != 0) // Éviter la division par zéro
     {
       direction = toPlayer / distance;
     }
-    sf::Vector2f movement = direction * m_speed * delta.asSeconds();
-    BaseCharacterBody::move(movement);
+    BaseCharacterBody::move(direction, delta);
   }
 }
 

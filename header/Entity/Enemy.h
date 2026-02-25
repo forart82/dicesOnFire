@@ -20,7 +20,7 @@ public:
 
   void update(sf::Time &delta) override;
 
-  void move(const sf::Time &delta);
+  void getDirectionAndMove(const sf::Time &delta);
   void prepareVertex();
   void removeHealth(int health);
   void dropItemsOnFloor();

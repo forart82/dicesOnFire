@@ -21,16 +21,6 @@ void BaseCharacterBody::draw(sf::RenderTarget &target, sf::RenderStates states) 
   target.draw(*m_healthBar);
 }
 
-void BaseCharacterBody::move(sf::Vector2f &movement)
-{
-  m_body->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-  m_healthBar->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-  m_watchRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-  m_shortRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-  m_longRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-  m_pickUpRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
-}
-
 bool BaseCharacterBody::insideWatchRangeCircle(const sf::Vector2f &targetPos) const
 {
   return collisionHelper::insideRadar(targetPos, *m_watchRangeCircle);
@@ -77,18 +67,6 @@ void BaseCharacterBody::setPickUpRangeCircle(std::unique_ptr<Circle> pickUpRange
   m_pickUpRangeCircle = std::move(pickUpRangeCircle);
 }
 
-void BaseCharacterBody::setHealth(float health)
-{
-  m_health = health;
-}
-void BaseCharacterBody::setMaxHealth(float maxHealth)
-{
-  m_maxHealth = maxHealth;
-}
-void BaseCharacterBody::setSpeed(float speed)
-{
-  m_speed = speed;
-}
 void BaseCharacterBody::setWatchRangeRadius(int watchRangeRadius)
 {
   m_watchRangeRadius = watchRangeRadius;
@@ -135,18 +113,7 @@ const Circle &BaseCharacterBody::getPickUpRangeCircle() const
 {
   return *m_pickUpRangeCircle;
 }
-float BaseCharacterBody::getHealth() const
-{
-  return m_health;
-}
-float BaseCharacterBody::getMaxHealth() const
-{
-  return m_maxHealth;
-}
-float BaseCharacterBody::getSpeed() const
-{
-  return m_speed;
-}
+
 int BaseCharacterBody::getWatchRangeRadius() const
 {
   return m_watchRangeRadius;

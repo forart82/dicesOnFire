@@ -1,14 +1,16 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"
 
 class Damageable
 {
-protected:
-  std::unique_ptr<Rectangle> m_body;
-  std::unique_ptr<RectangleX2> m_healthBar;
+private:
+  Rectangle *m_damageableBody = nullptr;
+  RectangleX2 *m_damageableHealthBar = nullptr;
 
+protected:
   float m_health;
   float m_maxHealth;
 
@@ -16,20 +18,15 @@ public:
   Damageable() = default;
   virtual ~Damageable() = default;
 
-  virtual void takeDamage(int amount) = 0;
+  void bind(Rectangle *body, RectangleX2 *healthBar);
+  void takeDamage(int amount);
 
-  virtual void setBody(std::unique_ptr<Rectangle> body) = 0;
-  virtual void setHealthBar(std::unique_ptr<RectangleX2> healthBar) = 0;
+  void setHealth(float health);
+  void setMaxHealth(float maxHealth);
 
-  virtual void setHealth(float health) = 0;
-  virtual void setMaxHealth(float maxHealth) = 0;
-
-  virtual const Rectangle &getBody() const = 0;
-  virtual const RectangleX2 &getHealthBar() const = 0;
-
-  virtual const sf::Vector2f &getBodyPosition() const = 0;
-  virtual float getHealth() const = 0;
-  virtual float getMaxHealth() const = 0;
+  const sf::Vector2f &getBodyPosition() const;
+  float getHealth() const;
+  float getMaxHealth() const;
 
   bool isAlive() const { return m_health > 0; }
 };
