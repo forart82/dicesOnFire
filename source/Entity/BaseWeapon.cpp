@@ -1,6 +1,9 @@
 #include "Entity/BaseWeapon.h"
 
-BaseWeapon::BaseWeapon() {}
+BaseWeapon::BaseWeapon()
+{
+  Dragable::bind(m_body.get());
+}
 
 void BaseWeapon::update(sf::Time &delta)
 {
@@ -102,7 +105,7 @@ const std::string &BaseWeapon::getStats() const
 
 const sf::FloatRect &BaseWeapon::getGlobalBounds() const
 {
-  return VertexRectangleDrawable::getGlobalBounds();
+  return VertexRectangleDrawable::getVertexBodyGlobalBounds();
 }
 
 const sf::Vector2f &BaseWeapon::getPosition() const

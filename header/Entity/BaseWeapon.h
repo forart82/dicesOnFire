@@ -9,15 +9,18 @@
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class BaseWeapon : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable, public Dragable
+class BaseWeapon
+    : public BaseEntity,
+      public sf::Drawable,
+      public VertexRectangleDrawable,
+      public Dragable
 {
 protected:
   std::unique_ptr<Rectangle> m_body;
   std::map<int, std::unique_ptr<DiceSlot>> m_diceSlots;
-  std::unique_ptr<Timer> m_timer;
 
   std::string m_name;
-  int m_damage;
+
   int m_numberOfSlots;
   int m_weaponSlotNumber;
 
@@ -32,13 +35,10 @@ public:
   void makeDiceSlots();
 
   void setBody(std::unique_ptr<Rectangle> body);
-  void setDamage(int damage);
-  void setCooldown(float cooldown);
   void setNumberOfSlots(int numberOfSlots);
   void setWeaponSlotNumber(int weaponSlotNumber);
   void setPosition(const sf::Vector2f &position);
 
-  int getDamage() const;
   int getNumberOfSlots() const;
 
   const std::string &getName() const;

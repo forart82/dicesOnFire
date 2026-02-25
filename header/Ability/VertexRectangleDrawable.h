@@ -51,7 +51,7 @@ public:
   const sf::FloatRect &getVertexAssetBody() const;
   const sf::Vector2f &getVertexBodyCenter() const;
   const sf::Vector2f &getVertexAssetBodyCenter() const;
-  const sf::FloatRect &getGlobalBounds() const;
+  const sf::FloatRect &getVertexBodyGlobalBounds() const;
 
   const sf::Vector2f &getVertexBodyLeftTop() const;
   const sf::Vector2f &getVertexBodyRightTop() const;

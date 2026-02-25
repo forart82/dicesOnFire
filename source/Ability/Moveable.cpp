@@ -1,5 +1,10 @@
 #include "Ability/Moveable.h"
 
+Moveable::Moveable()
+    : m_movementSpeed(0)
+{
+}
+
 void Moveable::bind(
     Rectangle *body,
     RectangleX2 *healthBar,
@@ -18,7 +23,7 @@ void Moveable::bind(
 
 void Moveable::move(const sf::Vector2f &direction, const sf::Time &delta)
 {
-  auto movement = direction * m_speed * delta.asSeconds();
+  auto movement = direction * m_movementSpeed * delta.asSeconds();
   m_movableBody->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
   m_movableHealthBar->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
   m_moveableWatchRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
@@ -27,12 +32,12 @@ void Moveable::move(const sf::Vector2f &direction, const sf::Time &delta)
   m_moveablePickUpRangeCircle->move(sf::Vector2f(std::round(movement.x), std::round(movement.y)));
 }
 
-void Moveable::setSpeed(float speed)
+void Moveable::setMovementSpeed(float movementSpeed)
 {
-  m_speed = speed;
+  m_movementSpeed = movementSpeed;
 }
 
-const float Moveable::getSpeed() const
+const float Moveable::getMovementSpeed() const
 {
-  return m_speed;
+  return m_movementSpeed;
 }

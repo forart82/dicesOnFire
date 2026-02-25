@@ -1,5 +1,11 @@
 #include "Ability/Damageable.h"
 
+Damageable::Damageable()
+    : m_health(0),
+      m_maxHealth(0)
+{
+}
+
 void Damageable::bind(Rectangle *body, RectangleX2 *healthBar)
 {
   m_damageableBody = body;
@@ -20,7 +26,7 @@ void Damageable::setMaxHealth(float maxHealth)
   m_maxHealth = maxHealth;
 }
 
-const sf::Vector2f &Damageable::getBodyPosition() const
+const sf::Vector2f &Damageable::getDamageableBodyPosition() const
 {
   return m_damageableBody->getShape().getPosition();
 }

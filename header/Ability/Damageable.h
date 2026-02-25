@@ -15,7 +15,7 @@ protected:
   float m_maxHealth;
 
 public:
-  Damageable() = default;
+  Damageable();
   virtual ~Damageable() = default;
 
   void bind(Rectangle *body, RectangleX2 *healthBar);
@@ -24,7 +24,7 @@ public:
   void setHealth(float health);
   void setMaxHealth(float maxHealth);
 
-  const sf::Vector2f &getBodyPosition() const;
+  const sf::Vector2f &getDamageableBodyPosition() const;
   float getHealth() const;
   float getMaxHealth() const;
 

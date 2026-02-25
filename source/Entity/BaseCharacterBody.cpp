@@ -1,6 +1,19 @@
 #include "Entity/BaseCharacterBody.h"
 
-BaseCharacterBody::BaseCharacterBody() {}
+BaseCharacterBody::BaseCharacterBody()
+{
+  Damageable::bind(
+      m_body.get(),
+      m_healthBar.get());
+
+  Moveable::bind(
+      m_body.get(),
+      m_healthBar.get(),
+      m_watchRangeCircle.get(),
+      m_shortRangeCircle.get(),
+      m_longRangeCircle.get(),
+      m_pickUpRangeCircle.get());
+}
 
 BaseCharacterBody::~BaseCharacterBody() {}
 

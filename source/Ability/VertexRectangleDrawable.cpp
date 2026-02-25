@@ -110,7 +110,7 @@ const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyCenter() const
   return (m_vertexAssetBodyLeftTop + m_vertexAssetBodyRightBottom) / 2.f;
 }
 
-const sf::FloatRect &VertexRectangleDrawable::getGlobalBounds() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexBodyGlobalBounds() const
 {
   // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
   float minX = std::min({m_vertexBodyLeftTop.x, m_vertexBodyRightTop.x, m_vertexBodyLeftBottom.x, m_vertexBodyRightBottom.x});

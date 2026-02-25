@@ -17,10 +17,10 @@ private:
   Circle *m_moveablePickUpRangeCircle = nullptr;
 
 protected:
-  float m_speed;
+  float m_movementSpeed;
 
 public:
-  Moveable() = default;
+  Moveable();
   virtual ~Moveable() = default;
 
   void bind(
@@ -33,7 +33,7 @@ public:
 
   void move(const sf::Vector2f &direction, const sf::Time &delta);
 
-  void setSpeed(float speed);
+  void setMovementSpeed(float movementSpeed);
 
-  const float getSpeed() const;
+  const float getMovementSpeed() const;
 };

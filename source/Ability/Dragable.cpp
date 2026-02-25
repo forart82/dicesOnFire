@@ -1,17 +1,21 @@
 #include "Ability/Dragable.h"
 
 Dragable::Dragable()
-    : m_game(game),
-      m_isDragged(false)
+    : m_isDragged(false)
 {
+}
+
+void Dragable::bind(Rectangle *body)
+{
+  m_dragableBody = body;
 }
 
 bool Dragable::startDrag(const sf::Vector2f &mousePos)
 {
-  if (getGlobalBounds().contains(mousePos))
+  if (m_dragableBody->getShape().getGlobalBounds().contains(mousePos))
   {
     m_isDragged = true;
-    m_originalPosition = getPosition(); // Save where we started
+    m_originalPosition = m_dragableBody->getShape().getPosition(); // Save where we started
 
     // Calculate the offset so the item doesn't teleport to the mouse
     m_dragOffset = mousePos - m_originalPosition;
@@ -25,7 +29,7 @@ void Dragable::updateDrag(const sf::Vector2f &mousePos)
   if (m_isDragged)
   {
     // Move the item to the mouse, minus the initial click offset
-    setPosition(mousePos - m_dragOffset);
+    m_dragableBody->setPosition(mousePos - m_dragOffset);
   }
 }
 
@@ -38,7 +42,12 @@ void Dragable::stopDrag()
 void Dragable::cancelDrag()
 {
   m_isDragged = false;
-  setPosition(m_originalPosition); // Snap back to start!
+  m_dragableBody->setPosition(m_originalPosition); // Snap back to start!
+}
+
+const sf::Vector2f &Dragable::getDragableCenter() const
+{
+  return m_dragableBody->getShape().getGeometricCenter();
 }
 
 bool Dragable::getIsDragged() const
