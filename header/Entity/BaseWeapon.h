@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Ability/Attackable.h"
 #include "Ability/Dragable.h"
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
@@ -13,10 +14,17 @@ class BaseWeapon
     : public BaseEntity,
       public sf::Drawable,
       public VertexRectangleDrawable,
-      public Dragable
+      public Dragable,
+      public Attackable
 {
+
+private:
+  Rectangle *m_ownerBody = nullptr;
+
 protected:
-  std::unique_ptr<Rectangle> m_body;
+  std::unique_ptr<Rectangle> m_weaponBody;
+  std::unique_ptr<Timer> m_weaponTimer;
+  std::unique_ptr<Circle> m_weaponRangeCircle;
   std::map<int, std::unique_ptr<DiceSlot>> m_diceSlots;
 
   std::string m_name;

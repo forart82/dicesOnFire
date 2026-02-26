@@ -13,7 +13,7 @@ private:
   sf::Time m_elapsedTime;
   float m_cooldown;
   bool m_isVertical;
-  bool m_isStopped;
+  bool m_isReady;
 
 public:
   Timer();
@@ -23,12 +23,12 @@ public:
   void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-  void toggleIsStopped();
+  void toggleIsReady();
   void setCooldown(float cooldown);
   void setBody(std::unique_ptr<RectangleX2> body);
   void setIsVertical(bool isVertical);
-  void setIsStopped(bool isStopped);
+  void setIsReady(bool isReady);
 
   float getCoolDown() const;
-  bool getIsStopped() const;
+  bool getIsReady() const;
 };

@@ -2,19 +2,20 @@
 
 BaseWeapon::BaseWeapon()
 {
-  Dragable::bind(m_body.get());
+  Dragable::bind(m_weaponBody.get());
+  Attackable::bind(m_ownerBody);
 }
 
 void BaseWeapon::update(sf::Time &delta)
 {
   if (m_weaponSlotNumber)
   {
-    m_body->update(delta);
+    m_weaponBody->update(delta);
     for (const auto &[key, diceSlot] : m_diceSlots)
     {
       diceSlot->update(delta);
     }
-    m_timer->update(delta);
+    m_attackTimer->update(delta);
   }
 }
 
@@ -22,12 +23,12 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_weaponSlotNumber)
   {
-    target.draw(*m_body);
+    target.draw(*m_weaponBody);
     for (const auto &[key, diceSlot] : m_diceSlots)
     {
       target.draw(*diceSlot);
     }
-    target.draw(*m_timer);
+    target.draw(*m_attackTimer);
   }
 }
 
@@ -55,17 +56,9 @@ void BaseWeapon::makeDiceSlots()
 
 void BaseWeapon::setBody(std::unique_ptr<Rectangle> body)
 {
-  m_body = std::move(body);
+  m_weaponBody = std::move(body);
 }
 
-void BaseWeapon::setDamage(int damage)
-{
-  m_damage = damage;
-}
-void BaseWeapon::setCooldown(float cooldown)
-{
-  m_timer->setCooldown(cooldown);
-}
 void BaseWeapon::setNumberOfSlots(int numberOfSlots)
 {
   m_numberOfSlots = numberOfSlots;
@@ -84,10 +77,6 @@ void BaseWeapon::setPosition(const sf::Vector2f &position)
   VertexRectangleDrawable::setVertexBodyPosition(position);
 }
 
-int BaseWeapon::getDamage() const
-{
-  return m_damage;
-}
 int BaseWeapon::getNumberOfSlots() const
 {
   return m_numberOfSlots;
@@ -100,7 +89,13 @@ const std::string &BaseWeapon::getName() const
 const std::string &BaseWeapon::getStats() const
 {
   return "Damage: " +
-         std::to_string(m_damage);
+         std::to_string(m_attackDamage) +
+         "\n" +
+         "Cooldown: " +
+         std::to_string(m_attackTimer->getCoolDown()) +
+         "\n" +
+         "Speed : " +
+         std::to_string(m_attackSpeed);
 }
 
 const sf::FloatRect &BaseWeapon::getGlobalBounds() const

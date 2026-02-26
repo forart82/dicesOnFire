@@ -49,7 +49,8 @@ void Attackable::setAttackSpeed(float attackSpeed)
 
 void Attackable::setCooldown(float attackCooldown)
 {
-  m_attackCooldown = attackCooldown;
+  attackCooldown = m_attackSpeed > 0 ? attackCooldown / m_attackSpeed : attackCooldown;
+  m_attackTimer->setCooldown(attackCooldown);
 }
 void Attackable::setAttackRangeRadius(float attackRangeRadius)
 {
@@ -64,14 +65,14 @@ Damageable *Attackable::checkRadar(const std::vector<Damageable *> &potentialTar
 
   Damageable *closestTarget = nullptr;
   float shortestDistance = static_cast<float>(m_attackRangeRadius);
-  sf::Vector2f myPos = m_attackableBody->getPosition();
+  sf::Vector2f myPos = m_attackableBody->getShape().getPosition();
 
   for (Damageable *target : potentialTargets)
   {
     if (target == nullptr || !target->isAlive())
       continue;
 
-    sf::Vector2f targetPos = target->getPosition();
+    sf::Vector2f targetPos = target->getDamageableBodyPosition();
 
     // Calculate distance
     float dx = myPos.x - targetPos.x;
@@ -95,13 +96,13 @@ void Attackable::dealDamage(Damageable *target)
   if (target != nullptr && target->isAlive() && m_attackTimer)
   {
     // Check if the timer has reached 0 (adjust to your Timer's specific function)
-    if (m_attackTimer->isReady())
+    if (m_attackTimer->getIsReady())
     {
       // WHACK!
       target->takeDamage(m_attackDamage);
 
       // Reset the stopwatch back to the weapon's speed stat
-      m_attackTimer->restart(m_attackSpeed);
+      m_attackTimer->setIsReady(false);
     }
   }
 }

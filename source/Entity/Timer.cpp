@@ -1,7 +1,7 @@
 #include "Entity/Timer.h"
 
 Timer::Timer()
-    : m_isStopped(false),
+    : m_isReady(false),
       m_cooldown(0),
       m_isVertical(false)
 {
@@ -12,7 +12,7 @@ Timer::~Timer() {};
 
 void Timer::update(sf::Time &delta)
 {
-  if (!m_isStopped)
+  if (!m_isReady)
   {
     m_elapsedTime += delta;
     float seconds = m_elapsedTime.asSeconds();
@@ -49,9 +49,9 @@ void Timer::draw(sf::RenderTarget &target, sf::RenderStates states) const
   target.draw(*m_body);
 }
 
-void Timer::toggleIsStopped()
+void Timer::toggleIsReady()
 {
-  m_isStopped = !m_isStopped;
+  m_isReady = !m_isReady;
 }
 
 void Timer::setCooldown(float cooldown)
@@ -70,9 +70,9 @@ void Timer::setIsVertical(bool isVertical)
   m_isVertical = isVertical;
 }
 
-void Timer::setIsStopped(bool isStopped)
+void Timer::setIsReady(bool isReady)
 {
-  m_isStopped = isStopped;
+  m_isReady = isReady;
 }
 
 float Timer::getCoolDown() const
@@ -80,7 +80,7 @@ float Timer::getCoolDown() const
   return m_cooldown;
 }
 
-bool Timer::getIsStopped() const
+bool Timer::getIsReady() const
 {
-  return m_isStopped;
+  return m_isReady;
 }
