@@ -13,17 +13,17 @@ Dice::~Dice() {}
 
 void Dice::update(sf::Time &delta)
 {
-  if (!m_timer->getIsStopped())
+  if (!m_timer->getIsReady())
   {
     m_timer->update(delta);
     int diceValue = randomHelper::GET_RANDOM_NUMBER_INT(1, m_faces);
   }
-  if (m_timer->getIsStopped())
+  if (m_timer->getIsReady())
   {
     m_elapsedTime += delta;
     if (m_elapsedTime.asSeconds() >= 0.5f)
     {
-      m_timer->toggleIsStopped();
+      m_timer->getIsReady();
       m_elapsedTime = sf::Time::Zero;
     }
   }
@@ -77,7 +77,7 @@ void Dice::setPosition(const sf::Vector2f &position)
 
 void Dice::onTimeout()
 {
-  m_timer->toggleIsStopped();
+  m_timer->toggleIsReady();
 }
 
 const std::string &Dice::getName() const
@@ -103,7 +103,7 @@ const std::string &Dice::getStats() const
 
 const sf::FloatRect &Dice::getGlobalBounds() const
 {
-  return VertexRectangleDrawable::getGlobalBounds();
+  return VertexRectangleDrawable::getVertexBodyGlobalBounds();
 }
 
 const sf::Vector2f &Dice::getPosition() const

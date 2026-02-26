@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Ability/VertexRectangleDrawable.h"
 #include "Ability/Dragable.h"
+#include "Ability/Hoverable.h"
+#include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/GameText.h"
 #include "Entity/Timer.h"
@@ -10,7 +11,12 @@
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
-class Dice : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable, public Dragable
+class Dice
+    : public BaseEntity,
+      public sf::Drawable,
+      public Dragable,
+      public Hoverable,
+      public VertexRectangleDrawable
 {
 private:
   std::unique_ptr<Timer> m_timer;

@@ -3,7 +3,20 @@
 BaseWeapon::BaseWeapon()
 {
   Dragable::bind(m_weaponBody.get());
-  Attackable::bind(m_ownerBody);
+  Attackable::bind(
+      m_ownerBody,
+      m_weaponTimer.get(),
+      m_weaponRangeCircle.get());
+  Hoverable::bind(
+      m_weaponToolTip.get(),
+      m_game->getPlayerView(),
+      m_game->getUiView(),
+      m_game->getWindow);
+}
+
+void BaseWeapon::bind(Rectangle *ownerBody)
+{
+  m_ownerBody = ownerBody;
 }
 
 void BaseWeapon::update(sf::Time &delta)
@@ -15,7 +28,7 @@ void BaseWeapon::update(sf::Time &delta)
     {
       diceSlot->update(delta);
     }
-    m_attackTimer->update(delta);
+    m_weaponTimer->update(delta);
   }
 }
 
@@ -28,7 +41,7 @@ void BaseWeapon::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
       target.draw(*diceSlot);
     }
-    target.draw(*m_attackTimer);
+    target.draw(*m_weaponTimer);
   }
 }
 
@@ -59,6 +72,16 @@ void BaseWeapon::setBody(std::unique_ptr<Rectangle> body)
   m_weaponBody = std::move(body);
 }
 
+void BaseWeapon::setWeaponTimer(std::unique_ptr<Timer> weaponTimer)
+{
+  m_weaponTimer = std::move(weaponTimer);
+}
+
+void BaseWeapon::setWeaponRangeCircle(std::unique_ptr<Circle> weaponRangeCircle)
+{
+  m_weaponRangeCircle = std::move(weaponRangeCircle);
+}
+
 void BaseWeapon::setNumberOfSlots(int numberOfSlots)
 {
   m_numberOfSlots = numberOfSlots;
@@ -82,17 +105,23 @@ int BaseWeapon::getNumberOfSlots() const
   return m_numberOfSlots;
 }
 
+const sf::Vector2f &BaseWeapon::getPosition() const
+{
+  return VertexRectangleDrawable::getVertexBodyCenter();
+}
+
 const std::string &BaseWeapon::getName() const
 {
   return m_name;
 }
+
 const std::string &BaseWeapon::getStats() const
 {
   return "Damage: " +
          std::to_string(m_attackDamage) +
          "\n" +
          "Cooldown: " +
-         std::to_string(m_attackTimer->getCoolDown()) +
+         std::to_string(m_weaponTimer->getCoolDown()) +
          "\n" +
          "Speed : " +
          std::to_string(m_attackSpeed);
@@ -101,9 +130,4 @@ const std::string &BaseWeapon::getStats() const
 const sf::FloatRect &BaseWeapon::getGlobalBounds() const
 {
   return VertexRectangleDrawable::getVertexBodyGlobalBounds();
-}
-
-const sf::Vector2f &BaseWeapon::getPosition() const
-{
-  return VertexRectangleDrawable::getVertexBodyCenter();
 }
