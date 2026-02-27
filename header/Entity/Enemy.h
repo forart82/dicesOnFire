@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+#include "Entity/Game.h"
 #include "Entity/BaseCharacterBody.h"
 #include "Entity/Dice.h"
 #include "Entity/FloorItems.h"

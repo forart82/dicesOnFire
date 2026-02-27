@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Ability/Gameable.h"
+#include "Entity/Game.h"
 #include "Entity/Grid.h"
 #include "Entity/Enemies.h"
 #include "Entity/Hero.h"
@@ -8,7 +10,7 @@
 #include "Loader/TextureLoader.h"
 #include "Loader/ConfigLoader.h"
 
-class VertexHub : public sf::Drawable
+class VertexHub : public sf::Drawable, Gameable
 {
 
 private:

@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/Enemy.h"
 #include "Entity/FloorItems.h"

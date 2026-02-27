@@ -4,7 +4,10 @@ DebugBar::DebugBar()
     : m_window(m_game->getWindow()),
       m_hero(m_game->getHero()),
       m_enemies(m_game->getEnemies()),
-      m_isActive(false)
+      m_isActive(false),
+      m_debugWindow(
+          m_game->getConfigLoader().get<int>("GLOBAL_SCREEN_WIDTH"),
+          m_game->getConfigLoader().get<int>("GLOBAL_SCREEN_HEIGHT"))
 {
   m_textGame.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_GAME").getShape().getPosition());
   m_textManager.setPosition(m_game->getConfigLoader().get<Rectangle>("DEBUGBAR_TEXT_MANAGER").getShape().getPosition());
@@ -23,8 +26,8 @@ void DebugBar::update(sf::Time &delta)
   m_textGame.addText("fpsdelta", "Time since last update: " + std::to_string(delta.asSeconds()));
   m_textGame.addText("random", std::to_string(std::rand() % 100000));
 
-  m_textManager.addText("TextureManagerTextures", "TextureManager Textures: " + std::to_string(textureLoader::m_textures.size()));
-  m_textManager.addText("FontManagerFonts", "FontManager Fonts: " + std::to_string(fontLoader::m_fonts.size()));
+  // m_textManager.addText("TextureManagerTextures", "TextureManager Textures: " + std::to_string(textureLoader::m_textures.size()));
+  // m_textManager.addText("FontManagerFonts", "FontManager Fonts: " + std::to_string(fontLoader::m_fonts.size()));
 
   m_textHero.addText(
       "HeroPosition",

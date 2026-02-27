@@ -1,17 +1,22 @@
 #pragma once
 
+#include <memory>
+#include <string>
+#include <map>
 #include "Ability/Attackable.h"
 #include "Ability/Dragable.h"
 #include "Ability/Hoverable.h"
 #include "Ability/PickUpable.h"
 #include "Ability/VertexRectangleDrawable.h"
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
-#include "Entity/DiceSlot.h"
 #include "Entity/Rectangle.h"
-#include "Entity/Timer.h"
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
+class Timer;
+class DiceSlot;
+class ToolTip;
 class BaseWeapon
     : public BaseEntity,
       public sf::Drawable,
@@ -61,7 +66,9 @@ public:
 
   const sf::Vector2f &getPosition() const;
 
-  const std::string &getName() const override;
-  const std::string &getStats() const override;
   const sf::FloatRect &getGlobalBounds() const override;
+
+  void setHoverableShowUpTime(float hoverableShowUpTime) override;
+  std::string getName() const override;
+  std::string getStats() const override;
 };

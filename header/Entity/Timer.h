@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/RectangleX2.h"
 

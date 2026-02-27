@@ -7,7 +7,7 @@
       "args": [
         "-fdiagnostics-color=always",
         // "-Wfatal-errors",
-        "-fmax-errors=1",
+        // "-fmax-errors=1",
         "-g",
         "${workspaceFolder}/main.cpp",
         "${workspaceFolder}/source/Entity/*.cpp",

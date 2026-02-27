@@ -17,7 +17,7 @@ std::unique_ptr<Hero> HeroManager::createHero()
   hero->setPickUpRangeCircle(std::make_unique<Circle>(m_game->getConfigLoader().get<Circle>("HERO_PICK_UP_RANGE")));
   hero->setHealth(100);
   hero->setMaxHealth(100);
-  hero->setSpeed(1000);
+  hero->setMovementSpeed(1000);
   hero->setWatchRangeRadius(m_game->getConfigLoader().get<int>("PLAYER_WATCH_RADIUS"));
   hero->setShortRangeRadius(25);
   hero->setLongRangeRadius(50);

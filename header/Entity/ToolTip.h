@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ability/VertexRectangleDrawable.h"
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 
 class ToolTip : public BaseEntity, public sf::Drawable, public VertexRectangleDrawable

@@ -6,7 +6,6 @@
 
 class Dice;
 class BaseWeapon;
-
 class BaseItems : public BaseEntity, public sf::Drawable
 {
 protected:
@@ -15,7 +14,6 @@ protected:
 
 public:
   BaseItems() = default;
-  virtual ~BaseItems() = default;
 
   virtual void update(sf::Time &delta) = 0;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;
@@ -23,9 +21,9 @@ public:
   virtual void addDice(std::unique_ptr<Dice> dice);
   virtual void addWeapon(std::unique_ptr<BaseWeapon> weapon);
 
-  virtual const std::vector<std::unique_ptr<Dice>> &getDices() const;
+  virtual std::vector<std::unique_ptr<Dice>> &getDices();
   virtual int getDicesSize() const;
 
-  virtual const std::vector<std::unique_ptr<BaseWeapon>> &getWeapons() const;
+  virtual std::vector<std::unique_ptr<BaseWeapon>> &getWeapons();
   virtual int getWeaponSize() const;
 };

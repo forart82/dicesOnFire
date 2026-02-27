@@ -11,7 +11,7 @@ VertexHub::VertexHub(
       m_enemies(enemies),
       m_totalVertices(0),
       m_verticesCounter(0),
-      m_tileSize(configLoader::get<int>("TILE_SIZE"))
+      m_tileSize(m_game->getConfigLoader().get<int>("TILE_SIZE"))
 {
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 }
@@ -83,7 +83,7 @@ void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_verticesCounter > 0)
   {
-    states.texture = &textureLoader::getTexture("Utumno");
+    states.texture = m_game->getTextureLoader().getTexture("Utumno");
     target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
   }
 }
@@ -124,13 +124,12 @@ void VertexHub::gridVertices()
 {
   auto heroPosition = m_hero.getBody().getShape().getPosition();
   auto heroWatchRangeRadius = m_hero.getWatchRangeRadius();
-  int tileSize
 
-      int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * m_tileSize);
-  int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * m_tileSize);
+  int playerXMin = gridHelper::SNAP_TO_GRID(heroPosition.x - heroWatchRangeRadius * m_tileSize, m_tileSize);
+  int playerYMin = gridHelper::SNAP_TO_GRID(heroPosition.y - heroWatchRangeRadius * m_tileSize, m_tileSize);
 
-  int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * m_tileSize);
-  int playerYMax = gridHelper::SNAP_TO_GRID(heroPosition.y + heroWatchRangeRadius * m_tileSize);
+  int playerXMax = gridHelper::SNAP_TO_GRID(heroPosition.x + heroWatchRangeRadius * m_tileSize, m_tileSize);
+  int playerYMax = gridHelper::SNAP_TO_GRID(heroPosition.y + heroWatchRangeRadius * m_tileSize, m_tileSize);
 
   for (int x = playerXMin; x <= playerXMax; x += m_tileSize)
   {

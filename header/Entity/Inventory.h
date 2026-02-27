@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Ability/VertexRectangleDrawable.h"
-#include "Entity/Dice.h"
-#include "Entity/BaseWeapon.h"
+#include "Entity/Game.h"
 #include "Entity/BaseItems.h"
 #include "Entity/Cell.h"
 #include "Loader/ConfigLoader.h"
 
+class Dice;
+class BaseWEapon;
 class Inventory : public BaseItems
 {
 private:

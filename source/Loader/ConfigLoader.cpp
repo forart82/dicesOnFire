@@ -113,6 +113,7 @@ const Circle &ConfigLoader::readCircle(std::stringstream &ss) const
   circle.setColors(
       sf::Color(toUnit8(red1), toUnit8(green1), toUnit8(blue1), toUnit8(alpha1)),
       sf::Color(toUnit8(red2), toUnit8(green2), toUnit8(blue2), toUnit8(alpha2)));
+  return circle;
 }
 
 int ConfigLoader::readInteger(std::stringstream &ss) const

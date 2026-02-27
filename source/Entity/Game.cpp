@@ -4,8 +4,8 @@ Game::Game()
     : m_rng(std::random_device{}())
 {
 
-  int m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
-  int m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
+  m_screenWidth = m_configLoader->get<int>("GLOBAL_SCREEN_WIDTH");
+  m_screenHeight = m_configLoader->get<int>("GLOBAL_SCREEN_HEIGHT");
   m_uiView = sf::View(
       sf::FloatRect(
           {0, 200},
@@ -46,11 +46,8 @@ void Game::init()
   m_toolTip = initGameableClass<ToolTip>();
 
   // Hub
-  m_attackHub = initGameableClass<AttackHub>();
-  m_pickUpHub = initGameableClass<PickUpHub>();
-  m_vertexHub = initGameableClass<VertexHub>();
-  m_vertexGuiHub = initGameableClass<VertexGuiHub>();
-  m_hoverHub = initGameableClass<HoverHub>();
+  // m_vertexHub = initGameableClass<VertexHub>();
+  // m_vertexGuiHub = initGameableClass<VertexGuiHub>();
 
   // Manager
   m_heroManager = initGameableClass<HeroManager>();
@@ -77,14 +74,6 @@ void Game::init()
     m_enemies->addEnemy();
   }
 
-  m_attackHub = std::make_unique<AttackHub>(
-      *m_hero,
-      *m_enemies);
-  m_pickUpHub = std::make_unique<PickUpHub>(
-      *m_hero,
-      *m_floorItems,
-      *m_inventory);
-
   m_bluntWeapon = m_weaponManager->createBluntWeapon();
   m_bluntWeapon->setVertexBodyPosition(m_configLoader->get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
   m_floorItems->addWeapon(std::move(m_bluntWeapon));
@@ -99,15 +88,8 @@ void Game::init()
   m_vertexGuiHub = std::make_unique<VertexGuiHub>(
       *m_inventory,
       *m_toolTip);
-
-  m_hoverHub = std::make_unique<HoverHub>(
-      m_window,
-      m_playerView,
-      m_uiView,
-      *m_toolTip,
-      *m_floorItems,
-      *m_inventory);
 }
+
 template <typename T>
 std::unique_ptr<T> Game::initGameableClass()
 {
@@ -207,9 +189,6 @@ void Game::update(sf::Time delta)
   // Elements
   m_hero->update(delta);
   m_enemies->update(delta);
-  m_attackHub->update(delta);
-  m_pickUpHub->update(delta);
-  m_hoverHub->update(delta);
   m_vertexHub->update(delta);
   m_vertexGuiHub->update(delta);
   m_weaponSlotsMenu->update(delta);

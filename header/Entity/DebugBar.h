@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/GameText.h"
 #include "Entity/DebugWindow.h"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include <cmath>
 #include "Entity/BaseEntity.h"
 
 class Rectangle : public BaseEntity, public sf::Drawable

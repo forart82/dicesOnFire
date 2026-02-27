@@ -112,12 +112,17 @@ const sf::Vector2f &BaseWeapon::getPosition() const
   return VertexRectangleDrawable::getVertexBodyCenter();
 }
 
-const std::string &BaseWeapon::getName() const
+void BaseWeapon::setHoverableShowUpTime(float hoverableShowUpTime)
+{
+  m_hoverableShowUpTime = hoverableShowUpTime;
+}
+
+std::string BaseWeapon::getName() const
 {
   return m_name;
 }
 
-const std::string &BaseWeapon::getStats() const
+std::string BaseWeapon::getStats() const
 {
   return "Damage: " +
          std::to_string(m_attackDamage) +

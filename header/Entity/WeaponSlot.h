@@ -1,13 +1,14 @@
 #pragma once
 
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
-#include "Entity/Timer.h"
 #include "Entity/DiceSlot.h"
 #include "Entity/WeaponSlot.h"
 #include "Entity/BladedWeapon.h"
 #include "Entity/Rectangle.h"
 #include "Helper/RandomHelper.h"
 
+class Timer;
 class WeaponSlot : public BaseEntity, public sf::Drawable
 {
 

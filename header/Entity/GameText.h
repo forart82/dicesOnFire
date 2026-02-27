@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 #include "Loader/FontLoader.h"
 #include "Globals/Colors.h"

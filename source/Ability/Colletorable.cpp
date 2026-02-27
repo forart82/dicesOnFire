@@ -46,7 +46,7 @@ void Collectorable::updateCollectorable(const sf::Time &delta)
 
       // 3. The Delete: Remove the empty shell from the floor list
       // erase() returns the iterator to the NEXT item, so we don't need ++it
-      it = weapons.erase(it);
+      it = dices.erase(it);
     }
     else
     {

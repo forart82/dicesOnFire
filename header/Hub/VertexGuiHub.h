@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Entity/Game.h"
 #include "Entity/Inventory.h"
 #include "Entity/ToolTip.h"
 #include "Loader/TextureLoader.h"

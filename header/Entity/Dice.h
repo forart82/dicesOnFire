@@ -5,14 +5,15 @@
 #include "Ability/Hoverable.h"
 #include "Ability/PickUpable.h"
 #include "Ability/VertexRectangleDrawable.h"
+#include "Entity/Game.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/GameText.h"
-#include "Entity/Timer.h"
 #include "Entity/Circle.h"
 #include "Helper/RandomHelper.h"
 #include "Loader/ConfigLoader.h"
 #include "Loader/RandomNameLoader.h"
 
+class Timer;
 class Dice
     : public BaseEntity,
       public sf::Drawable,
@@ -55,8 +56,8 @@ public:
 
   void onTimeout();
 
-  const std::string &getName() const;
-  const std::string &getStats() const;
+  std::string getName() const;
+  std::string getStats() const;
 
   const sf::FloatRect &getGlobalBounds() const;
   const sf::Vector2f &getPosition() const;

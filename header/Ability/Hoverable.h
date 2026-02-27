@@ -31,9 +31,9 @@ public:
   void checkHoverOverItem();
   void resetToolTip(const sf::Time &delta);
 
-  virtual const std::string &setHoverableShowUpTime(float hoverableShowUpTime) const = 0;
-
   virtual const sf::FloatRect &getGlobalBounds() const = 0;
-  virtual const std::string &getName() const = 0;
-  virtual const std::string &getStats() const = 0;
+
+  virtual std::string setHoverableShowUpTime(float hoverableShowUpTime) const = 0;
+  virtual std::string getName() const = 0;
+  virtual std::string getStats() const = 0;
 };

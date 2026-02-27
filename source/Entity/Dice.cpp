@@ -80,12 +80,12 @@ void Dice::onTimeout()
   m_timer->toggleIsReady();
 }
 
-const std::string &Dice::getName() const
+std::string Dice::getName() const
 {
   return m_name;
 }
 
-const std::string &Dice::getStats() const
+std::string Dice::getStats() const
 {
 
   std::stringstream coolDownStream;

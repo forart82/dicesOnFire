@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Ability/Gameable.h"
 #include "Globals/Colors.h"
 #include "Loader/ConfigLoader.h"
 
@@ -22,7 +23,7 @@ private:
   int m_screenHeight;
 
 public:
-  DebugWindow();
+  DebugWindow(int screenWidht, int screenHeight);
   ~DebugWindow();
 
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
