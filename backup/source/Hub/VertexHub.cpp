@@ -2,13 +2,16 @@
 
 VertexHub::VertexHub(
     Grid &grid,
+    FloorItems &floorItems,
     Hero &hero,
-    int tileSize)
+    Enemies &enemies)
     : m_grid(grid),
+      m_floorItems(floorItems),
       m_hero(hero),
+      m_enemies(enemies),
       m_totalVertices(0),
       m_verticesCounter(0),
-      m_tileSize(tileSize)
+      m_tileSize(m_game->getConfigLoader().get<int>("TILE_SIZE"))
 {
   m_vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 }
@@ -24,6 +27,10 @@ void VertexHub::update(sf::Time &delta)
   resizeVertices();
 
   gridVertices();
+
+  floorItemsVertices();
+
+  enemiesVertices();
 }
 
 template <typename T>
@@ -76,20 +83,33 @@ void VertexHub::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
   if (m_verticesCounter > 0)
   {
-    // states.texture = m_game->getTextureLoader().getTexture("Utumno");
-    // target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
+    states.texture = m_game->getTextureLoader().getTexture("Utumno");
+    target.draw(&m_vertices[0], m_verticesCounter * 6, sf::PrimitiveType::Triangles, states);
   }
 }
 
 void VertexHub::countTotalVertices()
 {
   countGridVertices();
+  countFloorItemsVertices();
+  countEnemiesVertices();
 }
 
 void VertexHub::countGridVertices()
 {
   int side = (m_hero.getWatchRangeRadius() * 2) + 1;
   m_totalVertices += side * side;
+}
+
+void VertexHub::countFloorItemsVertices()
+{
+  m_totalVertices += m_floorItems.getDicesSize();
+  m_totalVertices += m_floorItems.getWeaponSize();
+}
+
+void VertexHub::countEnemiesVertices()
+{
+  m_totalVertices += m_enemies.getEnemies().size();
 }
 
 void VertexHub::resizeVertices()
@@ -119,4 +139,15 @@ void VertexHub::gridVertices()
       makeTriangles(cell);
     }
   }
+}
+
+void VertexHub::floorItemsVertices()
+{
+  loopItemsAndMakeTriangles(m_floorItems.getDices());
+  loopItemsAndMakeTriangles(m_floorItems.getWeapons());
+}
+
+void VertexHub::enemiesVertices()
+{
+  loopItemsAndMakeTriangles(m_enemies.getEnemies());
 }

@@ -1,13 +1,6 @@
-#include "Entity/Hero.h"
-#include "Entity/Rectangle.h"
-#include "Entity/RectangleX2.h"
-#include "Entity/Circle.h"
-#include "Entity/Game.h"
 #include "Manager/HeroManager.h"
 
-HeroManager::HeroManager()
-{
-}
+HeroManager::HeroManager() {}
 
 HeroManager::~HeroManager() {}
 

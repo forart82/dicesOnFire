@@ -2,6 +2,9 @@
 
 BaseCharacterBody::BaseCharacterBody()
 {
+  Damageable::bind(
+      m_body.get(),
+      m_healthBar.get());
 
   Moveable::bind(
       m_body.get(),

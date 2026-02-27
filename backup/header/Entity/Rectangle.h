@@ -4,16 +4,16 @@
 #include <cmath>
 #include "Entity/BaseEntity.h"
 
-class Circle : public BaseEntity, public sf::Drawable
+class Rectangle : public BaseEntity, public sf::Drawable
 {
 
 protected:
-  sf::CircleShape m_shape;
+  sf::RectangleShape m_shape;
   bool m_isActive;
 
 public:
-  Circle();
-  ~Circle();
+  Rectangle();
+  ~Rectangle();
 
   void update(sf::Time &delta);
   void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -22,14 +22,14 @@ public:
   void addPosition(const sf::Vector2f &offset);
   void toggleActive();
 
-  void setCircle(const Circle &circle);
+  void setRectangle(const Rectangle &rectangle);
   void setPosition(const sf::Vector2f &position);
-  void setRadius(int radius);
-  void setOutlineThickness(int outlineTickness);
+  void setSize(const sf::Vector2f &size);
+  void setOutlineThickness(int outlineThickness);
   void setOrigin();
-  void setPointCount(size_t points);
   void setColors(const sf::Color &fillColor, const sf::Color &outlineColor);
   void setIsActive(bool isActive);
 
-  const sf::CircleShape &getShape() const;
+  const sf::RectangleShape &getShape() const;
+  bool getIsActive() const;
 };

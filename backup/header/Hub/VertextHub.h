@@ -1,12 +1,16 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Ability/Gameable.h"
+#include "Entity/Game.h"
 #include "Entity/Grid.h"
+#include "Entity/Enemies.h"
 #include "Entity/Hero.h"
+#include "Entity/FloorItems.h"
 #include "Loader/TextureLoader.h"
 #include "Loader/ConfigLoader.h"
 
-class VertexHub : public sf::Drawable
+class VertexHub : public sf::Drawable, Gameable
 {
 
 private:
@@ -16,13 +20,16 @@ private:
   int m_tileSize;
 
   Grid &m_grid;
+  FloorItems &m_floorItems;
   Hero &m_hero;
+  Enemies &m_enemies;
 
 public:
   VertexHub(
       Grid &grid,
+      FloorItems &m_floorItems,
       Hero &hero,
-      int tileSize);
+      Enemies &Enemies);
   ~VertexHub();
 
   void update(sf::Time &delta);
@@ -37,11 +44,11 @@ public:
   void initCount();
   void countTotalVertices();
   void countGridVertices();
-  // void countFloorItemsVertices();
-  // void countEnemiesVertices();
+  void countFloorItemsVertices();
+  void countEnemiesVertices();
 
   void resizeVertices();
   void gridVertices();
-  // void floorItemsVertices();
-  // void enemiesVertices();
+  void floorItemsVertices();
+  void enemiesVertices();
 };

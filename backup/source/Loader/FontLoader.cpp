@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Loader/FontLoader.h"
 
 FontLoader::FontLoader() {}

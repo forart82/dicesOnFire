@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "Ability/VertexRectangleDrawable.h"
+#include "Ability/Damageable.h"
 #include "Ability/Moveable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/Rectangle.h"
@@ -14,6 +15,7 @@ class BaseCharacterBody
     : public BaseEntity,
       public sf::Drawable,
       public VertexRectangleDrawable,
+      public Damageable,
       public Moveable
 {
 protected:

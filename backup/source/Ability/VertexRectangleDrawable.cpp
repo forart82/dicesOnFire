@@ -91,26 +91,26 @@ void VertexRectangleDrawable::setIsActive(bool isActive)
   m_isActive = isActive;
 }
 
-sf::FloatRect VertexRectangleDrawable::getVertexBody() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexBody() const
 {
   return sf::FloatRect({m_vertexBodyLeftTop.x, m_vertexBodyLeftTop.y}, {m_vertexBodyRightBottom.x, m_vertexBodyRightBottom.y});
 }
 
-sf::FloatRect VertexRectangleDrawable::getVertexAssetBody() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexAssetBody() const
 {
   return sf::FloatRect({m_vertexAssetBodyLeftTop.x, m_vertexAssetBodyLeftTop.y}, {m_vertexAssetBodyRightBottom.x, m_vertexAssetBodyRightBottom.y});
 }
 
-sf::Vector2f VertexRectangleDrawable::getVertexBodyCenter() const
+const sf::Vector2f &VertexRectangleDrawable::getVertexBodyCenter() const
 {
   return (m_vertexBodyLeftTop + m_vertexBodyRightBottom) / 2.f;
 }
-sf::Vector2f VertexRectangleDrawable::getVertexAssetBodyCenter() const
+const sf::Vector2f &VertexRectangleDrawable::getVertexAssetBodyCenter() const
 {
   return (m_vertexAssetBodyLeftTop + m_vertexAssetBodyRightBottom) / 2.f;
 }
 
-sf::FloatRect VertexRectangleDrawable::getVertexBodyGlobalBounds() const
+const sf::FloatRect &VertexRectangleDrawable::getVertexBodyGlobalBounds() const
 {
   // 1. Find the Minimum X and Y (The Top-Left of the bounding box)
   float minX = std::min({m_vertexBodyLeftTop.x, m_vertexBodyRightTop.x, m_vertexBodyLeftBottom.x, m_vertexBodyRightBottom.x});

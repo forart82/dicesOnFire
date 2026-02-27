@@ -1,8 +1,5 @@
 #pragma once
 
-#include <map>
-#include <string>
-
 #include "Entity/Circle.h"
 #include "Entity/Rectangle.h"
 #include "Entity/RectangleX2.h"

@@ -35,12 +35,30 @@ void Game::init()
   m_randomNameLoader = initGameableClass<RandomNameLoader>();
 
   // Entity
+  m_debugBar = initGameableClass<DebugBar>();
+  m_weaponSlotsMenu = initGameableClass<WeaponSlotsMenu>();
   m_hero = initGameableClass<Hero>();
   m_grid = initGameableClass<Grid>();
+  m_enemies = initGameableClass<Enemies>();
+  m_floorItems = initGameableClass<FloorItems>();
+  m_bluntWeapon = initGameableClass<BluntWeapon>();
+  m_inventory = initGameableClass<Inventory>();
+  m_toolTip = initGameableClass<ToolTip>();
+
+  // Hub
+  // m_vertexHub = initGameableClass<VertexHub>();
+  // m_vertexGuiHub = initGameableClass<VertexGuiHub>();
 
   // Manager
   m_heroManager = initGameableClass<HeroManager>();
+  m_enemyManager = initGameableClass<EnemyManager>();
+  m_weaponManager = initGameableClass<WeaponManager>();
+  m_diceManager = initGameableClass<DiceManager>();
+  m_diceSlotManager = initGameableClass<DiceSlotManager>();
   m_cellManager = initGameableClass<CellManager>();
+  m_rectangleX2Manager = initGameableClass<RectangleX2Manager>();
+  m_weaponSlotManager = initGameableClass<WeaponSlotManager>();
+  m_weaponSlotMenuManager = initGameableClass<WeaponSlotMenuManager>();
 
   m_playerZoom = 1;
 
@@ -48,11 +66,28 @@ void Game::init()
   m_fontLoader->reload();
   m_randomNameLoader->reload();
 
+  m_weaponSlotsMenu->setBody(std::make_unique<Rectangle>(m_configLoader->get<Rectangle>("WEAPONSLOTSMENU")));
+
+  m_hero = m_heroManager->createHero();
+  for (int i = 0; i < m_configLoader->get<int>("MAX_ENEMIES"); i++)
+  {
+    m_enemies->addEnemy();
+  }
+
+  m_bluntWeapon = m_weaponManager->createBluntWeapon();
+  m_bluntWeapon->setVertexBodyPosition(m_configLoader->get<sf::Vector2f>("BLUNTWEAPON_START_POSITION"));
+  m_floorItems->addWeapon(std::move(m_bluntWeapon));
+
   m_vertexHub.reset();
   m_vertexHub = std::make_unique<VertexHub>(
       *m_grid,
+      *m_floorItems,
       *m_hero,
-      m_configLoader->get<int>("TILE_SIZE"));
+      *m_enemies);
+
+  m_vertexGuiHub = std::make_unique<VertexGuiHub>(
+      *m_inventory,
+      *m_toolTip);
 }
 
 template <typename T>
@@ -81,10 +116,10 @@ void Game::run()
         switch (keyPressed->scancode)
         {
         case sf::Keyboard::Scancode::I:
-          // m_inventory->toggleInventory();
+          m_inventory->toggleInventory();
           break;
         case sf::Keyboard::Scancode::O:
-          // m_debugBar->toggleActive();
+          m_debugBar->toggleActive();
           break;
         case sf::Keyboard::Scancode::R:
           break;
@@ -126,7 +161,7 @@ void Game::run()
     m_FpsClock += realDelta;
     if (m_FpsClock.asSeconds() >= 1.0f)
     {
-      // m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
+      m_debugBar->setRealFps(1.0f / realDelta.asSeconds());
       m_FpsClock = sf::Time::Zero;
     }
     while (m_timeSinceLastUpdate >= m_timePerFrame)
@@ -143,11 +178,23 @@ void Game::update(sf::Time delta)
 
   m_autoDamgeTimer += delta;
 
+  if (m_autoDamgeTimer.asSeconds() > 0.1f)
+  {
+    for (auto &enemy : m_enemies->getEnemies())
+    {
+      enemy->removeHealth(1);
+    }
+    m_autoDamgeTimer = sf::Time::Zero;
+  }
   // Elements
   m_hero->update(delta);
+  m_enemies->update(delta);
   m_vertexHub->update(delta);
+  m_vertexGuiHub->update(delta);
+  m_weaponSlotsMenu->update(delta);
 
   // Last element
+  m_debugBar->update(delta);
 }
 
 void Game::draw()
@@ -160,10 +207,15 @@ void Game::draw()
   m_window.setView(m_playerView);
   m_window.draw(*m_vertexHub);
   m_window.draw(*m_hero);
+  m_window.draw(*m_enemies);
 
   m_window.setView(m_uiView);
+  m_window.draw(*m_weaponSlotsMenu);
+  m_window.draw(*m_vertexGuiHub);
+  m_window.draw(*m_toolTip);
 
   // Will be last
+  m_window.draw(*m_debugBar);
   m_window.display();
 }
 
@@ -226,9 +278,26 @@ Hero &Game::getHero() const
   return *m_hero;
 }
 
+Enemies &Game::getEnemies() const
+{
+  return *m_enemies;
+}
+
+Inventory &Game::getInventory() const
+{
+  return *m_inventory;
+}
+FloorItems &Game::getFloorItems() const
+{
+  return *m_floorItems;
+}
 Grid &Game::getGrid() const
 {
   return *m_grid;
+}
+ToolTip &Game::getToolTip() const
+{
+  return *m_toolTip;
 }
 
 // MARK: Loader
@@ -252,12 +321,51 @@ RandomNameLoader &Game::getRandomNameLoader() const
   return *m_randomNameLoader;
 }
 
+// MARK: Manager
+EnemyManager &Game::getEnemyManager() const
+{
+  return *m_enemyManager;
+}
+
 HeroManager &Game::getHeroManager() const
 {
   return *m_heroManager;
+}
+WeaponManager &Game::getWeaponManager() const
+{
+  return *m_weaponManager;
+}
+
+DiceManager &Game::getDiceManager() const
+{
+  return *m_diceManager;
+}
+TimerManager &Game::getTimerManager() const
+{
+  return *m_timerManager;
+}
+
+DiceSlotManager &Game::getDiceSlotManager() const
+{
+  return *m_diceSlotManager;
 }
 
 CellManager &Game::getCellManager() const
 {
   return *m_cellManager;
+}
+
+RectangleX2Manager &Game::getRectangleX2Manager() const
+{
+  return *m_rectangleX2Manager;
+}
+
+WeaponSlotManager &Game::getWeaponSlotManager() const
+{
+  return *m_weaponSlotManager;
+}
+
+WeaponSlotMenuManager &Game::getWeaponSlotMenuManager() const
+{
+  return *m_weaponSlotMenuManager;
 }
