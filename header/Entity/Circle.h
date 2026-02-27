@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "Entity/BaseEntity.h"
 #include "Globals/Colors.h"
 

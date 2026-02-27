@@ -1,7 +1,5 @@
 #include "Entity/BaseItems.h"
 
-BaseItems::~BaseItems() = default;
-
 void BaseItems::addDice(std::unique_ptr<Dice> dice)
 {
   m_dices.emplace_back(std::move(dice));

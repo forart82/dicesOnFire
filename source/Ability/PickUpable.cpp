@@ -1,40 +1,16 @@
 #include "Ability/PickUpable.h"
 
-void PickUpable::update(const sf::Time &delta)
+void PickUpable::bind(
+    Rectangle *pickUpableBody)
 {
-  pickUp();
+  m_pickUpableBody = pickUpableBody;
 }
 
-void PickUpable::pickUp()
+bool PickUpable::canBePickedUp(Collectorable *collector) const
 {
-  if (m_pickUpableIventory->getFreeSlotIndex() >= 0)
-  {
-    auto &weapons = m_pickUpableFloorItems->getWeapons();
-    for (auto it = weapons.begin(); it != weapons.end();)
-    {
-      if (m_cpickUpableCollector->insidePickUpRangeCircle((*it)->getLeftTop()) && m_invenotry.getFreeSlotIndex() >= 0)
-      {
-        m_invenotry.addWeapon(std::move(*it));
-        it = weapons.erase(it);
-      }
-      else
-      {
-        ++it;
-      }
-    }
+  if (m_pickUpableBody == nullptr)
+    return false;
 
-    auto &dices = m_floorItems.getDices();
-    for (auto it = dices.begin(); it != dices.end();)
-    {
-      if (m_hero.insidePickUpRangeCircle((*it)->getLeftTop()) && m_invenotry.getFreeSlotIndex() >= 0)
-      {
-        m_invenotry.addDice(std::move(*it));
-        it = dices.erase(it);
-      }
-      else
-      {
-        ++it;
-      }
-    }
-  }
+  // Ask the hero: "Is my position inside your pickup circle?"
+  return collector->insideColletorableRange(m_pickUpableBody->getShape().getGeometricCenter());
 }

@@ -20,7 +20,7 @@ public:
   ~Timer();
 
   std::function<void()> onTimeout;
-  void update(sf::Time &delta);
+  void update(const sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
   void toggleIsReady();

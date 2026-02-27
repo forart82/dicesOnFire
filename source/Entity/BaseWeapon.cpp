@@ -12,6 +12,10 @@ BaseWeapon::BaseWeapon()
       m_game->getPlayerView(),
       m_game->getUiView(),
       m_game->getWindow);
+  PickUpable::bind(
+      m_weaponBody.get(),
+
+  )
 }
 
 void BaseWeapon::bind(Rectangle *ownerBody)

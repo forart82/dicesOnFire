@@ -1,21 +1,17 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "Ability/Collectable.h"
-#include "Entity/FloorItems.h"
-#include "Entity/Inventory.h"
-
+class Collectorable;
+class Rectangle;
 class PickUpable
 {
 private:
-  Collectable *m_cpickUpableCollector = nullptr;
-  FloorItems *m_pickUpableFloorItems = nullptr;
-  Inventory *m_pickUpableIventory = nullptr;
+  Rectangle *m_pickUpableBody = nullptr;
 
 public:
   PickUpable() = default;
   virtual ~PickUpable() = default;
 
-  void update(const sf::Time &delta);
-  void pickUp();
+  void bind(Rectangle *pickUpableBody);
+
+  bool canBePickedUp(Collectorable *collector) const;
 };

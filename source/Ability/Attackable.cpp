@@ -10,7 +10,7 @@ void Attackable::bind(
   m_attackableRangeCircle = attackableRangeCircle;
 }
 
-void Attackable::updateAttackable(sf::Time &delta)
+void Attackable::updateAttackable(const sf::Time &delta)
 {
   assert(m_attackableBody != nullptr && "ERROR: Attackable body is not bound!");
 

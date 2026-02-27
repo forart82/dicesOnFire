@@ -3,6 +3,7 @@
 #include "Ability/Attackable.h"
 #include "Ability/Dragable.h"
 #include "Ability/Hoverable.h"
+#include "Ability/PickUpable.h"
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/DiceSlot.h"
@@ -17,6 +18,7 @@ class BaseWeapon
       public Attackable,
       public Dragable,
       public Hoverable,
+      public PickUpable,
       public VertexRectangleDrawable
 {
 

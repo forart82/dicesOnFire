@@ -10,7 +10,7 @@ Timer::Timer()
 
 Timer::~Timer() {};
 
-void Timer::update(sf::Time &delta)
+void Timer::update(const sf::Time &delta)
 {
   if (!m_isReady)
   {

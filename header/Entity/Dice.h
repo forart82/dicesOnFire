@@ -1,7 +1,9 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "Ability/Dragable.h"
 #include "Ability/Hoverable.h"
+#include "Ability/PickUpable.h"
 #include "Ability/VertexRectangleDrawable.h"
 #include "Entity/BaseEntity.h"
 #include "Entity/GameText.h"
@@ -16,6 +18,7 @@ class Dice
       public sf::Drawable,
       public Dragable,
       public Hoverable,
+      public PickUpable,
       public VertexRectangleDrawable
 {
 private:

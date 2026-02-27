@@ -29,13 +29,11 @@ public:
       Timer *attackableTimer,
       Circle *attackableRangeCircle);
 
-  void Attackable::updateAttackable(sf::Time &delta);
-  Damageable *Attackable::checkRadar(const std::vector<Damageable *> &targets);
+  void updateAttackable(const sf::Time &delta);
+  Damageable *checkRadar(const std::vector<Damageable *> &targets);
 
-  void Attackable::dealDamage(Damageable *target);
+  void dealDamage(Damageable *target);
 
-  void setAttackTimer(std::unique_ptr<Timer> attackTimer);
-  void setAttackRangeCircle(std::unique_ptr<Circle> attackRangeCircle);
   void setAttackDamage(int attackDamage);
   void setAttackSpeed(float attackSpeed);
   void setCooldown(float attackCooldown);
@@ -44,5 +42,5 @@ public:
   int getAttackDamage() const;
   float getAttackSpeed() const;
   int getAttackRangeRadius() const;
-  const Circle *Attackable::getAttackRangeCircle() const;
+  const Circle *getAttackRangeCircle() const;
 };

@@ -15,6 +15,7 @@ protected:
 
 public:
   BaseItems() = default;
+  virtual ~BaseItems() = default;
 
   virtual void update(sf::Time &delta) = 0;
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;

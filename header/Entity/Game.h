@@ -27,9 +27,6 @@
 #include "Entity/WeaponSlot.h"
 #include "Entity/WeaponSlotsMenu.h"
 
-#include "Hub/AttackHub.h"
-#include "Hub/HoverHub.h"
-#include "Hub/PickUpHub.h"
 #include "Hub/VertexGuiHub.h"
 #include "Hub/VertextHub.h"
 
@@ -84,11 +81,8 @@ private:
   std::unique_ptr<ToolTip> m_toolTip;
 
   // Hub
-  std::unique_ptr<AttackHub> m_attackHub;
-  std::unique_ptr<PickUpHub> m_pickUpHub;
   std::unique_ptr<VertexHub> m_vertexHub;
   std::unique_ptr<VertexGuiHub> m_vertexGuiHub;
-  std::unique_ptr<HoverHub> m_hoverHub;
 
   // Loader
   std::unique_ptr<ConfigLoader> m_configLoader;
