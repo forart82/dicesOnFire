@@ -15,8 +15,6 @@ BaseCharacterBody::BaseCharacterBody()
       m_pickUpRangeCircle.get());
 }
 
-BaseCharacterBody::~BaseCharacterBody() {}
-
 void BaseCharacterBody::update(sf::Time &delta)
 {
 }

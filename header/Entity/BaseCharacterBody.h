@@ -35,7 +35,7 @@ protected:
 
 public:
   BaseCharacterBody();
-  ~BaseCharacterBody();
+  virtual ~BaseCharacterBody() = default;
 
   virtual void update(sf::Time &delta);
   virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;

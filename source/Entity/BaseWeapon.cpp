@@ -11,11 +11,9 @@ BaseWeapon::BaseWeapon()
       m_weaponToolTip.get(),
       m_game->getPlayerView(),
       m_game->getUiView(),
-      m_game->getWindow);
+      m_game->getWindow());
   PickUpable::bind(
-      m_weaponBody.get(),
-
-  )
+      m_weaponBody.get());
 }
 
 void BaseWeapon::bind(Rectangle *ownerBody)
